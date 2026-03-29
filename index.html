@@ -3,37 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Koboogy - Mobile Optimized</title>
+    <title>Koboogy - Full Story master</title>
     <style>
-        /* 기본 변수 및 초기화 */
         :root { --primary-color: #4285f4; --bg-gray: #f8f9fa; --border-color: #eee; }
         body { font-family: 'Malgun Gothic', sans-serif; margin: 0; display: flex; height: 100vh; background-color: #fff; overflow: hidden; color: #333; }
 
-        /* [PC] 좌측 사이드바 / [모바일] 드로어 메뉴 */
+        /* 사이드바 설정 */
         .sidebar {
             width: 260px; border-right: 1px solid var(--border-color); padding: 20px 10px;
             background-color: #fff; flex-shrink: 0; overflow-y: auto; transition: transform 0.3s ease;
         }
-
-        /* 모바일용 사이드바 토글 버튼 (햄버거) */
         .mobile-menu-btn {
             display: none; position: fixed; bottom: 20px; right: 20px; 
             width: 50px; height: 50px; background: var(--primary-color); 
             color: white; border-radius: 50%; border: none; font-size: 24px; 
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2); z-index: 1001; cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2); z-index: 1001;
         }
 
-        /* Koboogy 로고 영역 */
+        /* 로고 영역 */
         .brand-logo { padding: 10px 15px 25px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid #f9f9f9; margin-bottom: 20px; }
         .brand-logo img { width: 45px; height: auto; border-radius: 6px; }
         .brand-name { font-size: 22px; font-weight: 800; }
 
-        /* 메인 콘텐츠 영역 */
+        /* 메인 영역 */
         .main-content { flex: 1; display: flex; flex-direction: column; overflow: hidden; background-color: var(--bg-gray); }
         .scroll-container { flex: 1; overflow-y: auto; padding: 20px; }
         .container { max-width: 800px; margin: 0 auto; }
 
-        /* 상단 고정 오디오 & 속도 조절 */
+        /* 오디오 상단 고정 */
         .audio-sticky { 
             position: sticky; top: 0; background: #fff; padding: 15px; 
             border-bottom: 1px solid var(--border-color); box-shadow: 0 2px 10px rgba(0,0,0,0.05); z-index: 99;
@@ -43,7 +40,7 @@
         .speed-btn { border: 1.5px solid var(--primary-color); background: white; color: var(--primary-color); padding: 4px 12px; border-radius: 15px; cursor: pointer; font-size: 13px; font-weight: bold; }
         .speed-btn.active { background: var(--primary-color); color: white; }
 
-        /* 문장 카드 디자인 (모바일 최적화) */
+        /* 문장 카드 스타일 */
         .sentence-card { background: white; padding: 20px; border-radius: 15px; margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
         .sentence-header { display: flex; align-items: flex-start; gap: 10px; }
         .play-sentence-btn { cursor: pointer; font-size: 22px; color: #ccc; margin-top: 2px; flex-shrink: 0; }
@@ -54,7 +51,7 @@
         .chunk { cursor: pointer; transition: background 0.1s; border-radius: 3px; padding: 0 2px; }
         .chunk.active { background-color: #d2e3fc; color: #174ea6; }
 
-        /* 사이드바 메뉴 스타일 */
+        /* 메뉴 스타일 */
         .menu-container { margin-bottom: 5px; }
         .menu-item { cursor: pointer; padding: 10px; display: flex; align-items: center; font-size: 16px; font-weight: 600; border-radius: 8px; }
         .triangle { width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 7px solid #555; margin-right: 12px; transform: rotate(-90deg); transition: transform 0.2s; }
@@ -64,12 +61,10 @@
         .sub-item { padding: 8px 0; font-size: 14px; color: #666; cursor: pointer; }
         .sub-item.active { color: var(--primary-color); font-weight: bold; }
 
-        /* [모바일 전용 반응형 스타일] */
         @media (max-width: 768px) {
             .sidebar { position: fixed; left: 0; top: 0; height: 100%; z-index: 1000; transform: translateX(-100%); box-shadow: 5px 0 15px rgba(0,0,0,0.1); }
             .sidebar.active { transform: translateX(0); }
             .mobile-menu-btn { display: block; }
-            .main-content { padding: 0; }
             .scroll-container { padding: 15px; }
             .sentence-text { font-size: 17px; }
             .ipa-text { font-size: 14px; }
@@ -109,6 +104,7 @@
 
         <div class="scroll-container">
             <div class="container" id="content-display">
+                
                 <div class="sentence-card">
                     <div class="sentence-header">
                         <span class="play-sentence-btn" data-start="1.950" data-end="7.350">▶️</span>
@@ -122,25 +118,132 @@
                     <div class="sentence-header">
                         <span class="play-sentence-btn" data-start="7.350" data-end="10.030">▶️</span>
                         <div class="sentence-text">
-                            <span class="chunk" data-start="7.350" data-end="7.720">What's your</span> <span class="chunk" data-start="7.720" data-end="10.030">go-to Korean dish?</span>
+                            <span class="chunk" data-start="7.350" data-end="7.720">What's your</span> 
+                            <span class="chunk" data-start="7.720" data-end="10.030">go-to Korean dish?</span>
                         </div>
                     </div>
                     <div class="ipa-text">/wʌts jɔːr ɡoʊ-tuː kə-ri-ən dɪʃ/</div>
                     <div class="translation-text">네가 제일 자주 먹는 한국 음식이 뭐야?</div>
                 </div>
 
+                <div class="sentence-card">
+                    <div class="sentence-header">
+                        <span class="play-sentence-btn" data-start="10.030" data-end="14.080">▶️</span>
+                        <div class="sentence-text">
+                            <span class="chunk" data-start="10.030" data-end="10.520">It's hard to</span> 
+                            <span class="chunk" data-start="10.520" data-end="11.640">choose just one,</span> 
+                            <span class="chunk" data-start="11.640" data-end="12.330">but I think I would</span> 
+                            <span class="chunk" data-start="12.330" data-end="14.080">go with kimchi jjigae.</span>
+                        </div>
+                    </div>
+                    <div class="ipa-text">/ɪts hɑːrd tuː tʃuːz dʒʌst wʌn, bʌt aɪ θɪŋk aɪ wʊd ɡoʊ wɪð kɪmtʃi dʒiɡeɪ/</div>
+                    <div class="translation-text">딱 하나만 고르기는 어렵지만, 김치찌개로 할게.</div>
                 </div>
+
+                <div class="sentence-card">
+                    <div class="sentence-header">
+                        <span class="play-sentence-btn" data-start="14.080" data-end="17.760">▶️</span>
+                        <div class="sentence-text">
+                            <span class="chunk" data-start="14.080" data-end="15.610">It's a hot and savory stew</span> 
+                            <span class="chunk" data-start="15.610" data-end="17.760">that has a distinct smell.</span>
+                        </div>
+                    </div>
+                    <div class="ipa-text">/ɪts ə hɑːt ænd seɪvəri stuː ðæt hæz ə dɪstɪŋkt smɛl/</div>
+                    <div class="translation-text">이건 맵고 맛있는 찌개인데 독특한 냄새가 나.</div>
+                </div>
+
+                <div class="sentence-card">
+                    <div class="sentence-header">
+                        <span class="play-sentence-btn" data-start="17.760" data-end="21.180">▶️</span>
+                        <div class="sentence-text">
+                            <span class="chunk" data-start="17.760" data-end="18.030">You can</span> 
+                            <span class="chunk" data-start="18.030" data-end="19.450">tell someone is cooking jjigae</span> 
+                            <span class="chunk" data-start="19.450" data-end="21.180">from miles away.</span>
+                        </div>
+                    </div>
+                    <div class="ipa-text">/juː kæn tɛl sʌmwʌn ɪz kʊkɪŋ dʒiɡeɪ frəm maɪlz əweɪ/</div>
+                    <div class="translation-text">멀리서도 누군가 찌개를 끓이고 있다는 걸 알 수 있어.</div>
+                </div>
+
+                <div class="sentence-card">
+                    <div class="sentence-header">
+                        <span class="play-sentence-btn" data-start="21.180" data-end="23.870">▶️</span>
+                        <div class="sentence-text">
+                            <span class="chunk" data-start="21.180" data-end="21.970">The great thing is</span> 
+                            <span class="chunk" data-start="21.970" data-end="22.330">that it's</span> 
+                            <span class="chunk" data-start="22.330" data-end="23.870">easy to make.</span>
+                        </div>
+                    </div>
+                    <div class="ipa-text">/ðə ɡreɪt θɪŋ ɪz ðæt ɪts iːzi tuː meɪk/</div>
+                    <div class="translation-text">좋은 점은 만들기가 쉽다는 거야.</div>
+                </div>
+
+                <div class="sentence-card">
+                    <div class="sentence-header">
+                        <span class="play-sentence-btn" data-start="23.870" data-end="28.230">▶️</span>
+                        <div class="sentence-text">
+                            <span class="chunk" data-start="23.870" data-end="24.650">As long as you have</span> 
+                            <span class="chunk" data-start="24.650" data-end="25.450">good kimchi,</span> 
+                            <span class="chunk" data-start="25.450" data-end="26.130">it usually</span> 
+                            <span class="chunk" data-start="26.130" data-end="28.230">turns out great.</span>
+                        </div>
+                    </div>
+                    <div class="ipa-text">/æz lɔːŋ æz juː hæv ɡʊd kɪmtʃi, ɪt juːʒuəli tɜːrnz aʊt ɡreɪt/</div>
+                    <div class="translation-text">맛있는 김치만 있다면 보통 아주 잘 만들어져.</div>
+                </div>
+
+                <div class="sentence-card">
+                    <div class="sentence-header">
+                        <span class="play-sentence-btn" data-start="28.230" data-end="35.130">▶️</span>
+                        <div class="sentence-text">
+                            <span class="chunk" data-start="28.230" data-end="28.500">When you</span> <span class="chunk" data-start="28.500" data-end="29.820">eat it at a restaurant,</span> <span class="chunk" data-start="29.820" data-end="30.710">they usually cook it</span> <span class="chunk" data-start="30.710" data-end="31.540">in a stone bowl</span> <span class="chunk" data-start="31.540" data-end="32.830">called a tteokbaegi,</span> <span class="chunk" data-start="32.830" data-end="33.410">which keeps it</span> <span class="chunk" data-start="33.410" data-end="35.130">hot until the last bite.</span>
+                        </div>
+                    </div>
+                    <div class="ipa-text">/wɛn juː iːt ɪt æt ə rɛstərənt, ðeɪ juːʒuəli kʊk ɪt ɪn ə stoʊn boʊl kɔːld ə tteokbaegi, wɪtʃ kiːps ɪt hɑːt ʌntɪl ðə læst baɪt/</div>
+                    <div class="translation-text">식당에서 먹을 때는 보통 뚝배기라고 불리는 돌솥에 끓여줘서 마지막까지 따뜻하게 먹을 수 있어.</div>
+                </div>
+
+                <div class="sentence-card">
+                    <div class="sentence-header">
+                        <span class="play-sentence-btn" data-start="35.130" data-end="42.590">▶️</span>
+                        <div class="sentence-text">
+                            <span class="chunk" data-start="35.130" data-end="37.620">My favorite restaurant, Sorojeok,</span> <span class="chunk" data-start="37.620" data-end="38.690">sells kimchi jjigae</span> <span class="chunk" data-start="38.690" data-end="40.380">for only seven thousand won,</span> <span class="chunk" data-start="40.380" data-end="40.870">which is like</span> <span class="chunk" data-start="40.870" data-end="42.590">five dollars.</span>
+                        </div>
+                    </div>
+                    <div class="ipa-text">/maɪ feɪvərɪt rɛstərənt, Sorojeok, sɛlz kɪmtʃi dʒiɡeɪ fɔːr oʊnli sɛvən θaʊzənd wʌn, wɪtʃ ɪz laɪk faɪv dɑːlərz/</div>
+                    <div class="translation-text">내가 가장 좋아하는 식당인 소로적에서는 김치찌개를 7천 원에 파는데, 이건 대략 5달러 정도야.</div>
+                </div>
+
+                <div class="sentence-card">
+                    <div class="sentence-header">
+                        <span class="play-sentence-btn" data-start="42.590" data-end="48.190">▶️</span>
+                        <div class="sentence-text">
+                            <span class="chunk" data-start="42.590" data-end="43.280">My mom used to</span> <span class="chunk" data-start="43.280" data-end="44.100">make it all the time</span> <span class="chunk" data-start="44.100" data-end="45.090">when I was little,</span> <span class="chunk" data-start="45.090" data-end="45.720">so the smell</span> <span class="chunk" data-start="45.720" data-end="48.190">always reminds me of my childhood.</span>
+                        </div>
+                    </div>
+                    <div class="ipa-text">/maɪ mɑːm juːst tuː meɪk ɪt ɔːl ðə taɪm wɛn aɪ wʌz lɪtəl, soʊ ðə smɛl ɔːlweɪz rɪmaɪndz miː ʌv maɪ tʃaɪldhʊd/</div>
+                    <div class="translation-text">어렸을 때 엄마가 항상 끓여주셔서 그 냄새를 맡으면 항상 어린 시절이 생각나.</div>
+                </div>
+
+                <div class="sentence-card">
+                    <div class="sentence-header">
+                        <span class="play-sentence-btn" data-start="48.190" data-end="50.600">▶️</span>
+                        <div class="sentence-text"><span class="chunk" data-start="48.190" data-end="49.100">I crave it at least</span> <span class="chunk" data-start="49.100" data-end="50.600">once a week.</span></div>
+                    </div>
+                    <div class="ipa-text">/aɪ kreɪv ɪt æt liːst wʌns ə wiːk/</div>
+                    <div class="translation-text">나는 적어도 일주일에 한 번은 이게 먹고 싶어.</div>
+                </div>
+
+            </div>
         </div>
     </div>
 
     <script>
-        /* 1. 모바일 메뉴 제어 */
         function toggleMobileMenu() {
             document.getElementById('sidebar').classList.toggle('active');
             document.getElementById('overlay').classList.toggle('active');
         }
 
-        /* 2. 사이드바 메뉴 자동 생성 */
         const sidebar = document.getElementById('sidebar-menu');
         for (let i = 1; i <= 12; i++) {
             const wkStr = i < 10 ? `0${i}` : i;
@@ -157,11 +260,10 @@
         }
         function toggleMenu(id) { document.getElementById(id).classList.toggle('expanded'); }
 
-        /* 3. 오디오 정밀 제어 (Koboogy Logic: 0.17s / 0.19s) */
         const audio = document.getElementById('myAudio');
         const chunks = document.querySelectorAll('.chunk');
-        const playSentenceBtns = document.querySelectorAll('.play-sentence-btn');
-        let stopLimit = 0;
+        const playBtns = document.querySelectorAll('.play-sentence-btn');
+        let stopT = 0;
 
         function setSpeed(s) {
             audio.playbackRate = s;
@@ -171,12 +273,12 @@
 
         function clearEff() {
             chunks.forEach(c => c.classList.remove('active'));
-            playSentenceBtns.forEach(b => b.classList.remove('active'));
+            playBtns.forEach(b => b.classList.remove('active'));
         }
 
         function playCore(start, end) {
-            const duration = end - start;
-            stopLimit = (duration <= 2.0) ? end : end - 0.19;
+            const dur = end - start;
+            stopT = (dur <= 2.0) ? end : end - 0.19;
             audio.currentTime = Math.max(0, start - 0.17); 
             audio.play();
         }
@@ -188,7 +290,7 @@
             });
         });
 
-        playSentenceBtns.forEach(b => {
+        playBtns.forEach(b => {
             b.addEventListener('click', () => {
                 clearEff(); b.classList.add('active');
                 b.closest('.sentence-card').querySelectorAll('.chunk').forEach(c => c.classList.add('active'));
@@ -197,8 +299,8 @@
         });
 
         audio.addEventListener('timeupdate', () => {
-            if (stopLimit && audio.currentTime >= stopLimit) {
-                audio.pause(); stopLimit = 0; clearEff();
+            if (stopT && audio.currentTime >= stopT) {
+                audio.pause(); stopT = 0; clearEff();
             }
         });
     </script>
