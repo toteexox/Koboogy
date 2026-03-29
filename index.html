@@ -23,7 +23,7 @@
         .sub-item { padding: 8px 0; font-size: 14px; color: #666; cursor: pointer; transition: all 0.2s; }
         .sub-item.active { color: var(--primary-color); font-weight: bold; }
 
-        /* 모바일 전용 메뉴 버튼 (☰) */
+        /* 모바일 ☰ 버튼 */
         .mobile-menu-btn { display: none; position: fixed; bottom: 25px; right: 25px; width: 55px; height: 55px; background: var(--primary-color); color: white; border-radius: 50%; border: none; font-size: 26px; box-shadow: 0 4px 12px rgba(0,0,0,0.25); z-index: 1001; cursor: pointer; }
 
         /* 메인 콘텐츠 영역 */
@@ -31,14 +31,13 @@
         .scroll-container { flex: 1; overflow-y: auto; padding: 20px; }
         .container { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; width: 100%; }
 
-        /* 상단 고정 오디오 */
+        /* 상단 고정 오디오 & 배속 버튼 */
         .audio-sticky { position: sticky; top: 0; background: #fff; padding: 15px; border-bottom: 1px solid var(--border-color); box-shadow: 0 2px 10px rgba(0,0,0,0.05); z-index: 99; }
         audio { width: 100%; height: 40px; }
         .speed-controls { margin-bottom: 10px; display: flex; gap: 6px; }
         .speed-btn { border: 1.5px solid var(--primary-color); background: white; color: var(--primary-color); padding: 4px 12px; border-radius: 15px; cursor: pointer; font-size: 13px; font-weight: bold; }
         .speed-btn.active { background: var(--primary-color); color: white; }
 
-        /* 섹션 가시성 제어 */
         .content-section { display: none; }
         .content-section.active { display: block; }
 
@@ -67,7 +66,7 @@
         .chunk { cursor: pointer; transition: background 0.1s; border-radius: 3px; padding: 0 2px; }
         .chunk.active { background-color: #d2e3fc; color: #174ea6; }
 
-        /* 나레이션 정렬 */
+        /* 나레이션 가운데 정렬 */
         .narration { align-self: center; font-size: 14px; color: #999; margin: 10px 0 20px; font-style: italic; text-align: center; width: 100%; }
 
         @media (max-width: 768px) {
@@ -77,7 +76,6 @@
             .sidebar-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); z-index: 998; }
             .sidebar-overlay.active { display: block; }
             .scroll-container { padding: 15px; }
-            .bubble { max-width: 85%; }
         }
     </style>
 </head>
@@ -96,10 +94,10 @@
         <div class="audio-sticky">
             <div class="container">
                 <div class="speed-controls">
-                    <button class="speed-btn" onclick="setSpeed(0.3)">x0.3</button>
-                    <button class="speed-btn" onclick="setSpeed(0.5)">x0.5</button>
-                    <button class="speed-btn" onclick="setSpeed(0.7)">x0.7</button>
-                    <button class="speed-btn active" onclick="setSpeed(1.0)">x1.0</button>
+                    <button class="speed-btn" onclick="setSpeed(0.3, this)">x0.3</button>
+                    <button class="speed-btn" onclick="setSpeed(0.5, this)">x0.5</button>
+                    <button class="speed-btn" onclick="setSpeed(0.7, this)">x0.7</button>
+                    <button class="speed-btn active" onclick="setSpeed(1.0, this)">x1.0</button>
                 </div>
                 <audio id="myAudio" controls><source id="audioSource" src="audio/9-1 - My Story.wav" type="audio/wav"></audio>
             </div>
@@ -124,32 +122,27 @@
                     <div class="sentence-card">
                         <div class="sentence-header"><span class="play-sentence-btn" data-audio="audio/9-1 - My Story.wav" data-start="10.030" data-end="14.080">▶️</span>
                         <div class="sentence-text"><span class="chunk" data-audio="audio/9-1 - My Story.wav" data-start="10.030" data-end="10.520">It's hard to</span> <span class="chunk" data-audio="audio/9-1 - My Story.wav" data-start="10.520" data-end="11.640">choose just one,</span> <span class="chunk" data-audio="audio/9-1 - My Story.wav" data-start="11.640" data-end="12.330">but I think I would</span> <span class="chunk" data-audio="audio/9-1 - My Story.wav" data-start="12.330" data-end="14.080">go with kimchi jjigae.</span></div></div>
-                        <div class="ipa-text">/ɪts hɑːrd tuː tʃuːz dʒʌst wʌn, bʌt aɪ θɪŋk aɪ wʊd ɡoʊ wɪð kɪmtʃi dʒiɡeɪ/</div>
                         <div class="translation-text">딱 하나만 고르기는 어렵지만, 김치찌개로 할게.</div>
                     </div>
                     <div class="sentence-card">
                         <div class="sentence-header"><span class="play-sentence-btn" data-audio="audio/9-1 - My Story.wav" data-start="14.080" data-end="17.760">▶️</span>
                         <div class="sentence-text"><span class="chunk" data-audio="audio/9-1 - My Story.wav" data-start="14.080" data-end="15.610">It's a hot and savory stew</span> <span class="chunk" data-audio="audio/9-1 - My Story.wav" data-start="15.610" data-end="17.760">that has a distinct smell.</span></div></div>
-                        <div class="translation-text">이건 맵고 맛있는 찌개인데 독특한 냄새가 나.</div>
                     </div>
                     <div class="sentence-card">
                         <div class="sentence-header"><span class="play-sentence-btn" data-audio="audio/9-1 - My Story.wav" data-start="17.760" data-end="21.180">▶️</span>
                         <div class="sentence-text"><span class="chunk" data-audio="audio/9-1 - My Story.wav" data-start="17.760" data-end="18.030">You can</span> <span class="chunk" data-audio="audio/9-1 - My Story.wav" data-start="18.030" data-end="19.450">tell someone is cooking jjigae</span> <span class="chunk" data-audio="audio/9-1 - My Story.wav" data-start="19.450" data-end="21.180">from miles away.</span></div></div>
-                        <div class="translation-text">멀리서도 누군가 찌개를 끓이고 있다는 걸 알 수 있어.</div>
                     </div>
                     <div class="sentence-card">
                         <div class="sentence-header"><span class="play-sentence-btn" data-audio="audio/9-1 - My Story.wav" data-start="21.180" data-end="23.870">▶️</span>
                         <div class="sentence-text"><span class="chunk" data-audio="audio/9-1 - My Story.wav" data-start="21.180" data-end="21.970">The great thing is</span> <span class="chunk" data-audio="audio/9-1 - My Story.wav" data-start="21.970" data-end="22.330">that it's</span> <span class="chunk" data-audio="audio/9-1 - My Story.wav" data-start="22.330" data-end="23.870">easy to make.</span></div></div>
-                        <div class="translation-text">좋은 점은 만들기가 쉽다는 거야.</div>
                     </div>
                     <div class="sentence-card">
                         <div class="sentence-header"><span class="play-sentence-btn" data-audio="audio/9-1 - My Story.wav" data-start="23.870" data-end="28.230">▶️</span>
                         <div class="sentence-text"><span class="chunk" data-audio="audio/9-1 - My Story.wav" data-start="23.870" data-end="24.650">As long as you have</span> <span class="chunk" data-audio="audio/9-1 - My Story.wav" data-start="24.650" data-end="25.450">good kimchi,</span> <span class="chunk" data-audio="audio/9-1 - My Story.wav" data-start="25.450" data-end="26.130">it usually</span> <span class="chunk" data-audio="audio/9-1 - My Story.wav" data-start="26.130" data-end="28.230">turns out great.</span></div></div>
-                        <div class="translation-text">맛있는 김치만 있다면 보통 아주 잘 만들어져.</div>
                     </div>
                     <div class="sentence-card">
                         <div class="sentence-header"><span class="play-sentence-btn" data-audio="audio/9-1 - My Story.wav" data-start="28.230" data-end="35.130">▶️</span>
-                        <div class="sentence-text"><span class="chunk" data-audio="audio/9-1 - My Story.wav" data-start="28.230" data-end="28.500">When you</span> <span class="chunk" data-audio="audio/9-1 - My Story.wav" data-start="28.500" data-end="29.820">eat it at a restaurant,</span> <span class="chunk" data-audio="audio/9-1 - My Story.wav" data-start="29.820" data-end="30.710">they usually cook it</span> <span class="chunk" data-audio="audio/9-1 - My Story.wav" data-start="30.710" data-end="31.540">in a stone bowl</span> <span class="chunk" data-audio="audio/9-1 - My Story.wav" data-start="31.540" data-end="32.830">called a tteokbaegi,</span> <span class="chunk" data-audio="audio/9-1 - My Story.wav" data-start="32.830" data-end="33.410">which keeps</span> <span class="chunk" data-audio="audio/9-1 - My Story.wav" data-start="33.410" data-end="35.130">it hot until the last bite.</span></div></div>
+                        <div class="sentence-text"><span class="chunk" data-audio="audio/9-1 - My Story.wav" data-start="28.230" data-end="28.500">When you</span> <span class="chunk" data-audio="audio/9-1 - My Story.wav" data-start="28.500" data-end="29.820">eat it at a restaurant,</span> <span class="chunk" data-audio="audio/9-1 - My Story.wav" data-start="29.820" data-end="30.710">they usually cook it</span> <span class="chunk" data-audio="audio/9-1 - My Story.wav" data-start="30.710" data-end="31.540">in a stone bowl</span> <span class="chunk" data-audio="audio/9-1 - My Story.wav" data-start="31.540" data-end="32.830">called a tteokbaegi,</span> <span class="chunk" data-audio="audio/9-1 - My Story.wav" data-start="32.830" data-end="33.410">which keeps it</span> <span class="chunk" data-audio="audio/9-1 - My Story.wav" data-start="33.410" data-end="35.130">hot until the last bite.</span></div></div>
                     </div>
                     <div class="sentence-card">
                         <div class="sentence-header"><span class="play-sentence-btn" data-audio="audio/9-1 - My Story.wav" data-start="35.130" data-end="42.590">▶️</span>
@@ -206,7 +199,6 @@
                         <div class="speaker-badge badge-a" data-audio="audio/9-3 - Real Conversations.wav" data-start="13.830" data-end="16.600">A</div>
                         <div class="bubble bubble-a">
                             <div class="sentence-text"><span class="chunk" data-audio="audio/9-3 - Real Conversations.wav" data-start="13.830" data-end="14.690">That sounds great.</span> <span class="chunk" data-audio="audio/9-3 - Real Conversations.wav" data-start="14.690" data-end="16.600">Let's do it.</span></div>
-                            <div class="translation-text">좋지. 거기 가자.</div>
                         </div>
                     </div>
 
@@ -224,7 +216,6 @@
                         <div class="speaker-badge badge-a" data-audio="audio/9-3 - Real Conversations.wav" data-start="20.840" data-end="23.680">A</div>
                         <div class="bubble bubble-a">
                             <div class="sentence-text"><span class="chunk" data-audio="audio/9-3 - Real Conversations.wav" data-start="20.840" data-end="21.820">Sure. The sundubu jjigae</span> <span class="chunk" data-audio="audio/9-3 - Real Conversations.wav" data-start="21.820" data-end="23.680">looks really good too.</span></div>
-                            <div class="translation-text">좋아. 순두부찌개도 맛있어 보이네.</div>
                         </div>
                     </div>
 
@@ -232,7 +223,6 @@
                         <div class="speaker-badge badge-b" data-audio="audio/9-3 - Real Conversations.wav" data-start="23.680" data-end="26.400">B</div>
                         <div class="bubble bubble-b">
                             <div class="sentence-text"><span class="chunk" data-audio="audio/9-3 - Real Conversations.wav" data-start="23.680" data-end="24.960">We can do that.</span> <span class="chunk" data-audio="audio/9-3 - Real Conversations.wav" data-start="24.960" data-end="26.400">It's a bit spicy though.</span></div>
-                            <div class="translation-text">그것도 괜찮지. 근데 조금 매운데...</div>
                         </div>
                     </div>
 
@@ -240,7 +230,6 @@
                         <div class="speaker-badge badge-b" data-audio="audio/9-3 - Real Conversations.wav" data-start="26.400" data-end="28.830">B</div>
                         <div class="bubble bubble-b">
                             <div class="sentence-text"><span class="chunk" data-audio="audio/9-3 - Real Conversations.wav" data-start="26.400" data-end="26.830">Can you</span> <span class="chunk" data-audio="audio/9-3 - Real Conversations.wav" data-start="26.830" data-end="28.830">handle spicy food?</span></div>
-                            <div class="translation-text">매운 거 괜찮아?</div>
                         </div>
                     </div>
 
@@ -248,7 +237,6 @@
                         <div class="speaker-badge badge-a" data-audio="audio/9-3 - Real Conversations.wav" data-start="28.830" data-end="32.060">A</div>
                         <div class="bubble bubble-a">
                             <div class="sentence-text"><span class="chunk" data-audio="audio/9-3 - Real Conversations.wav" data-start="28.830" data-end="29.870">I used to not,</span> <span class="chunk" data-audio="audio/9-3 - Real Conversations.wav" data-start="29.870" data-end="32.060">but it's growing on me.</span></div>
-                            <div class="translation-text">예전엔 못 먹었는데, 요즘 점점 좋아지기 시작했어.</div>
                         </div>
                     </div>
 
@@ -258,7 +246,6 @@
                         <div class="speaker-badge badge-b" data-audio="audio/9-3 - Real Conversations.wav" data-start="32.060" data-end="34.880">B</div>
                         <div class="bubble bubble-b">
                             <div class="sentence-text"><span class="chunk" data-audio="audio/9-3 - Real Conversations.wav" data-start="32.060" data-end="32.830">Excuse me,</span> <span class="chunk" data-audio="audio/9-3 - Real Conversations.wav" data-start="32.830" data-end="33.370">I think we're</span> <span class="chunk" data-audio="audio/9-3 - Real Conversations.wav" data-start="33.370" data-end="34.880">ready to order.</span></div>
-                            <div class="translation-text">저기요, 주문할게요.</div>
                         </div>
                     </div>
 
@@ -266,7 +253,6 @@
                         <div class="speaker-badge badge-b" data-audio="audio/9-3 - Real Conversations.wav" data-start="34.880" data-end="39.710">B</div>
                         <div class="bubble bubble-b">
                             <div class="sentence-text"><span class="chunk" data-audio="audio/9-3 - Real Conversations.wav" data-start="34.880" data-end="35.320">We'll get</span> <span class="chunk" data-audio="audio/9-3 - Real Conversations.wav" data-start="35.320" data-end="36.460">two samgyeopsal,</span> <span class="chunk" data-audio="audio/9-3 - Real Conversations.wav" data-start="36.460" data-end="37.570">one gyerantim,</span> <span class="chunk" data-audio="audio/9-3 - Real Conversations.wav" data-start="37.570" data-end="39.710">and one sundubu jjigae.</span></div>
-                            <div class="translation-text">삼겹살 2인분, 계란찜 하나, 순두부찌개 하나 할게요.</div>
                         </div>
                     </div>
 
@@ -274,7 +260,6 @@
                         <div class="speaker-badge badge-c" data-audio="audio/9-3 - Real Conversations.wav" data-start="39.710" data-end="41.400">C</div>
                         <div class="bubble bubble-c">
                             <div class="sentence-text"><span class="chunk" data-audio="audio/9-3 - Real Conversations.wav" data-start="39.710" data-end="41.400">Anything to drink?</span></div>
-                            <div class="translation-text">마실 건 뭘로 드릴까요?</div>
                         </div>
                     </div>
 
@@ -282,7 +267,6 @@
                         <div class="speaker-badge badge-b" data-audio="audio/9-3 - Real Conversations.wav" data-start="41.400" data-end="44.310">B</div>
                         <div class="bubble bubble-b">
                             <div class="sentence-text"><span class="chunk" data-audio="audio/9-3 - Real Conversations.wav" data-start="41.400" data-end="42.630">Just waters for now.</span> <span class="chunk" data-audio="audio/9-3 - Real Conversations.wav" data-start="42.630" data-end="44.310">Thank you.</span></div>
-                            <div class="translation-text">일단 그냥 물 주세요. 감사합니다.</div>
                         </div>
                     </div>
 
@@ -292,7 +276,6 @@
                         <div class="speaker-badge badge-a" data-audio="audio/9-3 - Real Conversations.wav" data-start="44.310" data-end="49.110">A</div>
                         <div class="bubble bubble-a">
                             <div class="sentence-text"><span class="chunk" data-audio="audio/9-3 - Real Conversations.wav" data-start="44.310" data-end="44.850">Wow,</span> <span class="chunk" data-audio="audio/9-3 - Real Conversations.wav" data-start="44.850" data-end="45.960">the gyerantim is even</span> <span class="chunk" data-audio="audio/9-3 - Real Conversations.wav" data-start="45.960" data-end="49.110">better than I thought!</span></div>
-                            <div class="translation-text">와, 계란찜 생각했던 것보다 훨씬 맛있다!</div>
                         </div>
                     </div>
                 </div>
@@ -302,9 +285,22 @@
     </div>
 
     <script>
+        /* [픽스] 보정값 (PC: 0.1s / Mobile: 0.04s) */
         const isMobile = window.innerWidth <= 768;
         const START_OFFSET = isMobile ? 0.04 : 0.1;
         const END_OFFSET = isMobile ? 0.04 : 0.1;
+
+        let currentPlaybackRate = 1.0;
+        const audio = document.getElementById('myAudio');
+        let stopT = 0;
+
+        /* [핵심] 배속 적용 함수 수정 */
+        function setSpeed(s, el) {
+            currentPlaybackRate = s;
+            audio.playbackRate = s;
+            document.querySelectorAll('.speed-btn').forEach(b => b.classList.remove('active'));
+            el.classList.add('active');
+        }
 
         function toggleMobileMenu() {
             document.getElementById('sidebar').classList.toggle('active');
@@ -338,22 +334,22 @@
                 </div>`);
         }
 
-        const audio = document.getElementById('myAudio');
-        let stopT = 0;
-
-        function setSpeed(s) {
-            audio.playbackRate = s;
-            document.querySelectorAll('.speed-btn').forEach(b => b.classList.remove('active'));
-            event.target.classList.add('active');
+        function clearEff() {
+            document.querySelectorAll('.chunk, .play-sentence-btn, .speaker-badge').forEach(el => el.classList.remove('active'));
         }
 
-        function clearEff() { document.querySelectorAll('.chunk, .play-sentence-btn, .speaker-badge').forEach(el => el.classList.remove('active')); }
-
         function playCore(audioPath, start, end) {
-            if (!audio.src.includes(audioPath)) { audio.src = audioPath; audio.load(); }
+            if (!audio.src.includes(audioPath)) {
+                audio.src = audioPath;
+                audio.load();
+                // 오디오 로드 직후 배속을 재설정하여 초기화 방지
+                audio.playbackRate = currentPlaybackRate;
+            }
             const dur = end - start;
             stopT = (dur <= 2.0) ? end : end - END_OFFSET;
             audio.currentTime = Math.max(0, start - START_OFFSET); 
+            // 재생 직전에도 한 번 더 배속 확인
+            audio.playbackRate = currentPlaybackRate;
             audio.play();
         }
 
@@ -371,7 +367,11 @@
             }
         });
 
-        audio.addEventListener('timeupdate', () => { if (stopT && audio.currentTime >= stopT) { audio.pause(); stopT = 0; clearEff(); } });
+        audio.addEventListener('timeupdate', () => {
+            if (stopT && audio.currentTime >= stopT) {
+                audio.pause(); stopT = 0; clearEff();
+            }
+        });
     </script>
 </body>
 </html>
