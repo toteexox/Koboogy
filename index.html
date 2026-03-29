@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Koboogy - Device Optimized</title>
+    <title>Koboogy - Pronunciation Master</title>
     <style>
         :root { --primary-color: #4285f4; --bg-gray: #f8f9fa; --border-color: #eee; }
         body { font-family: 'Malgun Gothic', sans-serif; margin: 0; display: flex; height: 100vh; background-color: #fff; overflow: hidden; color: #333; }
@@ -20,7 +20,7 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.2); z-index: 1001;
         }
 
-        /* 로고 영역 */
+        /* Koboogy 로고 영역 */
         .brand-logo { padding: 10px 15px 25px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid #f9f9f9; margin-bottom: 20px; }
         .brand-logo img { width: 45px; height: auto; border-radius: 6px; }
         .brand-name { font-size: 22px; font-weight: 800; }
@@ -51,7 +51,7 @@
         .chunk { cursor: pointer; transition: background 0.1s; border-radius: 3px; padding: 0 2px; }
         .chunk.active { background-color: #d2e3fc; color: #174ea6; }
 
-        /* 메뉴 스타일 */
+        /* 내비게이션 메뉴 */
         .menu-container { margin-bottom: 5px; }
         .menu-item { cursor: pointer; padding: 10px; display: flex; align-items: center; font-size: 16px; font-weight: 600; border-radius: 8px; }
         .triangle { width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 7px solid #555; margin-right: 12px; transform: rotate(-90deg); transition: transform 0.2s; }
@@ -61,7 +61,7 @@
         .sub-item { padding: 8px 0; font-size: 14px; color: #666; cursor: pointer; }
         .sub-item.active { color: var(--primary-color); font-weight: bold; }
 
-        /* 모바일 대응 */
+        /* 모바일 대응 (768px 이하) */
         @media (max-width: 768px) {
             .sidebar { position: fixed; left: 0; top: 0; height: 100%; z-index: 1000; transform: translateX(-100%); box-shadow: 5px 0 15px rgba(0,0,0,0.1); }
             .sidebar.active { transform: translateX(0); }
@@ -108,7 +108,9 @@
                 <div class="sentence-card">
                     <div class="sentence-header">
                         <span class="play-sentence-btn" data-start="1.950" data-end="7.350">▶️</span>
-                        <div class="sentence-text"><span class="chunk" data-start="1.950" data-end="7.350">Chapter nine: My Favorite Food My Story</span></div>
+                        <div class="sentence-text">
+                            <span class="chunk" data-start="1.950" data-end="7.350">Chapter nine: My Favorite Food My Story</span>
+                        </div>
                     </div>
                 </div>
 
@@ -224,10 +226,10 @@
     </div>
 
     <script>
-        /* [핵심] 기기 감지 및 보정값 설정 */
+        /* [중요] 모바일 보정값 0.05초로 업데이트 */
         const isMobile = window.innerWidth <= 768;
-        const START_OFFSET = isMobile ? 0.02 : 0.17;
-        const END_OFFSET = isMobile ? 0.02 : 0.19;
+        const START_OFFSET = isMobile ? 0.05 : 0.17;
+        const END_OFFSET = isMobile ? 0.05 : 0.19;
 
         function toggleMobileMenu() {
             document.getElementById('sidebar').classList.toggle('active');
@@ -238,15 +240,14 @@
         for (let i = 1; i <= 12; i++) {
             const wkStr = i < 10 ? `0${i}` : i;
             const isCurrent = i === 9;
-            const menuHtml = `
+            sidebar.insertAdjacentHTML('beforeend', `
                 <div class="menu-container ${isCurrent ? 'expanded' : ''}" id="wk${wkStr}">
                     <div class="menu-item" onclick="toggleMenu('wk${wkStr}')"><div class="triangle"></div>WK ${wkStr}</div>
                     <div class="sub-menu">
                         <div class="sub-item ${isCurrent ? 'active' : ''}" onclick="toggleMobileMenu()">My story</div>
                         <div class="sub-item" onclick="toggleMobileMenu()">Real Conversation</div>
                     </div>
-                </div>`;
-            sidebar.insertAdjacentHTML('beforeend', menuHtml);
+                </div>`);
         }
         function toggleMenu(id) { document.getElementById(id).classList.toggle('expanded'); }
 
@@ -268,9 +269,9 @@
 
         function playCore(start, end) {
             const duration = end - start;
-            // 2초 이하 문장은 끝부분 보정 제외, 그 외에는 기기별 END_OFFSET 적용
+            // 2초 이하 문장은 끝부분 보정 제외, 그 외에는 기기별 END_OFFSET(모바일: 0.05) 적용
             stopLimit = (duration <= 2.0) ? end : end - END_OFFSET;
-            // 기기별 START_OFFSET 적용하여 재생 시작
+            // 기기별 START_OFFSET(모바일: 0.05) 적용하여 재생 시작
             audio.currentTime = Math.max(0, start - START_OFFSET); 
             audio.play();
         }
