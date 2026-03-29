@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soritune Study Tool (Speaker Labels Removed)</title>
+    <style>
+        body { font-family: 'Malgun Gothic', sans-serif; padding: 20px; background-color: #f8f9fa; color: #333; }
+        .container { max-width: 800px; margin: 0 auto; }
+        
+        /* 상단 고정 오디오 플레이어 */
+        .audio-sticky { position: sticky; top: 0; background: #fff; padding: 15px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-bottom: 30px; z-index: 100; }
+        audio { width: 100%; }
+
+        /* 속도 조절 버튼 스타일 */
+        .speed-controls { margin-bottom: 15px; display: flex; gap: 10px; }
+        .speed-btn {
+            border: 1.5px solid #4285f4;
+            background: white;
+            color: #4285f4;
+            padding: 5px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        .speed-btn.active { background: #4285f4; color: white; }
+
+        /* 문장 카드 스타일 */
+        .sentence-card { background: white; padding: 25px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        
+        /* 본문 텍스트 (볼드) 및 재생 버튼 정렬 */
+        .sentence-header { display: flex; align-items: flex-start; margin-bottom: 12px; gap: 10px; }
+        .play-sentence-btn {
+            cursor: pointer;
+            font-size: 20px;
+            color: #ccc;
+            margin-top: 3px;
+            transition: color 0.2s;
+            user-select: none; /* 텍스트 선택 방지 */
+        }
+        .play-sentence-btn:hover { color: #4285f4; }
+        .play-sentence-btn.active { color: #174ea6; }
+
+        .sentence-text { font-size: 22px; font-weight: 700; line-height: 1.4; flex: 1; }
+        
+        /* IPA 발음기호 */
+        .ipa-text { font-size: 18px; color: #444; margin-bottom: 8px; font-family: 'Arial', sans-serif; padding-left: 30px; }
+        
+        /* 한국어 해석 (그레이) */
+        .translation-text { font-size: 16px; color: #888; padding-left: 30px; }
+
+        /* 클릭 가능한 청크 */
+        .chunk { cursor: pointer; transition: background 0.2s; border-radius: 4px; padding: 0 2px; }
+        .chunk:hover { background-color: #f0f4ff; color: #4285f4; }
+        .chunk.active { background-color: #d2e3fc; color: #174ea6; }
+
+        /* speaker-tag 스타일은 더 이상 사용되지 않으므로 제거했습니다. */
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="audio-sticky">
+        <div class="speed-controls">
+            <button class="speed-btn" onclick="setSpeed(0.3)">x0.3</button>
+            <button class="speed-btn" onclick="setSpeed(0.5)">x0.5</button>
+            <button class="speed-btn" onclick="setSpeed(0.7)">x0.7</button>
+            <button class="speed-btn active" id="default-speed" onclick="setSpeed(1.0)">x1.0</button>
+        </div>
+        <audio id="myAudio" controls>
+            <source src="audio/9-1 - My Story.wav" type="audio/wav">
+        </audio>
+    </div>
+
+    <div class="sentence-card">
+        <div class="sentence-header">
+            <span class="play-sentence-btn" data-start="1.950" data-end="7.350" title="문장 전체 재생">▶️</span>
+            <div class="sentence-text">
+                <span class="chunk" data-start="1.950" data-end="7.350">Chapter nine: My Favorite Food My Story</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="sentence-card">
+        <div class="sentence-header">
+            <span class="play-sentence-btn" data-start="7.350" data-end="10.030" title="문장 전체 재생">▶️</span>
+            <div class="sentence-text">
+                <span class="chunk" data-start="7.350" data-end="7.720">What's your</span> <span class="chunk" data-start="7.720" data-end="10.030">go-to Korean dish?</span>
+            </div>
+        </div>
+        <div class="ipa-text">/wʌts jɔːr ɡoʊ-tuː kə-ri-ən dɪʃ/</div>
+        <div class="translation-text">네가 제일 자주 먹는 한국 음식이 뭐야?</div>
+    </div>
+
+    <div class="sentence-card">
+        <div class="sentence-header">
+            <span class="play-sentence-btn" data-start="10.030" data-end="14.080" title="문장 전체 재생">▶️</span>
+            <div class="sentence-text">
+                <span class="chunk" data-start="10.030" data-end="10.520">It's hard to</span> <span class="chunk" data-start="10.520" data-end="11.640">choose just one,</span> <span class="chunk" data-start="11.640" data-end="12.330">but I think I would</span> <span class="chunk" data-start="12.330" data-end="14.080">go with kimchi jjigae.</span>
+            </div>
+        </div>
+        <div class="ipa-text">/ɪts hɑːrd tuː tʃuːz dʒʌst wʌn, bʌt aɪ θɪŋk aɪ wʊd ɡoʊ wɪð ˈkɪmtʃi dʒiˈɡeɪ/</div>
+        <div class="translation-text">딱 하나만 고르기는 어렵지만, 김치찌개로 할게.</div>
+    </div>
+
+    <div class="sentence-card">
+        <div class="sentence-header">
+            <span class="play-sentence-btn" data-start="14.080" data-end="17.760" title="문장 전체 재생">▶️</span>
+            <div class="sentence-text">
+                <span class="chunk" data-start="14.080" data-end="15.610">It's a hot and savory stew</span> <span class="chunk" data-start="15.610" data-end="17.760">that has a distinct smell.</span>
+            </div>
+        </div>
+        <div class="ipa-text">/ɪts ə hɑːt ænd ˈseɪvəri stuː ðæt hæz ə dɪˈstɪŋkt smɛl/</div>
+        <div class="translation-text">이건 맵고 맛있는 찌개인데 독특한 냄새가 나.</div>
+    </div>
+
+    <div class="sentence-card">
+        <div class="sentence-header">
+            <span class="play-sentence-btn" data-start="17.760" data-end="21.180" title="문장 전체 재생">▶️</span>
+            <div class="sentence-text">
+                <span class="chunk" data-start="17.760" data-end="18.030">You can</span> <span class="chunk" data-start="18.030" data-end="19.450">tell someone is cooking jjigae</span> <span class="chunk" data-start="19.450" data-end="21.180">from miles away.</span>
+            </div>
+        </div>
+        <div class="ipa-text">/juː kæn tɛl ˈsʌmwʌn ɪz ˈkʊkɪŋ dʒiˈɡeɪ frəm maɪlz əˈweɪ/</div>
+        <div class="translation-text">멀리서도 누군가 찌개를 끓이고 있다는 걸 알 수 있어.</div>
+    </div>
+
+    <div class="sentence-card">
+        <div class="sentence-header">
+            <span class="play-sentence-btn" data-start="21.180" data-end="23.870" title="문장 전체 재생">▶️</span>
+            <div class="sentence-text">
+                <span class="chunk" data-start="21.180" data-end="21.970">The great thing is</span> <span class="chunk" data-start="21.970" data-end="22.330">that it's</span> <span class="chunk" data-start="22.330" data-end="23.870">easy to make.</span>
+            </div>
+        </div>
+        <div class="ipa-text">/ðə ɡreɪt θɪŋ ɪz ðæt ɪts ˈiːzi tuː meɪk/</div>
+        <div class="translation-text">좋은 점은 만들기가 쉽다는 거야.</div>
+    </div>
+
+    <div class="sentence-card">
+        <div class="sentence-header">
+            <span class="play-sentence-btn" data-start="23.870" data-end="28.230" title="문장 전체 재생">▶️</span>
+            <div class="sentence-text">
+                <span class="chunk" data-start="23.870" data-end="24.650">As long as you have</span> <span class="chunk" data-start="24.650" data-end="25.450">good kimchi,</span> <span class="chunk" data-start="25.450" data-end="26.130">it usually</span> <span class="chunk" data-start="26.130" data-end="28.230">turns out great.</span>
+            </div>
+        </div>
+        <div class="ipa-text">/æz lɔːŋ æz juː hæv ɡʊd ˈkɪmtʃi, ɪt ˈjuːʒuəli tɜːrnz aʊt ɡreɪt/</div>
+        <div class="translation-text">맛있는 김치만 있다면 보통 아주 잘 만들어져.</div>
+    </div>
+
+    <div class="sentence-card">
+        <div class="sentence-header">
+            <span class="play-sentence-btn" data-start="28.230" data-end="35.130" title="문장 전체 재생">▶️</span>
+            <div class="sentence-text">
+                <span class="chunk" data-start="28.230" data-end="28.500">When you</span> <span class="chunk" data-start="28.500" data-end="29.820">eat it at a restaurant,</span> <span class="chunk" data-start="29.820" data-end="30.710">they usually cook it</span> <span class="chunk" data-start="30.710" data-end="31.540">in a stone bowl</span> <span class="chunk" data-start="31.540" data-end="32.830">called a tteokbaegi,</span> <span class="chunk" data-start="32.830" data-end="33.410">which keeps it</span> <span class="chunk" data-start="33.410" data-end="35.130">hot until the last bite.</span>
+            </div>
+        </div>
+        <div class="ipa-text">/wɛn juː iːt ɪt æt ə ˈrɛstərənt, ðeɪ ˈjuːʒuəli kʊk ɪt ɪn ə stoʊn boʊl kɔːld ə tteokbaegi, wɪtʃ kiːps ɪt hɑːt ʌnˈtɪl ðə læst baɪt/</div>
+        <div class="translation-text">식당에서 먹을 때는 보통 뚝배기라고 불리는 돌솥에 끓여줘서 마지막까지 따뜻하게 먹을 수 있어.</div>
+    </div>
+
+    <div class="sentence-card">
+        <div class="sentence-header">
+            <span class="play-sentence-btn" data-start="35.130" data-end="42.590" title="문장 전체 재생">▶️</span>
+            <div class="sentence-text">
+                <span class="chunk" data-start="35.130" data-end="37.620">My favorite restaurant, Sorojeok,</span> <span class="chunk" data-start="37.620" data-end="38.690">sells kimchi jjigae</span> <span class="chunk" data-start="38.690" data-end="40.380">for only seven thousand won,</span> <span class="chunk" data-start="40.380" data-end="40.870">which is like</span> <span class="chunk" data-start="40.870" data-end="42.590">five dollars.</span>
+            </div>
+        </div>
+        <div class="ipa-text">/maɪ ˈfeɪvərɪt ˈrɛstərənt, Sorojeok, sɛlz ˈkɪmtʃi dʒiˈɡeɪ fɔːr ˈoʊnli ˈsɛvən ˈθaʊzənd wʌn, wɪtʃ ɪz laɪk faɪv ˈdɑːlərz/</div>
+        <div class="translation-text">내가 가장 좋아하는 식당인 소로적에서는 김치찌개를 7천 원에 파는데, 이건 대략 5달러 정도야.</div>
+    </div>
+
+    <div class="sentence-card">
+        <div class="sentence-header">
+            <span class="play-sentence-btn" data-start="42.590" data-end="48.190" title="문장 전체 재생">▶️</span>
+            <div class="sentence-text">
+                <span class="chunk" data-start="42.590" data-end="43.280">My mom used to</span> <span class="chunk" data-start="43.280" data-end="44.100">make it all the time</span> <span class="chunk" data-start="44.100" data-end="45.090">when I was little,</span> <span class="chunk" data-start="45.090" data-end="45.720">so the smell</span> <span class="chunk" data-start="45.720" data-end="48.190">always reminds me of my childhood.</span>
+            </div>
+        </div>
+        <div class="ipa-text">/maɪ mɑːm juːst tuː meɪk ɪt ɔːl ðə taɪm wɛn aɪ wʌz ˈlɪtəl, soʊ ðə smɛl ˈɔːlweɪz rɪˈmaɪndz miː ʌv maɪ ˈtʃaɪldhʊd/</div>
+        <div class="translation-text">어렸을 때 엄마가 항상 끓여주셔서 그 냄새를 맡으면 항상 어린 시절이 생각나.</div>
+    </div>
+
+    <div class="sentence-card">
+        <div class="sentence-header">
+            <span class="play-sentence-btn" data-start="48.190" data-end="50.600" title="문장 전체 재생">▶️</span>
+            <div class="sentence-text">
+                <span class="chunk" data-start="48.190" data-end="49.100">I crave it at least</span> <span class="chunk" data-start="49.100" data-end="50.600">once a week.</span>
+            </div>
+        </div>
+        <div class="ipa-text">/aɪ kreɪv ɪt æt liːst wʌns ə wiːk/</div>
+        <div class="translation-text">나는 적어도 일주일에 한 번은 이게 먹고 싶어.</div>
+    </div>
+</div>
+
+<script>
+    const audio = document.getElementById('myAudio');
+    const chunks = document.querySelectorAll('.chunk');
+    const playSentenceBtns = document.querySelectorAll('.play-sentence-btn');
+    let currentStopTime = 0;
+
+    // 배속 조절 함수
+    function setSpeed(speed) {
+        audio.playbackRate = speed;
+        document.querySelectorAll('.speed-btn').forEach(btn => btn.classList.remove('active'));
+        event.target.classList.add('active');
+    }
+
+    // 하이라이트 초기화 함수
+    function clearHighlights() {
+        chunks.forEach(c => c.classList.remove('active'));
+        playSentenceBtns.forEach(b => b.classList.remove('active'));
+    }
+
+    // 재생 정지 로직 (시작 0.17s / 2초 초과 종료 0.19s 적용)
+    function playSegment(start, end) {
+        const duration = end - start;
+
+        // 로직 적용: 재생 시간이 2초를 초과하는 경우에만 0.19초 앞당겨 정지
+        currentStopTime = (duration <= 2.0) ? end : end - 0.19;
+
+        // 시작 보정: 0.17초 앞당겨 재생
+        audio.currentTime = Math.max(0, start - 0.17); 
+        audio.play();
+    }
+
+    // [개별 청크 클릭] 재생
+    chunks.forEach(chunk => {
+        chunk.addEventListener('click', () => {
+            const start = parseFloat(chunk.getAttribute('data-start'));
+            const end = parseFloat(chunk.getAttribute('data-end'));
+
+            clearHighlights();
+            chunk.classList.add('active'); // 클릭한 청크만 하이라이트
+            playSegment(start, end);
+        });
+    });
+
+    // [전체 문장 재생 버튼 ▶️ 클릭] 재생
+    playSentenceBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const start = parseFloat(btn.getAttribute('data-start'));
+            const end = parseFloat(btn.getAttribute('data-end'));
+
+            clearHighlights();
+            btn.classList.add('active'); // ▶️ 버튼 색상 변경
+
+            // 해당 문장 카드 안의 모든 청크 하이라이트
+            const parentCard = btn.closest('.sentence-card');
+            parentCard.querySelectorAll('.chunk').forEach(c => c.classList.add('active'));
+
+            playSegment(start, end); // 전체 문장 구간 재생
+        });
+    });
+
+    audio.addEventListener('timeupdate', () => {
+        if (currentStopTime && audio.currentTime >= currentStopTime) {
+            audio.pause();
+            currentStopTime = 0;
+            clearHighlights();
+        }
+    });
+
+    // 오디오가 멈췄을 때 하이라이트 확실히 제거
+    audio.addEventListener('pause', clearHighlights);
+</script>
+
+</body>
+</html>
