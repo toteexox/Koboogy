@@ -18,6 +18,7 @@
         body { font-family: 'Inter', 'Malgun Gothic', sans-serif; margin: 0; display: flex; height: 100vh; overflow: hidden; background: var(--white); color: var(--text); }
         body.memo-mode-active .main-content { background-color: var(--memo-bg); }
 
+        /* 외우기 모드 시 버튼 그룹 숨김 */
         body.memo-mode-active #toggle-group { display: none; }
 
         .sidebar { width: 280px; border-right: 1px solid var(--border); overflow-y: auto; flex-shrink: 0; padding: 20px 10px; background: var(--white); transition: 0.3s; }
@@ -38,33 +39,34 @@
 
         .main-content { flex: 1; display: flex; flex-direction: column; background: var(--bg); position: relative; transition: background-color 0.4s; }
         .sticky-header { background: var(--white); padding: 15px 25px; border-bottom: 1px solid var(--border); }
-        
         .container { max-width: 70%; margin: 0 auto; width: 100%; display: flex; flex-direction: column; align-items: center; }
+        
         .ctrl-row { display: flex; justify-content: center; align-items: center; margin-bottom: 15px; gap: 15px; width: 100%; flex-wrap: wrap; }
         .btn-grp { display: flex; gap: 6px; align-items: center; justify-content: center; }
         .mobile-menu-btn { display: none; background: none; border: none; font-size: 24px; cursor: pointer; padding: 0; position: absolute; left: 20px; }
 
-        .btn { border: 1px solid var(--dull-gray); background: var(--white); color: var(--dull-gray); cursor: pointer; border-radius: 4px; padding: 5px 10px; font-size: 12px; font-weight: 600; font-family: 'Inter', sans-serif; transition: 0.2s; }
+        .btn { border: 1px solid var(--dull-gray); background: var(--white); color: var(--dull-gray); cursor: pointer; border-radius: 4px; padding: 5px 10px; font-size: 12px; font-weight: 600; font-family: 'Inter', sans-serif; height: 32px; transition: 0.2s; }
         .btn.active { background: var(--dull-blue) !important; color: var(--white) !important; border-color: var(--dull-blue) !important; }
 
-        .toggle-btn { border: 1px solid #dadce0; background: var(--gray-btn); color: var(--gray-text); border-radius: 6px; padding: 6px 12px; min-width: 50px; font-weight: 600; }
+        .toggle-btn { border: 1px solid #dadce0; background: var(--gray-btn); color: var(--gray-text); border-radius: 6px; padding: 6px 12px; min-width: 50px; font-weight: 600; height: 32px; }
         .toggle-btn.active { background: #bdc1c6 !important; color: #202124 !important; }
 
         audio { width: 100%; height: 40px; margin-bottom: 15px; }
 
-        /* 연습 바 레이아웃: 한 줄 유지 및 선택형 반복 횟수 */
-        .practice-bar { background: #fff; padding: 10px 15px; border-radius: 12px; display: flex; justify-content: center; align-items: center; gap: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); width: 100%; }
-        .switch-box { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: bold; white-space: nowrap; }
-        .switch { position: relative; width: 34px; height: 18px; display: inline-block; }
+        .practice-bar { background: #fff; padding: 10px 20px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 3px rgba(0,0,0,0.1); width: 100%; height: 50px; }
+        .left-controls { display: flex; align-items: center; gap: 15px; }
+        .right-controls { display: flex; align-items: center; }
+        
+        .switch-box { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: bold; white-space: nowrap; height: 32px; }
+        .switch { position: relative; width: 40px; height: 22px; display: inline-block; }
         .switch input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 18px; }
-        .slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 2px; bottom: 2px; background-color: white; transition: .4s; border-radius: 50%; }
-        input:checked + .slider:before { transform: translateX(16px); }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 22px; }
+        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider:before { transform: translateX(18px); }
         input#shadow-mode:checked + .slider { background-color: var(--primary); }
         input#memo-mode:checked + .slider { background-color: #ff9800; }
 
-        /* 드롭다운 스타일 */
-        #repeat-count { border: 1px solid #ddd; border-radius: 4px; padding: 2px 4px; font-size: 13px; font-family: 'Inter', sans-serif; cursor: pointer; outline: none; }
+        #repeat-count { border: 1px solid #ddd; border-radius: 4px; padding: 0 8px; font-size: 13px; font-family: 'Inter', sans-serif; cursor: pointer; height: 32px; background: #fff; }
 
         .scroll-area { flex: 1; overflow-y: auto; padding: 30px 0; }
         .content-wrap { max-width: 70%; margin: 0 auto; width: 100%; }
@@ -72,16 +74,19 @@
 
         .card { background: var(--white); padding: 10px 15px; border-radius: 12px; margin-bottom: 10px; display: flex; gap: 15px; border: 2px solid transparent; box-shadow: 0 1px 2px rgba(0,0,0,0.05); transition: 0.2s; cursor: pointer; }
         .card.active-play { border-color: #d2e3fc; background: #f8fbff; }
+        
         .play-btn { width: 28px; height: 28px; cursor: pointer; flex-shrink: 0; background-size: contain; background-repeat: no-repeat; margin-top: 4px; }
         .playing .play-btn { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234285f4'%3E%3Cpath d='M6 19h4V5H6v14zm8-14v14h4V5h-4z'/%3E%3C/svg%3E"); }
         .card:not(.playing) .play-btn { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%239aa0a6'%3E%3Cpath d='M8 5v14l11-7z'/%3E%3C/svg%3E"); }
 
         .text-content { flex: 1; display: flex; flex-direction: column; }
         .sentence-eng, .ipa-text { transition: opacity 0.3s; font-family: 'Inter', sans-serif; }
+        
         body.memo-mode-active .sentence-eng { opacity: 0; visibility: hidden; height: 0; margin: 0; overflow: hidden; order: 2; }
         body.memo-mode-active .ipa-text { display: none !important; }
         body.memo-mode-active .card.show-script .sentence-eng { opacity: 1; visibility: visible; height: auto; margin-bottom: 4px; order: 2; }
         body.memo-mode-active .trans-text { order: 1; color: var(--text); font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+
         body:not(.memo-mode-active) .sentence-eng { order: 1; font-size: 18px; font-weight: 700; line-height: 1.3; margin-bottom: 4px; }
         body:not(.memo-mode-active) .ipa-text { order: 2; color: #777; font-size: 14px; margin-bottom: 2px; }
         body:not(.memo-mode-active) .trans-text { order: 3; color: #888; font-size: 13px; }
@@ -102,14 +107,9 @@
             .sidebar { position: fixed; left: -280px; height: 100%; z-index: 1001; } 
             .sidebar.open { left: 0; } 
             .mobile-menu-btn { display: block; } 
-            .container, .content-wrap { max-width: 98%; }
-            .sticky-header { padding: 10px 5px; }
-            .practice-bar { gap: 8px; padding: 8px 5px; }
-            .switch-box { font-size: 11px; gap: 4px; }
-            .switch { width: 30px; height: 16px; }
-            .slider:before { height: 12px; width: 12px; }
-            input:checked + .slider:before { transform: translateX(14px); }
-            #repeat-count { font-size: 11px; padding: 1px 2px; }
+            .container, .content-wrap { max-width: 95%; }
+            .practice-bar { padding: 0 10px; height: 48px; }
+            .btn { height: 28px; padding: 0 8px; font-size: 11px; }
         }
     </style>
 </head>
@@ -136,24 +136,11 @@
                 </div>
                 <audio id="player" controls></audio>
                 <div class="practice-bar">
-                    <div class="switch-box">
-                        <span>연습</span>
-                        <label class="switch"><input type="checkbox" id="shadow-mode" onchange="isShadowing = this.checked; stopAll();"><span class="slider"></span></label>
+                    <div class="left-controls">
+                        <div class="switch-box"><span>연습</span><label class="switch"><input type="checkbox" id="shadow-mode" onchange="isShadowing = this.checked; stopAll();"><span class="slider"></span></label></div>
+                        <div class="switch-box"><span>반복</span><select id="repeat-count"><option value="1">1</option><option value="2">2</option><option value="3" selected>3</option><option value="4">4</option><option value="5">5</option></select></div>
                     </div>
-                    <div class="switch-box" style="border-left: 1px solid #eee; border-right: 1px solid #eee; padding: 0 8px;">
-                        <span>반복</span>
-                        <select id="repeat-count">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3" selected>3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                        </select>
-                    </div>
-                    <div class="switch-box">
-                        <span>외우기</span>
-                        <label class="switch"><input type="checkbox" id="memo-mode" onchange="toggleMemoMode(this.checked)"><span class="slider"></span></label>
-                    </div>
+                    <div class="right-controls"><div class="switch-box"><span>외우기</span><label class="switch"><input type="checkbox" id="memo-mode" onchange="toggleMemoMode(this.checked)"><span class="slider"></span></label></div></div>
                 </div>
             </div>
         </header>
@@ -740,15 +727,7 @@
                 else { html += `<div class="chat-row" data-speaker="${item.speaker}" data-start="${item.start}" data-end="${item.end}"><div class="badge badge-${item.speaker}">${item.speaker}</div><div class="card" style="flex:1; margin:0;">${content}</div></div>`; }
             });
             displayArea.innerHTML = html; player.src = data.audio; stopAll();
-            
-            if (!isMemoMode) {
-                applyButtonState('.ipa-text', 'btn-ipa');
-                applyButtonState('.trans-text', 'btn-trans');
-            } else {
-                document.querySelectorAll('.trans-text').forEach(t => t.style.display = 'block');
-                document.querySelectorAll('.ipa-text').forEach(t => t.style.display = 'none');
-                document.querySelectorAll('.sentence-eng').forEach(t => t.style.display = '');
-            }
+            if (!isMemoMode) { applyButtonState('.ipa-text', 'btn-ipa'); applyButtonState('.trans-text', 'btn-trans'); }
         }
 
         function applyButtonState(sel, id) {
