@@ -9,82 +9,69 @@
         :root { --primary: #4285f4; --bg: #f1f3f4; --border: #eee; --white: #fff; --text: #3c4043; }
         * { box-sizing: border-box; }
         body { font-family: 'Malgun Gothic', sans-serif; margin: 0; display: flex; height: 100vh; overflow: hidden; background: var(--white); color: var(--text); }
-        .sidebar { width: 280px; border-right: 1px solid var(--border); overflow-y: auto; flex-shrink: 0; padding: 20px 10px; }
+        
+        /* 사이드바 스타일 유지 */
+        .sidebar { width: 280px; border-right: 1px solid var(--border); overflow-y: auto; flex-shrink: 0; padding: 20px 10px; background: var(--white); transition: 0.3s; }
         .brand { display: flex; align-items: center; gap: 10px; padding: 0 15px 30px; font-size: 24px; font-weight: bold; }
         .brand img { width: 45px; border-radius: 8px; }
         
-        .menu-group { margin-bottom: 5px; border-radius: 8px; transition: background-color 0.3s;}
-        .menu-item { cursor: pointer; padding: 10px 15px; display: flex; align-items: center; gap: 10px; font-weight: 600; color: #3c4043; border-radius: 8px; transition: 0.2s; }
+        .menu-group { margin-bottom: 5px; border-radius: 8px; }
+        .menu-item { cursor: pointer; padding: 10px 15px; display: flex; align-items: center; gap: 10px; font-weight: 600; color: #3c4043; border-radius: 8px; }
         .menu-item:hover { background: #f8f9fa; }
         .menu-item .arrow { font-size: 10px; transition: 0.3s; }
         .expanded .arrow { transform: rotate(90deg); }
         .expanded .menu-item { color: var(--primary); }
-        
         .sub-menu { display: none; padding-left: 25px; margin-top: 5px; }
         .expanded .sub-menu { display: block; }
-        .sub-item { padding: 8px 15px 8px 40px; cursor: pointer;  font-size: 14px; color: #5f6368; border-radius: 0 20px 20px 0; }
+        .sub-item { padding: 8px 15px 8px 40px; cursor: pointer; font-size: 14px; color: #5f6368; border-radius: 0 20px 20px 0; }
         .sub-item.active { background: #e8f0fe; color: var(--primary) !important; font-weight: 800 !important; }
 
-        .main-content { flex: 1; display: flex; flex-direction: column; background: var(--bg); }
+        .main-content { flex: 1; display: flex; flex-direction: column; background: var(--bg); position: relative; }
         .sticky-header { background: var(--white); padding: 15px 25px; border-bottom: 1px solid var(--border); }
         .container { max-width: 900px; margin: 0 auto; width: 100%; }
-        .ctrl-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .btn-grp { display: flex; gap: 8px; }
+        
+        .ctrl-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; gap: 10px; }
+        .btn-grp { display: flex; gap: 8px; align-items: center; }
+        
+        /* 모바일 메뉴 버튼 스타일 */
+        .mobile-menu-btn { display: none; background: none; border: none; font-size: 24px; cursor: pointer; color: var(--text); padding: 0; margin-right: 10px; }
+
+        /* 기존 동구란 배속 버튼 */
         .btn { border: 1px solid var(--primary); background: var(--white); color: var(--primary); cursor: pointer; border-radius: 20px; padding: 5px 15px; font-size: 13px; font-weight: bold; }
-        
-        /* 버튼 활성화 시 배경색 확실히 적용 */
         .btn.active { background: var(--primary) !important; color: var(--white) !important; }
-        .toggle-btn { border: 1px solid #dadce0; color: #5f6368; }
-        
+
+        /* ★IPA/한 버튼: 네모난 디자인으로 변경★ */
+        .toggle-btn { border: 1px solid #dadce0; color: #5f6368; border-radius: 4px; padding: 5px 12px; min-width: 45px; }
+        .toggle-btn.active { border-color: var(--primary); }
+
         audio { width: 100%; height: 40px; margin-bottom: 15px; }
         .practice-bar { background: #fff; padding: 10px 20px; border-radius: 12px; display: flex; align-items: center; gap: 15px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
         .switch-box { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: bold; }
-        .switch { position: relative; width: 40px; height: 20px; }
-        .switch input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background: #ccc; transition: .3s; border-radius: 20px; }
-        .slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 3px; bottom: 3px; background: white; transition: .3s; border-radius: 50%; }
-        input:checked + .slider { background: var(--primary); }
-        input:checked + .slider:before { transform: translateX(20px); }
-        .scroll-area { flex: 1; overflow-y: auto; padding: 30px 25px; }
         
-        .section-title { font-size: 28px; color: var(--primary); margin-bottom: 25px; cursor: pointer; display: inline-block; font-weight: bold; }
-        .section-title span { color: var(--primary); margin-right: 10px; }
-        .section-title.playing::after { content: ' ⏸'; font-size: 16px; }
-
+        /* 여백 줄인 카드 스타일 */
+        .scroll-area { flex: 1; overflow-y: auto; padding: 30px 25px; }
+        .section-title { font-size: 28px; color: var(--primary); margin-bottom: 25px; cursor: pointer; font-weight: bold; }
+        .section-title span { margin-right: 10px; }
+        
         .card { background: var(--white); padding: 10px 15px; border-radius: 12px; margin-bottom: 10px; display: flex; gap: 15px; border: 2px solid transparent; box-shadow: 0 1px 2px rgba(0,0,0,0.05); transition: 0.2s; }
         .card.active-play { border-color: #d2e3fc; background: #f8fbff; }
-        
-        .play-btn { width: 28px; height: 28px; cursor: pointer; flex-shrink: 0; background-size: contain; background-repeat: no-repeat; margin-top: 4px; }
-        .playing .play-btn { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234285f4'%3E%3Cpath d='M6 19h4V5H6v14zm8-14v14h4V5h-4z'/%3E%3C/svg%3E"); }
-        .card:not(.playing) .play-btn { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%239aa0a6'%3E%3Cpath d='M8 5v14l11-7z'/%3E%3C/svg%3E"); }
-        
-        .text-content { flex: 1; }
-        .sentence-eng { font-size: 18px; font-weight: 700; line-height: 1.3; margin-bottom: 4px; }
-        
-        /* 초기 디스플레이 설정은 자바스크립트가 제어하도록 style은 유지 */
         .ipa-text { color: #777; font-size: 14px; font-family: 'Inter', sans-serif; margin-bottom: 2px; }
         .trans-text { color: #888; font-size: 13px; }
-        
-        .chunk { cursor: pointer; border-radius: 3px; padding: 0 2px; }
-        .chunk.active { background: #d2e3fc; color: #174ea6; }
 
+        /* 대화창 화자 색상 농도 강화 */
         .chat-row { display: flex; gap: 12px; margin-bottom: 12px; align-items: flex-start; }
-        .badge { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; flex-shrink: 0; font-size: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-        
+        .badge { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; flex-shrink: 0; }
         .badge-A { background: #d2e3fc; color: #185abc; border: 1px solid #adc6ff; }
         .badge-B { background: #e8eaed; color: #3c4043; border: 1px solid #dadce0; }
-        .badge-C { background: #feefc3; color: #e37400; border: 1px solid #ffe082; }
-        
-        /* ★화자별 말풍선 컬러 20% 진하게 조정★ */
         .chat-row[data-speaker="A"] .card { background-color: #e8f0fe; border-color: #adc6ff; }
         .chat-row[data-speaker="B"] .card { background-color: #f1f3f4; border-color: #dadce0; }
-        .chat-row[data-speaker="C"] .card { background-color: #fff9e6; border-color: #ffe082; }
 
-        .chat-row.playing .badge-A { background: #185abc; color: white; }
-        .chat-row.playing .badge-B { background: #3c4043; color: white; }
-        .chat-row.playing .badge-C { background: #e37400; color: white; }
-
-        @media (max-width: 768px) { .sidebar { position: fixed; left: -280px; height: 100%; background: white; z-index: 1001; } .sidebar.open { left: 0; } }
+        @media (max-width: 768px) { 
+            .sidebar { position: fixed; left: -280px; height: 100%; z-index: 1001; box-shadow: 2px 0 5px rgba(0,0,0,0.1); } 
+            .sidebar.open { left: 0; } 
+            .mobile-menu-btn { display: block; }
+            .btn { padding: 5px 10px; font-size: 12px; }
+        }
     </style>
 </head>
 <body>
@@ -96,7 +83,13 @@
         <header class="sticky-header">
             <div class="container">
                 <div class="ctrl-row">
-                    <div class="btn-grp"><button class="btn" onclick="setSpeed(0.3, this)">x0.3</button><button class="btn" onclick="setSpeed(0.5, this)">x0.5</button><button class="btn" onclick="setSpeed(0.7, this)">x0.7</button><button class="btn active" onclick="setSpeed(1.0, this)">x1.0</button></div>
+                    <div class="btn-grp">
+                        <button class="mobile-menu-btn" onclick="toggleSidebar()">☰</button>
+                        <button class="btn" onclick="setSpeed(0.3, this)">x0.3</button>
+                        <button class="btn" onclick="setSpeed(0.5, this)">x0.5</button>
+                        <button class="btn" onclick="setSpeed(0.7, this)">x0.7</button>
+                        <button class="btn active" onclick="setSpeed(1.0, this)">x1.0</button>
+                    </div>
                     <div class="btn-grp">
                         <button class="btn toggle-btn active" id="btn-ipa" onclick="toggleDisplay('.ipa-text', this)">IPA</button>
                         <button class="btn toggle-btn active" id="btn-trans" onclick="toggleDisplay('.trans-text', this)">한</button>
@@ -104,10 +97,8 @@
                 </div>
                 <audio id="player" controls></audio>
                 <div class="practice-bar">
-                    <div class="switch-box"><span>연습 모드</span><label class="switch"><input type="checkbox" id="shadow-mode"><span class="slider"></span></label></div>
-                    <div style="margin-left: 15px; font-size: 14px;">반복: 
-                        <input type="number" id="repeat-count" value="3" min="1" max="5" style="width:45px; border:1px solid #ddd; border-radius:4px; padding:2px 5px;"> 회
-                    </div>
+                    <div class="switch-box"><span>연습 모드</span><label class="switch"><input type="checkbox" id="shadow-mode" onchange="isShadowing = this.checked; stopAll();"><span class="slider"></span></label></div>
+                    <div style="margin-left: 15px; font-size: 14px;">반복: <input type="number" id="repeat-count" value="3" min="1" max="5" style="width:45px; border:1px solid #ddd; border-radius:4px; padding:2px 5px;"> 회</div>
                     <span id="status" style="margin-left:auto; color:var(--primary); font-size:13px; font-weight:bold;"></span>
                 </div>
             </div>
@@ -657,22 +648,16 @@
         const player = document.getElementById('player');
         const displayArea = document.getElementById('display-area');
         const navList = document.getElementById('nav-list');
+        const sidebar = document.getElementById('sidebar');
         let isShadowing = false, currentRepeat = 0, stopTime = 0, isAutoPlaying = false;
 
+        // 모바일 사이드바 토글 함수
+        function toggleSidebar() { sidebar.classList.toggle('open'); }
+
         const menuItems = ["01 Work", "02 Introducing", "03 Personality", "04 Day", "05 Friends", "06 Directions", "07 Dating", "08 Health", "09 My Favorite Food", "10 Travel", "11 Bootcamp", "12 Memories"];
-        
         menuItems.forEach((name, idx) => {
             const wk = (idx + 1).toString().padStart(2, '0');
-            const html = `
-                <div class="menu-group" id="group-${wk}">
-                    <div class="menu-item" onclick="toggleAccordion('${wk}')">
-                        <span class="arrow">▶</span> ${name}
-                    </div>
-                    <div class="sub-menu">
-                        <div class="sub-item" onclick="loadContent('${wk}', 'mystory', this)">My story</div>
-                        <div class="sub-item" onclick="loadContent('${wk}', 'realconvo', this)">Real Conversation</div>
-                    </div>
-                </div>`;
+            const html = `<div class="menu-group" id="group-${wk}"><div class="menu-item" onclick="toggleAccordion('${wk}')"><span class="arrow">▶</span> ${name}</div><div class="sub-menu"><div class="sub-item" onclick="loadContent('${wk}', 'mystory', this)">My story</div><div class="sub-item" onclick="loadContent('${wk}', 'realconvo', this)">Real Conversation</div></div></div>`;
             navList.insertAdjacentHTML('beforeend', html);
         });
 
@@ -685,119 +670,73 @@
 
         function loadContent(wk, type, el) {
             const data = studyData[wk]?.[type]; if (!data) return;
-            document.querySelectorAll('.sub-item').forEach(s => s.classList.remove('active')); 
-            el.classList.add('active'); 
-            
+            document.querySelectorAll('.sub-item').forEach(s => s.classList.remove('active')); el.classList.add('active'); 
+            if (window.innerWidth <= 768) sidebar.classList.remove('open'); // 선택 시 모바일 메뉴 닫기
+
             const displayTitle = type === 'mystory' ? 'My Story' : 'Real Conversation';
             let html = `<h2 class="section-title" onclick="toggleAutoPlayAll(this)"><span>${wk}</span>| ${displayTitle}</h2>`;
-            
             const items = type === 'mystory' ? data.sentences : data.chat;
             items.forEach(item => {
                 const chunks = item.chunks.map(c => `<span class="chunk" data-s="${c.s}" data-e="${c.e}">${c.text}</span>`).join(' ');
-                if(type === 'mystory') { 
-                    html += `<div class="card" data-start="${item.start}" data-end="${item.end}"><div class="play-btn"></div><div class="text-content"><div class="sentence-eng">${chunks}</div><div class="ipa-text">${item.ipa}</div><div class="trans-text">${item.trans}</div></div></div>`; 
-                } else { 
-                    html += `<div class="chat-row" data-speaker="${item.speaker}" data-start="${item.start}" data-end="${item.end}"><div class="badge badge-${item.speaker}">${item.speaker}</div><div class="card" style="margin-bottom:0; flex:1;"><div class="text-content"><div class="sentence-eng">${chunks}</div><div class="ipa-text">${item.ipa}</div><div class="trans-text">${item.trans}</div></div></div></div>`; 
-                }
+                if(type === 'mystory') { html += `<div class="card" data-start="${item.start}" data-end="${item.end}"><div class="play-btn"></div><div class="text-content"><div class="sentence-eng">${chunks}</div><div class="ipa-text">${item.ipa}</div><div class="trans-text">${item.trans}</div></div></div>`; }
+                else { html += `<div class="chat-row" data-speaker="${item.speaker}" data-start="${item.start}" data-end="${item.end}"><div class="badge badge-${item.speaker}">${item.speaker}</div><div class="card" style="margin-bottom:0; flex:1;"><div class="text-content"><div class="sentence-eng">${chunks}</div><div class="ipa-text">${item.ipa}</div><div class="trans-text">${item.trans}</div></div></div></div>`; }
             });
-            displayArea.innerHTML = html; 
-            player.src = data.audio;
+            displayArea.innerHTML = html; player.src = data.audio;
             stopAll();
-
-            // ★핵심: 본문 로드 후 현재 버튼의 active 상태에 맞춰 텍스트 보임/숨김 즉시 적용★
-            applyButtonState('.ipa-text', 'btn-ipa');
-            applyButtonState('.trans-text', 'btn-trans');
+            applyButtonState('.ipa-text', 'btn-ipa'); applyButtonState('.trans-text', 'btn-trans');
         }
 
-        // 버튼 상태에 따라 요소 표시 여부 강제 적용 함수
         function applyButtonState(selector, btnId) {
             const isActive = document.getElementById(btnId).classList.contains('active');
-            document.querySelectorAll(selector).forEach(el => {
-                el.style.display = isActive ? 'block' : 'none';
-            });
+            document.querySelectorAll(selector).forEach(el => el.style.display = isActive ? 'block' : 'none');
         }
 
-        function toggleDisplay(sel, btn) { 
-            const s = btn.classList.toggle('active'); 
-            document.querySelectorAll(sel).forEach(e => e.style.display = s ? 'block' : 'none'); 
-        }
+        function toggleDisplay(sel, btn) { const s = btn.classList.toggle('active'); document.querySelectorAll(sel).forEach(e => e.style.display = s ? 'block' : 'none'); }
 
         function toggleAutoPlayAll(titleEl) {
             if (isAutoPlaying) stopAll();
-            else {
-                stopAll(); isAutoPlaying = true; titleEl.classList.add('playing');
-                const firstCard = document.querySelector('.card, .chat-row');
-                if (firstCard) { firstCard.classList.add('playing', 'active-play'); playPart(parseFloat(firstCard.dataset.start), parseFloat(firstCard.dataset.end)); }
+            else { stopAll(); isAutoPlaying = true; titleEl.classList.add('playing');
+                const first = document.querySelector('.card, .chat-row');
+                if (first) { first.classList.add('playing', 'active-play'); playPart(parseFloat(first.dataset.start), parseFloat(first.dataset.end)); }
             }
         }
 
-        function playPart(start, end) { 
-            clearTimeout(window.shadowTimer); stopTime = end - 0.32; player.currentTime = Math.max(0, start - 0.17); player.play(); 
-        }
+        function playPart(s, e) { clearTimeout(window.shadowTimer); stopTime = e - 0.32; player.currentTime = Math.max(0, s - 0.17); player.play(); }
 
         function stopAll() { 
             player.pause(); isAutoPlaying = false; currentRepeat = 0; stopTime = 0; clearTimeout(window.shadowTimer);
-            document.querySelectorAll('.playing, .active-play, .active').forEach(el => {
-                if(!el.classList.contains('sub-item')) el.classList.remove('playing', 'active-play', 'active');
-            });
+            document.querySelectorAll('.playing, .active-play, .active').forEach(el => { if(!el.classList.contains('sub-item')) el.classList.remove('playing', 'active-play', 'active'); });
             document.querySelectorAll('.section-title').forEach(t => t.classList.remove('playing'));
             document.getElementById('status').innerText = "";
         }
 
         displayArea.addEventListener('click', (e) => {
-            const chunk = e.target.closest('.chunk'); const playBtn = e.target.closest('.play-btn'); const badge = e.target.closest('.badge'); const row = e.target.closest('.card, .chat-row');
+            const chunk = e.target.closest('.chunk'), playBtn = e.target.closest('.play-btn'), badge = e.target.closest('.badge'), row = e.target.closest('.card, .chat-row');
             if (chunk) { stopAll(); chunk.classList.add('active'); playPart(parseFloat(chunk.dataset.s), parseFloat(chunk.dataset.e)); }
-            else if (playBtn || badge) { 
-                if (row.classList.contains('playing')) { player.pause(); row.classList.remove('playing'); } 
-                else { stopAll(); row.classList.add('playing', 'active-play'); playPart(parseFloat(row.dataset.start), parseFloat(row.dataset.end)); } 
-            }
+            else if (playBtn || badge) { if (row.classList.contains('playing')) { player.pause(); row.classList.remove('playing'); } else { stopAll(); row.classList.add('playing', 'active-play'); playPart(parseFloat(row.dataset.start), parseFloat(row.dataset.end)); } }
         });
 
         player.addEventListener('timeupdate', () => {
-            const cur = player.currentTime;
-            if (stopTime > 0 && cur >= stopTime) {
+            if (stopTime > 0 && player.currentTime >= stopTime) {
                 player.pause(); stopTime = 0;
-                const activeRow = document.querySelector('.card.playing, .chat-row.playing');
-                if (activeRow) {
-                    if (isShadowing) handleShadowProcess(activeRow); 
-                    else if (isAutoPlaying) handleNextSentence(activeRow);
-                    else activeRow.classList.remove('playing');
-                }
+                const active = document.querySelector('.card.playing, .chat-row.playing');
+                if (active) { if (isShadowing) handleShadowProcess(active); else if (isAutoPlaying) handleNext(active); else active.classList.remove('playing'); }
             }
         });
 
         function handleShadowProcess(el) {
-            currentRepeat++; 
-            const limit = parseInt(document.getElementById('repeat-count').value) || 1;
-            if (currentRepeat < limit) {
-                document.getElementById('status').innerText = `반복 중 (${currentRepeat}/${limit})`;
-                window.shadowTimer = setTimeout(() => { playPart(parseFloat(el.dataset.start), parseFloat(el.dataset.end)); }, 1200);
-            } else {
-                currentRepeat = 0;
-                if (isAutoPlaying) handleNextSentence(el);
-                else { el.classList.remove('playing'); document.getElementById('status').innerText = "반복 완료"; }
-            }
+            currentRepeat++; const limit = parseInt(document.getElementById('repeat-count').value) || 1;
+            if (currentRepeat < limit) { document.getElementById('status').innerText = `반복 (${currentRepeat}/${limit})`; window.shadowTimer = setTimeout(() => playPart(parseFloat(el.dataset.start), parseFloat(el.dataset.end)), 1200); }
+            else { currentRepeat = 0; if (isAutoPlaying) handleNext(el); else { el.classList.remove('playing'); document.getElementById('status').innerText = "반복 완료"; } }
         }
 
-        function handleNextSentence(currentEl) {
-            const allCards = Array.from(document.querySelectorAll('.card, .chat-row'));
-            const currentIndex = allCards.indexOf(currentEl);
-            currentEl.classList.remove('playing');
-            if (currentIndex < allCards.length - 1) {
-                const nextCard = allCards[currentIndex + 1];
-                document.getElementById('status').innerText = "다음 문장 이동 중...";
-                window.shadowTimer = setTimeout(() => {
-                    nextCard.classList.add('playing', 'active-play');
-                    playPart(parseFloat(nextCard.dataset.start), parseFloat(nextCard.dataset.end));
-                }, isShadowing ? 1500 : 400);
-            } else {
-                document.getElementById('status').innerText = "학습 완료! 🎉";
-                stopAll();
-            }
+        function handleNext(el) {
+            const all = Array.from(document.querySelectorAll('.card, .chat-row')), idx = all.indexOf(el); el.classList.remove('playing');
+            if (idx < all.length - 1) { window.shadowTimer = setTimeout(() => { all[idx+1].classList.add('playing', 'active-play'); playPart(parseFloat(all[idx+1].dataset.start), parseFloat(all[idx+1].dataset.end)); }, isShadowing ? 1500 : 400); }
+            else { document.getElementById('status').innerText = "학습 완료! 🎉"; stopAll(); }
         }
 
         function setSpeed(s, btn) { player.playbackRate = s; document.querySelectorAll('.btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); }
-        document.getElementById('shadow-mode').onchange = (e) => { isShadowing = e.target.checked; stopAll(); };
         window.onload = () => { };
     </script>
 </body>
