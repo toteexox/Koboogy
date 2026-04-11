@@ -6,12 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Koboogy</title>
     <style>
-        :root { --primary: #4285f4; --bg: #f1f3f4; --border: #eee; --white: #fff; --text: #3c4043; }
-        * { box-sizing: border-box; }
+        :root { --primary: #4285f4; --bg: #f1f3f4; --border: #eee; --white: #fff; --text: #3c4043; --gray-btn: #f1f3f4; --gray-text: #5f6368; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Malgun Gothic', sans-serif; margin: 0; display: flex; height: 100vh; overflow: hidden; background: var(--white); color: var(--text); }
         
-        /* 사이드바 스타일 유지 */
+        /* 사이드바 스타일 */
         .sidebar { width: 280px; border-right: 1px solid var(--border); overflow-y: auto; flex-shrink: 0; padding: 20px 10px; background: var(--white); transition: 0.3s; }
+        .sidebar.open { left: 0; }
         .brand { display: flex; align-items: center; gap: 10px; padding: 0 15px 30px; font-size: 24px; font-weight: bold; }
         .brand img { width: 45px; border-radius: 8px; }
         
@@ -32,33 +33,42 @@
         
         .ctrl-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; gap: 10px; }
         .btn-grp { display: flex; gap: 8px; align-items: center; }
-        
-        /* 모바일 메뉴 버튼 스타일 */
         .mobile-menu-btn { display: none; background: none; border: none; font-size: 24px; cursor: pointer; color: var(--text); padding: 0; margin-right: 10px; }
 
-        /* 기존 동구란 배속 버튼 */
+        /* 배속 버튼 (파란색 원형) */
         .btn { border: 1px solid var(--primary); background: var(--white); color: var(--primary); cursor: pointer; border-radius: 20px; padding: 5px 15px; font-size: 13px; font-weight: bold; }
         .btn.active { background: var(--primary) !important; color: var(--white) !important; }
 
-        /* ★IPA/한 버튼: 네모난 디자인으로 변경★ */
-        .toggle-btn { border: 1px solid #dadce0; color: #5f6368; border-radius: 4px; padding: 5px 12px; min-width: 45px; }
-        .toggle-btn.active { border-color: var(--primary); }
+        /* ★IPA/한 버튼: 깔끔한 회색 네모 디자인★ */
+        .toggle-btn { border: 1px solid #dadce0; background: var(--gray-btn); color: var(--gray-text); border-radius: 6px; padding: 6px 12px; min-width: 50px; font-weight: 600; transition: 0.2s; }
+        .toggle-btn.active { background: #bdc1c6 !important; color: #202124 !important; border-color: #9aa0a6; }
 
         audio { width: 100%; height: 40px; margin-bottom: 15px; }
-        .practice-bar { background: #fff; padding: 10px 20px; border-radius: 12px; display: flex; align-items: center; gap: 15px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-        .switch-box { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: bold; }
-        
-        /* 여백 줄인 카드 스타일 */
+
+        /* ★연습 모드: 슬라이딩 토글 키★ */
+        .practice-bar { background: #fff; padding: 12px 20px; border-radius: 12px; display: flex; align-items: center; gap: 15px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .switch-box { display: flex; align-items: center; gap: 12px; font-size: 14px; font-weight: bold; }
+        .switch { position: relative; width: 44px; height: 22px; display: inline-block; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 22px; }
+        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: var(--primary); }
+        input:checked + .slider:before { transform: translateX(22px); }
+
+        /* 본문 및 카드 스타일 */
         .scroll-area { flex: 1; overflow-y: auto; padding: 30px 25px; }
         .section-title { font-size: 28px; color: var(--primary); margin-bottom: 25px; cursor: pointer; font-weight: bold; }
-        .section-title span { margin-right: 10px; }
-        
         .card { background: var(--white); padding: 10px 15px; border-radius: 12px; margin-bottom: 10px; display: flex; gap: 15px; border: 2px solid transparent; box-shadow: 0 1px 2px rgba(0,0,0,0.05); transition: 0.2s; }
         .card.active-play { border-color: #d2e3fc; background: #f8fbff; }
+        
+        /* ★청크 하이라이트: 모바일 시인성 강화★ */
+        .chunk { cursor: pointer; border-radius: 4px; padding: 2px 4px; transition: 0.2s; display: inline-block; }
+        .chunk.active { background: #d2e3fc !important; color: #174ea6 !important; font-weight: bold; }
+
         .ipa-text { color: #777; font-size: 14px; font-family: 'Inter', sans-serif; margin-bottom: 2px; }
         .trans-text { color: #888; font-size: 13px; }
 
-        /* 대화창 화자 색상 농도 강화 */
+        /* 대화창 화자 설정 */
         .chat-row { display: flex; gap: 12px; margin-bottom: 12px; align-items: flex-start; }
         .badge { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; flex-shrink: 0; }
         .badge-A { background: #d2e3fc; color: #185abc; border: 1px solid #adc6ff; }
@@ -97,7 +107,13 @@
                 </div>
                 <audio id="player" controls></audio>
                 <div class="practice-bar">
-                    <div class="switch-box"><span>연습 모드</span><label class="switch"><input type="checkbox" id="shadow-mode" onchange="isShadowing = this.checked; stopAll();"><span class="slider"></span></label></div>
+                    <div class="switch-box">
+                        <span>연습 모드</span>
+                        <label class="switch">
+                            <input type="checkbox" id="shadow-mode" onchange="isShadowing = this.checked; stopAll();">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
                     <div style="margin-left: 15px; font-size: 14px;">반복: <input type="number" id="repeat-count" value="3" min="1" max="5" style="width:45px; border:1px solid #ddd; border-radius:4px; padding:2px 5px;"> 회</div>
                     <span id="status" style="margin-left:auto; color:var(--primary); font-size:13px; font-weight:bold;"></span>
                 </div>
@@ -642,7 +658,6 @@
 
 
 
-
 };
 
         const player = document.getElementById('player');
@@ -651,7 +666,6 @@
         const sidebar = document.getElementById('sidebar');
         let isShadowing = false, currentRepeat = 0, stopTime = 0, isAutoPlaying = false;
 
-        // 모바일 사이드바 토글 함수
         function toggleSidebar() { sidebar.classList.toggle('open'); }
 
         const menuItems = ["01 Work", "02 Introducing", "03 Personality", "04 Day", "05 Friends", "06 Directions", "07 Dating", "08 Health", "09 My Favorite Food", "10 Travel", "11 Bootcamp", "12 Memories"];
@@ -671,7 +685,7 @@
         function loadContent(wk, type, el) {
             const data = studyData[wk]?.[type]; if (!data) return;
             document.querySelectorAll('.sub-item').forEach(s => s.classList.remove('active')); el.classList.add('active'); 
-            if (window.innerWidth <= 768) sidebar.classList.remove('open'); // 선택 시 모바일 메뉴 닫기
+            if (window.innerWidth <= 768) sidebar.classList.remove('open');
 
             const displayTitle = type === 'mystory' ? 'My Story' : 'Real Conversation';
             let html = `<h2 class="section-title" onclick="toggleAutoPlayAll(this)"><span>${wk}</span>| ${displayTitle}</h2>`;
@@ -705,15 +719,24 @@
 
         function stopAll() { 
             player.pause(); isAutoPlaying = false; currentRepeat = 0; stopTime = 0; clearTimeout(window.shadowTimer);
-            document.querySelectorAll('.playing, .active-play, .active').forEach(el => { if(!el.classList.contains('sub-item')) el.classList.remove('playing', 'active-play', 'active'); });
+            document.querySelectorAll('.playing, .active-play, .chunk.active').forEach(el => { el.classList.remove('playing', 'active-play', 'active'); });
             document.querySelectorAll('.section-title').forEach(t => t.classList.remove('playing'));
             document.getElementById('status').innerText = "";
         }
 
+        // ★모바일/PC 공용 클릭/터치 이벤트 리스너 최적화★
         displayArea.addEventListener('click', (e) => {
             const chunk = e.target.closest('.chunk'), playBtn = e.target.closest('.play-btn'), badge = e.target.closest('.badge'), row = e.target.closest('.card, .chat-row');
-            if (chunk) { stopAll(); chunk.classList.add('active'); playPart(parseFloat(chunk.dataset.s), parseFloat(chunk.dataset.e)); }
-            else if (playBtn || badge) { if (row.classList.contains('playing')) { player.pause(); row.classList.remove('playing'); } else { stopAll(); row.classList.add('playing', 'active-play'); playPart(parseFloat(row.dataset.start), parseFloat(row.dataset.end)); } }
+            
+            if (chunk) { 
+                stopAll(); 
+                chunk.classList.add('active'); // 클릭 즉시 하이라이트 추가
+                playPart(parseFloat(chunk.dataset.s), parseFloat(chunk.dataset.e)); 
+            }
+            else if (playBtn || badge) { 
+                if (row.classList.contains('playing')) { player.pause(); row.classList.remove('playing'); } 
+                else { stopAll(); row.classList.add('playing', 'active-play'); playPart(parseFloat(row.dataset.start), parseFloat(row.dataset.end)); } 
+            }
         });
 
         player.addEventListener('timeupdate', () => {
