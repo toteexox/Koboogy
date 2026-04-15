@@ -18,7 +18,6 @@
         body { font-family: 'Inter', 'Malgun Gothic', sans-serif; margin: 0; display: flex; height: 100vh; overflow: hidden; background: var(--white); color: var(--text); }
         body.memo-mode-active .main-content { background-color: var(--memo-bg); }
 
-        /* 외우기 모드 시 버튼 그룹 숨김 */
         body.memo-mode-active #toggle-group { display: none; }
 
         .sidebar { width: 280px; border-right: 1px solid var(--border); overflow-y: auto; flex-shrink: 0; padding: 20px 10px; background: var(--white); transition: 0.3s; }
@@ -67,6 +66,7 @@
         input#memo-mode:checked + .slider { background-color: #ff9800; }
 
         #repeat-count { border: 1px solid #ddd; border-radius: 4px; padding: 0 8px; font-size: 13px; font-family: 'Inter', sans-serif; cursor: pointer; height: 32px; background: #fff; }
+        #current-count { font-size: 14px; color: var(--primary); font-weight: 800; min-width: 45px; text-align: center; }
 
         .scroll-area { flex: 1; overflow-y: auto; padding: 30px 0; }
         .content-wrap { max-width: 70%; margin: 0 auto; width: 100%; }
@@ -75,7 +75,7 @@
         .card { background: var(--white); padding: 10px 15px; border-radius: 12px; margin-bottom: 10px; display: flex; gap: 15px; border: 2px solid transparent; box-shadow: 0 1px 2px rgba(0,0,0,0.05); transition: 0.2s; cursor: pointer; }
         .card.active-play { border-color: #d2e3fc; background: #f8fbff; }
         
-        .play-btn { width: 28px; height: 28px; cursor: pointer; flex-shrink: 0; background-size: contain; background-repeat: no-repeat; margin-top: 4px; }
+        .play-btn { position: relative; width: 28px; height: 28px; cursor: pointer; flex-shrink: 0; background-size: contain; background-repeat: no-repeat; margin-top: 4px; }
         .playing .play-btn { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234285f4'%3E%3Cpath d='M6 19h4V5H6v14zm8-14v14h4V5h-4z'/%3E%3C/svg%3E"); }
         .card:not(.playing) .play-btn { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%239aa0a6'%3E%3Cpath d='M8 5v14l11-7z'/%3E%3C/svg%3E"); }
 
@@ -138,7 +138,17 @@
                 <div class="practice-bar">
                     <div class="left-controls">
                         <div class="switch-box"><span>연습</span><label class="switch"><input type="checkbox" id="shadow-mode" onchange="isShadowing = this.checked; stopAll();"><span class="slider"></span></label></div>
-                        <div class="switch-box"><span>반복</span><select id="repeat-count"><option value="1">1</option><option value="2">2</option><option value="3" selected>3</option><option value="4">4</option><option value="5">5</option></select></div>
+                        <div class="switch-box">
+                            <span>반복</span>
+                            <select id="repeat-count">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3" selected>3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                            <span id="current-count"></span>
+                        </div>
                     </div>
                     <div class="right-controls"><div class="switch-box"><span>외우기</span><label class="switch"><input type="checkbox" id="memo-mode" onchange="toggleMemoMode(this.checked)"><span class="slider"></span></label></div></div>
                 </div>
@@ -148,9 +158,6 @@
             <div style="text-align: center; margin-top: 50px; color: #9aa0a6;"><h3>반갑습니다! 👋</h3><p>학습하실 챕터를 선택해주세요.</p></div>
         </div></main>
     </div>
-
-
-
     <script>
         const studyData = {
 
@@ -682,10 +689,9 @@
 
 
 
-};
+}; // 데이터 종료 지점
 
-
-const player = document.getElementById('player'), displayArea = document.getElementById('display-area'), navList = document.getElementById('nav-list'), sidebar = document.getElementById('sidebar');
+        const player = document.getElementById('player'), displayArea = document.getElementById('display-area'), navList = document.getElementById('nav-list'), sidebar = document.getElementById('sidebar');
         let isShadowing = false, isMemoMode = false, currentRepeat = 0, stopTime = 0, isAutoPlaying = false;
 
         function toggleSidebar() { sidebar.classList.toggle('open'); }
@@ -705,12 +711,6 @@ const player = document.getElementById('player'), displayArea = document.getElem
             stopAll();
         }
 
-        const menuItems = ["01 Work", "02 Introducing", "03 Personality", "04 Day", "05 Friends", "06 Directions", "07 Dating", "08 Health", "09 My Favorite Food", "10 Travel", "11 Bootcamp", "12 Memories"];
-        menuItems.forEach((name, idx) => {
-            const wk = (idx + 1).toString().padStart(2, '0');
-            navList.insertAdjacentHTML('beforeend', `<div class="menu-group" id="group-${wk}"><div class="menu-item" onclick="toggleAccordion('${wk}')"><span class="arrow">▶</span> ${name}</div><div class="sub-menu"><div class="sub-item" onclick="loadContent('${wk}', 'mystory', this)">My story</div><div class="sub-item" onclick="loadContent('${wk}', 'realconvo', this)">Real Conversation</div></div></div>`);
-        });
-
         function toggleAccordion(wk) {
             const group = document.getElementById(`group-${wk}`), expanded = group.classList.contains('expanded');
             document.querySelectorAll('.menu-group').forEach(g => g.classList.remove('expanded'));
@@ -718,32 +718,38 @@ const player = document.getElementById('player'), displayArea = document.getElem
         }
 
         function loadContent(wk, type, el) {
-    const data = studyData[wk]?.[type]; if (!data) return;
-    document.querySelectorAll('.sub-item').forEach(s => s.classList.remove('active')); el.classList.add('active');
-    if (window.innerWidth <= 768) sidebar.classList.remove('open');
-    
-    let html = `<h2 class="section-title" onclick="toggleAutoPlayAll(this)"><span>${wk}</span>| ${type === 'mystory' ? 'My Story' : 'Real Conversation'}</h2>`;
-    const items = type === 'mystory' ? data.sentences : data.chat;
-    items.forEach(item => {
-        const chunks = item.chunks.map(c => `<span class="chunk" data-s="${c.s}" data-e="${c.e}">${c.text}</span>`).join(' ');
-        const content = `<div class="text-content"><div class="sentence-eng">${chunks}</div><div class="ipa-text">${item.ipa}</div><div class="trans-text">${item.trans}</div></div>`;
-        if(type === 'mystory') { html += `<div class="card" data-start="${item.start}" data-end="${item.end}"><div class="play-btn"></div>${content}</div>`; }
-        else { html += `<div class="chat-row" data-speaker="${item.speaker}" data-start="${item.start}" data-end="${item.end}"><div class="badge badge-${item.speaker}">${item.speaker}</div><div class="card" style="flex:1; margin:0;">${content}</div></div>`; }
-    });
-    displayArea.innerHTML = html; 
-    
-    // --- 수정 포인트 1: 오디오 소스 변경 후 현재 배속 유지 ---
-    const currentSpeed = parseFloat(document.querySelector('.btn-grp .btn.active')?.innerText.replace('x', '') || 1.0);
-    player.src = data.audio; 
-    player.playbackRate = currentSpeed; // 새로운 소스에 현재 배속 적용
-    
-    stopAll();
-    if (!isMemoMode) { applyButtonState('.ipa-text', 'btn-ipa'); applyButtonState('.trans-text', 'btn-trans'); }
-}
+            const data = studyData[wk]?.[type]; if (!data) return;
+            document.querySelectorAll('.sub-item').forEach(s => s.classList.remove('active')); el.classList.add('active');
+            if (window.innerWidth <= 768) sidebar.classList.remove('open');
+            
+            let html = `<h2 class="section-title" onclick="toggleAutoPlayAll(this)"><span>${wk}</span>| ${type === 'mystory' ? 'My Story' : 'Real Conversation'}</h2>`;
+            const items = type === 'mystory' ? data.sentences : data.chat;
+            items.forEach(item => {
+                const chunks = item.chunks.map(c => `<span class="chunk" data-s="${c.s}" data-e="${c.e}">${c.text}</span>`).join(' ');
+                const content = `<div class="text-content"><div class="sentence-eng">${chunks}</div><div class="ipa-text">${item.ipa}</div><div class="trans-text">${item.trans}</div></div>`;
+                if(type === 'mystory') { html += `<div class="card" data-start="${item.start}" data-end="${item.end}"><div class="play-btn"></div>${content}</div>`; }
+                else { html += `<div class="chat-row" data-speaker="${item.speaker}" data-start="${item.start}" data-end="${item.end}"><div class="badge badge-${item.speaker}">${item.speaker}</div><div class="card" style="flex:1; margin:0;">${content}</div></div>`; }
+            });
+            displayArea.innerHTML = html; 
+
+            // 현재 설정된 배속 버튼의 값을 가져와서 새 음원에도 적용
+            const currentSpeedBtn = document.querySelector('.btn-grp .btn.active');
+            const currentSpeed = currentSpeedBtn ? parseFloat(currentSpeedBtn.innerText.replace('x', '')) : 1.0;
+            
+            player.src = data.audio; 
+            player.load();
+            player.playbackRate = currentSpeed; 
+
+            stopAll();
+            if (!isMemoMode) { applyButtonState('.ipa-text', 'btn-ipa'); applyButtonState('.trans-text', 'btn-trans'); }
+        }
 
         function applyButtonState(sel, id) {
-            const active = document.getElementById(id).classList.contains('active');
-            document.querySelectorAll(sel).forEach(el => el.style.display = active ? 'block' : 'none');
+            const targetBtn = document.getElementById(id);
+            if (targetBtn) {
+                const active = targetBtn.classList.contains('active');
+                document.querySelectorAll(sel).forEach(el => el.style.display = active ? 'block' : 'none');
+            }
         }
 
         function toggleDisplay(sel, btn) { btn.classList.toggle('active'); applyButtonState(sel, btn.id); }
@@ -761,87 +767,124 @@ const player = document.getElementById('player'), displayArea = document.getElem
         });
 
         function toggleAutoPlayAll(titleEl) {
-            if (isAutoPlaying) stopAll();
-            else { 
-                stopAll(); isAutoPlaying = true; titleEl.classList.add('playing'); 
-                const first = document.querySelector('.card, .chat-row'); 
-                if (first) { 
-                    const cardPart = first.closest('.card') || first.querySelector('.card');
-                    if(isMemoMode && cardPart) cardPart.classList.add('show-script');
-                    first.classList.add('playing', 'active-play'); playPart(parseFloat(first.dataset.start), parseFloat(first.dataset.end)); 
-                } 
-            }
-        }
-
-       function playPart(s, e) {
-    clearTimeout(window.shadowTimer);
-    const rate = player.playbackRate;
-    
-    // 배속이 느려질수록(rate가 작아질수록) 빼주는 값을 줄여서 끝까지 나오게 함
-    stopTime = e - (0.32 * rate); 
-    
-    // 시작 지점도 배속에 맞춰 살짝 당김 (너무 긴 정적 방지)
-    player.currentTime = Math.max(0, s - (0.17 * rate));
-    player.play();
+    if (isAutoPlaying) stopAll();
+    else { 
+        stopAll(); isAutoPlaying = true; titleEl.classList.add('playing'); 
+        
+        // 수정: displayArea 바로 아래에 있는 첫 번째 아이템(.card 또는 .chat-row)만 선택
+        const first = displayArea.querySelector(':scope > .card, :scope > .chat-row'); 
+        
+        if (first) { 
+            const cardPart = first.classList.contains('card') ? first : first.querySelector('.card');
+            if(isMemoMode && cardPart) cardPart.classList.add('show-script');
+            first.classList.add('playing', 'active-play'); 
+            playPart(parseFloat(first.dataset.start), parseFloat(first.dataset.end)); 
+        } 
+    }
 }
+
+        function playPart(s, e) { 
+            clearTimeout(window.shadowTimer); 
+            const rate = player.playbackRate;
+            // 배속에 따라 종료 지점 보정 (느릴수록 더 끝까지 재생)
+            stopTime = e - (0.32 * rate); 
+            player.currentTime = Math.max(0, s - (0.17 * rate)); 
+            player.play(); 
+        }
 
         function stopAll() { 
             player.pause(); isAutoPlaying = false; currentRepeat = 0; stopTime = 0; clearTimeout(window.shadowTimer);
+            document.getElementById('current-count').innerText = '';
             document.querySelectorAll('.playing, .active-play, .chunk.active').forEach(el => el.classList.remove('playing', 'active-play', 'active'));
             document.querySelectorAll('.section-title').forEach(t => t.classList.remove('playing'));
         }
 
         player.addEventListener('timeupdate', () => {
             if (stopTime > 0 && player.currentTime >= stopTime) {
-                player.pause(); stopTime = 0; const active = document.querySelector('.card.playing, .chat-row.playing');
-                if (active) { if (isShadowing) handleShadowProcess(active); else if (isAutoPlaying) handleNext(active); else active.classList.remove('playing'); }
+                player.pause(); stopTime = 0; 
+                const active = document.querySelector('.card.playing, .chat-row.playing');
+                if (active) { 
+                    if (isShadowing) handleShadowProcess(active); 
+                    else if (isAutoPlaying) handleNext(active); 
+                    else active.classList.remove('playing'); 
+                }
             }
         });
 
         function handleShadowProcess(el) {
-    currentRepeat++;
-    const limit = parseInt(document.getElementById('repeat-count').value) || 1;
-    const rate = player.playbackRate;
-    
-    // 실제 재생 시간 계산 (문장길이 / 배속)
-    const durationInSec = (parseFloat(el.dataset.end) - parseFloat(el.dataset.start)) / rate;
-    // 대기 시간: (재생 시간 + 2초)를 밀리초로 변환
-    const waitTime = (durationInSec + 2) * 1000;
+            currentRepeat++; 
+            const limit = parseInt(document.getElementById('repeat-count').value) || 1;
+            const rate = player.playbackRate;
+            
+            // 상단 카운터 업데이트
+            document.getElementById('current-count').innerText = `${currentRepeat} / ${limit}`;
 
-    if (currentRepeat < limit) {
-        window.shadowTimer = setTimeout(() => {
-            playPart(parseFloat(el.dataset.start), parseFloat(el.dataset.end));
-        }, waitTime);
-    } else {
-        currentRepeat = 0;
-        if (isAutoPlaying) {
-            // 다음 문장으로 넘어갈 때도 동일하게 (재생시간 + 2초) 후 실행
-            window.shadowTimer = setTimeout(() => handleNext(el), waitTime);
-        } else {
-            el.classList.remove('playing');
+            const durationInSec = (parseFloat(el.dataset.end) - parseFloat(el.dataset.start)) / rate;
+            const waitTime = durationInSec * 1000; // 2초 추가 삭제, 문장 길이만큼 대기
+
+            if (currentRepeat < limit) { 
+                window.shadowTimer = setTimeout(() => playPart(parseFloat(el.dataset.start), parseFloat(el.dataset.end)), waitTime); 
+            } else { 
+                currentRepeat = 0; 
+                document.getElementById('current-count').innerText = '';
+                if (isAutoPlaying) window.shadowTimer = setTimeout(() => handleNext(el), waitTime); 
+                else el.classList.remove('playing'); 
+            }
         }
-    }
-}
 
         function handleNext(el) {
-    const all = Array.from(document.querySelectorAll('.card, .chat-row')), idx = all.indexOf(el); 
+    // 수정: displayArea의 직계 자식인 .card와 .chat-row만 리스트로 만듭니다.
+    // 이렇게 해야 Real Conversation에서 내부 카드(.card)가 중복으로 리스트에 담기는 것을 방지합니다.
+    const all = Array.from(displayArea.children).filter(child => 
+        child.classList.contains('card') || child.classList.contains('chat-row')
+    );
+    
+    const idx = all.indexOf(el); 
     el.classList.remove('playing');
     
     if (idx < all.length - 1) { 
         const next = all[idx+1]; 
-        const cardPart = next.closest('.card') || next.querySelector('.card');
-        if(isMemoMode && cardPart) cardPart.classList.add('show-script');
+        const cardPart = next.classList.contains('card') ? next : next.querySelector('.card');
         
-        // 다음 문장 시작
-        next.classList.add('playing', 'active-play'); 
-        playPart(parseFloat(next.dataset.start), parseFloat(next.dataset.end));
+        const rate = player.playbackRate;
+        const durationInSec = (parseFloat(el.dataset.end) - parseFloat(el.dataset.start)) / rate;
+        const waitTime = durationInSec * 1000;
+
+        window.shadowTimer = setTimeout(() => { 
+            if(isMemoMode && cardPart) cardPart.classList.add('show-script');
+            next.classList.add('playing', 'active-play'); 
+            playPart(parseFloat(next.dataset.start), parseFloat(next.dataset.end)); 
+        }, isShadowing ? waitTime : 400); 
     } else { 
         stopAll(); 
     }
 }
 
-        function setSpeed(s, btn) { player.playbackRate = s; document.querySelectorAll('.btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); }
-        window.onload = () => {};
+        function setSpeed(s, btn) { 
+            player.playbackRate = s; 
+            document.querySelectorAll('.btn-grp .btn').forEach(b => { if(b.innerText.includes('x')) b.classList.remove('active'); }); 
+            btn.classList.add('active'); 
+        }
+
+        window.onload = () => {
+            const menuItems = ["01 Work", "02 Introducing", "03 Personality", "04 Day", "05 Friends", "06 Directions", "07 Dating", "08 Health", "09 My Favorite Food", "10 Travel", "11 Bootcamp", "12 Memories"];
+            const navList = document.getElementById('nav-list');
+            if (navList) {
+                menuItems.forEach((name, idx) => {
+                    const wk = (idx + 1).toString().padStart(2, '0');
+                    navList.insertAdjacentHTML('beforeend', `
+                        <div class="menu-group" id="group-${wk}">
+                            <div class="menu-item" onclick="toggleAccordion('${wk}')">
+                                <span class="arrow">▶</span> ${name}
+                            </div>
+                            <div class="sub-menu">
+                                <div class="sub-item" onclick="loadContent('${wk}', 'mystory', this)">My story</div>
+                                <div class="sub-item" onclick="loadContent('${wk}', 'realconvo', this)">Real Conversation</div>
+                            </div>
+                        </div>`);
+                });
+            }
+        };
     </script>
 </body>
 </html>
