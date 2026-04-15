@@ -148,6 +148,9 @@
             <div style="text-align: center; margin-top: 50px; color: #9aa0a6;"><h3>반갑습니다! 👋</h3><p>학습하실 챕터를 선택해주세요.</p></div>
         </div></main>
     </div>
+
+
+
     <script>
         const studyData = {
 
@@ -681,7 +684,8 @@
 
 };
 
-        const player = document.getElementById('player'), displayArea = document.getElementById('display-area'), navList = document.getElementById('nav-list'), sidebar = document.getElementById('sidebar');
+
+const player = document.getElementById('player'), displayArea = document.getElementById('display-area'), navList = document.getElementById('nav-list'), sidebar = document.getElementById('sidebar');
         let isShadowing = false, isMemoMode = false, currentRepeat = 0, stopTime = 0, isAutoPlaying = false;
 
         function toggleSidebar() { sidebar.classList.toggle('open'); }
@@ -714,21 +718,28 @@
         }
 
         function loadContent(wk, type, el) {
-            const data = studyData[wk]?.[type]; if (!data) return;
-            document.querySelectorAll('.sub-item').forEach(s => s.classList.remove('active')); el.classList.add('active');
-            if (window.innerWidth <= 768) sidebar.classList.remove('open');
-            
-            let html = `<h2 class="section-title" onclick="toggleAutoPlayAll(this)"><span>${wk}</span>| ${type === 'mystory' ? 'My Story' : 'Real Conversation'}</h2>`;
-            const items = type === 'mystory' ? data.sentences : data.chat;
-            items.forEach(item => {
-                const chunks = item.chunks.map(c => `<span class="chunk" data-s="${c.s}" data-e="${c.e}">${c.text}</span>`).join(' ');
-                const content = `<div class="text-content"><div class="sentence-eng">${chunks}</div><div class="ipa-text">${item.ipa}</div><div class="trans-text">${item.trans}</div></div>`;
-                if(type === 'mystory') { html += `<div class="card" data-start="${item.start}" data-end="${item.end}"><div class="play-btn"></div>${content}</div>`; }
-                else { html += `<div class="chat-row" data-speaker="${item.speaker}" data-start="${item.start}" data-end="${item.end}"><div class="badge badge-${item.speaker}">${item.speaker}</div><div class="card" style="flex:1; margin:0;">${content}</div></div>`; }
-            });
-            displayArea.innerHTML = html; player.src = data.audio; stopAll();
-            if (!isMemoMode) { applyButtonState('.ipa-text', 'btn-ipa'); applyButtonState('.trans-text', 'btn-trans'); }
-        }
+    const data = studyData[wk]?.[type]; if (!data) return;
+    document.querySelectorAll('.sub-item').forEach(s => s.classList.remove('active')); el.classList.add('active');
+    if (window.innerWidth <= 768) sidebar.classList.remove('open');
+    
+    let html = `<h2 class="section-title" onclick="toggleAutoPlayAll(this)"><span>${wk}</span>| ${type === 'mystory' ? 'My Story' : 'Real Conversation'}</h2>`;
+    const items = type === 'mystory' ? data.sentences : data.chat;
+    items.forEach(item => {
+        const chunks = item.chunks.map(c => `<span class="chunk" data-s="${c.s}" data-e="${c.e}">${c.text}</span>`).join(' ');
+        const content = `<div class="text-content"><div class="sentence-eng">${chunks}</div><div class="ipa-text">${item.ipa}</div><div class="trans-text">${item.trans}</div></div>`;
+        if(type === 'mystory') { html += `<div class="card" data-start="${item.start}" data-end="${item.end}"><div class="play-btn"></div>${content}</div>`; }
+        else { html += `<div class="chat-row" data-speaker="${item.speaker}" data-start="${item.start}" data-end="${item.end}"><div class="badge badge-${item.speaker}">${item.speaker}</div><div class="card" style="flex:1; margin:0;">${content}</div></div>`; }
+    });
+    displayArea.innerHTML = html; 
+    
+    // --- 수정 포인트 1: 오디오 소스 변경 후 현재 배속 유지 ---
+    const currentSpeed = parseFloat(document.querySelector('.btn-grp .btn.active')?.innerText.replace('x', '') || 1.0);
+    player.src = data.audio; 
+    player.playbackRate = currentSpeed; // 새로운 소스에 현재 배속 적용
+    
+    stopAll();
+    if (!isMemoMode) { applyButtonState('.ipa-text', 'btn-ipa'); applyButtonState('.trans-text', 'btn-trans'); }
+}
 
         function applyButtonState(sel, id) {
             const active = document.getElementById(id).classList.contains('active');
@@ -762,7 +773,17 @@
             }
         }
 
-        function playPart(s, e) { clearTimeout(window.shadowTimer); stopTime = e - 0.32; player.currentTime = Math.max(0, s - 0.17); player.play(); }
+       function playPart(s, e) {
+    clearTimeout(window.shadowTimer);
+    const rate = player.playbackRate;
+    
+    // 배속이 느려질수록(rate가 작아질수록) 빼주는 값을 줄여서 끝까지 나오게 함
+    stopTime = e - (0.32 * rate); 
+    
+    // 시작 지점도 배속에 맞춰 살짝 당김 (너무 긴 정적 방지)
+    player.currentTime = Math.max(0, s - (0.17 * rate));
+    player.play();
+}
 
         function stopAll() { 
             player.pause(); isAutoPlaying = false; currentRepeat = 0; stopTime = 0; clearTimeout(window.shadowTimer);
@@ -778,21 +799,46 @@
         });
 
         function handleShadowProcess(el) {
-            currentRepeat++; const limit = parseInt(document.getElementById('repeat-count').value) || 1;
-            if (currentRepeat < limit) { window.shadowTimer = setTimeout(() => playPart(parseFloat(el.dataset.start), parseFloat(el.dataset.end)), 1200); }
-            else { currentRepeat = 0; if (isAutoPlaying) handleNext(el); else el.classList.remove('playing'); }
+    currentRepeat++;
+    const limit = parseInt(document.getElementById('repeat-count').value) || 1;
+    const rate = player.playbackRate;
+    
+    // 실제 재생 시간 계산 (문장길이 / 배속)
+    const durationInSec = (parseFloat(el.dataset.end) - parseFloat(el.dataset.start)) / rate;
+    // 대기 시간: (재생 시간 + 2초)를 밀리초로 변환
+    const waitTime = (durationInSec + 2) * 1000;
+
+    if (currentRepeat < limit) {
+        window.shadowTimer = setTimeout(() => {
+            playPart(parseFloat(el.dataset.start), parseFloat(el.dataset.end));
+        }, waitTime);
+    } else {
+        currentRepeat = 0;
+        if (isAutoPlaying) {
+            // 다음 문장으로 넘어갈 때도 동일하게 (재생시간 + 2초) 후 실행
+            window.shadowTimer = setTimeout(() => handleNext(el), waitTime);
+        } else {
+            el.classList.remove('playing');
         }
+    }
+}
 
         function handleNext(el) {
-            const all = Array.from(document.querySelectorAll('.card, .chat-row')), idx = all.indexOf(el); 
-            el.classList.remove('playing');
-            if (idx < all.length - 1) { 
-                const next = all[idx+1]; 
-                const cardPart = next.closest('.card') || next.querySelector('.card');
-                if(isMemoMode && cardPart) cardPart.classList.add('show-script');
-                window.shadowTimer = setTimeout(() => { next.classList.add('playing', 'active-play'); playPart(parseFloat(next.dataset.start), parseFloat(next.dataset.end)); }, isShadowing ? 1500 : 400); 
-            } else { stopAll(); }
-        }
+    const all = Array.from(document.querySelectorAll('.card, .chat-row')), idx = all.indexOf(el); 
+    el.classList.remove('playing');
+    
+    if (idx < all.length - 1) { 
+        const next = all[idx+1]; 
+        const cardPart = next.closest('.card') || next.querySelector('.card');
+        if(isMemoMode && cardPart) cardPart.classList.add('show-script');
+        
+        // 다음 문장 시작
+        next.classList.add('playing', 'active-play'); 
+        playPart(parseFloat(next.dataset.start), parseFloat(next.dataset.end));
+    } else { 
+        stopAll(); 
+    }
+}
 
         function setSpeed(s, btn) { player.playbackRate = s; document.querySelectorAll('.btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); }
         window.onload = () => {};
