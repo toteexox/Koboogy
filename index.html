@@ -18,10 +18,14 @@
         body { font-family: 'Inter', 'Malgun Gothic', sans-serif; margin: 0; display: flex; height: 100vh; overflow: hidden; background: var(--white); color: var(--text); }
         body.memo-mode-active .main-content { background-color: var(--memo-bg); }
 
+        /* [수정] 간소화 모드 제어 */
+        body.mini-mode .sticky-header { display: none; }
+        body.mini-mode .floating-menu { display: flex; }
+
         .sidebar { width: 280px; border-right: 1px solid var(--border); overflow-y: auto; flex-shrink: 0; padding: 20px 10px; background: var(--white); transition: 0.3s; }
         .sidebar.open { left: 0; }
         .brand { display: flex; align-items: center; gap: 10px; padding: 0 15px 30px; font-size: 24px; font-weight: bold; }
-        .brand img { width: 45px; border-radius: 8 image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234285f4'%3E%3Cpath d='M6 19h4V5H6v14zm8-14v14h4V5h-4z'/%3E%3C/svg%3E"); }px; }
+        .brand img { width: 45px; border-radius: 8px; }
         
         .menu-group { margin-bottom: 5px; border-radius: 8px; }
         .menu-item { cursor: pointer; padding: 10px 15px; display: flex; align-items: center; gap: 10px; font-weight: 600; color: #3c4043; border-radius: 8px; }
@@ -38,12 +42,10 @@
         .sticky-header { background: var(--white); padding: 15px 25px; border-bottom: 1px solid var(--border); }
         .container { max-width: 80%; margin: 0 auto; width: 100%; display: flex; flex-direction: column; align-items: center; }
         
-        /* 메뉴 레이아웃 수정 */
         .ctrl-row { display: flex; justify-content: center; align-items: center; margin-bottom: 5px; gap: 15px; width: 100%; flex-wrap: nowrap; }
         .btn-grp { display: flex; gap: 6px; align-items: center; flex-shrink: 0; }
         .mobile-menu-btn { display: none; background: none; border: none; font-size: 24px; cursor: pointer; padding: 0; position: absolute; left: 20px; }
 
-        /* 인라인 폰트 슬라이더 스타일 */
         .font-control-inline { display: flex; align-items: center; gap: 10px; flex: 1; max-width: 250px; margin: 0 10px; }
         .font-icon { color: var(--gray-text); font-weight: 700; font-size: 12px; }
         .large-A { font-size: 18px; }
@@ -56,7 +58,6 @@
         .toggle-btn { border: 1px solid #dadce0; background: var(--gray-btn); color: var(--gray-text); border-radius: 6px; padding: 6px 12px; min-width: 50px; font-weight: 600; height: 32px; }
         .toggle-btn.active { background: #bdc1c6 !important; color: #202124 !important; }
 
-        /* 모드별 버튼 제어 */
         body:not(.memo-mode-active) #btn-aa { display: none !important; }
         body.memo-mode-active #btn-ipa, body.memo-mode-active #btn-trans { display: none !important; }
         body.memo-mode-active #btn-aa { display: inline-block !important; }
@@ -73,53 +74,67 @@
         .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 22px; }
         .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
         input:checked + .slider:before { transform: translateX(18px); }
-        input#shadow-mode:checked + .slider { background-color: var(--primary); }
-        input#memo-mode:checked + .slider { background-color: #ff9800; }
+        input#shadow-mode:checked + .slider, input#float-shadow-mode:checked + .slider { background-color: var(--primary); }
+        input#memo-mode:checked + .slider, input#float-memo-mode:checked + .slider { background-color: #ff9800; }
 
         #repeat-count { border: 1px solid #ddd; border-radius: 4px; padding: 0 4px; font-size: 13px; height: 28px; background: #fff; }
         #current-count { font-size: 14px; color: var(--primary); font-weight: 800; min-width: 45px; text-align: center; }
+
+        /* [추가] 둥근 모서리 배경의 화살표 버튼 디자인 (이미지 반영) */
+        .tab-btn {
+            display: flex; align-items: center; justify-content: center;
+            background: #f1f3f4; border: none; border-radius: 12px;
+            width: 42px; height: 32px; cursor: pointer; transition: 0.2s;
+        }
+        .tab-btn:hover { background: #e8eaed; }
+        .tab-btn svg { width: 22px; height: 22px; fill: #5f6368; }
+
+        /* [수정] 초슬림 세로형 플로팅 메뉴 */
+        .floating-menu {
+            display: none; position: fixed; top: 120px; right: 20px; 
+            width: 52px; /* 토글 40px 기준 좌우 여백 최소화 */
+            background: white; border-radius: 22px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            padding: 20px 0; flex-direction: column; align-items: center; gap: 22px; 
+            z-index: 1001; border: 1px solid var(--border);
+        }
+        .float-item { display: flex; flex-direction: column; align-items: center; gap: 6px; width: 100%; }
+        .float-label { font-size: 11px; font-weight: 700; color: #9aa0a6; }
+        .float-select { width: 44px; border: 1px solid #eee; border-radius: 6px; font-size: 11px; outline: none; padding: 2px 0; text-align: center; }
 
         .scroll-area { flex: 1; overflow-y: auto; padding: 30px 0; }
         .content-wrap { max-width: 80%; margin: 0 auto; width: 100%; }
         .section-title { font-size: 28px; color: var(--primary); margin-bottom: 25px; cursor: pointer; font-weight: bold; }
 
-        .card { background: var(--white); padding: 10px 15px; border-radius: 12px; margin-bottom: 10px; display: flex; gap: 15px; border: 2px solid transparent; box-shadow: 0 1px 2px rgba(0,0,0,0.05); transition: 0.2s; cursor: pointer; }
-        .card.active-play { border-color: #d2e3fc; background: #f8fbff; }
-        
+        .card { position: relative; background: var(--white); padding: 10px 15px; border-radius: 12px; margin-bottom: 10px; display: flex; gap: 15px; border: 2px solid transparent; box-shadow: 0 1px 2px rgba(0,0,0,0.05); transition: 0.2s; cursor: pointer; overflow: hidden; }
+        .card.active-play, .card.playing { border-left: 6px solid var(--primary) !important; background: #f0f7ff; border-color: #d2e3fc; }
         .play-btn { width: 28px; height: 28px; cursor: pointer; flex-shrink: 0; background-size: contain; background-repeat: no-repeat; margin-top: 4px; }
         .playing .play-btn { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234285f4'%3E%3Cpath d='M6 19h4V5H6v14zm8-14v14h4V5h-4z'/%3E%3C/svg%3E"); }
         .card:not(.playing) .play-btn { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%239aa0a6'%3E%3Cpath d='M8 5v14l11-7z'/%3E%3C/svg%3E"); }
 
         .text-content { flex: 1; display: flex; flex-direction: column; }
-        .sentence-eng, .ipa-text, .trans-text { transition: font-size 0.2s; }
-        
-        body.memo-mode-active .sentence-eng { opacity: 0; visibility: hidden; height: 0; margin: 0; overflow: hidden; }
+        body.memo-mode-active .sentence-eng { opacity: 0; visibility: hidden; height: 0; margin: 0; order: 2; color: #777; }
         body.memo-mode-active .ipa-text { display: none !important; }
-        body.memo-mode-active .card.show-script .sentence-eng { opacity: 1; visibility: visible; height: auto; margin-bottom: 4px; }
-        body.memo-mode-active .trans-text { color: var(--text); font-weight: 600; margin-bottom: 8px; }
-
-        body:not(.memo-mode-active) .sentence-eng { font-size: 18px; font-weight: 700; line-height: 1.3; margin-bottom: 4px; }
-        body:not(.memo-mode-active) .ipa-text { color: #777; font-size: 14px; margin-bottom: 2px; }
-        body:not(.memo-mode-active) .trans-text { color: #888; font-size: 13px; }
+        body.memo-mode-active .card.show-script .sentence-eng { opacity: 1; visibility: visible; height: auto; margin-top: 4px; }
+        body.memo-mode-active .trans-text { color: var(--text); font-weight: 700; order: 1; margin-bottom: 0; }
+        body:not(.memo-mode-active) .sentence-eng { font-size: 18px; font-weight: 700; line-height: 1.3; margin-bottom: 4px; order: 1; }
+        body:not(.memo-mode-active) .ipa-text { color: #777; font-size: 14px; margin-bottom: 2px; order: 2; }
+        body:not(.memo-mode-active) .trans-text { color: #888; font-size: 13px; order: 3; }
 
         .chunk { cursor: pointer; border-radius: 4px; padding: 2px 4px; }
         .chunk.active { background: #d2e3fc !important; color: #174ea6 !important; font-weight: bold; }
-
         .chat-row { display: flex; gap: 12px; margin-bottom: 12px; align-items: flex-start; }
         .badge { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0; cursor: pointer; }
         .badge-A { background: var(--pastel-blue); color: var(--pastel-blue-text); border: 1px solid #bbdefb; }
         .badge-B { background: var(--pastel-green); color: var(--pastel-green-text); border: 1px solid #c8e6c9; }
         .badge-C { background: var(--pastel-pink); color: var(--pastel-pink-text); border: 1px solid #f8bbd0; }
-        .chat-row[data-speaker="A"] .card { background-color: var(--pastel-blue); border-color: #bbdefb; }
-        .chat-row[data-speaker="B"] .card { background-color: var(--pastel-green); border-color: #c8e6c9; }
-        .chat-row[data-speaker="C"] .card { background-color: var(--pastel-pink); border-color: #f8bbd0; }
+        .chat-row.playing .card, .chat-row.active-play .card { border-left: 6px solid var(--primary) !important; background: #f0f7ff; }
 
         @media (max-width: 768px) { 
             .sidebar { position: fixed; left: -280px; height: 100%; z-index: 1001; } 
             .sidebar.open { left: 0; } 
             .mobile-menu-btn { display: block; } 
             .container, .content-wrap { max-width: 95%; }
-            .font-control-inline { display: none; } /* 모바일에서 슬라이더 숨김 */
+            .font-control-inline { display: none; }
         }
     </style>
 </head>
@@ -133,7 +148,6 @@
             <div class="container">
                 <div class="ctrl-row">
                     <button class="mobile-menu-btn" onclick="toggleSidebar()">☰</button>
-                    <!-- 배속 버튼 -->
                     <div class="btn-grp">
                         <button class="btn" onclick="setSpeed(0.3, this)">x0.3</button>
                         <button class="btn" onclick="setSpeed(0.5, this)">x0.5</button>
@@ -141,14 +155,12 @@
                         <button class="btn active" onclick="setSpeed(1.0, this)">x1.0</button>
                     </div>
                     
-                    <!-- 폰트 슬라이더 (버튼 사이 위치) -->
                     <div class="font-control-inline">
                         <span class="font-icon">A</span>
-                        <input type="range" id="font-slider" min="14" max="48" value="18" step="1">
+                        <input type="range" id="font-slider" min="14" max="32" value="18" step="1">
                         <span class="font-icon large-A">A</span>
                     </div>
 
-                    <!-- 모드 버튼 -->
                     <div class="btn-grp" id="toggle-group">
                         <button class="btn toggle-btn active" id="btn-ipa" onclick="toggleDisplay('.ipa-text', this)">IPA</button>
                         <button class="btn toggle-btn active" id="btn-trans" onclick="toggleDisplay('.trans-text', this)">한</button>
@@ -156,38 +168,52 @@
                     </div>
                 </div>
 
-                <audio id="player"></audio> 
-
                 <div class="practice-bar">
                     <div class="left-controls">
-                        <!-- 재생 상태 아이콘 추가 -->
                         <span id="global-status-icon" onclick="toggleAutoPlayAll(document.querySelector('.section-title'))">▶️</span>
-                        <div class="switch-box"><span>연습</span><label class="switch"><input type="checkbox" id="shadow-mode" onchange="isShadowing = this.checked; stopAll();"><span class="slider"></span></label></div>
+                        <div class="switch-box"><span>연습</span><label class="switch"><input type="checkbox" id="shadow-mode" onchange="syncSettings('shadow', this.checked)"><span class="slider"></span></label></div>
                         <div class="switch-box">
                             <span>반복</span>
-                            <select id="repeat-count">
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3" selected>3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
+                            <select id="repeat-count" onchange="syncSettings('repeat', this.value)">
+                                <option value="1">1</option><option value="2">2</option><option value="3" selected>3</option><option value="4">4</option><option value="5">5</option>
                             </select>
                             <span id="current-count"></span>
                         </div>
                     </div>
                     <div class="right-controls">
-                        <div class="switch-box"><span>외우기</span><label class="switch"><input type="checkbox" id="memo-mode" onchange="toggleMemoMode(this.checked)"><span class="slider"></span></label></div>
+                        <div class="switch-box" style="gap: 15px;">
+                            <span>외우기</span><label class="switch"><input type="checkbox" id="memo-mode" onchange="syncSettings('memo', this.checked)"><span class="slider"></span></label>
+                            <!-- [수정] 이미지 반영 간소화 버튼 -->
+                            <button class="tab-btn" onclick="toggleMiniMode(true)" title="간소화 모드">
+                                <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 15v2h14v-2H5z"/></svg>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </header>
+
+        <!-- [추가] 초슬림 플로팅 메뉴 영역 -->
+        <div class="floating-menu" id="floating-menu">
+            <div class="float-item"><span id="float-play-icon" style="font-size: 20px; cursor:pointer;" onclick="toggleAutoPlayAll(document.querySelector('.section-title'))">▶️</span></div>
+            <div class="float-item"><span id="float-count-label" style="font-size:11px; font-weight:800; color:var(--primary);"></span></div>
+            <div class="float-item"><span class="float-label">반복</span><select id="float-repeat-count" class="float-select" onchange="syncSettings('repeat', this.value)"><option value="1">1</option><option value="2">2</option><option value="3" selected>3</option><option value="5">5</option></select></div>
+            <div class="float-item"><span class="float-label">배속</span><select id="float-speed" class="float-select" onchange="setSpeed(parseFloat(this.value), null)"><option value="0.3">0.3</option><option value="0.5">0.5</option><option value="0.7">0.7</option><option value="1.0" selected>1.0</option></select></div>
+            <div class="float-item"><span class="float-label">연습</span><label class="switch"><input type="checkbox" id="float-shadow-mode" onchange="syncSettings('shadow', this.checked)"><span class="slider"></span></label></div>
+            <div class="float-item"><span class="float-label">외우기</span><label class="switch"><input type="checkbox" id="float-memo-mode" onchange="syncSettings('memo', this.checked)"><span class="slider"></span></label></div>
+            <!-- 복구 버튼 -->
+            <button class="tab-btn" style="margin-top: 10px; width: 38px; height: 28px;" onclick="toggleMiniMode(false)" title="기본 모드">
+                <svg viewBox="0 0 24 24"><path d="M16 17.01V10h-2v7.01h-3L15 21l4-3.99h-3zM9 3L5 6.99h3V14h2V6.99h3L9 3z"/></svg>
+            </button>
+        </div>
+
+        <audio id="player"></audio> 
         <main class="scroll-area"><div class="content-wrap" id="display-area">
             <div style="text-align: center; margin-top: 50px; color: #9aa0a6;"><h3>반갑습니다! 👋</h3><p>학습하실 챕터를 선택해주세요.</p></div>
         </div></main>
     </div>
     <script>
         const studyData = {
-
 
 
 
@@ -725,40 +751,51 @@
               fontSlider = document.getElementById('font-slider'),
               statusIcon = document.getElementById('global-status-icon');
         
-        let isShadowing = false, 
-            isMemoMode = false, 
-            currentRepeat = 0, 
-            stopTime = 0, 
-            isAutoPlaying = false;
+        let isShadowing = false, isMemoMode = false, currentRepeat = 0, stopTime = 0, isAutoPlaying = false;
 
-        function toggleSidebar() { 
-            sidebar.classList.toggle('open'); 
+        function toggleSidebar() { sidebar.classList.toggle('open'); }
+
+        // 간소화 모드 토글
+        function toggleMiniMode(isMini) {
+            if (isMini) document.body.classList.add('mini-mode');
+            else document.body.classList.remove('mini-mode');
         }
 
-        // [수정] 자동 스크롤: 화면 중앙보다 약간 위(상단 25% 지점)로 정렬
+        // 설정 동기화
+        function syncSettings(type, value) {
+            if (type === 'shadow') {
+                isShadowing = value;
+                document.getElementById('shadow-mode').checked = value;
+                document.getElementById('float-shadow-mode').checked = value;
+                stopAll();
+            } else if (type === 'memo') {
+                toggleMemoMode(value);
+                document.getElementById('memo-mode').checked = value;
+                document.getElementById('float-memo-mode').checked = value;
+            } else if (type === 'repeat') {
+                document.getElementById('repeat-count').value = value;
+                document.getElementById('float-repeat-count').value = value;
+            }
+        }
+
         function scrollToActive(el) {
             if (!el) return;
             const container = document.querySelector('.scroll-area');
-            const containerRect = container.getBoundingClientRect();
             const elRect = el.getBoundingClientRect();
-            
-            // 컨테이너 상단으로부터의 상대 위치 + 현재 스크롤 값
-            const relativeTop = elRect.top - containerRect.top + container.scrollTop;
-            // 화면 높이의 25%만큼 여백을 주어 상단에 가깝게 배치
-            const offset = container.clientHeight * 0.25;
-
-            container.scrollTo({
-                top: relativeTop - offset,
-                behavior: 'smooth'
-            });
+            container.scrollTo({ top: elRect.top - container.getBoundingClientRect().top + container.scrollTop - (container.clientHeight * 0.25), behavior: 'smooth' });
         }
         
         function applyFontSize() {
             if (!fontSlider) return;
             const baseSize = parseInt(fontSlider.value);
-            document.querySelectorAll('.sentence-eng').forEach(el => { el.style.fontSize = baseSize + 'px'; });
+            if (isMemoMode) {
+                document.querySelectorAll('.trans-text').forEach(el => { el.style.fontSize = baseSize + 'px'; });
+                document.querySelectorAll('.sentence-eng').forEach(el => { el.style.fontSize = Math.max(12, baseSize * 0.75) + 'px'; });
+            } else {
+                document.querySelectorAll('.sentence-eng').forEach(el => { el.style.fontSize = baseSize + 'px'; });
+                document.querySelectorAll('.trans-text').forEach(el => { el.style.fontSize = Math.max(11, baseSize * 0.75) + 'px'; });
+            }
             document.querySelectorAll('.ipa-text').forEach(el => { el.style.fontSize = Math.max(12, baseSize * 0.8) + 'px'; });
-            document.querySelectorAll('.trans-text').forEach(el => { el.style.fontSize = Math.max(11, baseSize * 0.75) + 'px'; });
         }
 
         function toggleMemoMode(checked) {
@@ -777,18 +814,15 @@
         }
 
         function toggleAccordion(wk) {
-            const group = document.getElementById(`group-${wk}`), 
-                  expanded = group.classList.contains('expanded');
+            const group = document.getElementById(`group-${wk}`), expanded = group.classList.contains('expanded');
             document.querySelectorAll('.menu-group').forEach(g => g.classList.remove('expanded'));
             if (!expanded) group.classList.add('expanded');
         }
 
         function loadContent(wk, type, el) {
             const data = studyData[wk]?.[type]; if (!data) return;
-            document.querySelectorAll('.sub-item').forEach(s => s.classList.remove('active')); 
-            el.classList.add('active');
+            document.querySelectorAll('.sub-item').forEach(s => s.classList.remove('active')); el.classList.add('active');
             if (window.innerWidth <= 768) sidebar.classList.remove('open');
-            
             let html = `<h2 class="section-title" onclick="toggleAutoPlayAll(this)"><span>${wk}</span>| ${type === 'mystory' ? 'My Story' : 'Real Conversation'}</h2>`;
             const items = type === 'mystory' ? data.sentences : data.chat;
             items.forEach(item => {
@@ -797,12 +831,10 @@
                 if(type === 'mystory') { html += `<div class="card" data-start="${item.start}" data-end="${item.end}"><div class="play-btn"></div>${content}</div>`; }
                 else { html += `<div class="chat-row" data-speaker="${item.speaker}" data-start="${item.start}" data-end="${item.end}"><div class="badge badge-${item.speaker}">${item.speaker}</div><div class="card" style="flex:1; margin:0;">${content}</div></div>`; }
             });
-            displayArea.innerHTML = html; 
-            applyFontSize();
+            displayArea.innerHTML = html; applyFontSize();
             const currentSpeedBtn = document.querySelector('.btn-grp .btn.active');
             const currentSpeed = currentSpeedBtn ? parseFloat(currentSpeedBtn.innerText.replace('x', '')) : 1.0;
-            player.src = data.audio; player.load(); player.playbackRate = currentSpeed; 
-            stopAll();
+            player.src = data.audio; player.load(); player.playbackRate = currentSpeed; stopAll();
             if (!isMemoMode) { applyButtonState('.ipa-text', 'btn-ipa'); applyButtonState('.trans-text', 'btn-trans'); }
         }
 
@@ -828,24 +860,18 @@
             if (card && isMemoMode) card.classList.toggle('show-script');
         });
 
-        // [수정] 타이틀 재생 시 상태 아이콘 동기화
         function toggleAutoPlayAll(titleEl) {
-            if (isAutoPlaying) {
-                stopAll();
-            } else { 
-                stopAll(); 
-                isAutoPlaying = true; 
-                if (statusIcon) statusIcon.innerText = "⏸️"; // 일시정지 아이콘으로 변경
-                titleEl.classList.add('playing'); 
+            if (isAutoPlaying) { stopAll(); } 
+            else { 
+                stopAll(); isAutoPlaying = true; 
+                statusIcon.innerText = document.getElementById('float-play-icon').innerText = "⏸️";
                 const first = displayArea.querySelector(':scope > .card, :scope > .chat-row'); 
                 if (first) { 
                     const start = parseFloat(first.dataset.start), end = parseFloat(first.dataset.end), rate = player.playbackRate;
-                    const duration = (end - start) / rate;
+                    first.classList.add('active-play'); if(isMemoMode) first.classList.add('show-script');
                     scrollToActive(first);
-                    if (isMemoMode) {
-                        first.classList.add('active-play'); 
-                        window.shadowTimer = setTimeout(() => { first.classList.add('playing'); playPart(start, end); }, (duration + 2) * 1000);
-                    } else { first.classList.add('playing', 'active-play'); playPart(start, end); }
+                    if (isMemoMode) { window.shadowTimer = setTimeout(() => { first.classList.add('playing'); playPart(start, end); }, ((end - start) / rate + 2) * 1000); } 
+                    else { first.classList.add('playing'); playPart(start, end); }
                 } 
             }
         }
@@ -858,14 +884,15 @@
             player.play(); 
         }
 
-        // [수정] 모든 재생 중단 시 아이콘 초기화
         function stopAll() { 
-            player.pause(); 
-            isAutoPlaying = false; 
-            if (statusIcon) statusIcon.innerText = "▶️"; // 재생 아이콘으로 복구
+            player.pause(); isAutoPlaying = false; 
+            statusIcon.innerText = document.getElementById('float-play-icon').innerText = "▶️";
             currentRepeat = 0; stopTime = 0; clearTimeout(window.shadowTimer);
-            document.getElementById('current-count').innerText = '';
-            document.querySelectorAll('.playing, .active-play, .chunk.active').forEach(el => el.classList.remove('playing', 'active-play', 'active'));
+            document.getElementById('current-count').innerText = document.getElementById('float-count-label').innerText = '';
+            document.querySelectorAll('.playing, .active-play, .chunk.active, .show-script').forEach(el => {
+                if(!el.closest('.memo-mode-active')) el.classList.remove('show-script');
+                el.classList.remove('playing', 'active-play', 'active');
+            });
             document.querySelectorAll('.section-title').forEach(t => t.classList.remove('playing'));
         }
 
@@ -884,34 +911,28 @@
         function toggleAllScripts() {
             const cards = document.querySelectorAll('.card');
             const isAnyHidden = Array.from(cards).some(c => !c.classList.contains('show-script'));
-            cards.forEach(card => {
-                if (isAnyHidden) card.classList.add('show-script');
-                else card.classList.remove('show-script');
-            });
+            cards.forEach(card => { if (isAnyHidden) card.classList.add('show-script'); else card.classList.remove('show-script'); });
         }
 
         function handleShadowProcess(el) {
             currentRepeat++; 
             const limit = parseInt(document.getElementById('repeat-count').value) || 1, rate = player.playbackRate;
-            document.getElementById('current-count').innerText = `${currentRepeat} / ${limit}`;
+            document.getElementById('current-count').innerText = document.getElementById('float-count-label').innerText = `${currentRepeat} / ${limit}`;
             const duration = (parseFloat(el.dataset.end) - parseFloat(el.dataset.start)) / rate;
             const waitTime = isMemoMode ? (duration + 2) * 1000 : (duration + 1.5) * 1000;
             if (currentRepeat < limit) { window.shadowTimer = setTimeout(() => playPart(parseFloat(el.dataset.start), parseFloat(el.dataset.end)), waitTime); } 
-            else { currentRepeat = 0; document.getElementById('current-count').innerText = ''; if (isAutoPlaying) window.shadowTimer = setTimeout(() => handleNext(el), waitTime); else el.classList.remove('playing'); }
+            else { currentRepeat = 0; if (isAutoPlaying) window.shadowTimer = setTimeout(() => handleNext(el), waitTime); else el.classList.remove('playing'); }
         }
 
         function handleNext(el) {
             const all = Array.from(displayArea.children).filter(child => child.classList.contains('card') || child.classList.contains('chat-row'));
-            const idx = all.indexOf(el); el.classList.remove('playing');
+            const idx = all.indexOf(el); el.classList.remove('playing', 'active-play');
             if (idx < all.length - 1) { 
                 const next = all[idx+1], rate = player.playbackRate;
-                const nextDuration = (parseFloat(next.dataset.end) - parseFloat(next.dataset.start)) / rate;
-                const thinkingTime = (nextDuration + 2) * 1000;
-                const waitTime = isMemoMode ? thinkingTime : (isShadowing ? (nextDuration + 1.5) * 1000 : 400);
+                next.classList.add('active-play'); if(isMemoMode) next.classList.add('show-script');
+                scrollToActive(next);
                 window.shadowTimer = setTimeout(() => { 
-                    next.classList.add('active-play'); 
-                    scrollToActive(next);
-                    if (isMemoMode) { window.shadowTimer = setTimeout(() => { next.classList.add('playing'); playPart(parseFloat(next.dataset.start), parseFloat(next.dataset.end)); }, thinkingTime); } 
+                    if (isMemoMode) { window.shadowTimer = setTimeout(() => { next.classList.add('playing'); playPart(parseFloat(next.dataset.start), parseFloat(next.dataset.end)); }, ((parseFloat(next.dataset.end) - parseFloat(next.dataset.start)) / rate + 2) * 1000); } 
                     else { next.classList.add('playing'); playPart(parseFloat(next.dataset.start), parseFloat(next.dataset.end)); }
                 }, 400); 
             } else { stopAll(); }
@@ -920,7 +941,8 @@
         function setSpeed(s, btn) { 
             player.playbackRate = s; 
             document.querySelectorAll('.btn-grp .btn').forEach(b => { if(b.innerText.includes('x')) b.classList.remove('active'); }); 
-            btn.classList.add('active'); 
+            if(btn) btn.classList.add('active');
+            document.getElementById('float-speed').value = s.toFixed(1);
         }
 
         window.onload = () => {
