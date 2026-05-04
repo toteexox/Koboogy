@@ -18,12 +18,10 @@
         body { font-family: 'Inter', 'Malgun Gothic', sans-serif; margin: 0; display: flex; height: 100vh; overflow: hidden; background: var(--white); color: var(--text); }
         body.memo-mode-active .main-content { background-color: var(--memo-bg); }
 
-        body.memo-mode-active #toggle-group { display: none; }
-
         .sidebar { width: 280px; border-right: 1px solid var(--border); overflow-y: auto; flex-shrink: 0; padding: 20px 10px; background: var(--white); transition: 0.3s; }
         .sidebar.open { left: 0; }
         .brand { display: flex; align-items: center; gap: 10px; padding: 0 15px 30px; font-size: 24px; font-weight: bold; }
-        .brand img { width: 45px; border-radius: 8px; }
+        .brand img { width: 45px; border-radius: 8 image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234285f4'%3E%3Cpath d='M6 19h4V5H6v14zm8-14v14h4V5h-4z'/%3E%3C/svg%3E"); }px; }
         
         .menu-group { margin-bottom: 5px; border-radius: 8px; }
         .menu-item { cursor: pointer; padding: 10px 15px; display: flex; align-items: center; gap: 10px; font-weight: 600; color: #3c4043; border-radius: 8px; }
@@ -38,25 +36,38 @@
 
         .main-content { flex: 1; display: flex; flex-direction: column; background: var(--bg); position: relative; transition: background-color 0.4s; }
         .sticky-header { background: var(--white); padding: 15px 25px; border-bottom: 1px solid var(--border); }
-        .container { max-width: 70%; margin: 0 auto; width: 100%; display: flex; flex-direction: column; align-items: center; }
+        .container { max-width: 80%; margin: 0 auto; width: 100%; display: flex; flex-direction: column; align-items: center; }
         
-        .ctrl-row { display: flex; justify-content: center; align-items: center; margin-bottom: 15px; gap: 15px; width: 100%; flex-wrap: wrap; }
-        .btn-grp { display: flex; gap: 6px; align-items: center; justify-content: center; }
+        /* 메뉴 레이아웃 수정 */
+        .ctrl-row { display: flex; justify-content: center; align-items: center; margin-bottom: 5px; gap: 15px; width: 100%; flex-wrap: nowrap; }
+        .btn-grp { display: flex; gap: 6px; align-items: center; flex-shrink: 0; }
         .mobile-menu-btn { display: none; background: none; border: none; font-size: 24px; cursor: pointer; padding: 0; position: absolute; left: 20px; }
 
-        .btn { border: 1px solid var(--dull-gray); background: var(--white); color: var(--dull-gray); cursor: pointer; border-radius: 4px; padding: 5px 10px; font-size: 12px; font-weight: 600; font-family: 'Inter', sans-serif; height: 32px; transition: 0.2s; }
+        /* 인라인 폰트 슬라이더 스타일 */
+        .font-control-inline { display: flex; align-items: center; gap: 10px; flex: 1; max-width: 250px; margin: 0 10px; }
+        .font-icon { color: var(--gray-text); font-weight: 700; font-size: 12px; }
+        .large-A { font-size: 18px; }
+        #font-slider { flex: 1; -webkit-appearance: none; height: 4px; background: #e0e0e0; border-radius: 5px; outline: none; }
+        #font-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 16px; height: 16px; border-radius: 50%; background: var(--primary); cursor: pointer; border: 2px solid white; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
+
+        .btn { border: 1px solid var(--dull-gray); background: var(--white); color: var(--dull-gray); cursor: pointer; border-radius: 4px; padding: 5px 10px; font-size: 12px; font-weight: 600; height: 32px; transition: 0.2s; }
         .btn.active { background: var(--dull-blue) !important; color: var(--white) !important; border-color: var(--dull-blue) !important; }
 
         .toggle-btn { border: 1px solid #dadce0; background: var(--gray-btn); color: var(--gray-text); border-radius: 6px; padding: 6px 12px; min-width: 50px; font-weight: 600; height: 32px; }
         .toggle-btn.active { background: #bdc1c6 !important; color: #202124 !important; }
 
-        audio { width: 100%; height: 40px; margin-bottom: 15px; }
+        /* 모드별 버튼 제어 */
+        body:not(.memo-mode-active) #btn-aa { display: none !important; }
+        body.memo-mode-active #btn-ipa, body.memo-mode-active #btn-trans { display: none !important; }
+        body.memo-mode-active #btn-aa { display: inline-block !important; }
 
-        .practice-bar { background: #fff; padding: 10px 20px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 3px rgba(0,0,0,0.1); width: 100%; height: 50px; }
-        .left-controls { display: flex; align-items: center; gap: 15px; }
-        .right-controls { display: flex; align-items: center; }
+        audio { display: none; }
+
+        .practice-bar { background: #fff; padding: 10px 20px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 3px rgba(0,0,0,0.1); width: 100%; height: 50px; margin-top: 10px; }
+        .left-controls { display: flex; align-items: center; gap: 12px; }
+        #global-status-icon { font-size: 18px; width: 24px; text-align: center; cursor: pointer; transition: 0.2s; }
         
-        .switch-box { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: bold; white-space: nowrap; height: 32px; }
+        .switch-box { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: bold; white-space: nowrap; }
         .switch { position: relative; width: 40px; height: 22px; display: inline-block; }
         .switch input { opacity: 0; width: 0; height: 0; }
         .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 22px; }
@@ -65,37 +76,37 @@
         input#shadow-mode:checked + .slider { background-color: var(--primary); }
         input#memo-mode:checked + .slider { background-color: #ff9800; }
 
-        #repeat-count { border: 1px solid #ddd; border-radius: 4px; padding: 0 8px; font-size: 13px; font-family: 'Inter', sans-serif; cursor: pointer; height: 32px; background: #fff; }
+        #repeat-count { border: 1px solid #ddd; border-radius: 4px; padding: 0 4px; font-size: 13px; height: 28px; background: #fff; }
         #current-count { font-size: 14px; color: var(--primary); font-weight: 800; min-width: 45px; text-align: center; }
 
         .scroll-area { flex: 1; overflow-y: auto; padding: 30px 0; }
-        .content-wrap { max-width: 70%; margin: 0 auto; width: 100%; }
-        .section-title { font-size: 28px; color: var(--primary); margin-bottom: 25px; cursor: pointer; font-weight: bold; font-family: 'Inter', sans-serif; }
+        .content-wrap { max-width: 80%; margin: 0 auto; width: 100%; }
+        .section-title { font-size: 28px; color: var(--primary); margin-bottom: 25px; cursor: pointer; font-weight: bold; }
 
         .card { background: var(--white); padding: 10px 15px; border-radius: 12px; margin-bottom: 10px; display: flex; gap: 15px; border: 2px solid transparent; box-shadow: 0 1px 2px rgba(0,0,0,0.05); transition: 0.2s; cursor: pointer; }
         .card.active-play { border-color: #d2e3fc; background: #f8fbff; }
         
-        .play-btn { position: relative; width: 28px; height: 28px; cursor: pointer; flex-shrink: 0; background-size: contain; background-repeat: no-repeat; margin-top: 4px; }
+        .play-btn { width: 28px; height: 28px; cursor: pointer; flex-shrink: 0; background-size: contain; background-repeat: no-repeat; margin-top: 4px; }
         .playing .play-btn { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234285f4'%3E%3Cpath d='M6 19h4V5H6v14zm8-14v14h4V5h-4z'/%3E%3C/svg%3E"); }
         .card:not(.playing) .play-btn { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%239aa0a6'%3E%3Cpath d='M8 5v14l11-7z'/%3E%3C/svg%3E"); }
 
         .text-content { flex: 1; display: flex; flex-direction: column; }
-        .sentence-eng, .ipa-text { transition: opacity 0.3s; font-family: 'Inter', sans-serif; }
+        .sentence-eng, .ipa-text, .trans-text { transition: font-size 0.2s; }
         
-        body.memo-mode-active .sentence-eng { opacity: 0; visibility: hidden; height: 0; margin: 0; overflow: hidden; order: 2; }
+        body.memo-mode-active .sentence-eng { opacity: 0; visibility: hidden; height: 0; margin: 0; overflow: hidden; }
         body.memo-mode-active .ipa-text { display: none !important; }
-        body.memo-mode-active .card.show-script .sentence-eng { opacity: 1; visibility: visible; height: auto; margin-bottom: 4px; order: 2; }
-        body.memo-mode-active .trans-text { order: 1; color: var(--text); font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        body.memo-mode-active .card.show-script .sentence-eng { opacity: 1; visibility: visible; height: auto; margin-bottom: 4px; }
+        body.memo-mode-active .trans-text { color: var(--text); font-weight: 600; margin-bottom: 8px; }
 
-        body:not(.memo-mode-active) .sentence-eng { order: 1; font-size: 18px; font-weight: 700; line-height: 1.3; margin-bottom: 4px; }
-        body:not(.memo-mode-active) .ipa-text { order: 2; color: #777; font-size: 14px; margin-bottom: 2px; }
-        body:not(.memo-mode-active) .trans-text { order: 3; color: #888; font-size: 13px; }
+        body:not(.memo-mode-active) .sentence-eng { font-size: 18px; font-weight: 700; line-height: 1.3; margin-bottom: 4px; }
+        body:not(.memo-mode-active) .ipa-text { color: #777; font-size: 14px; margin-bottom: 2px; }
+        body:not(.memo-mode-active) .trans-text { color: #888; font-size: 13px; }
 
         .chunk { cursor: pointer; border-radius: 4px; padding: 2px 4px; }
         .chunk.active { background: #d2e3fc !important; color: #174ea6 !important; font-weight: bold; }
 
         .chat-row { display: flex; gap: 12px; margin-bottom: 12px; align-items: flex-start; }
-        .badge { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0; cursor: pointer; font-family: 'Inter', sans-serif; }
+        .badge { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0; cursor: pointer; }
         .badge-A { background: var(--pastel-blue); color: var(--pastel-blue-text); border: 1px solid #bbdefb; }
         .badge-B { background: var(--pastel-green); color: var(--pastel-green-text); border: 1px solid #c8e6c9; }
         .badge-C { background: var(--pastel-pink); color: var(--pastel-pink-text); border: 1px solid #f8bbd0; }
@@ -108,8 +119,7 @@
             .sidebar.open { left: 0; } 
             .mobile-menu-btn { display: block; } 
             .container, .content-wrap { max-width: 95%; }
-            .practice-bar { padding: 0 10px; height: 48px; }
-            .btn { height: 28px; padding: 0 8px; font-size: 11px; }
+            .font-control-inline { display: none; } /* 모바일에서 슬라이더 숨김 */
         }
     </style>
 </head>
@@ -123,20 +133,35 @@
             <div class="container">
                 <div class="ctrl-row">
                     <button class="mobile-menu-btn" onclick="toggleSidebar()">☰</button>
+                    <!-- 배속 버튼 -->
                     <div class="btn-grp">
                         <button class="btn" onclick="setSpeed(0.3, this)">x0.3</button>
                         <button class="btn" onclick="setSpeed(0.5, this)">x0.5</button>
                         <button class="btn" onclick="setSpeed(0.7, this)">x0.7</button>
                         <button class="btn active" onclick="setSpeed(1.0, this)">x1.0</button>
                     </div>
+                    
+                    <!-- 폰트 슬라이더 (버튼 사이 위치) -->
+                    <div class="font-control-inline">
+                        <span class="font-icon">A</span>
+                        <input type="range" id="font-slider" min="14" max="32" value="18" step="1">
+                        <span class="font-icon large-A">A</span>
+                    </div>
+
+                    <!-- 모드 버튼 -->
                     <div class="btn-grp" id="toggle-group">
                         <button class="btn toggle-btn active" id="btn-ipa" onclick="toggleDisplay('.ipa-text', this)">IPA</button>
                         <button class="btn toggle-btn active" id="btn-trans" onclick="toggleDisplay('.trans-text', this)">한</button>
+                        <button class="btn toggle-btn" id="btn-aa" onclick="toggleAllScripts()" title="전체 영어 보기">Aa</button>
                     </div>
                 </div>
-                <audio id="player" controls></audio>
+
+                <audio id="player"></audio> 
+
                 <div class="practice-bar">
                     <div class="left-controls">
+                        <!-- 재생 상태 아이콘 추가 -->
+                        <span id="global-status-icon" onclick="toggleAutoPlayAll(document.querySelector('.section-title'))">▶️</span>
                         <div class="switch-box"><span>연습</span><label class="switch"><input type="checkbox" id="shadow-mode" onchange="isShadowing = this.checked; stopAll();"><span class="slider"></span></label></div>
                         <div class="switch-box">
                             <span>반복</span>
@@ -150,7 +175,9 @@
                             <span id="current-count"></span>
                         </div>
                     </div>
-                    <div class="right-controls"><div class="switch-box"><span>외우기</span><label class="switch"><input type="checkbox" id="memo-mode" onchange="toggleMemoMode(this.checked)"><span class="slider"></span></label></div></div>
+                    <div class="right-controls">
+                        <div class="switch-box"><span>외우기</span><label class="switch"><input type="checkbox" id="memo-mode" onchange="toggleMemoMode(this.checked)"><span class="slider"></span></label></div>
+                    </div>
                 </div>
             </div>
         </header>
@@ -691,11 +718,49 @@
 
 }; // 데이터 종료 지점
 
-        const player = document.getElementById('player'), displayArea = document.getElementById('display-area'), navList = document.getElementById('nav-list'), sidebar = document.getElementById('sidebar');
-        let isShadowing = false, isMemoMode = false, currentRepeat = 0, stopTime = 0, isAutoPlaying = false;
-
-        function toggleSidebar() { sidebar.classList.toggle('open'); }
+        const player = document.getElementById('player'), 
+              displayArea = document.getElementById('display-area'), 
+              navList = document.getElementById('nav-list'), 
+              sidebar = document.getElementById('sidebar'),
+              fontSlider = document.getElementById('font-slider'),
+              statusIcon = document.getElementById('global-status-icon');
         
+        let isShadowing = false, 
+            isMemoMode = false, 
+            currentRepeat = 0, 
+            stopTime = 0, 
+            isAutoPlaying = false;
+
+        function toggleSidebar() { 
+            sidebar.classList.toggle('open'); 
+        }
+
+        // [수정] 자동 스크롤: 화면 중앙보다 약간 위(상단 25% 지점)로 정렬
+        function scrollToActive(el) {
+            if (!el) return;
+            const container = document.querySelector('.scroll-area');
+            const containerRect = container.getBoundingClientRect();
+            const elRect = el.getBoundingClientRect();
+            
+            // 컨테이너 상단으로부터의 상대 위치 + 현재 스크롤 값
+            const relativeTop = elRect.top - containerRect.top + container.scrollTop;
+            // 화면 높이의 25%만큼 여백을 주어 상단에 가깝게 배치
+            const offset = container.clientHeight * 0.25;
+
+            container.scrollTo({
+                top: relativeTop - offset,
+                behavior: 'smooth'
+            });
+        }
+        
+        function applyFontSize() {
+            if (!fontSlider) return;
+            const baseSize = parseInt(fontSlider.value);
+            document.querySelectorAll('.sentence-eng').forEach(el => { el.style.fontSize = baseSize + 'px'; });
+            document.querySelectorAll('.ipa-text').forEach(el => { el.style.fontSize = Math.max(12, baseSize * 0.8) + 'px'; });
+            document.querySelectorAll('.trans-text').forEach(el => { el.style.fontSize = Math.max(11, baseSize * 0.75) + 'px'; });
+        }
+
         function toggleMemoMode(checked) {
             isMemoMode = checked;
             document.body.classList.toggle('memo-mode-active', checked);
@@ -712,14 +777,16 @@
         }
 
         function toggleAccordion(wk) {
-            const group = document.getElementById(`group-${wk}`), expanded = group.classList.contains('expanded');
+            const group = document.getElementById(`group-${wk}`), 
+                  expanded = group.classList.contains('expanded');
             document.querySelectorAll('.menu-group').forEach(g => g.classList.remove('expanded'));
             if (!expanded) group.classList.add('expanded');
         }
 
         function loadContent(wk, type, el) {
             const data = studyData[wk]?.[type]; if (!data) return;
-            document.querySelectorAll('.sub-item').forEach(s => s.classList.remove('active')); el.classList.add('active');
+            document.querySelectorAll('.sub-item').forEach(s => s.classList.remove('active')); 
+            el.classList.add('active');
             if (window.innerWidth <= 768) sidebar.classList.remove('open');
             
             let html = `<h2 class="section-title" onclick="toggleAutoPlayAll(this)"><span>${wk}</span>| ${type === 'mystory' ? 'My Story' : 'Real Conversation'}</h2>`;
@@ -731,15 +798,10 @@
                 else { html += `<div class="chat-row" data-speaker="${item.speaker}" data-start="${item.start}" data-end="${item.end}"><div class="badge badge-${item.speaker}">${item.speaker}</div><div class="card" style="flex:1; margin:0;">${content}</div></div>`; }
             });
             displayArea.innerHTML = html; 
-
-            // 현재 설정된 배속 버튼의 값을 가져와서 새 음원에도 적용
+            applyFontSize();
             const currentSpeedBtn = document.querySelector('.btn-grp .btn.active');
             const currentSpeed = currentSpeedBtn ? parseFloat(currentSpeedBtn.innerText.replace('x', '')) : 1.0;
-            
-            player.src = data.audio; 
-            player.load();
-            player.playbackRate = currentSpeed; 
-
+            player.src = data.audio; player.load(); player.playbackRate = currentSpeed; 
             stopAll();
             if (!isMemoMode) { applyButtonState('.ipa-text', 'btn-ipa'); applyButtonState('.trans-text', 'btn-trans'); }
         }
@@ -760,40 +822,48 @@
             if (playBtn || badge) {
                 const row = e.target.closest('.card, .chat-row');
                 if (row.classList.contains('playing')) { player.pause(); row.classList.remove('playing'); } 
-                else { stopAll(); if(isMemoMode && card) card.classList.add('show-script'); row.classList.add('playing', 'active-play'); playPart(parseFloat(row.dataset.start), parseFloat(row.dataset.end)); }
+                else { stopAll(); if(isMemoMode && card) card.classList.add('show-script'); row.classList.add('playing', 'active-play'); scrollToActive(row); playPart(parseFloat(row.dataset.start), parseFloat(row.dataset.end)); }
                 return;
             }
             if (card && isMemoMode) card.classList.toggle('show-script');
         });
 
+        // [수정] 타이틀 재생 시 상태 아이콘 동기화
         function toggleAutoPlayAll(titleEl) {
-    if (isAutoPlaying) stopAll();
-    else { 
-        stopAll(); isAutoPlaying = true; titleEl.classList.add('playing'); 
-        
-        // 수정: displayArea 바로 아래에 있는 첫 번째 아이템(.card 또는 .chat-row)만 선택
-        const first = displayArea.querySelector(':scope > .card, :scope > .chat-row'); 
-        
-        if (first) { 
-            const cardPart = first.classList.contains('card') ? first : first.querySelector('.card');
-            if(isMemoMode && cardPart) cardPart.classList.add('show-script');
-            first.classList.add('playing', 'active-play'); 
-            playPart(parseFloat(first.dataset.start), parseFloat(first.dataset.end)); 
-        } 
-    }
-}
+            if (isAutoPlaying) {
+                stopAll();
+            } else { 
+                stopAll(); 
+                isAutoPlaying = true; 
+                if (statusIcon) statusIcon.innerText = "⏸️"; // 일시정지 아이콘으로 변경
+                titleEl.classList.add('playing'); 
+                const first = displayArea.querySelector(':scope > .card, :scope > .chat-row'); 
+                if (first) { 
+                    const start = parseFloat(first.dataset.start), end = parseFloat(first.dataset.end), rate = player.playbackRate;
+                    const duration = (end - start) / rate;
+                    scrollToActive(first);
+                    if (isMemoMode) {
+                        first.classList.add('active-play'); 
+                        window.shadowTimer = setTimeout(() => { first.classList.add('playing'); playPart(start, end); }, (duration + 2) * 1000);
+                    } else { first.classList.add('playing', 'active-play'); playPart(start, end); }
+                } 
+            }
+        }
 
         function playPart(s, e) { 
             clearTimeout(window.shadowTimer); 
             const rate = player.playbackRate;
-            // 배속에 따라 종료 지점 보정 (느릴수록 더 끝까지 재생)
             stopTime = e - (0.32 * rate); 
             player.currentTime = Math.max(0, s - (0.17 * rate)); 
             player.play(); 
         }
 
+        // [수정] 모든 재생 중단 시 아이콘 초기화
         function stopAll() { 
-            player.pause(); isAutoPlaying = false; currentRepeat = 0; stopTime = 0; clearTimeout(window.shadowTimer);
+            player.pause(); 
+            isAutoPlaying = false; 
+            if (statusIcon) statusIcon.innerText = "▶️"; // 재생 아이콘으로 복구
+            currentRepeat = 0; stopTime = 0; clearTimeout(window.shadowTimer);
             document.getElementById('current-count').innerText = '';
             document.querySelectorAll('.playing, .active-play, .chunk.active').forEach(el => el.classList.remove('playing', 'active-play', 'active'));
             document.querySelectorAll('.section-title').forEach(t => t.classList.remove('playing'));
@@ -811,54 +881,41 @@
             }
         });
 
+        function toggleAllScripts() {
+            const cards = document.querySelectorAll('.card');
+            const isAnyHidden = Array.from(cards).some(c => !c.classList.contains('show-script'));
+            cards.forEach(card => {
+                if (isAnyHidden) card.classList.add('show-script');
+                else card.classList.remove('show-script');
+            });
+        }
+
         function handleShadowProcess(el) {
             currentRepeat++; 
-            const limit = parseInt(document.getElementById('repeat-count').value) || 1;
-            const rate = player.playbackRate;
-            
-            // 상단 카운터 업데이트
+            const limit = parseInt(document.getElementById('repeat-count').value) || 1, rate = player.playbackRate;
             document.getElementById('current-count').innerText = `${currentRepeat} / ${limit}`;
-
-            const durationInSec = (parseFloat(el.dataset.end) - parseFloat(el.dataset.start)) / rate;
-            const waitTime = durationInSec * 1000; // 2초 추가 삭제, 문장 길이만큼 대기
-
-            if (currentRepeat < limit) { 
-                window.shadowTimer = setTimeout(() => playPart(parseFloat(el.dataset.start), parseFloat(el.dataset.end)), waitTime); 
-            } else { 
-                currentRepeat = 0; 
-                document.getElementById('current-count').innerText = '';
-                if (isAutoPlaying) window.shadowTimer = setTimeout(() => handleNext(el), waitTime); 
-                else el.classList.remove('playing'); 
-            }
+            const duration = (parseFloat(el.dataset.end) - parseFloat(el.dataset.start)) / rate;
+            const waitTime = isMemoMode ? (duration + 2) * 1000 : (duration + 1.5) * 1000;
+            if (currentRepeat < limit) { window.shadowTimer = setTimeout(() => playPart(parseFloat(el.dataset.start), parseFloat(el.dataset.end)), waitTime); } 
+            else { currentRepeat = 0; document.getElementById('current-count').innerText = ''; if (isAutoPlaying) window.shadowTimer = setTimeout(() => handleNext(el), waitTime); else el.classList.remove('playing'); }
         }
 
         function handleNext(el) {
-    // 수정: displayArea의 직계 자식인 .card와 .chat-row만 리스트로 만듭니다.
-    // 이렇게 해야 Real Conversation에서 내부 카드(.card)가 중복으로 리스트에 담기는 것을 방지합니다.
-    const all = Array.from(displayArea.children).filter(child => 
-        child.classList.contains('card') || child.classList.contains('chat-row')
-    );
-    
-    const idx = all.indexOf(el); 
-    el.classList.remove('playing');
-    
-    if (idx < all.length - 1) { 
-        const next = all[idx+1]; 
-        const cardPart = next.classList.contains('card') ? next : next.querySelector('.card');
-        
-        const rate = player.playbackRate;
-        const durationInSec = (parseFloat(el.dataset.end) - parseFloat(el.dataset.start)) / rate;
-        const waitTime = durationInSec * 1000;
-
-        window.shadowTimer = setTimeout(() => { 
-            if(isMemoMode && cardPart) cardPart.classList.add('show-script');
-            next.classList.add('playing', 'active-play'); 
-            playPart(parseFloat(next.dataset.start), parseFloat(next.dataset.end)); 
-        }, isShadowing ? waitTime : 400); 
-    } else { 
-        stopAll(); 
-    }
-}
+            const all = Array.from(displayArea.children).filter(child => child.classList.contains('card') || child.classList.contains('chat-row'));
+            const idx = all.indexOf(el); el.classList.remove('playing');
+            if (idx < all.length - 1) { 
+                const next = all[idx+1], rate = player.playbackRate;
+                const nextDuration = (parseFloat(next.dataset.end) - parseFloat(next.dataset.start)) / rate;
+                const thinkingTime = (nextDuration + 2) * 1000;
+                const waitTime = isMemoMode ? thinkingTime : (isShadowing ? (nextDuration + 1.5) * 1000 : 400);
+                window.shadowTimer = setTimeout(() => { 
+                    next.classList.add('active-play'); 
+                    scrollToActive(next);
+                    if (isMemoMode) { window.shadowTimer = setTimeout(() => { next.classList.add('playing'); playPart(parseFloat(next.dataset.start), parseFloat(next.dataset.end)); }, thinkingTime); } 
+                    else { next.classList.add('playing'); playPart(parseFloat(next.dataset.start), parseFloat(next.dataset.end)); }
+                }, 400); 
+            } else { stopAll(); }
+        }
 
         function setSpeed(s, btn) { 
             player.playbackRate = s; 
@@ -872,18 +929,10 @@
             if (navList) {
                 menuItems.forEach((name, idx) => {
                     const wk = (idx + 1).toString().padStart(2, '0');
-                    navList.insertAdjacentHTML('beforeend', `
-                        <div class="menu-group" id="group-${wk}">
-                            <div class="menu-item" onclick="toggleAccordion('${wk}')">
-                                <span class="arrow">▶</span> ${name}
-                            </div>
-                            <div class="sub-menu">
-                                <div class="sub-item" onclick="loadContent('${wk}', 'mystory', this)">My story</div>
-                                <div class="sub-item" onclick="loadContent('${wk}', 'realconvo', this)">Real Conversation</div>
-                            </div>
-                        </div>`);
+                    navList.insertAdjacentHTML('beforeend', `<div class="menu-group" id="group-${wk}"><div class="menu-item" onclick="toggleAccordion('${wk}')"><span class="arrow">▶</span> ${name}</div><div class="sub-menu"><div class="sub-item" onclick="loadContent('${wk}', 'mystory', this)">My story</div><div class="sub-item" onclick="loadContent('${wk}', 'realconvo', this)">Real Conversation</div></div></div>`);
                 });
             }
+            if (fontSlider) { fontSlider.addEventListener('input', applyFontSize); }
         };
     </script>
 </body>
