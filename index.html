@@ -18,6 +18,7 @@
         body { font-family: 'Inter', 'Malgun Gothic', sans-serif; margin: 0; display: flex; height: 100vh; overflow: hidden; background: var(--white); color: var(--text); }
         body.memo-mode-active .main-content { background-color: var(--memo-bg); }
 
+        /* [수정] 간소화 모드 제어 */
         body.mini-mode .sticky-header { display: none; }
         body.mini-mode .floating-menu { display: flex; }
 
@@ -79,27 +80,31 @@
         #repeat-count { border: 1px solid #ddd; border-radius: 4px; padding: 0 4px; font-size: 13px; height: 28px; background: #fff; }
         #current-count { font-size: 14px; color: var(--primary); font-weight: 800; min-width: 45px; text-align: center; }
 
-        .tab-btn { display: flex; align-items: center; justify-content: center; background: #f1f3f4; border: none; border-radius: 12px; width: 42px; height: 32px; cursor: pointer; transition: 0.2s; }
+        /* [추가] 둥근 모서리 배경의 화살표 버튼 디자인 (이미지 반영) */
+        .tab-btn {
+            display: flex; align-items: center; justify-content: center;
+            background: #f1f3f4; border: none; border-radius: 12px;
+            width: 42px; height: 32px; cursor: pointer; transition: 0.2s;
+        }
         .tab-btn:hover { background: #e8eaed; }
+        .tab-btn svg { width: 22px; height: 22px; fill: #5f6368; }
 
+        /* [수정] 초슬림 세로형 플로팅 메뉴 */
         .floating-menu {
-            display: none; position: fixed; top: 120px; right: 20px; width: 52px; background: white; border-radius: 22px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            padding: 20px 0; flex-direction: column; align-items: center; gap: 22px; z-index: 1001; border: 1px solid var(--border);
+            display: none; position: fixed; top: 120px; right: 20px; 
+            width: 52px; /* 토글 40px 기준 좌우 여백 최소화 */
+            background: white; border-radius: 22px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            padding: 20px 0; flex-direction: column; align-items: center; gap: 22px; 
+            z-index: 1001; border: 1px solid var(--border);
         }
         .float-item { display: flex; flex-direction: column; align-items: center; gap: 6px; width: 100%; }
         .float-label { font-size: 11px; font-weight: 700; color: #9aa0a6; }
         .float-select { width: 44px; border: 1px solid #eee; border-radius: 6px; font-size: 11px; outline: none; padding: 2px 0; text-align: center; }
 
         .scroll-area { flex: 1; overflow-y: auto; padding: 30px 0; }
-        /* 본문 하단 공백과 플로팅 버튼 🔝 */
-        .content-wrap { max-width: 80%; margin: 0 auto; width: 100%; padding-bottom: 100px; }
-        #scroll-top-btn {
-            position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px; background: var(--white);
-            border: 1px solid var(--border); border-radius: 50%; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            cursor: pointer; display: none; align-items: center; justify-content: center; font-size: 24px; z-index: 1002;
-        }
-
+        .content-wrap { max-width: 80%; margin: 0 auto; width: 100%; }
         .section-title { font-size: 28px; color: var(--primary); margin-bottom: 25px; cursor: pointer; font-weight: bold; }
+
         .card { position: relative; background: var(--white); padding: 10px 15px; border-radius: 12px; margin-bottom: 10px; display: flex; gap: 15px; border: 2px solid transparent; box-shadow: 0 1px 2px rgba(0,0,0,0.05); transition: 0.2s; cursor: pointer; overflow: hidden; }
         .card.active-play, .card.playing { border-left: 6px solid var(--primary) !important; background: #f0f7ff; border-color: #d2e3fc; }
         .play-btn { width: 28px; height: 28px; cursor: pointer; flex-shrink: 0; background-size: contain; background-repeat: no-repeat; margin-top: 4px; }
@@ -122,6 +127,7 @@
         .badge-A { background: var(--pastel-blue); color: var(--pastel-blue-text); border: 1px solid #bbdefb; }
         .badge-B { background: var(--pastel-green); color: var(--pastel-green-text); border: 1px solid #c8e6c9; }
         .badge-C { background: var(--pastel-pink); color: var(--pastel-pink-text); border: 1px solid #f8bbd0; }
+        .chat-row.playing .card, .chat-row.active-play .card { border-left: 6px solid var(--primary) !important; background: #f0f7ff; }
 
         @media (max-width: 768px) { 
             .sidebar { position: fixed; left: -280px; height: 100%; z-index: 1001; } 
@@ -158,7 +164,7 @@
                     <div class="btn-grp" id="toggle-group">
                         <button class="btn toggle-btn active" id="btn-ipa" onclick="toggleDisplay('.ipa-text', this)">IPA</button>
                         <button class="btn toggle-btn active" id="btn-trans" onclick="toggleDisplay('.trans-text', this)">한</button>
-                        <button class="btn toggle-btn" id="btn-aa" onclick="toggleAllScripts()">Aa</button>
+                        <button class="btn toggle-btn" id="btn-aa" onclick="toggleAllScripts()" title="전체 영어 보기">Aa</button>
                     </div>
                 </div>
 
@@ -169,7 +175,7 @@
                         <div class="switch-box">
                             <span>반복</span>
                             <select id="repeat-count" onchange="syncSettings('repeat', this.value)">
-                                <option value="1">1</option><option value="2">2</option><option value="3" selected>3</option><option value="5">5</option>
+                                <option value="1">1</option><option value="2">2</option><option value="3" selected>3</option><option value="4">4</option><option value="5">5</option>
                             </select>
                             <span id="current-count"></span>
                         </div>
@@ -177,32 +183,35 @@
                     <div class="right-controls">
                         <div class="switch-box" style="gap: 15px;">
                             <span>외우기</span><label class="switch"><input type="checkbox" id="memo-mode" onchange="syncSettings('memo', this.checked)"><span class="slider"></span></label>
-                            <button class="tab-btn" onclick="toggleMiniMode(true)">>></button>
+                            <!-- [수정] 이미지 반영 간소화 버튼 -->
+                            <button class="tab-btn" onclick="toggleMiniMode(true)" title="간소화 모드">
+                                >>
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
         </header>
 
+        <!-- [추가] 초슬림 플로팅 메뉴 영역 -->
         <div class="floating-menu" id="floating-menu">
             <div class="float-item"><span id="float-play-icon" style="font-size: 20px; cursor:pointer;" onclick="toggleAutoPlayAll(document.querySelector('.section-title'))">▶️</span></div>
             <div class="float-item"><span id="float-count-label" style="font-size:11px; font-weight:800; color:var(--primary);"></span></div>
-            <div class="float-item"><span class="float-label">반복</span><select id="float-repeat-count" class="float-select" onchange="syncSettings('repeat', this.value)"><option value="1">1</option><option value="3" selected>3</option><option value="5">5</option></select></div>
-            <div class="float-item"><span class="float-label">배속</span><select id="float-speed" class="float-select" onchange="setSpeed(parseFloat(this.value), null)"><option value="0.5">0.5</option><option value="0.7">0.7</option><option value="1.0" selected>1.0</option></select></div>
+            <div class="float-item"><span class="float-label">반복</span><select id="float-repeat-count" class="float-select" onchange="syncSettings('repeat', this.value)"><option value="1">1</option><option value="2">2</option><option value="3" selected>3</option><option value="5">5</option></select></div>
+            <div class="float-item"><span class="float-label">배속</span><select id="float-speed" class="float-select" onchange="setSpeed(parseFloat(this.value), null)"><option value="0.3">0.3</option><option value="0.5">0.5</option><option value="0.7">0.7</option><option value="1.0" selected>1.0</option></select></div>
             <div class="float-item"><span class="float-label">연습</span><label class="switch"><input type="checkbox" id="float-shadow-mode" onchange="syncSettings('shadow', this.checked)"><span class="slider"></span></label></div>
             <div class="float-item"><span class="float-label">외우기</span><label class="switch"><input type="checkbox" id="float-memo-mode" onchange="syncSettings('memo', this.checked)"><span class="slider"></span></label></div>
-            <button class="tab-btn" style="margin-top: 10px; width: 38px; height: 28px;" onclick="toggleMiniMode(false)"><<</button>
+            <!-- 복구 버튼 -->
+            <button class="tab-btn" style="margin-top: 10px; width: 38px; height: 28px;" onclick="toggleMiniMode(false)" title="기본 모드">
+                <<
+            </button>
         </div>
 
         <audio id="player"></audio> 
-        <main class="scroll-area" id="scroll-area">
-            <div class="content-wrap" id="display-area">
-                <div style="text-align: center; margin-top: 50px; color: #9aa0a6;"><h3>반갑습니다! 👋</h3><p>학습하실 챕터를 선택해주세요.</p></div>
-            </div>
-        </main>
-        <button id="scroll-top-btn" onclick="scrollToTop()">🔝</button>
+        <main class="scroll-area"><div class="content-wrap" id="display-area">
+            <div style="text-align: center; margin-top: 50px; color: #9aa0a6;"><h3>반갑습니다! 👋</h3><p>학습하실 챕터를 선택해주세요.</p></div>
+        </div></main>
     </div>
-
     <script>
         const studyData = {
 
@@ -733,36 +742,26 @@
 
 
 
-}; // studyData 종료
+}; // 데이터 종료 지점
 
         const player = document.getElementById('player'), 
               displayArea = document.getElementById('display-area'), 
               navList = document.getElementById('nav-list'), 
               sidebar = document.getElementById('sidebar'),
               fontSlider = document.getElementById('font-slider'),
-              statusIcon = document.getElementById('global-status-icon'),
-              scrollArea = document.getElementById('scroll-area'),
-              topBtn = document.getElementById('scroll-top-btn');
+              statusIcon = document.getElementById('global-status-icon');
         
         let isShadowing = false, isMemoMode = false, currentRepeat = 0, stopTime = 0, isAutoPlaying = false;
 
-        // 🔝 플로팅 버튼 로직
-        scrollArea.addEventListener('scroll', () => {
-            if (scrollArea.scrollTop > 150) topBtn.style.display = 'flex';
-            else topBtn.style.display = 'none';
-        });
-
-        function scrollToTop() {
-            scrollArea.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
         function toggleSidebar() { sidebar.classList.toggle('open'); }
 
+        // 간소화 모드 토글
         function toggleMiniMode(isMini) {
             if (isMini) document.body.classList.add('mini-mode');
             else document.body.classList.remove('mini-mode');
         }
 
+        // 설정 동기화
         function syncSettings(type, value) {
             if (type === 'shadow') {
                 isShadowing = value;
@@ -781,19 +780,22 @@
 
         function scrollToActive(el) {
             if (!el) return;
+            const container = document.querySelector('.scroll-area');
             const elRect = el.getBoundingClientRect();
-            const areaRect = scrollArea.getBoundingClientRect();
-            scrollArea.scrollTo({ 
-                top: elRect.top - areaRect.top + scrollArea.scrollTop - (scrollArea.clientHeight * 0.25), 
-                behavior: 'smooth' 
-            });
+            container.scrollTo({ top: elRect.top - container.getBoundingClientRect().top + container.scrollTop - (container.clientHeight * 0.25), behavior: 'smooth' });
         }
         
         function applyFontSize() {
+            if (!fontSlider) return;
             const baseSize = parseInt(fontSlider.value);
-            document.querySelectorAll('.sentence-eng').forEach(el => el.style.fontSize = (isMemoMode ? Math.max(12, baseSize * 0.75) : baseSize) + 'px');
-            document.querySelectorAll('.trans-text').forEach(el => el.style.fontSize = (isMemoMode ? baseSize : Math.max(11, baseSize * 0.75)) + 'px');
-            document.querySelectorAll('.ipa-text').forEach(el => el.style.fontSize = Math.max(12, baseSize * 0.8) + 'px');
+            if (isMemoMode) {
+                document.querySelectorAll('.trans-text').forEach(el => { el.style.fontSize = baseSize + 'px'; });
+                document.querySelectorAll('.sentence-eng').forEach(el => { el.style.fontSize = Math.max(12, baseSize * 0.75) + 'px'; });
+            } else {
+                document.querySelectorAll('.sentence-eng').forEach(el => { el.style.fontSize = baseSize + 'px'; });
+                document.querySelectorAll('.trans-text').forEach(el => { el.style.fontSize = Math.max(11, baseSize * 0.75) + 'px'; });
+            }
+            document.querySelectorAll('.ipa-text').forEach(el => { el.style.fontSize = Math.max(12, baseSize * 0.8) + 'px'; });
         }
 
         function toggleMemoMode(checked) {
@@ -802,7 +804,11 @@
             const activeSub = document.querySelector('.sub-item.active');
             if (activeSub) {
                 const group = document.querySelector('.menu-group.expanded');
-                if (group) loadContent(group.id.replace('group-', ''), activeSub.innerText.toLowerCase().includes('story') ? 'mystory' : 'realconvo', activeSub);
+                if (group) {
+                    const wk = group.id.replace('group-', '');
+                    const type = activeSub.innerText.toLowerCase().includes('story') ? 'mystory' : 'realconvo';
+                    loadContent(wk, type, activeSub);
+                }
             }
             stopAll();
         }
@@ -822,11 +828,13 @@
             items.forEach(item => {
                 const chunks = item.chunks.map(c => `<span class="chunk" data-s="${c.s}" data-e="${c.e}">${c.text}</span>`).join('');
                 const content = `<div class="text-content"><div class="sentence-eng">${chunks}</div><div class="ipa-text">${item.ipa}</div><div class="trans-text">${item.trans}</div></div>`;
-                if(type === 'mystory') html += `<div class="card" data-start="${item.start}" data-end="${item.end}"><div class="play-btn"></div>${content}</div>`;
-                else html += `<div class="chat-row" data-speaker="${item.speaker}" data-start="${item.start}" data-end="${item.end}"><div class="badge badge-${item.speaker}">${item.speaker}</div><div class="card" style="flex:1; margin:0;">${content}</div></div>`;
+                if(type === 'mystory') { html += `<div class="card" data-start="${item.start}" data-end="${item.end}"><div class="play-btn"></div>${content}</div>`; }
+                else { html += `<div class="chat-row" data-speaker="${item.speaker}" data-start="${item.start}" data-end="${item.end}"><div class="badge badge-${item.speaker}">${item.speaker}</div><div class="card" style="flex:1; margin:0;">${content}</div></div>`; }
             });
             displayArea.innerHTML = html; applyFontSize();
-            player.src = data.audio; player.load(); stopAll();
+            const currentSpeedBtn = document.querySelector('.btn-grp .btn.active');
+            const currentSpeed = currentSpeedBtn ? parseFloat(currentSpeedBtn.innerText.replace('x', '')) : 1.0;
+            player.src = data.audio; player.load(); player.playbackRate = currentSpeed; stopAll();
             if (!isMemoMode) { applyButtonState('.ipa-text', 'btn-ipa'); applyButtonState('.trans-text', 'btn-trans'); }
         }
 
@@ -853,16 +861,16 @@
         });
 
         function toggleAutoPlayAll(titleEl) {
-            if (isAutoPlaying) stopAll();
+            if (isAutoPlaying) { stopAll(); } 
             else { 
                 stopAll(); isAutoPlaying = true; 
                 statusIcon.innerText = document.getElementById('float-play-icon').innerText = "⏸️";
-                const first = displayArea.querySelector('.card, .chat-row'); 
+                const first = displayArea.querySelector(':scope > .card, :scope > .chat-row'); 
                 if (first) { 
-                    const start = parseFloat(first.dataset.start), end = parseFloat(first.dataset.end);
+                    const start = parseFloat(first.dataset.start), end = parseFloat(first.dataset.end), rate = player.playbackRate;
                     first.classList.add('active-play'); if(isMemoMode) first.classList.add('show-script');
                     scrollToActive(first);
-                    if (isMemoMode) window.shadowTimer = setTimeout(() => { first.classList.add('playing'); playPart(start, end); }, ((end - start) / player.playbackRate + 2) * 1000);
+                    if (isMemoMode) { window.shadowTimer = setTimeout(() => { first.classList.add('playing'); playPart(start, end); }, ((end - start) / rate + 2) * 1000); } 
                     else { first.classList.add('playing'); playPart(start, end); }
                 } 
             }
@@ -882,9 +890,10 @@
             currentRepeat = 0; stopTime = 0; clearTimeout(window.shadowTimer);
             document.getElementById('current-count').innerText = document.getElementById('float-count-label').innerText = '';
             document.querySelectorAll('.playing, .active-play, .chunk.active, .show-script').forEach(el => {
-                if(!document.body.classList.contains('memo-mode-active')) el.classList.remove('show-script');
+                if(!el.closest('.memo-mode-active')) el.classList.remove('show-script');
                 el.classList.remove('playing', 'active-play', 'active');
             });
+            document.querySelectorAll('.section-title').forEach(t => t.classList.remove('playing'));
         }
 
         player.addEventListener('timeupdate', () => {
@@ -911,23 +920,22 @@
             document.getElementById('current-count').innerText = document.getElementById('float-count-label').innerText = `${currentRepeat} / ${limit}`;
             const duration = (parseFloat(el.dataset.end) - parseFloat(el.dataset.start)) / rate;
             const waitTime = isMemoMode ? (duration + 2) * 1000 : (duration + 1.5) * 1000;
-            if (currentRepeat < limit) window.shadowTimer = setTimeout(() => playPart(parseFloat(el.dataset.start), parseFloat(el.dataset.end)), waitTime);
+            if (currentRepeat < limit) { window.shadowTimer = setTimeout(() => playPart(parseFloat(el.dataset.start), parseFloat(el.dataset.end)), waitTime); } 
             else { currentRepeat = 0; if (isAutoPlaying) window.shadowTimer = setTimeout(() => handleNext(el), waitTime); else el.classList.remove('playing'); }
         }
 
         function handleNext(el) {
-            const all = Array.from(displayArea.querySelectorAll('.card, .chat-row'));
+            const all = Array.from(displayArea.children).filter(child => child.classList.contains('card') || child.classList.contains('chat-row'));
             const idx = all.indexOf(el); el.classList.remove('playing', 'active-play');
             if (idx < all.length - 1) { 
                 const next = all[idx+1], rate = player.playbackRate;
                 next.classList.add('active-play'); if(isMemoMode) next.classList.add('show-script');
                 scrollToActive(next);
                 window.shadowTimer = setTimeout(() => { 
-                    const nextDur = (parseFloat(next.dataset.end) - parseFloat(next.dataset.start)) / rate;
-                    if (isMemoMode) window.shadowTimer = setTimeout(() => { next.classList.add('playing'); playPart(parseFloat(next.dataset.start), parseFloat(next.dataset.end)); }, (nextDur + 2) * 1000);
+                    if (isMemoMode) { window.shadowTimer = setTimeout(() => { next.classList.add('playing'); playPart(parseFloat(next.dataset.start), parseFloat(next.dataset.end)); }, ((parseFloat(next.dataset.end) - parseFloat(next.dataset.start)) / rate + 2) * 1000); } 
                     else { next.classList.add('playing'); playPart(parseFloat(next.dataset.start), parseFloat(next.dataset.end)); }
                 }, 400); 
-            } else stopAll();
+            } else { stopAll(); }
         }
 
         function setSpeed(s, btn) { 
@@ -939,11 +947,14 @@
 
         window.onload = () => {
             const menuItems = ["01 Work", "02 Introducing", "03 Personality", "04 Day", "05 Friends", "06 Directions", "07 Dating", "08 Health", "09 My Favorite Food", "10 Travel", "11 Bootcamp", "12 Memories"];
-            menuItems.forEach((name, idx) => {
-                const wk = (idx + 1).toString().padStart(2, '0');
-                navList.insertAdjacentHTML('beforeend', `<div class="menu-group" id="group-${wk}"><div class="menu-item" onclick="toggleAccordion('${wk}')"><span class="arrow">▶</span> ${name}</div><div class="sub-menu"><div class="sub-item" onclick="loadContent('${wk}', 'mystory', this)">My story</div><div class="sub-item" onclick="loadContent('${wk}', 'realconvo', this)">Real Conversation</div></div></div>`);
-            });
-            fontSlider.addEventListener('input', applyFontSize);
+            const navList = document.getElementById('nav-list');
+            if (navList) {
+                menuItems.forEach((name, idx) => {
+                    const wk = (idx + 1).toString().padStart(2, '0');
+                    navList.insertAdjacentHTML('beforeend', `<div class="menu-group" id="group-${wk}"><div class="menu-item" onclick="toggleAccordion('${wk}')"><span class="arrow">▶</span> ${name}</div><div class="sub-menu"><div class="sub-item" onclick="loadContent('${wk}', 'mystory', this)">My story</div><div class="sub-item" onclick="loadContent('${wk}', 'realconvo', this)">Real Conversation</div></div></div>`);
+                });
+            }
+            if (fontSlider) { fontSlider.addEventListener('input', applyFontSize); }
         };
     </script>
 </body>
