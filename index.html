@@ -43,8 +43,8 @@
             
             /* 성취도별 메인 컬러 파스텔 톤으로 변경 */
             --color-tg: #a1c9f4; /* 파스텔 블루: 통과 */
-            --color-br: #ffeb84; /* 파스텔 옐로우: 발음 */
-            --color-bb: #ffbba1; /* 파스텔 오렌지: 버벅 */
+            --color-br: #a8e6cf; /* 파스텔 그린: 발음 (변경됨) */
+            --color-bb: #ffeb84; /* 파스텔 옐로우: 버벅 (변경됨) */
             --color-bg: #fca7a7; /* 파스텔 레드: 불가 */
             
             --pastel-blue: #e3f2fd; --pastel-blue-text: #1976d2;
@@ -348,8 +348,8 @@
                         <h3>📊 전체 카드 격파 성취도 현황 <span style="font-size:13px; font-weight:normal; color:#888;">(클릭 시 해당 카드로 퀴즈 진입)</span></h3>
                         <div class="stats-grid">
                             <div class="stat-box" style="background:var(--color-tg);" onclick="startGlobalQuizByStatus('통과')">통과 🔵<br><span id="stat-tg">0</span>개</div>
-                            <div class="stat-box" style="background:var(--color-br);" onclick="startGlobalQuizByStatus('발음')">발음 🟡<br><span id="stat-br">0</span>개</div>
-                            <div class="stat-box" style="background:var(--color-bb);" onclick="startGlobalQuizByStatus('버벅')">버벅 🟠<br><span id="stat-bb">0</span>개</div>
+                            <div class="stat-box" style="background:var(--color-br);" onclick="startGlobalQuizByStatus('발음')">발음 🟢<br><span id="stat-br">0</span>개</div>
+                            <div class="stat-box" style="background:var(--color-bb);" onclick="startGlobalQuizByStatus('버벅')">버벅 🟡<br><span id="stat-bb">0</span>개</div>
                             <div class="stat-box" style="background:var(--color-bg);" onclick="startGlobalQuizByStatus('불가')">불가 🔴<br><span id="stat-bg">0</span>개</div>
                         </div>
                     </div>
@@ -1096,8 +1096,8 @@
     // 5. 성취도 컬러 아이콘 변경
     function getStatusIconChar(status) {
         if (status === '통과') return ' 🔵'; 
-        if (status === '발음') return ' 🟡';
-        if (status === '버벅') return ' 🟠'; 
+        if (status === '발음') return ' 🟢'; 
+        if (status === '버벅') return ' 🟡'; 
         if (status === '불가') return ' 🔴';
         return '';
     }
@@ -1996,8 +1996,8 @@
                         <h3>📊 전체 카드 격파 성취도 현황 <span style="font-size:13px; font-weight:normal; color:#888;">(클릭 시 해당 카드로 퀴즈 진입)</span></h3>
                         <div class="stats-grid">
                             <div class="stat-box" style="background:var(--color-tg);" onclick="startGlobalQuizByStatus('통과')">통과 🔵<br><span id="stat-tg">0</span>개</div>
-                            <div class="stat-box" style="background:var(--color-br);" onclick="startGlobalQuizByStatus('발음')">발음 🟡<br><span id="stat-br">0</span>개</div>
-                            <div class="stat-box" style="background:var(--color-bb);" onclick="startGlobalQuizByStatus('버벅')">버벅 🟠<br><span id="stat-bb">0</span>개</div>
+                            <div class="stat-box" style="background:var(--color-br);" onclick="startGlobalQuizByStatus('발음')">발음 🟢<br><span id="stat-br">0</span>개</div>
+                            <div class="stat-box" style="background:var(--color-bb);" onclick="startGlobalQuizByStatus('버벅')">버벅 🟡<br><span id="stat-bb">0</span>개</div>
                             <div class="stat-box" style="background:var(--color-bg);" onclick="startGlobalQuizByStatus('불가')">불가 🔴<br><span id="stat-bg">0</span>개</div>
                         </div>
                     </div>
@@ -2048,8 +2048,8 @@
                         <div style="font-size:14px; font-weight:bold; margin-bottom:10px; color:var(--text);">🔥 집중 공략할 성취도를 선택하세요 (다중 선택 가능)</div>
                         <div class="status-choice-grp" style="margin-bottom:15px;">
                             <button class="status-badge-btn tg" id="b-filter-tg" onclick="toggleBurningFilter('통과', this)">🔵 통과</button>
-                            <button class="status-badge-btn br" id="b-filter-br" onclick="toggleBurningFilter('발음', this)">🟡 발음</button>
-                            <button class="status-badge-btn bb" id="b-filter-bb" onclick="toggleBurningFilter('버벅', this)">🟠 버벅</button>
+                            <button class="status-badge-btn br" id="b-filter-br" onclick="toggleBurningFilter('발음', this)">🟢 발음</button>
+                            <button class="status-badge-btn bb" id="b-filter-bb" onclick="toggleBurningFilter('버벅', this)">🟡 버벅</button>
                             <button class="status-badge-btn bg" id="b-filter-bg" onclick="toggleBurningFilter('불가', this)">🔴 불가</button>
                         </div>
                         <div style="font-size:14px; font-weight:bold; margin-bottom:10px; color:var(--text);">오디오 배속 설정</div>
@@ -2799,8 +2799,8 @@
                     </div>
                     <div class="ch-right">
                         <span style="color:var(--color-tg);" onclick="startChapterBurningMode('${wk}', '통과')">🔵 ${cTg}</span>
-                        <span style="color:var(--color-br);" onclick="startChapterBurningMode('${wk}', '발음')">🟡 ${cBr}</span>
-                        <span style="color:var(--color-bb);" onclick="startChapterBurningMode('${wk}', '버벅')">🟠 ${cBb}</span>
+                        <span style="color:var(--color-br);" onclick="startChapterBurningMode('${wk}', '발음')">🟢 ${cBr}</span>
+                        <span style="color:var(--color-bb);" onclick="startChapterBurningMode('${wk}', '버벅')">🟡 ${cBb}</span>
                         <span style="color:var(--color-bg);" onclick="startChapterBurningMode('${wk}', '불가')">🔴 ${cBg}</span>
                     </div>
                 </div>
@@ -3156,8 +3156,8 @@
                 <h4 style="font-size: 14px; color: var(--gray-text); margin: 0 0 12px 0; font-weight: 700;">🎯 성취도 현황 선택</h4>
                 <div class="status-choice-grp" id="status-choice-grp">
                     <button class="status-badge-btn tg" onclick="submitStatusClick('${wk}','${type}',${idx},'통과', this)">🔵 통과</button>
-                    <button class="status-badge-btn br" onclick="submitStatusClick('${wk}','${type}',${idx},'발음', this)">🟡 발음</button>
-                    <button class="status-badge-btn bb" onclick="submitStatusClick('${wk}','${type}',${idx},'버벅', this)">🟠 버벅</button>
+                    <button class="status-badge-btn br" onclick="submitStatusClick('${wk}','${type}',${idx},'발음', this)">🟢 발음</button>
+                    <button class="status-badge-btn bb" onclick="submitStatusClick('${wk}','${type}',${idx},'버벅', this)">🟡 버벅</button>
                     <button class="status-badge-btn bg" onclick="submitStatusClick('${wk}','${type}',${idx},'불가', this)">🔴 불가</button>
                 </div>
             </div>
