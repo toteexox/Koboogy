@@ -5,6 +5,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Koboogy</title>
+
+    <link rel="apple-touch-icon" href="Koboogy.png">
+    <link rel="shortcut icon" href="Koboogy.png">
+    <meta name="apple-mobile-web-app-title" content="Koboogy">
+
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
@@ -229,8 +234,8 @@
             </div>
             <p style="font-size:14px; color:var(--gray-text); margin-bottom:20px;">공부방 전용 시스템입니다. 아이디를 입력해 주세요.</p>
             
-            <input type="text" id="user-id" class="login-input" placeholder="순수 ID 입력 (예: jenny)">
-            <input type="password" id="user-pw" class="login-input" placeholder="비밀번호 입력">
+            <input type="text" id="user-id" class="login-input" placeholder="ID (예: jenny)">
+            <input type="password" id="user-pw" class="login-input" placeholder="PW">
             
             <!-- 아이디 저장 체크박스 (비밀번호 아래로 이동) -->
             <div style="display:flex; align-items:center; justify-content:flex-start; margin-bottom:12px; gap:8px;">
