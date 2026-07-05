@@ -5,6 +5,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Koboogy</title>
+
+<link rel="icon" href="icon.png" type="image/png">
+    
+    <link rel="apple-touch-icon" href="icon.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="white">
+    <meta name="apple-mobile-web-app-title" content="Koboogy">
+    
+    <link rel="manifest" href="manifest.json">
+
+
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
@@ -236,6 +247,7 @@
     .chapter-grid { grid-template-columns: repeat(3, 1fr); }
     .ch-left { gap: 5px; flex-direction: column; align-items: flex-start; }
     .ch-right span { font-size: 12px; width: 35px; }
+    body.quiz-mode-active .gray-header.practice-bar-section { display: none !important; }
 }
 </style>
 </head>
