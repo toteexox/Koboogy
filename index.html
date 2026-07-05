@@ -2630,7 +2630,7 @@
         db = firebase.firestore();
 
         // 6. 자동 로그인 대신 세션 유지로 변경 (ID 기억하기 기능 추가)
-        auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+        auth.setPersistence(firebase.auth.Auth.Persistence.SESSION);
 
         // 로그인 상태 관찰자
         auth.onAuthStateChanged((user) => {
