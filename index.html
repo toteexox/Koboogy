@@ -13,6 +13,13 @@
             --primary: #4285f4; --bg: #f1f3f4; --border: #eee; --white: #fff; --text: #3c4043; 
             --gray-btn: #f1f3f4; --gray-text: #5f6368; --memo-bg: #fdf6e3;
             --dull-blue: #7a97c2; --dull-gray: #9ba3af;
+            
+            /* 성취도별 메인 컬러 파스텔 톤으로 변경 */
+            --color-tg: #a1c9f4; /* 파스텔 블루: 통과 */
+            --color-br: #ffeb84; /* 파스텔 옐로우: 발음 */
+            --color-bb: #ffbba1; /* 파스텔 오렌지: 버벅 */
+            --color-bg: #fca7a7; /* 파스텔 레드: 불가 */
+            
             --pastel-blue: #e3f2fd; --pastel-blue-text: #1976d2;
             --pastel-green: #e8f5e9; --pastel-green-text: #388e3c;
             --pastel-pink: #fce4ec; --pastel-pink-text: #c2185b;
@@ -21,42 +28,40 @@
         body { font-family: 'Inter', 'Malgun Gothic', sans-serif; margin: 0; display: flex; height: 100vh; overflow: hidden; background: var(--white); color: var(--text); }
         
         body.quiz-mode-active .main-content { background-color: var(--memo-bg); }
-        body.quiz-mode-active .sidebar { display: none; }
+        body.quiz-mode-active .sidebar { display: none !important; }
 
         #login-screen { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #f1f3f4; display: flex; align-items: center; justify-content: center; z-index: 9999; }
         .login-card { background: white; padding: 40px 30px; border-radius: 16px; box-shadow: 0 4px 24px rgba(0,0,0,0.08); width: 100%; max-width: 380px; text-align: center; }
-        .login-card .brand { justify-content: center; padding: 0 0 20px 0; font-size: 24px; font-weight: bold; display: flex; align-items: center; gap: 10px; }
-        .login-card .brand img { width: 45px; border-radius: 8px; }
+.login-card .brand { flex-direction: column; justify-content: center; padding: 0 0 20px 0; font-size: 24px; font-weight: 800; display: flex; align-items: center; gap: 15px; }
+        .login-card .brand img { width: 100%; max-width: 320px; border-radius: 4px; object-fit: contain; }
         .login-input { width: 100%; height: 48px; border: 1px solid #c4d0d5; border-radius: 8px; padding: 0 16px; font-size: 15px; margin-bottom: 12px; outline: none; transition: 0.2s; }
         .login-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(66,133,244,0.15); }
         .login-btn { width: 100%; height: 48px; background: var(--primary); color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.2s; margin-top: 10px; }
         .login-btn:hover { background: #3574de; }
         
-        /* 🔥 초기 진입 화면 대형 버튼 스타일 수정 (파스텔 블루/옐로우) */
         #entry-screen { display: none; flex-direction: column; align-items: center; justify-content: center; height: 100%; width: 100%; }
         .entry-btn-wrap { display: flex; gap: 20px; margin-top: 20px; }
         .entry-btn { width: 220px; height: 160px; border-radius: 16px; border: none; font-size: 22px; font-weight: 800; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 6px 16px rgba(0,0,0,0.1); }
         .entry-btn:hover { transform: translateY(-4px); box-shadow: 0 10px 20px rgba(0,0,0,0.15); }
-        .entry-study { background: #e3f2fd; color: #1565c0; } /* 파스텔 블루 */
-        .entry-quiz { background: #fff9c4; color: #f57f17; } /* 파스텔 노랑 */
+        .entry-study { background: #e3f2fd; color: #1565c0; } 
+        .entry-quiz { background: #fff9c4; color: #f57f17; } 
 
         .mypage-view { display: none; width: 100%; padding: 20px 0; }
         .mypage-card { background: white; border-radius: 16px; padding: 25px; border: 1px solid var(--border); box-shadow: 0 1px 3px rgba(0,0,0,0.05); width: 100%; margin-bottom: 20px; }
         .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 15px; }
-        .stat-box { text-align: center; padding: 12px; border-radius: 10px; font-weight: bold; font-size: 14px; cursor: pointer; transition: 0.2s; }
+        .stat-box { text-align: center; padding: 12px; border-radius: 10px; font-weight: bold; font-size: 14px; cursor: pointer; transition: 0.2s; color: #333; }
         .stat-box:hover { filter: brightness(0.95); transform: translateY(-2px); }
         
-        /* 🔥 챕터별 성취도 리스트 스타일 추가 */
-        .chapter-stat-item { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; border: 1px solid var(--border); border-radius: 12px; cursor: pointer; transition: 0.2s; background: #fff; margin-bottom: 10px; }
-        .chapter-stat-item:hover { border-color: var(--primary); background: #f8f9fa; transform: translateX(4px); }
+        .chapter-stat-item { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; border: 1px solid var(--border); border-radius: 12px; background: #fff; margin-bottom: 10px; }
         .ch-left { display: flex; align-items: center; gap: 15px; }
-        .ch-title { font-weight: 800; font-size: 16px; color: var(--text); width: 90px; }
+        .ch-title { font-weight: 800; font-size: 16px; color: var(--text); width: 90px; cursor: pointer; transition: 0.2s; }
+        .ch-title:hover { color: var(--primary); text-decoration: underline; }
         .ch-rate { font-size: 14px; font-weight: 800; color: var(--primary); background: #e8f0fe; padding: 6px 12px; border-radius: 8px; }
         .ch-right { display: flex; gap: 15px; font-size: 14px; font-weight: bold; }
-        .ch-right span { width: 45px; text-align: center; background: #f1f3f4; padding: 4px 0; border-radius: 6px; }
+        .ch-right span { width: 45px; text-align: center; background: #f1f3f4; padding: 4px 0; border-radius: 6px; cursor: pointer; transition: 0.2s; color: #333; }
+        .ch-right span:hover { background: #e0e0e0; transform: scale(1.05); }
 
-        .sidebar { width: 280px; border-right: 1px solid var(--border); overflow-y: auto; flex-shrink: 0; padding: 20px 10px; background: var(--white); transition: 0.3s; position: relative; z-index: 100; }
-        .sidebar.open { left: 0; }
+        .sidebar { display: none; width: 280px; border-right: 1px solid var(--border); overflow-y: auto; flex-shrink: 0; padding: 20px 10px; background: var(--white); transition: 0.3s; position: relative; z-index: 100; }
         
         .menu-group { margin-bottom: 5px; border-radius: 8px; }
         .menu-item { cursor: pointer; padding: 10px 15px; display: flex; align-items: center; gap: 10px; font-weight: 600; color: #3c4043; border-radius: 8px; }
@@ -71,17 +76,14 @@
 
         .main-content { flex: 1; display: flex; flex-direction: column; background: var(--bg); position: relative; transition: background-color 0.4s; overflow: hidden; }
         
-        /* 🔥 상단 메뉴바 (로고 포함) */
         .sticky-header { background: var(--white); padding: 8px 0; border-bottom: 1px solid var(--border); position: sticky; top: 0; width: 100%; z-index: 99; }
         .top-nav-row { display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 95%; margin: 0 auto; gap: 20px; }
         .nav-brand { display: flex; align-items: center; gap: 8px; font-size: 20px; font-weight: bold; cursor: pointer; flex-shrink: 0; }
         .nav-brand img { width: 32px; border-radius: 6px; }
         .left-modes { display: flex; gap: 8px; align-items: center; flex: 1; }
-        .right-user { display: flex; align-items: center; font-size: 14px; font-weight: bold; color: var(--gray-text); gap: 10px; flex-shrink: 0; }
+        .right-user { display: flex; align-items: center; font-size: 14px; font-weight: bold; color: var(--gray-text); gap: 10px; flex-shrink: 0; cursor: pointer; transition: color 0.2s; }
+        .right-user:hover { color: var(--primary); }
         .mobile-menu-btn { display: none; background: none; border: none; font-size: 24px; cursor: pointer; padding: 0; margin-right: 10px; }
-        
-        .mypage-link-btn { cursor: pointer; color: var(--primary); border: 1px solid var(--border); padding: 6px 12px; border-radius: 6px; font-size: 13px; font-weight: bold; background: white; transition: 0.2s; margin-left: 6px; }
-        .mypage-link-btn:hover { background: #f8f9fa; }
 
         .btn { border: 1px solid var(--dull-gray); background: var(--white); color: var(--dull-gray); cursor: pointer; border-radius: 4px; padding: 5px 10px; font-size: 12px; font-weight: 600; height: 32px; transition: 0.2s; }
         .btn.active { background: var(--dull-blue) !important; color: var(--white) !important; border-color: var(--dull-blue) !important; }
@@ -118,13 +120,13 @@
         .section-title { font-size: 28px; color: var(--primary); margin-bottom: 25px; cursor: pointer; font-weight: bold; }
         
         .status-choice-grp { display: flex; gap: 8px; margin-top: 10px; flex-wrap: nowrap; width: 100%; }
-        .status-badge-btn { border: none; padding: 12px 10px; border-radius: 8px; font-size: 14px; font-weight: bold; cursor: pointer; color: white; transition: 0.2s; flex: 1; text-align: center; }
-        .status-badge-btn.tg { background: #4caf50; }
-        .status-badge-btn.br { background: #2196f3; }
-        .status-badge-btn.bb { background: #ff9800; }
-        .status-badge-btn.bg { background: #f44336; }
+        .status-badge-btn { border: none; padding: 12px 10px; border-radius: 8px; font-size: 14px; font-weight: bold; cursor: pointer; color: #333; transition: 0.2s; flex: 1; text-align: center; }
+        .status-badge-btn.tg { background: var(--color-tg); }
+        .status-badge-btn.br { background: var(--color-br); }
+        .status-badge-btn.bb { background: var(--color-bb); }
+        .status-badge-btn.bg { background: var(--color-bg); }
         .status-badge-btn:hover { filter: brightness(0.9); }
-        .status-badge-btn.disabled-gray { background: #e0e0e0 !important; color: #9aa0a6 !important; box-shadow: none !important; }
+        .status-badge-btn.disabled-gray { background: #e0e0e0 !important; color: #9aa0a6 !important; box-shadow: none !important; opacity: 0.5; }
 
         .card { position: relative; background: var(--white); padding: 15px 20px; border-radius: 12px; margin-bottom: 10px; display: flex; flex-direction: column; border: 2px solid transparent; box-shadow: 0 1px 2px rgba(0,0,0,0.05); transition: 0.2s; cursor: pointer; overflow: hidden; }
         .card-main-row { display: flex; gap: 15px; width: 100%; align-items: flex-start; }
@@ -164,14 +166,14 @@
         #quiz-play-area { display: none; }
         .quiz-container { display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 640px; margin: 0 auto; padding: 5px; }
         
-        .quiz-card-meta-row { display: flex; justify-content: flex-start; align-items: center; gap: 15px; width: 100%; margin-bottom: 10px; padding: 0 4px; }
+        .quiz-card-meta-row { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 10px; padding: 0 4px; }
         .quiz-type-badge { background: #3c4043; color: white; font-size: 14px; font-weight: 800; padding: 6px 14px; border-radius: 8px; letter-spacing: 0.5px; }
         .quiz-pagination-counter { font-size: 14px; color: var(--gray-text); font-weight: 800; background: rgba(255,255,255,0.8); padding: 4px 12px; border-radius: 12px; border: 1px solid #ddd; }
 
-        .quiz-split-card { width: 100%; background: var(--white); border: 2px solid #ddd; border-radius: 18px; box-shadow: 0 6px 22px rgba(0,0,0,0.06); overflow: hidden; transition: 0.2s; cursor: pointer; margin-bottom: 20px; }
+        .quiz-split-card { width: 100%; background: var(--white); border: 2px solid #ddd; border-radius: 18px; box-shadow: 0 6px 22px rgba(0,0,0,0.06); overflow: hidden; transition: 0.2s; cursor: pointer; margin-bottom: 20px; position: relative; }
         .quiz-split-card:hover { border-color: var(--primary); }
         
-        .quiz-card-top-korean-zone { padding: 35px 25px; text-align: center; background: #fff; border-bottom: 1px dashed #e0e0e0; }
+        .quiz-card-top-korean-zone { padding: 35px 25px; text-align: center; background: #fff; border-bottom: 1px dashed #e0e0e0; position: relative; }
         
         .quiz-card-bottom-english-zone { position: relative; padding: 35px 25px 60px 25px; text-align: center; background: #fafafa; min-height: 110px; display: flex; align-items: center; justify-content: center; }
         .quiz-in-card-nav { position: absolute; bottom: 15px; right: 20px; display: flex; gap: 20px; }
@@ -190,11 +192,13 @@
 
         .mobile-float-ctrl-btn { display: none; }
 
+        #burning-mode-dashboard { display: none; width: 100%; max-width: 640px; margin: 0 auto 15px auto; background: white; border-radius: 12px; padding: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border: 1px solid #ddd; }
+
         @media (max-width: 768px) { 
             .sidebar { position: fixed; left: -280px; height: 100%; z-index: 1001; } 
-            .sidebar.open { left: 0; } 
+            .sidebar.open { left: 0; display: block !important; } 
             .top-nav-row { max-width: 95%; flex-wrap: wrap; justify-content: space-between; gap: 10px; }
-            .nav-brand { width: 100%; justify-content: center; margin-bottom: 5px; } /* 모바일에서 로고 가운데 정렬 */
+            .nav-brand { width: 100%; justify-content: center; margin-bottom: 5px; } 
             .left-modes { justify-content: flex-start; }
             .right-user { width: auto; font-size: 13px; }
             
@@ -210,7 +214,6 @@
             .quiz-bar-action-btn { font-size: 11px; padding: 0 4px; }
             .stats-grid { grid-template-columns: repeat(2, 1fr); }
             .chapter-grid { grid-template-columns: repeat(3, 1fr); }
-            .quiz-card-meta-row { flex-wrap: wrap; }
             
             .ch-left { gap: 5px; flex-direction: column; align-items: flex-start; }
             .ch-right span { font-size: 12px; width: 35px; }
@@ -218,16 +221,26 @@
     </style>
 </head>
 <body>
-    <div id="login-screen">
+<div id="login-screen">
         <div class="login-card">
-            <div class="brand"><img src="Koboogy.png" alt="Logo" onerror="this.style.display='none'"> Koboogy</div>
+            <div class="brand">
+                <img src="Koboogy.png" alt="Logo" onerror="this.style.display='none'">
+                <div>Koboogy</div>
+            </div>
             <p style="font-size:14px; color:var(--gray-text); margin-bottom:20px;">공부방 전용 시스템입니다. 아이디를 입력해 주세요.</p>
+            
             <input type="text" id="user-id" class="login-input" placeholder="순수 ID 입력 (예: jenny)">
             <input type="password" id="user-pw" class="login-input" placeholder="비밀번호 입력">
+            
+            <!-- 아이디 저장 체크박스 (비밀번호 아래로 이동) -->
+            <div style="display:flex; align-items:center; justify-content:flex-start; margin-bottom:12px; gap:8px;">
+                <input type="checkbox" id="remember-id" style="cursor:pointer;">
+                <label for="remember-id" style="font-size:13px; color:var(--gray-text); cursor:pointer;">ID 기억하기</label>
+            </div>
+
             <button class="login-btn" onclick="handleLoginSubmit()">학습 시작하기</button>
         </div>
     </div>
-
     <div class="sidebar" id="sidebar">
         <div id="nav-list" style="margin-top: 10px;"></div>
     </div>
@@ -245,9 +258,8 @@
                     <button class="btn" id="btn-quiz-mode" onclick="switchMainMode('quiz')" style="height:32px;">🧩 퀴즈 풀기</button>
                 </div>
                 
-                <div class="right-user" id="user-badge-area" style="display:none;">
+                <div class="right-user" id="user-badge-area" style="display:none;" onclick="toggleMyPageView()">
                     <span>🎓 <span id="welcome-username">유저</span> 코치님</span>
-                    <button class="mypage-link-btn" onclick="toggleMyPageView()">[마이페이지]</button>
                 </div>
             </div>
         </header>
@@ -256,6 +268,7 @@
             <div class="full-width-container">
                 <div class="practice-bar">
                     <div class="left-controls">
+                        <button class="btn" onclick="toggleSidebar()" style="font-size:16px; padding:0 8px; border:none; background:transparent; margin-right:5px; color:#5f6368;">☰</button>
                         <span id="global-status-icon" onclick="toggleAutoPlayAll(document.querySelector('.section-title'))">▶️</span>
                         
                         <div class="switch-box">
@@ -290,7 +303,7 @@
         <button class="mobile-float-ctrl-btn" onclick="toggleMobileControls()">⚙️</button>
 
         <audio id="player"></audio> 
-        <main class="scroll-area" id="main-scroll-area">
+        <audio id="record-player" style="display:none;"></audio> <main class="scroll-area" id="main-scroll-area">
             <div class="content-wrap">
                 <div id="entry-screen">
                     <h2 style="color: var(--primary); font-size: 28px; margin-bottom: 10px;">꼬부기에 오신 것을 환영합니다!</h2>
@@ -307,17 +320,16 @@
                     <div class="mypage-card">
                         <h3>📊 전체 카드 격파 성취도 현황 <span style="font-size:13px; font-weight:normal; color:#888;">(클릭 시 해당 카드로 퀴즈 진입)</span></h3>
                         <div class="stats-grid">
-                            <div class="stat-box" style="background:#e8f5e9; color:#388e3c;" onclick="startGlobalQuizByStatus('통과')">통과 🟢<br><span id="stat-tg">0</span>개</div>
-                            <div class="stat-box" style="background:#e3f2fd; color:#1976d2;" onclick="startGlobalQuizByStatus('발음')">발음 🔵<br><span id="stat-br">0</span>개</div>
-                            <div class="stat-box" style="background:#fff3cd; color:#856404;" onclick="startGlobalQuizByStatus('버벅')">버벅 🟡<br><span id="stat-bb">0</span>개</div>
-                            <div class="stat-box" style="background:#fce4ec; color:#c2185b;" onclick="startGlobalQuizByStatus('불가')">불가 🔴<br><span id="stat-bg">0</span>개</div>
+                            <div class="stat-box" style="background:var(--color-tg);" onclick="startGlobalQuizByStatus('통과')">통과 🔵<br><span id="stat-tg">0</span>개</div>
+                            <div class="stat-box" style="background:var(--color-br);" onclick="startGlobalQuizByStatus('발음')">발음 🟡<br><span id="stat-br">0</span>개</div>
+                            <div class="stat-box" style="background:var(--color-bb);" onclick="startGlobalQuizByStatus('버벅')">버벅 🟠<br><span id="stat-bb">0</span>개</div>
+                            <div class="stat-box" style="background:var(--color-bg);" onclick="startGlobalQuizByStatus('불가')">불가 🔴<br><span id="stat-bg">0</span>개</div>
                         </div>
                     </div>
 
                     <div class="mypage-card">
-                        <h3>📈 챕터별 세부 성취도 현황 <span style="font-size:13px; font-weight:normal; color:#888;">(클릭 시 해당 챕터 퀴즈 진입)</span></h3>
-                        <div id="chapter-stats-list">
-                            </div>
+                        <h3>📈 챕터별 세부 성취도 현황 <span style="font-size:13px; font-weight:normal; color:#888;">(클릭 시 해당 챕터 퀴즈 진입. 성취도 클릭 시 버닝모드 진입)</span></h3>
+                        <div id="chapter-stats-list"></div>
                     </div>
 
                     <div class="mypage-card">
@@ -354,7 +366,26 @@
                 <div id="quiz-play-area">
                     <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 640px; margin: 0 auto 15px auto;">
                         <button class="btn" onclick="resetQuizSetup()">🔙 퀴즈 설정 다시하기</button>
-                        <button id="btn-burning-mode" class="btn-burning" onclick="toggleBurningMode()">🔥 버닝 모드</button>
+                        <button id="btn-burning-mode" class="btn-burning" onclick="toggleBurningModeUI()">🔥 버닝 모드</button>
+                    </div>
+
+                    <div id="burning-mode-dashboard">
+                        <div style="font-size:14px; font-weight:bold; margin-bottom:10px; color:var(--text);">🔥 집중 공략할 성취도를 선택하세요 (다중 선택 가능)</div>
+                        <div class="status-choice-grp" style="margin-bottom:15px;">
+                            <button class="status-badge-btn tg" id="b-filter-tg" onclick="toggleBurningFilter('통과', this)">🔵 통과</button>
+                            <button class="status-badge-btn br" id="b-filter-br" onclick="toggleBurningFilter('발음', this)">🟡 발음</button>
+                            <button class="status-badge-btn bb" id="b-filter-bb" onclick="toggleBurningFilter('버벅', this)">🟠 버벅</button>
+                            <button class="status-badge-btn bg" id="b-filter-bg" onclick="toggleBurningFilter('불가', this)">🔴 불가</button>
+                        </div>
+                        <div style="font-size:14px; font-weight:bold; margin-bottom:10px; color:var(--text);">오디오 배속 설정</div>
+                        <div class="speed-controls-row">
+                            <div class="btn-grp">
+                                <button class="btn" onclick="setSpeed(0.3, this)">x0.3</button>
+                                <button class="btn" onclick="setSpeed(0.5, this)">x0.5</button>
+                                <button class="btn" onclick="setSpeed(0.7, this)">x0.7</button>
+                                <button class="btn active" onclick="setSpeed(1.0, this)">x1.0</button>
+                            </div>
+                        </div>
                     </div>
                     
                     <div id="quiz-card-render-zone"></div>
@@ -904,8 +935,8 @@
 }; // 데이터 종료 지점
 
 
-   // ==========================================
-    // 1. [최상단 배치] FIREBASE 초기화 및 엔진 가동
+    // ==========================================
+    // 1. FIREBASE 초기화 및 엔진 가동
     // ==========================================
     const firebaseConfig = {
       apiKey: "AIzaSyDNgYoAR-kbArvzb3LdGEh2Hk0n-2y2X5Q",
@@ -922,6 +953,28 @@
         if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
         auth = firebase.auth(); 
         db = firebase.firestore();
+
+        // 6. 자동 로그인 대신 세션 유지로 변경 (ID 기억하기 기능 추가)
+        auth.setPersistence(firebase.auth.Auth.Persistence.SESSION);
+
+        // 로그인 상태 관찰자
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                currentUserUid = user.uid;
+                const emailPrefix = user.email.split('@')[0];
+                const formattedName = emailPrefix.charAt(0).toUpperCase() + emailPrefix.slice(1);
+                welcomeUsername.innerText = formattedName;
+                
+                loginScreen.style.display = 'none'; 
+                userBadgeArea.style.display = 'flex';
+                
+                showEntryScreen();
+                fetchUserProgressFromFirestore();
+            } else {
+                loginScreen.style.display = 'flex';
+            }
+        });
+
     } catch (error) { console.error("Firebase 초기화 에러:", error); }
 
     let isShadowing = false, 
@@ -934,8 +987,14 @@
     let fullQuizPool = []; 
     let quizPool = [];
     let currentQuizIndex = 0;
-    let isBurningMode = false;
     
+    // 랜덤 보기 토글 변수 추가
+    let isRandomQuiz = false;
+
+    // 버닝 모드 관련 변수
+    let isBurningMode = false;
+    let activeBurningFilters = [];
+
     let mediaRecorder = null, audioChunks = [], recordedAudioUrl = null;
 
     const loginScreen = document.getElementById('login-screen'),
@@ -947,43 +1006,44 @@
           quizSetupArea = document.getElementById('quiz-setup-area'),
           quizPlayArea = document.getElementById('quiz-play-area'),
           quizCardRenderZone = document.getElementById('quiz-card-render-zone'),
+          burningDashboard = document.getElementById('burning-mode-dashboard'),
           statusIcon = document.getElementById('global-status-icon'),
           player = document.getElementById('player'),
-          practiceBarSection = document.getElementById('practice-bar-section');
+          practiceBarSection = document.getElementById('practice-bar-section'),
+          sidebar = document.getElementById('sidebar');
 
     function convertIdToEmail(pureId) { return `${pureId.trim().toLowerCase()}@koboogy.com`; }
 
     function handleLoginSubmit() {
         if (!auth) { alert("Firebase 세팅을 확인해 주세요!"); return; }
-        const idInput = document.getElementById('user-id').value.trim(), pwInput = document.getElementById('user-pw').value;
+        const idInput = document.getElementById('user-id').value.trim();
+        const pwInput = document.getElementById('user-pw').value;
+        const rememberChk = document.getElementById('remember-id').checked;
+
         if (!idInput || !pwInput) { alert("아이디와 비밀번호를 입력해 주세요!"); return; }
 
+        if (rememberChk) {
+            localStorage.setItem('koboogy_saved_id', idInput);
+        } else {
+            localStorage.removeItem('koboogy_saved_id');
+        }
+
         auth.signInWithEmailAndPassword(convertIdToEmail(idInput), pwInput)
-            .then((user) => {
-                currentUserUid = user.user.uid;
-                const formattedName = idInput.charAt(0).toUpperCase() + idInput.slice(1);
-                welcomeUsername.innerText = formattedName;
-                
-                loginScreen.style.display = 'none'; 
-                userBadgeArea.style.display = 'flex';
-                
-                showEntryScreen();
-                fetchUserProgressFromFirestore();
-            }).catch((err) => alert("로그인 실패: " + err.message));
+            .catch((err) => alert("로그인 실패: " + err.message));
     }
     document.getElementById('user-pw').addEventListener('keypress', e => { if (e.key === 'Enter') handleLoginSubmit(); });
     function handleLogout() { if(auth) auth.signOut().then(() => location.reload()); }
 
-    // 🔥 메인 로고 클릭 시 호출되어 첫 화면으로 돌아가는 함수
     function showEntryScreen() {
-        document.getElementById('top-left-modes').style.display = 'none'; // 상단 중앙 버튼 숨김
-        entryScreen.style.display = 'flex'; // 첫 화면 표시
+        document.getElementById('top-left-modes').style.display = 'none'; 
+        entryScreen.style.display = 'flex'; 
         
         mainStudyContainer.style.display = 'none';
         quizSetupArea.style.display = 'none';
         quizPlayArea.style.display = 'none';
         mypageArea.style.display = 'none';
         practiceBarSection.style.display = 'none';
+        sidebar.style.display = 'none'; // 초기화면에서 사이드바 숨김
         document.body.classList.remove('quiz-mode-active');
         stopAll();
     }
@@ -1006,9 +1066,12 @@
             });
     }
 
+    // 5. 성취도 컬러 아이콘 변경
     function getStatusIconChar(status) {
-        if (status === '통과') return ' 🟢'; if (status === '발음') return ' 🔵';
-        if (status === '버벅') return ' 🟡'; if (status === '불가') return ' 🔴';
+        if (status === '통과') return ' 🔵'; 
+        if (status === '발음') return ' 🟡';
+        if (status === '버벅') return ' 🟠'; 
+        if (status === '불가') return ' 🔴';
         return '';
     }
 
@@ -1021,21 +1084,18 @@
         } else { 
             updateMyPageStatisticsUI(); 
             mainStudyContainer.style.display = 'none'; quizSetupArea.style.display = 'none'; quizPlayArea.style.display = 'none'; practiceBarSection.style.display = 'none';
+            sidebar.style.display = 'none';
             mypageArea.style.display = 'block'; 
-            
-            // 진입 화면에서는 안보이던 모드 버튼을 다시 표시
             document.getElementById('top-left-modes').style.display = 'flex';
         }
     }
 
-    // 🔥 전체 통계 및 챕터별 성취도 리스트 렌더링
     function updateMyPageStatisticsUI() {
         let tg = 0, br = 0, bb = 0, bg = 0;
         const chapterListContainer = document.getElementById('chapter-stats-list');
-        chapterListContainer.innerHTML = ''; // 초기화
+        chapterListContainer.innerHTML = ''; 
 
-        // 각 챕터별 데이터 계산
-        Object.keys(studyData).forEach(wk => {
+        Object.keys(studyData).sort().forEach(wk => {
             const cData = studyData[wk];
             let cTotal = 0, cTg = 0, cBr = 0, cBb = 0, cBg = 0;
 
@@ -1052,74 +1112,83 @@
                 }
             });
 
-            const completed = cTg + cBr; // 통과 + 발음
+            const completed = cTg + cBr; 
             const rate = cTotal === 0 ? 0 : Math.round((completed / cTotal) * 100);
 
-            // 챕터별 리스트 항목 생성 (클릭 시 퀴즈모드 진입)
+            // 4. 챕터별 성취도 클릭 시 버닝 모드로 직접 연결 (onclick 추가)
             const html = `
-                <div class="chapter-stat-item" onclick="startDirectChapterQuiz('${wk}')">
-                    <div class="ch-left">
+                <div class="chapter-stat-item">
+                    <div class="ch-left" onclick="startDirectChapterQuiz('${wk}')">
                         <div class="ch-title">Chapter ${wk}</div>
                         <div class="ch-rate">${rate}% <span style="font-size:12px; color:#5f6368; font-weight:normal;">(${completed} / ${cTotal})</span></div>
                     </div>
                     <div class="ch-right">
-                        <span style="color:#388e3c;">🟢 ${cTg}</span>
-                        <span style="color:#1976d2;">🔵 ${cBr}</span>
-                        <span style="color:#856404;">🟡 ${cBb}</span>
-                        <span style="color:#c2185b;">🔴 ${cBg}</span>
+                        <span style="color:var(--color-tg);" onclick="startChapterBurningMode('${wk}', '통과')">🔵 ${cTg}</span>
+                        <span style="color:var(--color-br);" onclick="startChapterBurningMode('${wk}', '발음')">🟡 ${cBr}</span>
+                        <span style="color:var(--color-bb);" onclick="startChapterBurningMode('${wk}', '버벅')">🟠 ${cBb}</span>
+                        <span style="color:var(--color-bg);" onclick="startChapterBurningMode('${wk}', '불가')">🔴 ${cBg}</span>
                     </div>
                 </div>
             `;
             chapterListContainer.insertAdjacentHTML('beforeend', html);
         });
 
-        // 전체 카운트 갱신
         document.getElementById('stat-tg').innerText = tg; document.getElementById('stat-br').innerText = br; document.getElementById('stat-bb').innerText = bb; document.getElementById('stat-bg').innerText = bg;
     }
 
-    // 🔥 다이렉트 챕터 퀴즈 (마이페이지 챕터 클릭 시 호출)
     function startDirectChapterQuiz(wk) {
         activeQuizChapters = [wk];
-        activeQuizTypes = ['all']; // 모든 모드 포함
+        activeQuizTypes = ['all']; 
+        isBurningMode = false;
         switchMainMode('quiz');
         startQuizPool();
     }
 
-    // 🔥 전체 상태별 퀴즈 시작 (마이페이지 상단 4개 큰 뱃지 클릭 시 호출)
-    function startGlobalQuizByStatus(statusName) {
-        quizPool = [];
-        Object.keys(studyData).forEach(wk => {
-            const cData = studyData[wk];
-            if (cData.mystory) {
-                cData.mystory.sentences.forEach((s, i) => {
-                    if (userProgressCache[`${wk}_mystory_${i}`] === statusName) {
-                        quizPool.push({ wk, type: 'mystory', typeBadge: 'MS', idx: i, data: s, audio: cData.mystory.audio });
-                    }
-                });
-            }
-            if (cData.realconvo) {
-                cData.realconvo.chat.forEach((s, i) => {
-                    if (userProgressCache[`${wk}_realconvo_${i}`] === statusName) {
-                        quizPool.push({ wk, type: 'realconvo', typeBadge: 'RC', idx: i, data: s, audio: cData.realconvo.audio });
-                    }
-                });
-            }
-        });
-
-        if (quizPool.length === 0) { alert(`해당하는 [${statusName}] 상태의 카드가 하나도 없습니다!`); return; }
-
-        fullQuizPool = [...quizPool];
-        isBurningMode = false;
-        document.getElementById('btn-burning-mode').classList.remove('active');
-
-        currentQuizIndex = 0; recordedAudioUrl = null;
+    // 마이페이지 세부 성취도 클릭에서 버닝모드 바로 진입
+    function startChapterBurningMode(wk, status) {
+        activeQuizChapters = [wk];
+        activeQuizTypes = ['all'];
+        isBurningMode = true;
+        activeBurningFilters = [status];
+        
         switchMainMode('quiz');
+        buildFullQuizPool(); 
+        document.getElementById('btn-burning-mode').classList.add('active');
+        burningDashboard.style.display = 'block';
+        
+        // 필터 UI 동기화
+        syncBurningFilterUI();
+        applyBurningFilters();
+        
         quizSetupArea.style.display = 'none';
         quizPlayArea.style.display = 'block';
-        renderQuizCard();
     }
 
-    function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
+    function startGlobalQuizByStatus(statusName) {
+        isBurningMode = true;
+        activeBurningFilters = [statusName];
+        
+        // 전체 챕터 선택
+        activeQuizChapters = Object.keys(studyData);
+        activeQuizTypes = ['all'];
+        
+        switchMainMode('quiz');
+        buildFullQuizPool();
+        document.getElementById('btn-burning-mode').classList.add('active');
+        burningDashboard.style.display = 'block';
+        
+        syncBurningFilterUI();
+        applyBurningFilters();
+
+        quizSetupArea.style.display = 'none';
+        quizPlayArea.style.display = 'block';
+    }
+
+    function toggleSidebar() { 
+        sidebar.style.display = (sidebar.style.display === 'block') ? 'none' : 'block'; 
+        sidebar.classList.toggle('open');
+    }
+    
     function toggleMobileControls() { document.getElementById('practice-bar-section').classList.toggle('show-on-mobile'); }
 
     function toggleShadowModeUI() {
@@ -1148,10 +1217,20 @@
         stopAll();
 
         if (isQuizMode) {
+            sidebar.style.display = 'none';
             mainStudyContainer.style.display = 'none';
             quizPlayArea.style.display = 'none';
             quizSetupArea.style.display = 'block';
+            
+            // 퀴즈 설정 초기화 시 UI 동기화
+            document.querySelectorAll('.chapter-chk-btn').forEach(btn => {
+                const wk = btn.innerText.replace('Ch ', '');
+                if (activeQuizChapters.includes(wk)) btn.classList.add('active');
+                else btn.classList.remove('active');
+            });
         } else {
+            // 학습 모드 진입 시 사이드바 표시 (모바일 제외)
+            if(window.innerWidth > 768) { sidebar.style.display = 'block'; }
             quizSetupArea.style.display = 'none';
             quizPlayArea.style.display = 'none';
             mainStudyContainer.style.display = 'block';
@@ -1175,7 +1254,7 @@
         const data = studyData[wk]?.[type]; if (!data) return;
         
         document.querySelectorAll('.sub-item').forEach(s => s.classList.remove('active')); el.classList.add('active');
-        if (window.innerWidth <= 768) document.getElementById('sidebar').classList.remove('open');
+        if (window.innerWidth <= 768) { sidebar.classList.remove('open'); sidebar.style.display = 'none'; }
         
         let html = `<h2 class="section-title" onclick="toggleAutoPlayAll(this)"><span>${wk}</span>| ${type === 'mystory' ? 'My Story' : 'Real Conversation'}</h2>`;
         const items = type === 'mystory' ? data.sentences : data.chat;
@@ -1224,56 +1303,95 @@
         }
     }
 
+    function buildFullQuizPool() {
+        fullQuizPool = [];
+        activeQuizChapters.sort().forEach(wk => {
+            const cData = studyData[wk]; if (!cData) return;
+            if ((activeQuizTypes.includes('mystory') || activeQuizTypes.includes('all')) && cData.mystory) {
+                cData.mystory.sentences.forEach((s, i) => fullQuizPool.push({ wk, type: 'mystory', typeBadge: 'MS', idx: i, data: s, audio: cData.mystory.audio }));
+            }
+            if ((activeQuizTypes.includes('realconvo') || activeQuizTypes.includes('all')) && cData.realconvo) {
+                cData.realconvo.chat.forEach((s, i) => fullQuizPool.push({ wk, type: 'realconvo', typeBadge: 'RC', idx: i, data: s, audio: cData.realconvo.audio }));
+            }
+        });
+    }
+
     function startQuizPool() {
         if (activeQuizChapters.length === 0) { alert("학습할 챕터를 1개 이상 선택해 주세요!"); return; }
         
-        quizPool = [];
-        activeQuizChapters.sort().forEach(wk => {
-            const cData = studyData[wk]; if (!cData) return;
-            
-            if (activeQuizTypes.includes('mystory') && cData.mystory) {
-                cData.mystory.sentences.forEach((s, i) => quizPool.push({ wk, type: 'mystory', typeBadge: 'MS', idx: i, data: s, audio: cData.mystory.audio }));
-            }
-            if (activeQuizTypes.includes('realconvo') && cData.realconvo) {
-                cData.realconvo.chat.forEach((s, i) => quizPool.push({ wk, type: 'realconvo', typeBadge: 'RC', idx: i, data: s, audio: cData.realconvo.audio }));
-            }
-        });
+        buildFullQuizPool();
+        if (fullQuizPool.length === 0) { alert("선택한 챕터/모드에 해당하는 데이터가 없습니다."); return; }
 
-        if (quizPool.length === 0) { alert("선택한 챕터/모드에 해당하는 데이터가 없습니다."); return; }
-
-        fullQuizPool = [...quizPool]; 
         isBurningMode = false;
         document.getElementById('btn-burning-mode').classList.remove('active'); 
+        burningDashboard.style.display = 'none';
 
+        quizPool = [...fullQuizPool];
         currentQuizIndex = 0; recordedAudioUrl = null;
         quizSetupArea.style.display = 'none';
         quizPlayArea.style.display = 'block';
         renderQuizCard();
     }
 
-    function toggleBurningMode() {
+    // 8. 버닝 모드 다중 선택 로직
+    function toggleBurningModeUI() {
         const btn = document.getElementById('btn-burning-mode');
         isBurningMode = !isBurningMode;
 
         if (isBurningMode) {
-            const burningPool = fullQuizPool.filter(qItem => {
-                const progressKey = `${qItem.wk}_${qItem.type}_${qItem.idx}`;
-                const status = userProgressCache[progressKey];
-                return status === '발음' || status === '버벅' || status === '불가';
-            });
-
-            if (burningPool.length === 0) {
-                alert("선택한 챕터 중 집중 훈련(발음/버벅/불가) 대상 카드가 없습니다!");
-                isBurningMode = false; 
-                return;
+            btn.classList.add('active');
+            burningDashboard.style.display = 'block';
+            
+            // 처음 켤 때는 기본적으로 4개 모두 활성화 (또는 이전에 선택한 필터 유지)
+            if(activeBurningFilters.length === 0) {
+                activeBurningFilters = ['통과', '발음', '버벅', '불가'];
             }
-
-            quizPool = burningPool;
-            btn.classList.add('active'); 
+            syncBurningFilterUI();
+            applyBurningFilters();
         } else {
+            btn.classList.remove('active');
+            burningDashboard.style.display = 'none';
             quizPool = [...fullQuizPool];
-            btn.classList.remove('active'); 
+            currentQuizIndex = 0;
+            renderQuizCard();
         }
+    }
+
+    function toggleBurningFilter(status, btnEl) {
+        if (activeBurningFilters.includes(status)) {
+            activeBurningFilters = activeBurningFilters.filter(s => s !== status);
+            btnEl.classList.add('disabled-gray');
+        } else {
+            activeBurningFilters.push(status);
+            btnEl.classList.remove('disabled-gray');
+        }
+        applyBurningFilters();
+    }
+
+    function syncBurningFilterUI() {
+        const filters = [
+            { id: 'b-filter-tg', status: '통과' },
+            { id: 'b-filter-br', status: '발음' },
+            { id: 'b-filter-bb', status: '버벅' },
+            { id: 'b-filter-bg', status: '불가' }
+        ];
+        filters.forEach(f => {
+            const el = document.getElementById(f.id);
+            if (activeBurningFilters.includes(f.status)) {
+                el.classList.remove('disabled-gray');
+            } else {
+                el.classList.add('disabled-gray');
+            }
+        });
+    }
+
+    function applyBurningFilters() {
+        quizPool = fullQuizPool.filter(qItem => {
+            const progressKey = `${qItem.wk}_${qItem.type}_${qItem.idx}`;
+            const status = userProgressCache[progressKey];
+            // 상태가 없으면 '미학습'으로 간주하여 필터링 제외, 명확하게 있는 것만 필터
+            return status && activeBurningFilters.includes(status);
+        });
 
         currentQuizIndex = 0;
         recordedAudioUrl = null;
@@ -1281,10 +1399,31 @@
     }
 
     function resetQuizSetup() {
-        stopAll(); quizPlayArea.style.display = 'none'; quizSetupArea.style.display = 'block';
+        stopAll(); 
+        quizPlayArea.style.display = 'none'; 
+        quizSetupArea.style.display = 'block';
+        isBurningMode = false;
+
+        // UI 버튼 초기화 (현재 선택된 activeQuizChapters와 동기화)
+        document.querySelectorAll('.chapter-chk-btn').forEach(btn => {
+            const wk = btn.innerText.replace('Ch ', '');
+            if (activeQuizChapters.includes(wk)) btn.classList.add('active');
+            else btn.classList.remove('active');
+        });
+    }
+
+    function toggleRandomQuiz(el) {
+        isRandomQuiz = !isRandomQuiz;
+        el.style.filter = isRandomQuiz ? 'grayscale(0)' : 'grayscale(100%)';
+        el.style.opacity = isRandomQuiz ? '1' : '0.4';
     }
 
     function renderQuizCard() {
+        if (quizPool.length === 0) {
+            quizCardRenderZone.innerHTML = `<div style="text-align:center; padding: 40px; color:var(--gray-text);">해당 조건의 카드가 없습니다.<br><br>필터를 변경하거나 챕터를 다시 선택해주세요.</div>`;
+            return;
+        }
+
         if (currentQuizIndex >= quizPool.length) currentQuizIndex = 0;
         if (currentQuizIndex < 0) currentQuizIndex = quizPool.length - 1;
         
@@ -1297,16 +1436,23 @@
         const statusIconBadge = getStatusIconChar(savedStatus || '');
         const englishFullText = item.chunks.map(c => c.text).join(' ');
 
+        // 버닝 모드일 경우 카드 내의 성취도 아이콘 숨김 처리
+        const badgeDisplay = isBurningMode ? 'none' : 'inline';
+
         let html = `
         <div class="quiz-container">
-            <div class="quiz-card-meta-row" style="justify-content: flex-start; gap: 15px;">
-                <div class="quiz-type-badge">${qItem.typeBadge} ${wk}</div>
-                <div class="quiz-pagination-counter">${currentQuizIndex + 1} / ${quizPool.length}</div>
+            <div class="quiz-card-meta-row">
+                <div style="display:flex; gap:15px; align-items:center;">
+                    <div class="quiz-type-badge">${qItem.typeBadge} ${wk}</div>
+                    <div class="quiz-pagination-counter">${currentQuizIndex + 1} / ${quizPool.length}</div>
+                </div>
             </div>
             
             <div class="quiz-split-card" id="quiz-card-element" data-step="korean" onclick="toggleQuizCardFields()">
                 <div class="quiz-card-top-korean-zone">
-                    <div class="trans-text" style="font-size:22px; color:#1a0dab; font-weight:700;">${item.trans} <span id="badge-indicator-${idx}">${statusIconBadge}</span></div>
+                    <div style="position:absolute; top:15px; right:20px; cursor:pointer; font-size:20px; filter: grayscale(${isRandomQuiz ? '0' : '100%'}); opacity: ${isRandomQuiz ? '1' : '0.4'}; transition: 0.2s; user-select: none;" onclick="event.stopPropagation(); toggleRandomQuiz(this)">🔀</div>
+
+                    <div class="trans-text" style="font-size:22px; color:#1a0dab; font-weight:700;">${item.trans} <span id="badge-indicator-${idx}" style="display:${badgeDisplay};">${statusIconBadge}</span></div>
                 </div>
                 <div class="quiz-card-bottom-english-zone">
                     <div id="quiz-english-fields-box" style="display: none; width:100%;">
@@ -1334,9 +1480,9 @@
             <div class="quiz-status-panel" style="width:100%; text-align:center;">
                 <h4 style="font-size: 14px; color: var(--gray-text); margin: 0 0 12px 0; font-weight: 700;">🎯 성취도 현황 선택</h4>
                 <div class="status-choice-grp" id="status-choice-grp">
-                    <button class="status-badge-btn tg" onclick="submitStatusClick('${wk}','${type}',${idx},'통과', this)">🟢 통과</button>
-                    <button class="status-badge-btn br" onclick="submitStatusClick('${wk}','${type}',${idx},'발음', this)">🔵 발음</button>
-                    <button class="status-badge-btn bb" onclick="submitStatusClick('${wk}','${type}',${idx},'버벅', this)">🟡 버벅</button>
+                    <button class="status-badge-btn tg" onclick="submitStatusClick('${wk}','${type}',${idx},'통과', this)">🔵 통과</button>
+                    <button class="status-badge-btn br" onclick="submitStatusClick('${wk}','${type}',${idx},'발음', this)">🟡 발음</button>
+                    <button class="status-badge-btn bb" onclick="submitStatusClick('${wk}','${type}',${idx},'버벅', this)">🟠 버벅</button>
                     <button class="status-badge-btn bg" onclick="submitStatusClick('${wk}','${type}',${idx},'불가', this)">🔴 불가</button>
                 </div>
             </div>
@@ -1369,7 +1515,16 @@
     function playQuizSentence(s, e) { stopAll(); player.currentTime = Math.max(0, s - 0.15); player.play(); stopTime = e - 0.3; }
     
     function navigateQuiz(dir) {
-        currentQuizIndex += dir; recordedAudioUrl = null;
+        if (isRandomQuiz && quizPool.length > 1) {
+            let nextIndex = currentQuizIndex;
+            while(nextIndex === currentQuizIndex) {
+                nextIndex = Math.floor(Math.random() * quizPool.length);
+            }
+            currentQuizIndex = nextIndex;
+        } else {
+            currentQuizIndex += dir;
+        }
+        recordedAudioUrl = null;
         renderQuizCard();
     }
 
@@ -1378,8 +1533,12 @@
             mediaRecorder = new MediaRecorder(stream); audioChunks = [];
             mediaRecorder.ondataavailable = e => { audioChunks.push(e.data); };
             mediaRecorder.onstop = () => {
-                const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                // 특정 타입 명시 없이 생성하여 브라우저 자체 호환성을 높임 (특히 iOS)
+                const audioBlob = new Blob(audioChunks); 
                 recordedAudioUrl = URL.createObjectURL(audioBlob);
+                
+                const recordPlayer = document.getElementById('record-player');
+                recordPlayer.src = recordedAudioUrl;
                 document.getElementById('play-record-btn').disabled = false;
             };
             mediaRecorder.start();
@@ -1393,7 +1552,13 @@
             document.getElementById('start-record-btn').style.display = 'flex'; document.getElementById('stop-record-btn').style.display = 'none';
         }
     }
-    function playRecording() { if (recordedAudioUrl) { new Audio(recordedAudioUrl).play(); } }
+    
+    function playRecording() { 
+        if (recordedAudioUrl) { 
+            const recordPlayer = document.getElementById('record-player');
+            recordPlayer.play(); 
+        } 
+    }
 
     function submitStatusClick(wk, type, idx, statusName, btnEl) {
         saveSentenceStatusToCloud(wk, type, idx, statusName);
@@ -1473,7 +1638,20 @@
     }
 
     window.onload = () => {
-        const menuItems = ["01 Work", "02 Introducing", "03 Personality"];
+        // 아이디 저장 로직 불러오기
+        const savedId = localStorage.getItem('koboogy_saved_id');
+        if (savedId) {
+            document.getElementById('user-id').value = savedId;
+            document.getElementById('remember-id').checked = true;
+        }
+
+        // 전체 12챕터 반영
+        const menuItems = [
+            "01 Work", "02 Introducing", "03 Personality", "04 How was your day", 
+            "05 Catching up", "06 Directions", "07 Dating", "08 Health", 
+            "09 Favorite Food", "10 Travel", "11 Boot camp", "12 Beautiful Memories"
+        ];
+        
         const navList = document.getElementById('nav-list');
         const quizGrid = document.getElementById('quiz-chapter-grid');
 
