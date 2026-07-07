@@ -1084,24 +1084,34 @@ auth.onAuthStateChanged((user) => {
         stopAll();
     }
 
-    function fetchUserProgressFromFirestore() {
+function fetchUserProgressFromFirestore() {
         if (!currentUserUid || !db) return;
         db.collection("users").doc(currentUserUid).collection("data").doc("progress").get()
-            .then((doc) => { userProgressCache = doc.exists ? doc.data() : {}; updateMyPageStatisticsUI(); });
+            .then((doc) => { 
+                userProgressCache = doc.exists ? doc.data() : {}; 
+                updateMyPageStatisticsUI(); 
+            })
+            // 👇 데이터를 불러오지 못했을 때 콘솔에 에러를 찍어줍니다.
+            .catch((error) => console.error("데이터 불러오기 에러:", error)); 
     }
 
-    function saveSentenceStatusToCloud(chapterWk, type, index, statusName) {
+function saveSentenceStatusToCloud(chapterWk, type, index, statusName) {
         if (!currentUserUid || !db) return;
         const dataKey = `${chapterWk}_${type}_${index}`;
         userProgressCache[dataKey] = statusName;
+
         db.collection("users").doc(currentUserUid).collection("data").doc("progress").set(userProgressCache, { merge: true })
             .then(() => {
                 updateMyPageStatisticsUI();
                 const currentBadge = document.getElementById(`badge-indicator-${index}`);
                 if (currentBadge) currentBadge.innerHTML = getStatusIconChar(statusName);
+            })
+            // 👇 저장이 실패하면 알림창(alert)을 띄워서 바로 알 수 있게 해줍니다.
+            .catch((error) => {
+                alert("파이어베이스 저장에 실패했습니다! (규칙 설정 또는 인터넷 연결 확인)");
+                console.error("데이터 저장 에러:", error);
             });
     }
-
     // 5. 성취도 컬러 아이콘 변경
     function getStatusIconChar(status) {
         if (status === '통과') return ' 🔵'; 
