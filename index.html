@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Koboogy</title>
 
+
     <link rel="icon" href="icon_v2.png" type="image/png">
     
     <link rel="apple-touch-icon" href="icon_v2.png">
@@ -14,7 +15,6 @@
     <meta name="apple-mobile-web-app-title" content="Koboogy">
     
     <link rel="manifest" href="manifest.json">
-
 
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
@@ -205,6 +205,42 @@
 
         #burning-mode-dashboard { display: none; width: 100%; max-width: 640px; margin: 0 auto 15px auto; background: white; border-radius: 12px; padding: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border: 1px solid #ddd; }
 
+/* 🧩 문장 맞추기 퍼즐 전용 스타일 */
+        .scramble-word { display: inline-block; padding: 10px 16px; background: white; border: 2px solid #ddd; border-radius: 12px; margin: 4px; font-weight: bold; cursor: pointer; transition: 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .scramble-word:hover { border-color: var(--primary); color: var(--primary); transform: translateY(-2px); }
+        .scramble-word.used { display: none !important; } /* 단어 완전 숨김 처리 */
+        
+        .answer-box { min-height: 70px; border: 2px dashed #b0b5b9; border-radius: 12px; padding: 15px; margin-bottom: 15px; display: flex; flex-wrap: wrap; gap: 8px; align-content: flex-start; justify-content: center; background: #fafafa; transition: 0.3s; }
+        
+        /* 선택된 정답 단어 디자인 */
+        .answer-word { display: inline-block; padding: 10px 16px; background: #fff; color: #3c4043; border: 2px solid #ced4da; border-radius: 12px; font-weight: bold; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.05); animation: popIn 0.2s ease-out; transition: 0.2s; }
+        .answer-word:hover { background: #f1f3f4; }
+        
+        @keyframes popIn { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+        
+        .puzzle-success { border-color: #388e3c !important; background: #e8f5e9 !important; }
+        .puzzle-success .answer-word { background: #e8f5e9; border-color: #388e3c; color: #2e7d32; }
+        .puzzle-fail { border-color: #d32f2f !important; background: #ffebee !important; }
+        .puzzle-fail .answer-word { background: #ffebee; border-color: #d32f2f; color: #c62828; }
+        
+        .puzzle-btn-check { width: 100%; height: 50px; background: #3c4043; color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 800; cursor: pointer; margin: 15px 0; transition: 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .puzzle-btn-check:hover { background: #202124; transform: translateY(-2px); }
+
+.sortable-ghost {
+    opacity: 0.4;
+    background-color: #f1f3f4;
+    border: 2px dashed #9aa0a6;
+    border-radius: 12px;
+    color: transparent !important; /* 🎯 글자를 투명하게! */
+}
+.sortable-drag {
+    opacity: 0.9 !important;
+    transform: rotate(5deg); /* 살짝 기울어지면 더 역동적이에요! */
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    z-index: 9999;
+}
+
+
  @media (max-width: 768px) { 
     /* 사이드바 및 상단 네비게이션 모바일 대응 */
     .sidebar { position: fixed; left: -280px; height: 100%; z-index: 1001; } 
@@ -263,7 +299,6 @@
             <input type="text" id="user-id" class="login-input" placeholder="순수 ID 입력 (예: jenny)">
             <input type="password" id="user-pw" class="login-input" placeholder="비밀번호 입력">
             
-            <!-- 아이디 저장 체크박스 (비밀번호 아래로 이동) -->
             <div style="display:flex; align-items:center; justify-content:flex-start; margin-bottom:12px; gap:8px;">
                 <input type="checkbox" id="remember-id" style="cursor:pointer;">
                 <label for="remember-id" style="font-size:13px; color:var(--gray-text); cursor:pointer;">ID 기억하기</label>
@@ -288,7 +323,8 @@
                 <div class="left-modes" id="top-left-modes" style="display:none;">
                     <button class="mobile-menu-btn" onclick="toggleSidebar()">☰</button>
                     <button class="btn active" id="btn-study-mode" onclick="switchMainMode('study')" style="height:32px;">📖 학습 모드</button>
-                    <button class="btn" id="btn-quiz-mode" onclick="switchMainMode('quiz')" style="height:32px;">🧩 퀴즈 풀기</button>
+                    <button class="btn" id="btn-quiz-mode" onclick="switchMainMode('quiz')" style="height:32px;">📇 암기 카드</button>
+                    <button class="btn" id="btn-puzzle-mode" onclick="switchMainMode('puzzle')" style="height:32px;">🧩 문장 재배열</button>
                 </div>
                 
                 <div class="right-user" id="user-badge-area" style="display:none;" onclick="toggleMyPageView()">
@@ -333,17 +369,16 @@
             </div>
         </section>
 
-
-
         <audio id="player"></audio> 
         <audio id="record-player" style="display:none;"></audio> <main class="scroll-area" id="main-scroll-area">
             <div class="content-wrap">
                 <div id="entry-screen">
                     <h2 style="color: var(--primary); font-size: 28px; margin-bottom: 10px;">꼬부기에 오신 것을 환영합니다!</h2>
                     <p style="color: var(--gray-text); font-size: 16px;">진행하실 모드를 선택해 주세요.</p>
-                    <div class="entry-btn-wrap">
+                    <div class="entry-btn-wrap" style="flex-wrap: wrap; justify-content: center;">
                         <button class="entry-btn entry-study" onclick="switchMainMode('study')">📖 학습 모드</button>
-                        <button class="entry-btn entry-quiz" onclick="switchMainMode('quiz')">🧩 퀴즈 모드</button>
+                        <button class="entry-btn entry-quiz" onclick="switchMainMode('quiz')">📇 암기 카드</button>
+                        <button class="entry-btn" style="background:#e8f5e9; color:#2e7d32;" onclick="switchMainMode('puzzle')">🧩 문장 재배열</button>
                     </div>
                 </div>
 
@@ -379,7 +414,7 @@
                 </div>
 
                 <div id="quiz-setup-area">
-                    <h2 class="section-title">🎯 퀴즈 세팅</h2>
+                    <h2 class="section-title" id="setup-title-text">🎯 세팅</h2>
                     <div class="quiz-setup-box">
                         <h4>1. 학습할 모드를 선택하세요 (중복 가능)</h4>
                         <div class="quiz-type-filters">
@@ -403,13 +438,19 @@
                     </div>
 
                     <div id="burning-mode-dashboard">
-                        <div style="font-size:14px; font-weight:bold; margin-bottom:10px; color:var(--text);">🔥 집중 공략할 성취도를 선택하세요 (다중 선택 가능)</div>
-                        <div class="status-choice-grp" style="margin-bottom:15px;">
-                            <button class="status-badge-btn tg" id="b-filter-tg" onclick="toggleBurningFilter('통과', this)">🔵 통과</button>
-                            <button class="status-badge-btn br" id="b-filter-br" onclick="toggleBurningFilter('발음', this)">🟢 발음</button>
-                            <button class="status-badge-btn bb" id="b-filter-bb" onclick="toggleBurningFilter('버벅', this)">🟡 버벅</button>
-                            <button class="status-badge-btn bg" id="b-filter-bg" onclick="toggleBurningFilter('불가', this)">🔴 불가</button>
+                        <div id="burning-quiz-filters">
+                            <div style="font-size:14px; font-weight:bold; margin-bottom:10px; color:var(--text);">🔥 집중 공략할 성취도를 선택하세요</div>
+                            <div class="status-choice-grp" style="margin-bottom:15px;">
+                                <button class="status-badge-btn tg" id="b-filter-tg" onclick="toggleBurningFilter('통과', this)">🔵 통과</button>
+                                <button class="status-badge-btn br" id="b-filter-br" onclick="toggleBurningFilter('발음', this)">🟢 발음</button>
+                                <button class="status-badge-btn bb" id="b-filter-bb" onclick="toggleBurningFilter('버벅', this)">🟡 버벅</button>
+                                <button class="status-badge-btn bg" id="b-filter-bg" onclick="toggleBurningFilter('불가', this)">🔴 불가</button>
+                            </div>
                         </div>
+                        <div id="burning-puzzle-filters" style="display:none; text-align:center; font-weight:bold; color:#d32f2f; margin-bottom:15px;">
+                            🔥 '재도전' 항목만 집중 복습 중입니다!
+                        </div>
+
                         <div style="font-size:14px; font-weight:bold; margin-bottom:10px; color:var(--text);">오디오 배속 설정</div>
                         <div class="speed-controls-row">
                             <div class="btn-grp">
@@ -716,7 +757,7 @@
                     { speaker: "A", start: 12.100, end: 13.540, ipa: "/haʊ kʌm/", trans: "왜?", chunks: [{ text: "How come?", s: 12.100, e: 13.540 }] },
                     { speaker: "B", start: 13.540, end: 17.600, ipa: "/wɛl, hiː ˈstɑːrtəd ˈæskɪŋ ˈriːəli ˈpɜːrsənəl ˈkwɛstʃənz əˈbaʊt ˈmærɪdʒ/", trans: "그게, 결혼 관련해서 완전 개인적인 질문을 하기 시작하는 거야.", chunks: [{ text: "Well, he started asking really personal", s: 13.540, e: 15.810 }, { text: "questions about marriage.", s: 15.810, e: 17.600 }] },
                     { speaker: "B", start: 17.600, end: 20.960, ipa: "/ɪt wʌz ˈoʊnli ˈaʊər ˈsɛkənd deɪt. ɪt wʌz wɪərd/", trans: "고작 두 번째 데이트였는데! 너무 이상했어.", chunks: [{ text: "It was only our second date!", s: 17.600, e: 19.390 },{ text: "It was weird.", s: 19.390, e: 20.960 },] },
-                    { speaker: "A", start: 20.960, end: 24.510, ipa: "/oʊ maɪ ɡɑːd, noʊ weɪ! wʌt dɪd hiː æsk/", trans: "헐 대박, 진짜? 뭐라고 물어봤는데?", chunks: [{ text: "Oh my God, no way!", s: 20.960, e: 22.590 },{ text: "What did he ask?", s: 22.590, e: 24.510 }] },,
+                    { speaker: "A", start: 20.960, end: 24.510, ipa: "/oʊ maɪ ɡɑːd, noʊ weɪ! wʌt dɪd hiː æsk/", trans: "헐 대박, 진짜? 뭐라고 물어봤는데?", chunks: [{ text: "Oh my God, no way!", s: 20.960, e: 22.590 },{ text: "What did he ask?", s: 22.590, e: 24.510 }] },
                     { speaker: "B", start: 24.510, end: 30.910, ipa: "/hiː æskt haʊ ˈmɛni kɪdz aɪ ˈwɑːntɪd, ɪf aɪ stɪl ˈwɑːntɪd tuː wɜːrk ˈæftər ˈmærɪdʒ, ænd ˈiːvən haʊ mʌtʃ ˈmʌni aɪ seɪvd/", trans: "애는 몇 명 낳고 싶은지, 결혼해도 계속 일할 건지, 심지어 얼마나 모았는지까지 물어봤어!", chunks: [{ text: "He asked how many kids I wanted,", s: 24.510, e: 26.430 }, { text: "if I still wanted to", s: 26.430, e: 27.380 }, { text: "work after marriage,", s: 27.380, e: 28.640 }, { text: "and even how much money I saved!", s: 28.640, e: 30.910 }] },
                     { speaker: "A", start: 30.910, end: 31.780, ipa: "/wʌt ðə hɛk/", trans: "뭐야 그게?", chunks: [{ text: "What the heck?", s: 30.910, e: 31.780 }] },
                     { speaker: "A", start: 31.780, end: 33.730, ipa: "/ðæts soʊ ˈpɜːrsənəl/", trans: "그건 너무 사적이잖아.", chunks: [{ text: "That's so personal.", s: 31.780, e: 33.730 }] },
@@ -951,10 +992,8 @@
         }
 
 
-
 }; // 데이터 종료 지점
 
-    
     // ==========================================
     // 1. FIREBASE 초기화 및 엔진 가동
     // ==========================================
@@ -974,37 +1013,34 @@
         auth = firebase.auth(); 
         db = firebase.firestore();
 
-        // 6. 자동 로그인 대신 세션 유지로 변경 (ID 기억하기 기능 추가)
         auth.setPersistence(firebase.auth.Auth.Persistence.SESSION);
 
-// [수정] 로그인 상태 관찰자 부분
-auth.onAuthStateChanged((user) => {
-    if (user) {
-        // 로그인 상태라면 바로 메인 화면으로 진입
-        currentUserUid = user.uid;
-        const emailPrefix = user.email.split('@')[0];
-        const formattedName = emailPrefix.charAt(0).toUpperCase() + emailPrefix.slice(1);
-        welcomeUsername.innerText = formattedName;
-        
-        loginScreen.style.display = 'none'; 
-        userBadgeArea.style.display = 'flex';
-        
-        showEntryScreen();
-        fetchUserProgressFromFirestore();
-    } else {
-        // 로그아웃 상태라면 로그인 화면 표시 및 아이디 기억하기 설정
-        loginScreen.style.display = 'flex';
-        const savedId = localStorage.getItem('koboogy_saved_id');
-        if (savedId) {
-            document.getElementById('user-id').value = savedId;
-            document.getElementById('remember-id').checked = true;
-        }
-    }
-});
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                currentUserUid = user.uid;
+                const emailPrefix = user.email.split('@')[0];
+                const formattedName = emailPrefix.charAt(0).toUpperCase() + emailPrefix.slice(1);
+                welcomeUsername.innerText = formattedName;
+                
+                loginScreen.style.display = 'none'; 
+                userBadgeArea.style.display = 'flex';
+                
+                showEntryScreen();
+                fetchUserProgressFromFirestore();
+            } else {
+                loginScreen.style.display = 'flex';
+                const savedId = localStorage.getItem('koboogy_saved_id');
+                if (savedId) {
+                    document.getElementById('user-id').value = savedId;
+                    document.getElementById('remember-id').checked = true;
+                }
+            }
+        });
     } catch (error) { console.error("Firebase 초기화 에러:", error); }
 
+    let currentAppMode = 'study'; // 'study', 'quiz', 'puzzle' 중 하나
     let isShadowing = false, 
-        isQuizMode = false,
+        isQuizMode = false, // 테스트 화면 상태(암기카드, 퍼즐 포괄)
         currentRepeat = 0, stopTime = 0, isAutoPlaying = false,
         currentUserUid = null, userProgressCache = {}; 
 
@@ -1013,15 +1049,14 @@ auth.onAuthStateChanged((user) => {
     let fullQuizPool = []; 
     let quizPool = [];
     let currentQuizIndex = 0;
-    
-    // 랜덤 보기 토글 변수 추가
     let isRandomQuiz = false;
 
-    // 버닝 모드 관련 변수
     let isBurningMode = false;
     let activeBurningFilters = [];
 
-    let mediaRecorder = null, audioChunks = [], recordedAudioUrl = null;
+    // 🎯 녹음 관련 변수 (딕셔너리 추가)
+    let mediaRecorder = null, audioChunks = [];
+    let recordedAudioDict = {}; 
 
     const loginScreen = document.getElementById('login-screen'),
           entryScreen = document.getElementById('entry-screen'),
@@ -1069,23 +1104,22 @@ auth.onAuthStateChanged((user) => {
         quizPlayArea.style.display = 'none';
         mypageArea.style.display = 'none';
         practiceBarSection.style.display = 'none';
-        sidebar.style.display = 'none'; // 초기화면에서 사이드바 숨김
+        sidebar.style.display = 'none';
         document.body.classList.remove('quiz-mode-active');
         stopAll();
     }
 
-function fetchUserProgressFromFirestore() {
+    function fetchUserProgressFromFirestore() {
         if (!currentUserUid || !db) return;
         db.collection("users").doc(currentUserUid).collection("data").doc("progress").get()
             .then((doc) => { 
                 userProgressCache = doc.exists ? doc.data() : {}; 
                 updateMyPageStatisticsUI(); 
             })
-            // 👇 데이터를 불러오지 못했을 때 콘솔에 에러를 찍어줍니다.
-            .catch((error) => console.error("데이터 불러오기 에러:", error)); 
+            .catch((error) => console.error("데이터 불러오기 에러:", error));
     }
 
-function saveSentenceStatusToCloud(chapterWk, type, index, statusName) {
+    function saveSentenceStatusToCloud(chapterWk, type, index, statusName) {
         if (!currentUserUid || !db) return;
         const dataKey = `${chapterWk}_${type}_${index}`;
         userProgressCache[dataKey] = statusName;
@@ -1093,7 +1127,6 @@ function saveSentenceStatusToCloud(chapterWk, type, index, statusName) {
         db.collection("users").doc(currentUserUid).collection("data").doc("progress").set(userProgressCache, { merge: true })
             .then(() => {
                 updateMyPageStatisticsUI();
-                // [수정] 기존에 있던 성취도 뱃지(동그라미 점) 화면 업데이트 코드를 삭제했습니다.
             })
             .catch((error) => {
                 alert("파이어베이스 저장에 실패했습니다! (규칙 설정 또는 인터넷 연결 확인)");
@@ -1101,12 +1134,12 @@ function saveSentenceStatusToCloud(chapterWk, type, index, statusName) {
             });
     }
 
-    // 5. 성취도 컬러 아이콘 변경
     function getStatusIconChar(status) {
         if (status === '통과') return ' 🔵'; 
         if (status === '발음') return ' 🟢';
         if (status === '버벅') return ' 🟡'; 
         if (status === '불가') return ' 🔴';
+        if (status === '재도전') return ' 🔴';
         return '';
     }
 
@@ -1115,7 +1148,7 @@ function saveSentenceStatusToCloud(chapterWk, type, index, statusName) {
         entryScreen.style.display = 'none';
         if (mypageArea.style.display === 'block') { 
             mypageArea.style.display = 'none'; 
-            switchMainMode(isQuizMode ? 'quiz' : 'study'); 
+            switchMainMode(isQuizMode ? currentAppMode : 'study'); 
         } else { 
             updateMyPageStatisticsUI(); 
             mainStudyContainer.style.display = 'none'; quizSetupArea.style.display = 'none'; quizPlayArea.style.display = 'none'; practiceBarSection.style.display = 'none';
@@ -1143,14 +1176,13 @@ function saveSentenceStatusToCloud(chapterWk, type, index, statusName) {
                     if (s === '통과') { cTg++; tg++; }
                     if (s === '발음') { cBr++; br++; }
                     if (s === '버벅') { cBb++; bb++; }
-                    if (s === '불가') { cBg++; bg++; }
+                    if (s === '불가' || s === '재도전') { cBg++; bg++; }
                 }
             });
 
             const completed = cTg + cBr; 
             const rate = cTotal === 0 ? 0 : Math.round((completed / cTotal) * 100);
 
-            // 4. 챕터별 성취도 클릭 시 버닝 모드로 직접 연결 (onclick 추가)
             const html = `
                 <div class="chapter-stat-item">
                     <div class="ch-left" onclick="startDirectChapterQuiz('${wk}')">
@@ -1179,7 +1211,6 @@ function saveSentenceStatusToCloud(chapterWk, type, index, statusName) {
         startQuizPool();
     }
 
-    // 마이페이지 세부 성취도 클릭에서 버닝모드 바로 진입
     function startChapterBurningMode(wk, status) {
         activeQuizChapters = [wk];
         activeQuizTypes = ['all'];
@@ -1191,7 +1222,6 @@ function saveSentenceStatusToCloud(chapterWk, type, index, statusName) {
         document.getElementById('btn-burning-mode').classList.add('active');
         burningDashboard.style.display = 'block';
         
-        // 필터 UI 동기화
         syncBurningFilterUI();
         applyBurningFilters();
         
@@ -1203,7 +1233,6 @@ function saveSentenceStatusToCloud(chapterWk, type, index, statusName) {
         isBurningMode = true;
         activeBurningFilters = [statusName];
         
-        // 전체 챕터 선택
         activeQuizChapters = Object.keys(studyData);
         activeQuizTypes = ['all'];
         
@@ -1224,7 +1253,6 @@ function saveSentenceStatusToCloud(chapterWk, type, index, statusName) {
         sidebar.classList.toggle('open');
     }
     
-
     function toggleShadowModeUI() {
         const ui = document.getElementById('shadow-toggle-ui');
         const isActive = !ui.classList.contains('active');
@@ -1238,11 +1266,18 @@ function saveSentenceStatusToCloud(chapterWk, type, index, statusName) {
     }
 
     function switchMainMode(mode) {
-        isQuizMode = (mode === 'quiz');
+        currentAppMode = mode;
+        isQuizMode = (mode === 'quiz' || mode === 'puzzle');
+        
         entryScreen.style.display = 'none';
         document.getElementById('top-left-modes').style.display = 'flex'; 
-        document.getElementById('btn-quiz-mode').classList.toggle('active', isQuizMode);
-        document.getElementById('btn-study-mode').classList.toggle('active', !isQuizMode);
+        
+        document.getElementById('btn-study-mode').classList.toggle('active', mode === 'study');
+        document.getElementById('btn-quiz-mode').classList.toggle('active', mode === 'quiz');
+        
+        const puzzleBtn = document.getElementById('btn-puzzle-mode');
+        if(puzzleBtn) puzzleBtn.classList.toggle('active', mode === 'puzzle');
+        
         document.body.classList.toggle('quiz-mode-active', isQuizMode);
         
         mypageArea.style.display = 'none';
@@ -1256,14 +1291,17 @@ function saveSentenceStatusToCloud(chapterWk, type, index, statusName) {
             quizPlayArea.style.display = 'none';
             quizSetupArea.style.display = 'block';
             
-            // 퀴즈 설정 초기화 시 UI 동기화
+            const setupTitle = document.getElementById('setup-title-text');
+            if(setupTitle) {
+                setupTitle.innerText = (mode === 'puzzle') ? '🎯 문장 재배열 세팅' : '🎯 암기 카드 세팅';
+            }
+            
             document.querySelectorAll('.chapter-chk-btn').forEach(btn => {
                 const wk = btn.innerText.replace('Ch ', '');
                 if (activeQuizChapters.includes(wk)) btn.classList.add('active');
                 else btn.classList.remove('active');
             });
         } else {
-            // 학습 모드 진입 시 사이드바 표시 (모바일 제외)
             if(window.innerWidth > 768) { sidebar.style.display = 'block'; }
             quizSetupArea.style.display = 'none';
             quizPlayArea.style.display = 'none';
@@ -1361,13 +1399,12 @@ function saveSentenceStatusToCloud(chapterWk, type, index, statusName) {
         burningDashboard.style.display = 'none';
 
         quizPool = [...fullQuizPool];
-        currentQuizIndex = 0; recordedAudioUrl = null;
+        currentQuizIndex = 0; recordedAudioDict = {}; // 시작할때 녹음파일들 초기화
         quizSetupArea.style.display = 'none';
         quizPlayArea.style.display = 'block';
         renderQuizCard();
     }
 
-// 8. 버닝 모드 다중 선택 로직
     function toggleBurningModeUI() {
         const btn = document.getElementById('btn-burning-mode');
         isBurningMode = !isBurningMode;
@@ -1376,11 +1413,18 @@ function saveSentenceStatusToCloud(chapterWk, type, index, statusName) {
             btn.classList.add('active');
             burningDashboard.style.display = 'block';
             
-            // [수정] 버닝 모드 진입 시 기본으로 아무것도 선택되지 않도록 배열을 비워줍니다.
-            activeBurningFilters = [];
-            
-            syncBurningFilterUI();
-            applyBurningFilters();
+            if (currentAppMode === 'puzzle') {
+                document.getElementById('burning-quiz-filters').style.display = 'none';
+                document.getElementById('burning-puzzle-filters').style.display = 'block';
+                activeBurningFilters = ['재도전'];
+                applyBurningFilters();
+            } else {
+                document.getElementById('burning-quiz-filters').style.display = 'block';
+                document.getElementById('burning-puzzle-filters').style.display = 'none';
+                activeBurningFilters = [];
+                syncBurningFilterUI();
+                applyBurningFilters();
+            }
         } else {
             btn.classList.remove('active');
             burningDashboard.style.display = 'none';
@@ -1410,10 +1454,12 @@ function saveSentenceStatusToCloud(chapterWk, type, index, statusName) {
         ];
         filters.forEach(f => {
             const el = document.getElementById(f.id);
-            if (activeBurningFilters.includes(f.status)) {
-                el.classList.remove('disabled-gray');
-            } else {
-                el.classList.add('disabled-gray');
+            if(el) {
+                if (activeBurningFilters.includes(f.status)) {
+                    el.classList.remove('disabled-gray');
+                } else {
+                    el.classList.add('disabled-gray');
+                }
             }
         });
     }
@@ -1422,12 +1468,10 @@ function saveSentenceStatusToCloud(chapterWk, type, index, statusName) {
         quizPool = fullQuizPool.filter(qItem => {
             const progressKey = `${qItem.wk}_${qItem.type}_${qItem.idx}`;
             const status = userProgressCache[progressKey];
-            // 상태가 없으면 '미학습'으로 간주하여 필터링 제외, 명확하게 있는 것만 필터
             return status && activeBurningFilters.includes(status);
         });
 
         currentQuizIndex = 0;
-        recordedAudioUrl = null;
         renderQuizCard();
     }
 
@@ -1437,7 +1481,6 @@ function saveSentenceStatusToCloud(chapterWk, type, index, statusName) {
         quizSetupArea.style.display = 'block';
         isBurningMode = false;
 
-        // UI 버튼 초기화 (현재 선택된 activeQuizChapters와 동기화)
         document.querySelectorAll('.chapter-chk-btn').forEach(btn => {
             const wk = btn.innerText.replace('Ch ', '');
             if (activeQuizChapters.includes(wk)) btn.classList.add('active');
@@ -1466,11 +1509,101 @@ function saveSentenceStatusToCloud(chapterWk, type, index, statusName) {
         
         const progressKey = `${wk}_${type}_${idx}`;
         const savedStatus = userProgressCache[progressKey];
-        const statusIconBadge = getStatusIconChar(savedStatus || '');
-        const englishFullText = item.chunks.map(c => c.text).join(' ');
+        
+        const englishFullText = item.chunks.map(c => c.text).join(' ').replace(/([.?!])\s+/g, '$1<br>');
+        const transText = item.trans.replace(/([.?!])\s+/g, '$1<br>');
 
-        // 버닝 모드일 경우 카드 내의 성취도 아이콘 숨김 처리
-        const badgeDisplay = isBurningMode ? 'none' : 'inline';
+        let innerCardHtml = '';
+        let actionButtonsHtml = '';
+        let statusPanelHtml = '';
+        
+        // 📇 1. 암기 카드 모드
+        if (currentAppMode === 'quiz') {
+            innerCardHtml = `
+            <div class="quiz-split-card" id="quiz-card-element" data-step="korean" onclick="toggleQuizCardFields()">
+                <div class="quiz-card-top-korean-zone">
+                    <div style="position:absolute; top:15px; right:20px; cursor:pointer; font-size:20px; filter: grayscale(${isRandomQuiz ? '0' : '100%'}); opacity: ${isRandomQuiz ? '1' : '0.4'}; transition: 0.2s; user-select: none;" onclick="event.stopPropagation(); toggleRandomQuiz(this)">🔀</div>
+                    <div class="trans-text" style="font-size:22px; color:#1a0dab; font-weight:700;">${transText}</div>
+                </div>
+                <div class="quiz-card-bottom-english-zone">
+                    <div id="quiz-english-fields-box" style="display: none; width:100%;">
+                        <div class="sentence-eng" style="font-size:22px; font-weight:700; margin-bottom:10px; color:#3c4043;">${englishFullText}</div>
+                        <div class="ipa-text" style="color:#777; font-size:15px;">${item.ipa}</div>
+                    </div>
+                    <div id="quiz-tap-guide-lbl" style="display: block; font-size:13px; color:var(--gray-text); font-weight:400;">
+                        💡 카드를 터치하면 영어 정답과 발음기호가 나옵니다.
+                    </div>
+                    <div class="quiz-in-card-nav">
+                        <button class="quiz-nav-arrow" onclick="event.stopPropagation(); navigateQuiz(-1)">◀</button>
+                        <button class="quiz-nav-arrow" onclick="event.stopPropagation(); navigateQuiz(1)">▶</button>
+                    </div>
+                </div>
+            </div>`;
+   
+           const currentCardAudio = recordedAudioDict[currentQuizIndex];
+
+           actionButtonsHtml = `
+            <div class="quiz-audio-action-row">
+                <button class="quiz-bar-action-btn native-sound" onclick="playQuizSentence(${item.start}, ${item.end})">🔊 원어민 음성 듣기</button>
+                <button class="quiz-bar-action-btn" id="start-record-btn" onclick="startRecording()">🎙️ 녹음 시작</button>
+                <button class="quiz-bar-action-btn recording-active" id="stop-record-btn" onclick="stopRecording()" style="display:none;">⏹️ 녹음 중지</button>
+                <button class="quiz-bar-action-btn" id="play-record-btn" onclick="playRecording()" ${currentCardAudio ? '' : 'disabled'}>🎧 내 발음 듣기</button>
+            </div>`;
+
+            if (!isBurningMode) {
+                statusPanelHtml = `
+                <div class="quiz-status-panel" style="width:100%; text-align:center;">
+                    <h4 style="font-size: 14px; color: var(--gray-text); margin: 0 0 12px 0; font-weight: 700;">🎯 성취도 현황 선택</h4>
+                    <div class="status-choice-grp" id="status-choice-grp">
+                        <button class="status-badge-btn tg" onclick="submitStatusClick('${wk}','${type}',${idx},'통과', this)">🔵 통과</button>
+                        <button class="status-badge-btn br" onclick="submitStatusClick('${wk}','${type}',${idx},'발음', this)">🟢 발음</button>
+                        <button class="status-badge-btn bb" onclick="submitStatusClick('${wk}','${type}',${idx},'버벅', this)">🟡 버벅</button>
+                        <button class="status-badge-btn bg" onclick="submitStatusClick('${wk}','${type}',${idx},'불가', this)">🔴 불가</button>
+                    </div>
+                </div>`;
+            }
+        } 
+        // 🧩 2. 문장 재배열 모드 (녹음 버튼 없음)
+        else if (currentAppMode === 'puzzle') {
+            innerCardHtml = `
+            <div class="quiz-split-card" id="quiz-card-element" data-step="puzzle" style="margin-bottom:15px; cursor:default;">
+                <div class="quiz-card-top-korean-zone">
+                    <div style="position:absolute; top:15px; right:20px; cursor:pointer; font-size:20px; filter: grayscale(${isRandomQuiz ? '0' : '100%'}); opacity: ${isRandomQuiz ? '1' : '0.4'}; transition: 0.2s; user-select: none;" onclick="event.stopPropagation(); toggleRandomQuiz(this)">🔀</div>
+                    <div class="trans-text" style="font-size:22px; color:#1a0dab; font-weight:700;">${transText}</div>
+                </div>
+                <div class="quiz-card-bottom-english-zone" style="padding: 20px 25px;">
+                    <div id="quiz-puzzle-box" style="width:100%;">
+                        <div class="answer-box" id="puzzle-answer-box"></div>
+                    </div>
+                    <div class="quiz-in-card-nav" style="bottom: 10px;">
+                        <button class="quiz-nav-arrow" onclick="event.stopPropagation(); navigateQuiz(-1)">◀</button>
+                        <button class="quiz-nav-arrow" onclick="event.stopPropagation(); navigateQuiz(1)">▶</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="puzzle-word-pool" style="display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; padding: 0 10px;"></div>
+            
+            <button id="puzzle-btn-check" class="puzzle-btn-check" style="display:none;" onclick="verifyPuzzleAnswer()">✅ 정답 확인</button>
+
+            <div id="puzzle-result-area" style="display:none; margin-top:15px; padding:20px; background:#e8f0fe; border-radius:12px; text-align:center; color:#174ea6;">
+                <div style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+                    <button id="puzzle-inline-play-btn" style="background:none; border:none; font-size:28px; cursor:pointer; padding:0; display:flex; align-items:center;" onclick="togglePuzzleAudio(${item.start}, ${item.end})">▶️</button>
+                    <div id="puzzle-correct-text" style="font-size:20px; font-weight:700;"></div>
+                </div>
+            </div>`;
+
+            if (!isBurningMode) {
+                statusPanelHtml = `
+                <div class="quiz-status-panel" style="width:100%; text-align:center; margin-top:20px;">
+                    <h4 style="font-size: 14px; color: var(--gray-text); margin: 0 0 12px 0; font-weight: 700;">🎯 퍼즐 결과 기록</h4>
+                    <div class="status-choice-grp" id="status-choice-grp">
+                        <button class="status-badge-btn tg" onclick="submitStatusClick('${wk}','${type}',${idx},'통과', this)">🔵 통과</button>
+                        <button class="status-badge-btn bg" onclick="submitStatusClick('${wk}','${type}',${idx},'재도전', this)">🔴 재도전</button>
+                    </div>
+                </div>`;
+            }
+        }
 
         let html = `
         <div class="quiz-container">
@@ -1481,49 +1614,14 @@ function saveSentenceStatusToCloud(chapterWk, type, index, statusName) {
                 </div>
             </div>
             
-            <div class="quiz-split-card" id="quiz-card-element" data-step="korean" onclick="toggleQuizCardFields()">
-                <div class="quiz-card-top-korean-zone">
-                    <div style="position:absolute; top:15px; right:20px; cursor:pointer; font-size:20px; filter: grayscale(${isRandomQuiz ? '0' : '100%'}); opacity: ${isRandomQuiz ? '1' : '0.4'}; transition: 0.2s; user-select: none;" onclick="event.stopPropagation(); toggleRandomQuiz(this)">🔀</div>
-
-                    <div class="trans-text" style="font-size:22px; color:#1a0dab; font-weight:700;">${item.trans} <span id="badge-indicator-${idx}" style="display:${badgeDisplay};">${statusIconBadge}</span></div>
-                </div>
-                <div class="quiz-card-bottom-english-zone">
-                    <div id="quiz-english-fields-box" style="display: none; width:100%;">
-                        <div class="sentence-eng" style="font-size:22px; font-weight:700; margin-bottom:10px; color:#3c4043;">${englishFullText}</div>
-                        <div class="ipa-text" style="color:#777; font-size:15px;">${item.ipa}</div>
-                    </div>
-                    <div id="quiz-tap-guide-lbl" style="display: block; font-size:13px; color:var(--gray-text); font-weight:400;">
-                        💡 카드를 터치하면 영어 정답과 발음기호가 나옵니다.
-                    </div>
-                    
-                    <div class="quiz-in-card-nav">
-                        <button class="quiz-nav-arrow" onclick="event.stopPropagation(); navigateQuiz(-1)">◀</button>
-                        <button class="quiz-nav-arrow" onclick="event.stopPropagation(); navigateQuiz(1)">▶</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="quiz-audio-action-row">
-                <button class="quiz-bar-action-btn native-sound" onclick="playQuizSentence(${item.start}, ${item.end})">🔊 원어민 음성 듣기</button>
-                <button class="quiz-bar-action-btn" id="start-record-btn" onclick="startRecording()">🎙️ 녹음 시작</button>
-                <button class="quiz-bar-action-btn recording-active" id="stop-record-btn" onclick="stopRecording()" style="display:none;">⏹️ 녹음 중지</button>
-                <button class="quiz-bar-action-btn" id="play-record-btn" onclick="playRecording()" ${recordedAudioUrl ? '' : 'disabled'}>🎧 내 발음 듣기</button>
-            </div>
-
-            <div class="quiz-status-panel" style="width:100%; text-align:center;">
-                <h4 style="font-size: 14px; color: var(--gray-text); margin: 0 0 12px 0; font-weight: 700;">🎯 성취도 현황 선택</h4>
-                <div class="status-choice-grp" id="status-choice-grp">
-                    <button class="status-badge-btn tg" onclick="submitStatusClick('${wk}','${type}',${idx},'통과', this)">🔵 통과</button>
-                    <button class="status-badge-btn br" onclick="submitStatusClick('${wk}','${type}',${idx},'발음', this)">🟢 발음</button>
-                    <button class="status-badge-btn bb" onclick="submitStatusClick('${wk}','${type}',${idx},'버벅', this)">🟡 버벅</button>
-                    <button class="status-badge-btn bg" onclick="submitStatusClick('${wk}','${type}',${idx},'불가', this)">🔴 불가</button>
-                </div>
-            </div>
+            ${innerCardHtml}
+            ${actionButtonsHtml}
+            ${statusPanelHtml}
         </div>`;
 
         quizCardRenderZone.innerHTML = html;
 
-        if (savedStatus) {
+        if (savedStatus && document.getElementById('status-choice-grp')) {
             const btns = document.getElementById('status-choice-grp').querySelectorAll('.status-badge-btn');
             btns.forEach(btn => {
                 if (btn.innerText.includes(savedStatus)) btn.classList.remove('disabled-gray');
@@ -1534,223 +1632,302 @@ function saveSentenceStatusToCloud(chapterWk, type, index, statusName) {
         if (!player.src.endsWith(encodeURI(qItem.audio))) {
             player.src = qItem.audio; player.load();
         }
+
+        if (currentAppMode === 'puzzle') {
+            initPuzzleMode(qItem);
+        }
     }
 
     function toggleQuizCardFields() {
         const card = document.getElementById('quiz-card-element'); if (!card) return;
         const currentStep = card.getAttribute('data-step');
+        
+        if (currentStep === 'puzzle') return; 
+        
         const engFieldsBox = document.getElementById('quiz-english-fields-box'), guideLbl = document.getElementById('quiz-tap-guide-lbl');
         
         if (currentStep === 'korean') { card.setAttribute('data-step', 'english'); engFieldsBox.style.display = 'block'; guideLbl.style.display = 'none'; } 
         else { card.setAttribute('data-step', 'korean'); engFieldsBox.style.display = 'none'; guideLbl.style.display = 'block'; }
     }
 
-function playQuizSentence(s, e) {
-    if (!player.paused) {
-        // 이미 재생 중이면 멈춤
-        player.pause();
-    } else {
-        // 멈춰있으면 처음부터 재생
-        stopAll();
-        player.currentTime = Math.max(0, s - 0.15);
-        player.play();
-        stopTime = e - 0.3;
-    }
-}
-    
-    function navigateQuiz(dir) {
-        if (isRandomQuiz && quizPool.length > 1) {
-            let nextIndex = currentQuizIndex;
-            while(nextIndex === currentQuizIndex) {
-                nextIndex = Math.floor(Math.random() * quizPool.length);
-            }
-            currentQuizIndex = nextIndex;
-        } else {
-            currentQuizIndex += dir;
-        }
-        recordedAudioUrl = null;
-        renderQuizCard();
-    }
+    async function startRecording() {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            mediaRecorder = new MediaRecorder(stream);
+            audioChunks = [];
 
-    function startRecording() {
-        navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
-            mediaRecorder = new MediaRecorder(stream); audioChunks = [];
-            mediaRecorder.ondataavailable = e => { audioChunks.push(e.data); };
+            mediaRecorder.ondataavailable = e => {
+                if (e.data.size > 0) audioChunks.push(e.data);
+            };
+
             mediaRecorder.onstop = () => {
-                // 특정 타입 명시 없이 생성하여 브라우저 자체 호환성을 높임 (특히 iOS)
-                const audioBlob = new Blob(audioChunks); 
-                recordedAudioUrl = URL.createObjectURL(audioBlob);
+                // 🎯 맥북 Safari 호환을 위해 {type: 'audio/webm'} 삭제
+                const audioBlob = new Blob(audioChunks);
+                const url = URL.createObjectURL(audioBlob);
                 
-                const recordPlayer = document.getElementById('record-player');
-                recordPlayer.src = recordedAudioUrl;
+                // 현재 보고 있는 카드의 위치에 녹음 파일 저장
+                recordedAudioDict[currentQuizIndex] = url; 
+                
                 document.getElementById('play-record-btn').disabled = false;
             };
+
             mediaRecorder.start();
-            document.getElementById('start-record-btn').style.display = 'none'; document.getElementById('stop-record-btn').style.display = 'flex';
-        }).catch(err => { alert("마이크 장치 접근 권한이 필요합니다."); });
+            document.getElementById('start-record-btn').style.display = 'none';
+            document.getElementById('stop-record-btn').style.display = 'flex';
+        } catch (err) {
+            alert("마이크 접근 권한이 필요합니다.");
+        }
     }
 
-function stopRecording() {
-    if (mediaRecorder && mediaRecorder.state !== 'inactive') {
-        mediaRecorder.stop(); 
-        mediaRecorder.stream.getTracks().forEach(track => track.stop());
-        document.getElementById('start-record-btn').style.display = 'flex'; 
+    function stopRecording() {
+        if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+            mediaRecorder.stop();
+            mediaRecorder.stream.getTracks().forEach(track => track.stop());
+        }
+        document.getElementById('start-record-btn').style.display = 'flex';
         document.getElementById('stop-record-btn').style.display = 'none';
-        
-        mediaRecorder.onstop = () => {
-            // 브라우저 호환성을 위해 mimeType을 지정합니다.
-            const audioBlob = new Blob(audioChunks, { type: mediaRecorder.mimeType || 'audio/webm' }); 
-            recordedAudioUrl = URL.createObjectURL(audioBlob);
-            
+    }
+
+    function playRecording() {
+        // 현재 카드의 녹음 파일을 찾아서 재생
+        const audioUrl = recordedAudioDict[currentQuizIndex];
+        if (audioUrl) {
             const recordPlayer = document.getElementById('record-player');
-            recordPlayer.src = recordedAudioUrl;
-            recordPlayer.load(); // 안정적인 재생을 위해 강제 로드
-            document.getElementById('play-record-btn').disabled = false;
-        };
-    }
-}    
-
-function playRecording() { 
-    if (recordedAudioUrl) { 
-        const recordPlayer = document.getElementById('record-player');
-        if (!recordPlayer.paused) {
-            // 재생 중이면 멈춤
-            recordPlayer.pause();
+            recordPlayer.src = audioUrl;
+            recordPlayer.play();
         } else {
-            // 멈춰있으면 처음부터 재생
-            recordPlayer.currentTime = 0; 
-            recordPlayer.play(); 
+            alert("현재 카드에 녹음된 소리가 없습니다.");
         }
-    } 
-}
-    function submitStatusClick(wk, type, idx, statusName, btnEl) {
-        saveSentenceStatusToCloud(wk, type, idx, statusName);
-        const parent = btnEl.parentElement;
-        parent.querySelectorAll('.status-badge-btn').forEach(b => {
-            if (b === btnEl) b.classList.remove('disabled-gray');
-            else b.classList.add('disabled-gray');
-        });
     }
 
-    function scrollToActive(el) {
-        if (!el) return;
-        const container = document.getElementById('main-scroll-area');
-        container.scrollTo({ top: el.getBoundingClientRect().top - container.getBoundingClientRect().top + container.scrollTop - (container.clientHeight * 0.25), behavior: 'smooth' });
+    // ==========================================
+    // 🧩 문장 재배열(퍼즐) 엔진 로직
+    // ==========================================
+    let puzzleAnswerTarget = "";
+    
+   function initPuzzleMode(qItem) {
+    const rawText = qItem.data.chunks.map(c => c.text).join(' ');
+    const cleanText = rawText.toLowerCase().replace(/[.,?!]/g, '').replace(/\s+/g, ' ').trim();
+    puzzleAnswerTarget = cleanText;
+    
+    let words = cleanText.split(' ');
+    for (let i = words.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [words[i], words[j]] = [words[j], words[i]];
     }
+    
+// 카드 생성
+    const poolHtml = words.map((w, i) => `<span class="scramble-word" id="sw-${i}" onclick="event.stopPropagation(); tapScrambleWord(this, '${w.replace(/'/g, "\\'")}')">${w}</span>`).join('');
+    
+    document.getElementById('puzzle-word-pool').innerHTML = poolHtml;
+    document.getElementById('puzzle-answer-box').innerHTML = '';
 
-    mainStudyContainer.addEventListener('click', (e) => {
-        if (isQuizMode) return;
-        const card = e.target.closest('.card'), chunk = e.target.closest('.chunk'), playBtn = e.target.closest('.play-btn'), badge = e.target.closest('.badge');
-        if (chunk) { stopAll(); chunk.classList.add('active'); playPart(parseFloat(chunk.dataset.s), parseFloat(chunk.dataset.e)); return; }
-        if (playBtn || badge || card) {
-            const row = e.target.closest('.card, .chat-row'); if (!row) return;
-            if (row.classList.contains('playing')) { player.pause(); row.classList.remove('playing'); } 
-            else { stopAll(); row.classList.add('playing', 'active-play'); scrollToActive(row); playPart(parseFloat(row.dataset.start), parseFloat(row.dataset.end)); }
+// 🎯 지연 실행 (혹시라도 박스가 안 그려졌을까 봐 0.1초 뒤에 라이브러리 가동)
+    setTimeout(() => {
+        const answerBox = document.getElementById('puzzle-answer-box');
+        if (answerBox) {
+            new Sortable(answerBox, {
+                animation: 150,
+                ghostClass: 'sortable-ghost',
+                forceFallback: true,
+                fallbackOnBody: true
+            });
         }
+    }, 100);
+    
+    // 🎯 아래 설정을 이렇게 바꿔주세요!
+    const answerBox = document.getElementById('puzzle-answer-box');
+    new Sortable(answerBox, {
+        animation: 150,
+        ghostClass: 'sortable-ghost',    // 빈자리 표시
+        dragClass: 'sortable-drag',     // 잡고 있는 카드 스타일
+        forceFallback: true,            // 드래그 강제 활성화
+        fallbackOnBody: true,           // 🎯 핵심: 카드가 마우스를 따라 둥둥 떠다니게 함
+        scroll: true                    // 드래그 중 스크롤 지원
     });
 
-    function toggleAutoPlayAll(titleEl) {
-        if (isAutoPlaying) { stopAll(); } 
-        else {
-            stopAll(); isAutoPlaying = true; statusIcon.innerText = "⏸️";
-            const first = mainStudyContainer.querySelector('.card, .chat-row');
-            if (first) { first.classList.add('active-play', 'playing'); scrollToActive(first); playPart(parseFloat(first.dataset.start), parseFloat(first.dataset.end)); }
+    document.getElementById('puzzle-result-area').style.display = 'none';
+    document.getElementById('puzzle-btn-check').style.display = 'none';
+}
+
+
+
+
+    function tapScrambleWord(el, word) {
+        if (el.classList.contains('used')) return;
+        el.classList.add('used'); 
+        
+        const answerBox = document.getElementById('puzzle-answer-box');
+        const answerId = 'aw-' + el.id;
+        answerBox.insertAdjacentHTML('beforeend', `<span class="answer-word" id="${answerId}" onclick="event.stopPropagation(); returnScrambleWord('${el.id}', '${answerId}')">${word}</span>`);
+        
+        checkAllWordsUsed();
+    }
+
+    function returnScrambleWord(poolId, answerId) {
+        document.getElementById(answerId).remove();
+        document.getElementById(poolId).classList.remove('used');
+        document.getElementById('puzzle-answer-box').classList.remove('puzzle-success', 'puzzle-fail');
+        
+        checkAllWordsUsed();
+    }
+
+    // 단어를 모두 누르면 정답 확인 버튼 띄우기
+    function checkAllWordsUsed() {
+        const unused = document.querySelectorAll('#puzzle-word-pool .scramble-word:not(.used)');
+        const checkBtn = document.getElementById('puzzle-btn-check');
+        if(unused.length === 0) {
+            checkBtn.style.display = 'block';
+        } else {
+            checkBtn.style.display = 'none';
         }
     }
 
-    function playPart(s, e) { clearTimeout(window.shadowTimer); const rate = player.playbackRate; stopTime = e - (0.32 * rate); player.currentTime = Math.max(0, s - (0.17 * rate)); player.play(); }
+    // 정답 확인 및 오디오 버튼 노출
+    function verifyPuzzleAnswer() {
+        const answerBox = document.getElementById('puzzle-answer-box');
+        const currentAnswer = Array.from(answerBox.querySelectorAll('.answer-word')).map(el => el.innerText).join(' ');
+        const resultArea = document.getElementById('puzzle-result-area');
+        const resultText = document.getElementById('puzzle-correct-text');
+        const checkBtn = document.getElementById('puzzle-btn-check');
+        
+        const qItem = quizPool[currentQuizIndex];
+        const originalText = qItem.data.chunks.map(c => c.text).join(' '); 
+
+        resultText.innerHTML = originalText;
+        resultArea.style.display = 'block';
+        checkBtn.style.display = 'none'; 
+
+        if (currentAnswer === puzzleAnswerTarget) {
+            answerBox.classList.add('puzzle-success');
+            answerBox.classList.remove('puzzle-fail');
+        } else {
+            answerBox.classList.add('puzzle-fail');
+            answerBox.classList.remove('puzzle-success');
+        }
+        
+        togglePuzzleAudio(qItem.data.start, qItem.data.end);
+    }
+
+    // 퍼즐 오디오 ▶️ / ⏸️ 토글
+    function togglePuzzleAudio(s, e) {
+        const btn = document.getElementById('puzzle-inline-play-btn');
+        if (!player.paused) {
+            player.pause();
+            if(btn) btn.innerHTML = '▶️';
+        } else {
+            stopAll();
+            player.currentTime = Math.max(0, s - 0.15);
+            player.play();
+            stopTime = e - 0.3;
+            if(btn) btn.innerHTML = '⏸️'; // 재생 중일 때 일시정지 아이콘으로 변경
+        }
+    }
 
     function stopAll() {
         player.pause(); isAutoPlaying = false; stopTime = 0; clearTimeout(window.shadowTimer);
         statusIcon.innerText = "▶️";
         if(document.getElementById('current-count')) document.getElementById('current-count').innerText = '';
         document.querySelectorAll('.playing, .active-play, .chunk.active').forEach(el => el.classList.remove('playing', 'active-play', 'active'));
+        
+        // 🎯 변경된 버튼 ID로 수정
+        const puzzleBtn = document.getElementById('puzzle-inline-play-btn');
+        if (puzzleBtn) puzzleBtn.innerHTML = '▶️';
     }
 
-// 1. 오디오 재생 진행상황을 체크하는 이벤트 리스너 수정
     player.addEventListener('timeupdate', () => {
         if (stopTime > 0 && player.currentTime >= stopTime) {
             player.pause(); stopTime = 0;
+            
+            const puzzleBtn = document.getElementById('puzzle-inline-play-btn');
+            if (puzzleBtn) puzzleBtn.innerHTML = '▶️';
+
             if (isQuizMode) return;
             const active = mainStudyContainer.querySelector('.card.playing, .chat-row.playing');
             if (active) { 
-                // 섀도잉/리스닝 상관없이 무조건 반복(Repeat) 로직으로 넘깁니다.
                 handleRepeatProcess(active); 
             }
         }
     });
 
-// 2. 기존 handleShadowProcess 함수를 통째로 지우고 아래의 handleRepeatProcess 함수로 교체합니다.
-    function handleRepeatProcess(el) {
-        currentRepeat++; 
-        const limit = parseInt(document.getElementById('repeat-count').value) || 1;
-        const lbl = `${currentRepeat} / ${limit}`;
-        if(document.getElementById('current-count')) document.getElementById('current-count').innerText = lbl;
-        
-        // 섀도잉 모드: 오디오 길이 + 1.5초 대기 (학생이 따라 말할 시간 확보)
-        // 리스닝 모드: 0.8초 대기 후 바로 반복 재생
-        const duration = (parseFloat(el.dataset.end) - parseFloat(el.dataset.start)) / player.playbackRate;
-        const pauseTime = isShadowing ? (duration + 1.5) * 1000 : 800; 
-
-        if (currentRepeat < limit) { 
-            window.shadowTimer = setTimeout(() => playPart(parseFloat(el.dataset.start), parseFloat(el.dataset.end)), pauseTime); 
-        } 
-        else { 
-            currentRepeat = 0; 
-            if (isAutoPlaying) {
-                window.shadowTimer = setTimeout(() => handleNext(el), pauseTime); 
-            } else {
-                el.classList.remove('playing'); 
-            }
-        }
-    }
-
-
-    function handleNext(el) {
-        const all = Array.from(mainStudyContainer.children).filter(c => c.classList.contains('card') || c.classList.contains('chat-row'));
-        const idx = all.indexOf(el); el.classList.remove('playing', 'active-play');
-        if (idx < all.length - 1) {
-            const next = all[idx+1]; next.classList.add('active-play'); scrollToActive(next);
-            window.shadowTimer = setTimeout(() => { next.classList.add('playing'); playPart(parseFloat(next.dataset.start), parseFloat(next.dataset.end)); }, 400);
-        } else { stopAll(); }
-    }
-
-    function setSpeed(s, btn) {
-        player.playbackRate = s; document.querySelectorAll('.btn-grp .btn').forEach(b => { if(b.innerText.includes('x')) b.classList.remove('active'); });
-        if(btn) btn.classList.add('active');
-    }
-
-    window.onload = () => {
-        // 아이디 저장 로직 불러오기
-        const savedId = localStorage.getItem('koboogy_saved_id');
-        if (savedId) {
-            document.getElementById('user-id').value = savedId;
-            document.getElementById('remember-id').checked = true;
-        }
-
-        // 전체 12챕터 반영
-        const menuItems = [
-            "01 Work", "02 Introducing", "03 Personality", "04 How was your day", 
-            "05 Catching up", "06 Directions", "07 Dating", "08 Health", 
-            "09 Favorite Food", "10 Travel", "11 Boot camp", "12 Beautiful Memories"
-        ];
-        
+    // ==========================================
+    // 💡 사이드바 및 퀴즈 챕터 자동 생성 로직
+    // ==========================================
+    function initializeMenus() {
         const navList = document.getElementById('nav-list');
-        const quizGrid = document.getElementById('quiz-chapter-grid');
+        const quizChapterGrid = document.getElementById('quiz-chapter-grid');
+        
+        let navHtml = '';
+        let quizHtml = '';
 
-        if (navList && quizGrid) {
-            menuItems.forEach((name, idx) => {
-                const wk = (idx + 1).toString().padStart(2, '0');
-                
-                navList.insertAdjacentHTML('beforeend', `<div class="menu-group" id="group-${wk}"><div class="menu-item" onclick="toggleAccordion('${wk}')"><span class="arrow">▶</span> ${name}</div><div class="sub-menu"><div class="sub-item" onclick="loadContent('${wk}', 'mystory', this)">My story</div><div class="sub-item" onclick="loadContent('${wk}', 'realconvo', this)">Real Conversation</div></div></div>`);
-                
-                quizGrid.insertAdjacentHTML('beforeend', `<button class="chapter-chk-btn" onclick="toggleQuizChapter('${wk}', this)">Ch ${wk}</button>`);
-            });
+        Object.keys(studyData).sort().forEach(wk => {
+            const cData = studyData[wk];
+            
+            navHtml += `
+                <div class="menu-group" id="group-${wk}">
+                    <div class="menu-item" onclick="toggleAccordion('${wk}')">
+                        <span class="arrow">▶</span> 챕터 ${wk}
+                    </div>
+                    <div class="sub-menu">
+            `;
+            if (cData.mystory) navHtml += `<div class="sub-item" onclick="loadContent('${wk}', 'mystory', this)">📖 My Story</div>`;
+            if (cData.realconvo) navHtml += `<div class="sub-item" onclick="loadContent('${wk}', 'realconvo', this)">🗣️ Real Convo</div>`;
+            navHtml += `</div></div>`;
+
+            quizHtml += `<button class="chapter-chk-btn" onclick="toggleQuizChapter('${wk}', this)">Ch ${wk}</button>`;
+        });
+
+        if (navList) navList.innerHTML = navHtml;
+        if (quizChapterGrid) quizChapterGrid.innerHTML = quizHtml;
+    }
+
+    // 윈도우(페이지)가 로드될 때 메뉴 생성 함수 실행
+    window.addEventListener('DOMContentLoaded', initializeMenus);
+
+    // ==========================================
+    // ⚠️ 코치님의 원본에 있던 필수 함수들이 복사 누락되어 있다면 아래에 이어서 붙여넣어 주세요! 
+    // (setSpeed, navigateQuiz, submitStatusClick, handleRepeatProcess, playQuizSentence 등)
+    // ==========================================
+
+    function setSpeed(speed, btnEl) {
+        player.playbackRate = speed;
+        document.querySelectorAll('.speed-controls-row .btn').forEach(b => b.classList.remove('active'));
+        btnEl.classList.add('active');
+    }
+
+    function navigateQuiz(dir) {
+        stopAll();
+        if (isRandomQuiz) {
+            currentQuizIndex = Math.floor(Math.random() * quizPool.length);
+        } else {
+            currentQuizIndex += dir;
         }
-    };
+        renderQuizCard();
+    }
 
+    function submitStatusClick(wk, type, idx, statusName, btnEl) {
+        saveSentenceStatusToCloud(wk, type, idx, statusName);
+        
+        const parentGrp = btnEl.closest('.status-choice-grp');
+        if(parentGrp) {
+            parentGrp.querySelectorAll('.status-badge-btn').forEach(b => b.classList.add('disabled-gray'));
+            btnEl.classList.remove('disabled-gray');
+        }
+        
+        setTimeout(() => navigateQuiz(1), 300);
+    }
 
-
+    function playQuizSentence(s, e) {
+        stopAll();
+        player.currentTime = Math.max(0, s - 0.15);
+        player.play();
+        stopTime = e - 0.3;
+    }
+    
 </script>
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+
+
 </body>
+
 </html>
