@@ -361,8 +361,12 @@ const studyData = {
       chat: [
         { speaker: "A", start: 4.700, end: 7.360, ipa: "/wʌt duː juː ˈnɔːrməli duː ˈæftər wɜːrk/", trans: "퇴근하고 보통 뭐 해?", chunks: [{ text: "What do you normally", s: 4.700, e: 5.570 }, { text: "do after work?", s: 5.570, e: 7.360 }] },
         { speaker: "B", start: 7.360, end: 12.060, ipa: "/aɪv biːn ˈɪntuː ˈkʊkɪŋ ˈleɪtli, soʊ aɪ ˈjuːʒuəli meɪk ˈsʌmθɪŋ naɪs fɔːr maɪˈsɛlf/", trans: "요즘 요리에 빠져서, 주로 내가 먹을 거 맛있게 만들어 먹어.", chunks: [{ text: "I've been into cooking lately,", s: 7.360, e: 9.020 }, { text: "so I usually make something", s: 9.020, e: 10.250 }, { text: "nice for myself.", s: 10.250, e: 12.060 }] },
-        { speaker: "A", start: 12.060, end: 13.060, ipa: "/kuːl/", trans: "오, 멋지다.", chunks: [{ text: "Cool.", s: 12.060, e: 13.060 }] },
-        { speaker: "A", start: 13.060, end: 18.690, ipa: "/aɪ juːst tuː kʊk ə lɑːt, bʌt aɪv biːn soʊ ˈbɪzi wɪð wɜːrk aɪ doʊnt hæv ðə ˈɛnərdʒi ˌɛniˈmɔːr/", trans: "나도 예전엔 요리 자주 했는데, 요즘은 일 때문에 너무 바빠서 그럴 에너지가 없어.", chunks: [{ text: "I used to cook a lot,", s: 13.060, e: 14.340 }, { text: "but I've been so busy with work", s: 14.340, e: 16.320 }, { text: "I don't have the energy anymore.", s: 16.320, e: 18.690 }] },
+        { speaker: "A", start: 12.060, end: 16.320, ipa: "/kuːl. aɪ juːst tuː kʊk ə lɑːt, bʌt aɪv biːn soʊ ˈbɪzi wɪð wɜːrk./", trans: "오, 멋지다. 나도 예전엔 요리 자주 했는데, 요즘은 일 때문에 너무 바빠.", chunks: [{ text: "Cool.", s: 12.060, e: 13.060 },{ text: "I used to cook a lot,", s: 13.060, e: 14.340 }, { text: "but I've been so busy with work", s: 14.340, e: 16.320 }] },
+        { speaker: "A", start: 16.320, end: 18.690, ipa: "/aɪ doʊnt hæv ðə ˈɛnərdʒi ˌɛniˈmɔːr/", trans: "더는 그럴 에너지가 없어.", chunks: [{ text: "I don't have the energy anymore.", s: 16.320, e: 18.690 }] },
+
+
+
+
         { speaker: "B", start: 18.690, end: 20.540, ipa: "/jeə, aɪ ˌʌndərˈstænd/", trans: "맞아, 이해해.", chunks: [{ text: "Yeah, I understand.", s: 18.690, e: 20.540 }] },
         { speaker: "B", start: 20.540, end: 24.160, ipa: "/wɛn aɪm tuː ˈtaɪərd tuː kʊk, aɪ dʒʌst ɡɛt dɪˈlɪvəri/", trans: "나도 너무 피곤하면 그냥 배달 시켜 먹어.", chunks: [{ text: "When I'm too tired to cook,", s: 20.540, e: 22.000 }, { text: "I just get delivery.", s: 22.000, e: 24.160 }] },
         { speaker: "A", start: 24.160, end: 29.180, ipa: "/miː tuː. bʌt noʊ ˈmætər haʊ ˈtaɪərd aɪ æm, aɪ ˈnɛvər skɪp ˈɛksərsaɪzɪŋ/", trans: "나도 그래. 근데 아무리 피곤해도 운동은 절대 안 빼먹어.", chunks: [{ text: "Me too.", s: 24.160, e: 25.340 },{ text: "But no matter", s: 25.340, e: 25.960 }, { text: "how tired I am,", s: 25.960, e: 27.010 }, { text: "I never skip exercising.", s: 27.010, e: 29.180 }] },
