@@ -723,7 +723,7 @@ const studyData = {
     },
     "useful_mystory": {
       title: "Useful Expressions (MS)",
-      audio: "audio/4-1 Useful Expressionss.wav",
+      audio: "audio/4-1 Useful expressions.wav",
       sentences: [
         { group: "kind of", start: 4.160, end: 6.900, ipa: "/ɪt wʌz kaɪnd ʌv koʊld ðɪs ˈmɔːrnɪŋ/", trans: "오늘 아침에는 날씨가 좀 추웠어.", chunks: [{ text: "It was kind of cold this morning", s: 4.160, e: 6.900 }] },
         { group: "kind of", start: 9.810, end: 13.510, ipa: "/briˈænə wʌz kaɪnd ʌv hɑːrd tuː ˌʌndərˈstænd/", trans: "브리아나는 이해하기가 좀 어려웠어.", chunks: [{ text: "Brianna was kind of hard to understand", s: 9.810, e: 13.510 }] },
@@ -865,7 +865,7 @@ const studyData = {
     },
     "useful_realconvo": {
       title: "Useful Expressions (RC)",
-      audio: "audio/4-3 Useful Expressionss.wav",
+      audio: "audio/4-3 Useful expressions.wav",
       sentences: [
         { group: "I've always wanted to", start: 4.250, end: 7.220, ipa: "/aɪv ˈɔːlweɪz ˈwɑːntɪd tuː ɡoʊ tuː pəˈriːs/", trans: "난 항상 파리에 가고 싶었어.", chunks: [{ text: "I've always wanted to go to Paris", s: 4.250, e: 7.220 }] },
         { group: "I've always wanted to", start: 10.400, end: 13.070, ipa: "/aɪv ˈɔːlweɪz ˈwɑːntɪd tuː duː ðæt/", trans: "나 그거 맨날 해보고 싶었어.", chunks: [{ text: "I've always wanted to do that", s: 10.400, e: 13.070 }] },
@@ -985,7 +985,7 @@ const studyData = {
     },
     "useful_mystory": {
       title: "Useful Expressions (MS)",
-      audio: "audio/5-1 Useful Expressionss.wav",
+      audio: "audio/5-1 Useful expressions.wav",
       sentences: [
         { group: "what are you up to", start: 4.060, end: 6.550, ipa: "/heɪ, hwʌt ɑːr juː ʌp tuː/", trans: "야, 뭐 해?", chunks: [{ text: "Hey, what are you up to?", s: 4.060, e: 6.550 }] },
         { group: "what are you up to", start: 9.120, end: 11.700, ipa: "/hwʌt ɑːr juː ʌp tuː ðɪs ˈwiːkˌɛnd/", trans: "이번 주말에 뭐 할 거야?", chunks: [{ text: "What are you up to this weekend?", s: 9.120, e: 11.700 }] },
@@ -1127,7 +1127,7 @@ const studyData = {
     },
     "useful_realconvo": {
       title: "Useful Expressions (RC)",
-      audio: "audio/5-3 Useful Expressionss.wav",
+      audio: "audio/5-3 Useful expressions.wav",
       sentences: [
         { group: "get lost", start: 4.410, end: 7.680, ipa: "/ɪts ˈiːzi tuː ɡɛt lɔːst ɪn ˈmjʌŋdɔːŋ/", trans: "명동에서는 길 잃기 쉬워.", chunks: [{ text: "It's easy to get lost in Myeong-dong", s: 4.410, e: 7.680 }] },
         { group: "get lost", start: 11.100, end: 14.050, ipa: "/aɪ ɡɑːt lɔːst ɑːn ðə weɪ hɪr/", trans: "여기 오는 길에 길 헤맸어.", chunks: [{ text: "I got lost on the way here", s: 11.100, e: 14.050 }] },
@@ -1230,7 +1230,7 @@ const studyData = {
     },
     "useful_mystory": {
       title: "Useful Expressions (MS)",
-      audio: "audio/6-1 Useful Expressionss.wav",
+      audio: "audio/6-1 Useful expressions.wav",
       sentences: [
         { group: "get to", start: 4.130, end: 7.330, ipa: "/tɛkst miː wɛn juː ɡɛt tuː ðə ˈsteɪʃən/", trans: "역에 도착하면 문자해.", chunks: [{ text: "Text me when you get to the station", s: 4.130, e: 7.330 }] },
         { group: "get to", start: 10.480, end: 12.900, ipa: "/aɪ dʒʌst ɡɑːt tuː wɜːrk/", trans: "나 방금 회사 도착했어.", chunks: [{ text: "I just got to work", s: 10.480, e: 12.900 }] },
@@ -1367,7 +1367,7 @@ const studyData = {
     },
     "useful_realconvo": {
       title: "Useful Expressions (RC)",
-      audio: "audio/6-3 Useful Expressionss.wav",
+      audio: "audio/6-3 Useful expressions.wav",
       sentences: [
         { group: "get lost", start: 4.410, end: 7.680, ipa: "/ɪts ˈiːzi tuː ɡɛt lɔːst ɪn ˈmjʌŋdɔːŋ/", trans: "명동에서는 길 잃기 쉬워.", chunks: [{ text: "It's easy to get lost in Myeong-dong", s: 4.410, e: 7.680 }] },
         { group: "get lost", start: 11.100, end: 14.050, ipa: "/aɪ ɡɑːt lɔːst ɑːn ðə weɪ hɪr/", trans: "여기 오는 길에 길 헤맸어.", chunks: [{ text: "I got lost on the way here", s: 11.100, e: 14.050 }] },
@@ -1461,7 +1461,7 @@ const studyData = {
     },
     "useful_mystory": {
       title: "Useful Expressions (MS)",
-      audio: "audio/7-1 Useful Expressionss.wav",
+      audio: "audio/7-1 Useful expressions.wav",
       sentences: [
         { group: "different from", start: 4.510, end: 7.810, ipa: "/ˈkɛli ɪz ˈvɛri ˈdɪfərənt frʌm hɜːr ˈsɪstər/", trans: "켈리는 언니(여동생)랑 많이 달라.", chunks: [{ text: "Kelly is very different from her sister", s: 4.510, e: 7.810 }] },
         { group: "different from", start: 11.250, end: 15.420, ipa: "/ˈkrɪsɪz riˈækʃən wʌz ˈdɪfərənt frʌm hwʌt aɪ ɪkˈspɛktɪd/", trans: "크리스의 반응은 내가 예상했던 것과 달랐어.", chunks: [{ text: "Chris's reaction was different from what I expected", s: 11.250, e: 15.420 }] },
@@ -1581,7 +1581,7 @@ const studyData = {
     },
     "useful_realconvo": {
       title: "Useful Expressions (RC)",
-      audio: "audio/7-3 Useful Expressionss.wav",
+      audio: "audio/7-3 Useful expressions.wav",
       sentences: [
         { group: "personal", start: 4.920, end: 9.230, ipa: "/aɪ doʊnt laɪk ˈʃɛrɪŋ maɪ ˈpɜːrsənəl laɪf ɑːn ˈsoʊʃəl ˈmiːdiə/", trans: "난 내 사생활을 SNS에 공개하는 거 싫어.", chunks: [{ text: "I don't like sharing my personal life on social media.", s: 4.920, e: 9.230 }] },
         { group: "personal", start: 13.350, end: 17.540, ipa: "/ðɪs ɪz ə ˈrɪli ˈpɜːrsənəl ˈmætər, soʊ doʊnt tɛl ˈɛniwʌn/", trans: "이건 진짜 개인적인 일이니까 아무한테도 말하지 마.", chunks: [{ text: "This is a really personal matter, so don't tell anyone.", s: 13.350, e: 17.540 }] },
@@ -1674,7 +1674,7 @@ const studyData = {
     },
     "useful_mystory": {
       title: "Useful Expressions (MS)",
-      audio: "audio/8-1 Useful Expressionss.wav",
+      audio: "audio/8-1 Useful expressions.wav",
       sentences: [
         { group: "prioritize", start: 4.660, end: 8.340, ipa: "/juː niːd tuː praɪˈɔːrɪˌtaɪz jɔːr hɛlθ ˈoʊvər wɜːrk/", trans: "일보다 건강을 먼저 챙겨야 해.", chunks: [{ text: "You need to prioritize your health over work.", s: 4.660, e: 8.340 }] },
         { group: "prioritize", start: 11.900, end: 15.780, ipa: "/raɪt naʊ, aɪm praɪˈɔːrɪˌtaɪzɪŋ maɪ ˈɪŋɡlɪʃ ˈstʌdiz/", trans: "지금은 영어 공부를 우선하고 있어.", chunks: [{ text: "Right now, I'm prioritizing my English studies.", s: 11.900, e: 15.780 }] },
@@ -1805,7 +1805,7 @@ const studyData = {
     },
     "useful_realconvo": {
       title: "Useful Expressions (RC)",
-      audio: "audio/8-3 Useful Expressionss.wav",
+      audio: "audio/8-3 Useful expressions.wav",
       sentences: [
         { group: "down", start: 4.730, end: 7.870, ipa: "/kaɪl lʊks ə bɪt daʊn təˈdeɪ/", trans: "Kyle 오늘 좀 기운이 없어 보여.", chunks: [{ text: "Kyle looks a bit down today", s: 4.730, e: 7.870 }] },
         { group: "down", start: 10.850, end: 14.020, ipa: "/ɑːr juː oʊˈkeɪ? juː lʊk daʊn/", trans: "괜찮아? 기운 없어 보이네.", chunks: [{ text: "Are you okay? You look down", s: 10.850, e: 14.020 }] },
@@ -1907,7 +1907,7 @@ const studyData = {
     },
     "useful_mystory": {
       title: "Useful Expressions (MS)",
-      audio: "audio/9-1 Useful Expressionss.wav",
+      audio: "audio/9-1 Useful expressions.wav",
       sentences: [
         { group: "go-to", start: 4.830, end: 9.230, ipa: "/ðɪs ɪz maɪ ˈɡoʊtuː kæˈfeɪ hwɛn aɪ niːd tuː ɡɛt wɜːrk dʌn/", trans: "여기가 내가 일할 때 늘 가는 단골 카페야.", chunks: [{ text: "This is my go-to cafe when I need to get work done.", s: 4.830, e: 9.230 }] },
         { group: "go-to", start: 13.810, end: 18.340, ipa: "/ðæt ˈrɑːmɛn ʃɑːp ɪz maɪ ˈɡoʊtuː spɑːt fɔːr ə leɪt-naɪt miːl/", trans: "그 라멘집은 내가 밤에 출출할 때 자주 찾는 집이야.", chunks: [{ text: "That ramen shop is my go-to spot for a late-night meal.", s: 13.810, e: 18.340 }] },
@@ -2034,7 +2034,7 @@ const studyData = {
     },
     "useful_realconvo": {
       title: "Useful Expressions (RC)",
-      audio: "audio/9-3 Useful Expressionss.wav",
+      audio: "audio/9-3 Useful expressions.wav",
       sentences: [
         { group: "feel like", start: 4.380, end: 7.260, ipa: "/aɪ fiːl laɪk ˈteɪkɪŋ ə næp/", trans: "낮잠 자고 싶어.", chunks: [{ text: "I feel like taking a nap.", s: 4.380, e: 7.260 }] },
         { group: "feel like", start: 10.530, end: 13.220, ipa: "/aɪ fiːl laɪk ˈɡoʊɪŋ fɔːr ə wɔːk/", trans: "산책 가고 싶어.", chunks: [{ text: "I feel like going for a walk.", s: 10.530, e: 13.220 }] },
@@ -2152,7 +2152,7 @@ const studyData = {
     },
     "useful_mystory": {
       title: "Useful Expressions (MS)",
-      audio: "audio/10-1 Useful Expressionss.wav",
+      audio: "audio/10-1 Useful expressions.wav",
       sentences: [
         { group: "random", start: 4.450, end: 7.770, ipa: "/wiː pɪkt ə ˈrændəm ˈnʌmbər frʌm ðə lɪst/", trans: "우린 리스트에서 무작위로 숫자를 골랐어.", chunks: [{ text: "We picked a random number from the list.", s: 4.450, e: 7.770 }] },
         { group: "random", start: 11.340, end: 14.800, ipa: "/ˈmɛləni meɪd ə ˈrændəm dʒoʊk ˈdʊrɪŋ ðə ˈmiːtɪŋ/", trans: "Melanie가 회의 중에 뜬금없는 농담을 했어.", chunks: [{ text: "Melanie made a random joke during the meeting.", s: 11.340, e: 14.800 }] },
@@ -2277,7 +2277,7 @@ const studyData = {
     },
     "useful_realconvo": {
       title: "Useful Expressions (RC)",
-      audio: "audio/10-3 Useful Expressionss.wav",
+      audio: "audio/10-3 Useful expressions.wav",
       sentences: [
         { group: "been to", start: 3.740, end: 8.420, ipa: "/hæv juː biːn tuː soʊl/", trans: "서울 가본 적 있어?", chunks: [{ text: "Have you been to Seoul?", s: 3.740, e: 8.420 }] },
         { group: "been to", start: 11.160, end: 13.980, ipa: "/aɪv biːn tuː nuː jɔːrk twaɪs/", trans: "뉴욕에 두 번 가봤어.", chunks: [{ text: "I've been to New York twice", s: 11.160, e: 13.980 }] },
@@ -2373,7 +2373,7 @@ const studyData = {
     },
     "useful_mystory": {
       title: "Useful Expressions (MS)",
-      audio: "audio/11-1 Useful Expressionss.wav",
+      audio: "audio/11-1 Useful expressions.wav",
       sentences: [
         { group: "give up on", start: 4.450, end: 7.090, ipa: "/doʊnt ɡɪv ʌp ɑːn jɔːr driːmz/", trans: "네 꿈을 포기하지 마.", chunks: [{ text: "Don't give up on your dreams.", s: 4.450, e: 7.090 }] },
         { group: "give up on", start: 9.620, end: 11.900, ipa: "/ʃiː ɡeɪv ʌp ɑːn hɜːr ˈdaɪət/", trans: "걔 다이어트 포기했어.", chunks: [{ text: "She gave up on her diet.", s: 9.620, e: 11.900 }] },
@@ -2477,7 +2477,7 @@ const studyData = {
     },
     "useful_realconvo": {
       title: "Useful Expressions (RC)",
-      audio: "audio/11-3 Useful Expressionss.wav",
+      audio: "audio/11-3 Useful expressions.wav",
       sentences: [
         { group: "end", start: 4.860, end: 10.270, ipa: "/ʃiː ɛndɪd ðə riˈleɪʃənˌʃɪp/", trans: "걔 그 관계 정리했어.", chunks: [{ text: "She ended the relationship", s: 4.860, e: 10.270 }] },
         { group: "end", start: 13.140, end: 15.930, ipa: "/ðə ˈpɑːrti wɪl ɛnd æt ˈmɪdˌnaɪt/", trans: "파주는 자정에 끝날 거야.", chunks: [{ text: "The party will end at midnight", s: 13.140, e: 15.930 }] },
@@ -2559,7 +2559,7 @@ const studyData = {
     },
     "useful_mystory": {
       title: "Useful Expressions (MS)",
-      audio: "audio/12-1 Useful Expressionss.wav",
+      audio: "audio/12-1 Useful expressions.wav",
       sentences: [
         { group: "haven't done it in (time)", start: 4.260, end: 7.440, ipa: "/aɪ ˈhævənt hæd məkˈdɑːnəldz ɪn jɪrz/", trans: "맥도날드를 몇 년 채 안 먹었어.", chunks: [{ text: "I haven't had McDonald's in years", s: 4.260, e: 7.440 }] },
         { group: "haven't done it in (time)", start: 10.340, end: 13.470, ipa: "/ʃiː ˈhæzənt siːn ʤɑːʃ ɪn mʌnθs/", trans: "걔 몇 달 동안 Josh를 못 봤어.", chunks: [{ text: "She hasn't seen Josh in months", s: 10.340, e: 13.470 }] },
@@ -2676,7 +2676,7 @@ const studyData = {
     },
     "useful_realconvo": {
       title: "Useful Expressions (RC)",
-      audio: "audio/12-3 Useful Expressionss.wav",
+      audio: "audio/12-3 Useful expressions.wav",
       sentences: [
         { group: "have (article) idea", start: 4.420, end: 6.620, ipa: "/aɪ hæv ən aɪˈdiːə/", trans: "하나 생각났어.", chunks: [{ text: "I have an idea", s: 4.420, e: 6.620 }] },
         { group: "have (article) idea", start: 8.810, end: 11.810, ipa: "/aɪ hæv sʌm aɪˈdiːə hwɛr ʃiː maɪt biː/", trans: "걔가 어디에 있을지 대충 감은 있어.", chunks: [{ text: "I have some idea where she might be", s: 8.810, e: 11.810 }] },
