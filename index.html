@@ -117,11 +117,16 @@
         .switch-box { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: bold; white-space: nowrap; }
 
         .shadow-toggle-wrapper { position: relative; width: 120px; height: 30px; background: #e0e0e0; border-radius: 15px; display: flex; cursor: pointer; align-items: center; justify-content: space-between; padding: 0 4px; border: 1px solid #ccc; box-shadow: inset 0 1px 3px rgba(0,0,0,0.1); }
-        .shadow-toggle-slider { position: absolute; top: 2px; left: 2px; width: 56px; height: 24px; background: var(--white); border-radius: 12px; transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1); box-shadow: 0 1px 3px rgba(0,0,0,0.2); z-index: 0; }
-        .shadow-toggle-wrapper.active .shadow-toggle-slider { transform: translateX(58px); background: var(--primary); }
-        .shadow-toggle-text { position: relative; z-index: 1; flex: 1; text-align: center; font-size: 12px; font-weight: 800; color: #777; transition: 0.3s; user-select: none; }
-        .shadow-toggle-wrapper.active .text-shadowing { color: white; }
-        .shadow-toggle-wrapper:not(.active) .text-listening { color: var(--primary); }
+
+        /* 슬라이더(움직이는 버튼) 기본 색상을 톤다운 파란색으로 변경! */
+.shadow-toggle-slider { position: absolute; top: 2px; left: 2px; width: 56px; height: 24px; background: var(--dull-blue); border-radius: 12px; transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1); box-shadow: 0 1px 3px rgba(0,0,0,0.2); z-index: 0; }
+.shadow-toggle-wrapper.active .shadow-toggle-slider { transform: translateX(58px); background: var(--dull-blue); }
+.shadow-toggle-text { position: relative; z-index: 1; flex: 1; text-align: center; font-size: 12px; font-weight: 800; color: #777; transition: 0.3s; user-select: none; }
+
+/* 파란색 슬라이더 위에 올라가는 글씨는 양쪽 다 흰색으로 돋보이게 처리! */
+.shadow-toggle-wrapper.active .toggle-right { color: white; }
+.shadow-toggle-wrapper:not(.active) .toggle-left { color: white; }
+
 
         #repeat-count { border: 1px solid #ddd; border-radius: 4px; padding: 0 4px; font-size: 13px; height: 28px; background: #fff; }
         #current-count { font-size: 14px; color: var(--primary); font-weight: 800; min-width: 45px; text-align: center; }
@@ -170,6 +175,17 @@
 
         body.hide-details.lang-ko:not(.quiz-mode-active) .sentence-eng,
         body.hide-details.lang-ko:not(.quiz-mode-active) .ipa-text { display: none; }
+       
+        /* 🃏 개별 카드 보조 텍스트 토글 (클릭 시) */
+body.hide-details:not(.lang-ko) .card.details-on .ipa-text,
+body.hide-details:not(.lang-ko) .card.details-on .trans-text { display: block !important; }
+body.hide-details.lang-ko .card.details-on .sentence-eng,
+body.hide-details.lang-ko .card.details-on .ipa-text { display: block !important; }
+
+body:not(.hide-details):not(.lang-ko) .card.details-off .ipa-text,
+body:not(.hide-details):not(.lang-ko) .card.details-off .trans-text { display: none !important; }
+body:not(.hide-details).lang-ko .card.details-off .sentence-eng,
+body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !important; }
 
         .chunk { cursor: pointer; border-radius: 4px; padding: 2px 4px; }
         .chunk.active { background: #d2e3fc !important; color: #174ea6 !important; font-weight: bold; }
@@ -291,15 +307,45 @@
     .ch-left { gap: 5px; flex-direction: column; align-items: flex-start; }
     .ch-right span { font-size: 12px; width: 35px; }
 
-    /* 한/영 및 보조글씨 토글 버튼 배경색 및 테두리 제거 */
-    #btn-lang-toggle, #btn-detail-toggle,
-    #btn-lang-toggle.active, #btn-detail-toggle.active {
-        background-color: transparent !important;
-        border: none !important;
-        box-shadow: none !important;
-        color: #5f6368 !important;
-    }
+
  }
+/* 🔝 탑 버튼 디자인 */
+#scrollTopBtn {
+    position: fixed;
+    bottom: 90px; 
+    right: 20px;
+    background: var(--dull-blue); 
+    color: white;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: none; 
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    z-index: 9999;
+}
+
+
+
+/* 📱 모바일(768px 이하)에서 로고와 마이페이지 한 줄 배치 */
+@media (max-width: 768px) {
+    .header { 
+        display: flex !important;
+        justify-content: space-between !important; 
+        align-items: center !important; 
+        width: 100%;
+        padding: 10px 15px; 
+    }
+    .mypage-btn { 
+        position: static !important;
+        margin: 0 !important;
+    }
+}
+
+
 </style>
 </head>
 
@@ -355,21 +401,34 @@
     <button class="btn" onclick="toggleSidebar()" style="font-size:25px; padding:0 8px; border:none; background:transparent; margin-right:5px; color:#5f6368;">☰</button>
     <span id="global-status-icon" onclick="toggleAutoPlayAll(document.querySelector('.section-title'))">▶️</span>
     
-    <button class="btn" id="btn-lang-toggle" onclick="toggleLangMode()" style="padding:4px 16px; font-size:16px !important; background:transparent !important; border:1px solid #dadce0 !important; border-radius:6px !important; box-shadow:none !important; color:#5f6368 !important; white-space:nowrap !important;">🇺🇸</button>
-<button class="btn active" id="btn-detail-toggle" onclick="toggleDetailMode()" style="padding:4px 16px; font-size:16px !important; background:transparent !important; border:1px solid #dadce0 !important; border-radius:6px !important; box-shadow:none !important; color:#5f6368 !important; white-space:nowrap !important;">🐵 보조 ON</button>
+    <div class="switch-box">
+        <div class="shadow-toggle-wrapper" id="btn-lang-toggle" onclick="toggleLangMode()">
+            <div class="shadow-toggle-slider"></div>
+            <span class="shadow-toggle-text toggle-left">🇺🇸</span>
+            <span class="shadow-toggle-text toggle-right">🇰🇷</span>
+        </div>
+    </div>
+
+    <div class="switch-box">
+        <div class="shadow-toggle-wrapper active" id="btn-detail-toggle" onclick="toggleDetailMode()">
+            <div class="shadow-toggle-slider"></div>
+            <span class="shadow-toggle-text toggle-left">보조 ON</span>
+            <span class="shadow-toggle-text toggle-right">OFF</span>
+        </div>
+    </div>
 
     <div class="switch-box">
         <div class="shadow-toggle-wrapper" id="shadow-toggle-ui" onclick="toggleShadowModeUI()">
-                                <div class="shadow-toggle-slider"></div>
-                                <span class="shadow-toggle-text text-listening">리스닝</span>
-                                <span class="shadow-toggle-text text-shadowing">섀도잉</span>
-                            </div>
-                        </div>
+            <div class="shadow-toggle-slider"></div>
+            <span class="shadow-toggle-text toggle-left">리스닝</span>
+            <span class="shadow-toggle-text toggle-right">섀도잉</span>
+        </div>
+    </div>
 
                         <div class="switch-box">
                             <span>반복</span>
                             <select id="repeat-count" onchange="syncSettings('repeat', this.value)">
-                                <option value="1">1</option><option value="2">2</option><option value="3" selected>3</option><option value="4">4</option><option value="5">5</option>
+                                <option value="1" selected>1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option>
                             </select>
                             <span id="current-count"></span>
                         </div>
@@ -519,7 +578,7 @@
                 const formattedName = emailPrefix.charAt(0).toUpperCase() + emailPrefix.slice(1);
                 welcomeUsername.innerText = formattedName;
                 
-                loginScreen.style.display = 'none'; 
+                loginScreen.style.display = 'none'; window.scrollTo({ top: 0, behavior: 'instant' });
                 userBadgeArea.style.display = 'flex';
                 
                 showEntryScreen();
@@ -761,29 +820,28 @@
 
     function toggleLangMode() {
         document.body.classList.toggle('lang-ko');
-        const btn = document.getElementById('btn-lang-toggle');
-        
-        if(document.body.classList.contains('lang-ko')) {
-            btn.innerHTML = '🇰🇷';
-            btn.classList.add('active'); 
-        } else {
-            btn.innerHTML = '🇺🇸';
-            btn.classList.remove('active');
-        }
+        document.getElementById('btn-lang-toggle').classList.toggle('active');
     }
 
+ 
     function toggleDetailMode() {
         document.body.classList.toggle('hide-details');
-        const btn = document.getElementById('btn-detail-toggle');
-        
+        const toggleUi = document.getElementById('btn-detail-toggle');
         if(document.body.classList.contains('hide-details')) {
-            btn.innerHTML = '🙈 보조 OFF';
-            btn.classList.remove('active');
+            toggleUi.classList.remove('active');
         } else {
-            btn.innerHTML = '🐵 보조 ON';
-            btn.classList.add('active');
+            toggleUi.classList.add('active');
         }
+        
+        // 💡 전역 스위치를 누르면 개별 카드로 조작해둔 설정들 깔끔하게 초기화!
+        document.querySelectorAll('.card.details-on, .card.details-off').forEach(c => {
+            c.classList.remove('details-on', 'details-off');
+        });
     }
+
+
+
+
 
     function syncSettings(type, value) {
         if (type === 'shadow') { isShadowing = value; stopAll(); }
@@ -855,6 +913,7 @@
         if (!expanded) group.classList.add('expanded');
     }
 
+
     function loadContent(wk, type, el) {
         if (isQuizMode) return; 
         const data = studyData[wk]?.[type]; if (!data) return;
@@ -868,27 +927,79 @@
         
         const items = type === 'realconvo' ? data.chat : data.sentences;
 
-        items.forEach((item, idx) => {
-            const chunks = item.chunks ? item.chunks.map(c => `<span class="chunk" ${hasAudio ? `data-s="${c.s || 0}" data-e="${c.e || 0}"` : ''}>${c.text}</span>`).join('') : '';
-            const content = `
-                <div class="text-content">
-                    <div class="sentence-eng">${chunks}</div>
-                    ${item.ipa ? `<div class="ipa-text">${item.ipa}</div>` : ''}
-                    ${item.trans ? `<div class="trans-text">${item.trans}</div>` : ''}
-                </div>`;
+        // 💡 [핵심] Useful / Live 등 그룹(group)이 있는 파트인지 확인
+        const hasGroups = items && items.length > 0 && items[0].group !== undefined;
+
+        if (hasGroups) {
+            // 그룹별로 문장 묶기
+            let groupedMap = {};
+            items.forEach((item, idx) => {
+                let gName = item.group || "Expressions";
+                if (!groupedMap[gName]) groupedMap[gName] = [];
+                groupedMap[gName].push({ item, idx });
+            });
+
+            Object.keys(groupedMap).forEach(groupName => {
+                // 💡 교재처럼 영어 뱃지와 한글 뜻 분리하기 ("spending time | 시간을 보내다" 대응)
+                let engTitle = groupName;
+                let korTitle = "";
+                if(groupName.includes("|")) {
+                    const parts = groupName.split("|");
+                    engTitle = parts[0].trim();
+                    korTitle = parts[1].trim();
+                } else if (groupName.includes(" - ")) {
+                    const parts = groupName.split(" - ");
+                    engTitle = parts[0].trim();
+                    korTitle = parts[1].trim();
+                }
                 
-            if(type === 'realconvo') { 
+                // 1. 교재와 똑같은 [파란 뱃지] + [파란 텍스트] 타이틀 생성
                 html += `
-                <div class="chat-row ${hasAudio ? '' : 'no-audio'}" data-speaker="${item.speaker}" ${hasAudio ? `data-start="${item.start || 0}" data-end="${item.end || 0}"` : ''}>
-                    <div class="chat-main-wrapper">
-                        <div class="badge badge-${item.speaker}">${item.speaker}</div>
-                        <div class="card" style="flex:1; margin:0; ${hasAudio ? '' : 'cursor:default;'}">${content}</div>
+                    <div style="display: flex; align-items: center; gap: 12px; margin: 35px 0 14px 0;">
+                        <span style="background: #5ba4ff; color: white; padding: 6px 16px; border-radius: 6px; font-size: 20px; font-weight: 800;">${engTitle}</span>
+                        ${korTitle ? `<span style="color: #5ba4ff; font-size: 18px; font-weight: 700;">${korTitle}</span>` : ''}
                     </div>
-                </div>`; 
-            } else { 
-                html += `<div class="card ${hasAudio ? '' : 'no-audio'}" ${hasAudio ? `data-start="${item.start || 0}" data-end="${item.end || 0}"` : ''} style="${hasAudio ? '' : 'cursor:default;'}"><div class="card-main-row">${hasAudio ? '<div class="play-btn"></div>' : ''}${content}</div></div>`; 
-            }
-        });
+                `;
+
+                // 2. 해당 그룹 예문들 렌더링
+                groupedMap[groupName].forEach(obj => {
+                    const item = obj.item;
+                    const chunks = item.chunks ? item.chunks.map(c => `<span class="chunk" ${hasAudio ? `data-s="${c.s || 0}" data-e="${c.e || 0}"` : ''}>${c.text}</span>`).join('') : '';
+                    const content = `
+                        <div class="text-content">
+                            <div class="sentence-eng">${chunks}</div>
+                            ${item.ipa ? `<div class="ipa-text">${item.ipa}</div>` : ''}
+                            ${item.trans ? `<div class="trans-text">${item.trans}</div>` : ''}
+                        </div>`;
+                        
+                    html += `<div class="card ${hasAudio ? '' : 'no-audio'}" ${hasAudio ? `data-start="${item.start || 0}" data-end="${item.end || 0}"` : ''} style="${hasAudio ? '' : 'cursor:default;'}"><div class="card-main-row">${hasAudio ? '<div class="play-btn"></div>' : ''}${content}</div></div>`;
+                });
+            });
+
+        } else {
+            // 그룹이 없는 일반 세션 (My Story, Real Convo 등)
+            items.forEach((item, idx) => {
+                const chunks = item.chunks ? item.chunks.map(c => `<span class="chunk" ${hasAudio ? `data-s="${c.s || 0}" data-e="${c.e || 0}"` : ''}>${c.text}</span>`).join('') : '';
+                const content = `
+                    <div class="text-content">
+                        <div class="sentence-eng">${chunks}</div>
+                        ${item.ipa ? `<div class="ipa-text">${item.ipa}</div>` : ''}
+                        ${item.trans ? `<div class="trans-text">${item.trans}</div>` : ''}
+                    </div>`;
+                    
+                if(type === 'realconvo') { 
+                    html += `
+                    <div class="chat-row ${hasAudio ? '' : 'no-audio'}" data-speaker="${item.speaker}" ${hasAudio ? `data-start="${item.start || 0}" data-end="${item.end || 0}"` : ''}>
+                        <div class="chat-main-wrapper">
+                            <div class="badge badge-${item.speaker}">${item.speaker}</div>
+                            <div class="card" style="flex:1; margin:0; ${hasAudio ? '' : 'cursor:default;'}">${content}</div>
+                        </div>
+                    </div>`; 
+                } else { 
+                    html += `<div class="card ${hasAudio ? '' : 'no-audio'}" ${hasAudio ? `data-start="${item.start || 0}" data-end="${item.end || 0}"` : ''} style="${hasAudio ? '' : 'cursor:default;'}"><div class="card-main-row">${hasAudio ? '<div class="play-btn"></div>' : ''}${content}</div></div>`; 
+                }
+            });
+        }
         
         mainStudyContainer.innerHTML = html; 
         
@@ -1448,16 +1559,50 @@ function playQuizSentence(s, e) {
         if (isQuizMode) return;
         
         const noAudioCard = e.target.closest('.no-audio');
-        if (noAudioCard) return;
+        const chunk = e.target.closest('.chunk');
+        const playBtn = e.target.closest('.play-btn');
+        const badge = e.target.closest('.badge');
+        const card = e.target.closest('.card');
 
-        const card = e.target.closest('.card'), chunk = e.target.closest('.chunk'), playBtn = e.target.closest('.play-btn'), badge = e.target.closest('.badge');
-        if (chunk) { stopAll(); chunk.classList.add('active'); playPart(parseFloat(chunk.dataset.s), parseFloat(chunk.dataset.e)); return; }
-        if (playBtn || badge || card) {
-            const row = e.target.closest('.card, .chat-row'); if (!row) return;
-            if (row.classList.contains('playing')) { player.pause(); row.classList.remove('playing'); } 
-            else { stopAll(); row.classList.add('playing', 'active-play'); scrollToActive(row); playPart(parseFloat(row.dataset.start), parseFloat(row.dataset.end)); }
+        // 1. 청크 클릭 시: 부분 재생 유지
+        if (chunk && !noAudioCard) { 
+            stopAll(); 
+            chunk.classList.add('active'); 
+            playPart(parseFloat(chunk.dataset.s), parseFloat(chunk.dataset.e)); 
+            return; 
+        }
+
+        // 2. 카드 앞 재생버튼이나 뱃지(A, B) 클릭 시: 전체 문장 재생
+        if ((playBtn || badge) && !noAudioCard) {
+            const row = e.target.closest('.card, .chat-row'); 
+            if (!row) return;
+            if (row.classList.contains('playing')) { 
+                player.pause(); 
+                row.classList.remove('playing'); 
+            } else { 
+                stopAll(); 
+                row.classList.add('playing', 'active-play'); 
+                scrollToActive(row); 
+                playPart(parseFloat(row.dataset.start), parseFloat(row.dataset.end)); 
+            }
+            return;
+        }
+
+        // 3. 카드 빈 공간 클릭 시: 해당 카드의 보조 텍스트만 켜기/끄기 토글
+        if (card) {
+            if (document.body.classList.contains('hide-details')) {
+                // 전역이 숨김 상태일 때는 누른 카드만 '켜기(details-on)'
+                card.classList.toggle('details-on');
+                card.classList.remove('details-off');
+            } else {
+                // 전역이 켜짐 상태일 때는 누른 카드만 '끄기(details-off)'
+                card.classList.toggle('details-off');
+                card.classList.remove('details-on');
+            }
         }
     });
+
+
 
     function toggleAutoPlayAll(titleEl) {
         if (isAutoPlaying) { stopAll(); } 
@@ -1548,8 +1693,8 @@ function playQuizSentence(s, e) {
                     <div class="sub-item" onclick="loadContent('${wk}', 'mystory', this)">1. My Story</div>
                     <div class="sub-item" onclick="loadContent('${wk}', 'useful_mystory', this)">1-1. Useful (MS)</div>
                     <div class="sub-item" onclick="loadContent('${wk}', 'live_mystory', this)">1-2. Live (MS)</div>
-                    <div class="sub-item" onclick="loadContent('${wk}', 'grammar', this)">2. Grammar</div>
-                    <div class="sub-item" onclick="loadContent('${wk}', 'realconvo', this)">3. Real Convo</div>
+                    <div class="sub-item" onclick="loadContent('${wk}', 'grammar', this)">2. Grammar Focus</div>
+                    <div class="sub-item" onclick="loadContent('${wk}', 'realconvo', this)">3. Real Conversations</div>
                     <div class="sub-item" onclick="loadContent('${wk}', 'useful_realconvo', this)">3-1. Useful (RC)</div>
                     <div class="sub-item" onclick="loadContent('${wk}', 'live_realconvo', this)">3-2. Live (RC)</div>
                 `;
@@ -1585,6 +1730,34 @@ function playQuizSentence(s, e) {
         }
     });
 
+// ==========================================
+// 🔝 탑 버튼 전용 스크롤 감지 및 이동 로직 (Koboogy 맞춤형 + 타이밍 해결)
+// ==========================================
+window.addEventListener('DOMContentLoaded', function() {
+    const mainScrollArea = document.getElementById('main-scroll-area');
+    const topBtn = document.getElementById('scrollTopBtn');
+
+    if (mainScrollArea && topBtn) {
+        // 1. 진짜 스크롤이 일어나는 'main-scroll-area'만 정확히 감지!
+        mainScrollArea.addEventListener('scroll', function() {
+            // 화면 절반 이상 내려가면 버튼 보이기
+            if (mainScrollArea.scrollTop > mainScrollArea.clientHeight / 2) {
+                topBtn.style.display = 'flex';
+            } else {
+                topBtn.style.display = 'none';
+            }
+        });
+
+        // 2. 버튼 클릭 시 해당 구역을 맨 위로 쓩! 
+        topBtn.addEventListener('click', function() {
+            mainScrollArea.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
+});
+
+
 </script>
+
+<div id="scrollTopBtn">🔝</div>
 </body>
 </html>
