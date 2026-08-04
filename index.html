@@ -303,7 +303,7 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
     
     /* 통계 레이아웃 모바일 최적화 */
     .stats-grid { grid-template-columns: repeat(2, 1fr); }
-    .chapter-grid { grid-template-columns: repeat(3, 1fr); }
+    .chapter-grid { grid-template-columns: repeat(4, 1fr); }
     .ch-left { gap: 5px; flex-direction: column; align-items: flex-start; }
     .ch-right span { font-size: 12px; width: 35px; }
 
@@ -346,6 +346,15 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
 }
 
 
+/* 💡 마이페이지 인덱스 탭 전용 활성화 스타일 */
+        #mypage-area .btn.active {
+            background: var(--white) !important;
+            color: var(--primary) !important;
+            font-weight: 800 !important;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1) !important;
+            border: 1px solid var(--border) !important;
+        }
+
 </style>
 </head>
 
@@ -385,7 +394,7 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
                     <button class="mobile-menu-btn" onclick="toggleSidebar()">☰</button>
                     <button class="btn active" id="btn-study-mode" onclick="switchMainMode('study')" style="height:32px;">📖 학습 모드</button>
                     <button class="btn" id="btn-quiz-mode" onclick="switchMainMode('quiz')" style="height:32px;">🎙️ 툭탁 연습</button>
-                    <button class="btn" id="btn-puzzle-mode" onclick="switchMainMode('puzzle')" style="height:32px;">🧩 문장 조립</button>
+                    <button class="btn" id="btn-puzzle-mode" onclick="switchMainMode('puzzle')" style="height:32px;">🧩 문장 배열</button>
                 </div>
                 
                 <div class="right-user" id="user-badge-area" style="display:none;" onclick="toggleMyPageView()">
@@ -457,7 +466,7 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
                     <div class="entry-btn-wrap">
                         <button class="entry-btn entry-study" onclick="switchMainMode('study')">📖 학습 모드</button>
                         <button class="entry-btn entry-quiz" onclick="switchMainMode('quiz')">🎙️ 툭탁 연습</button>
-                        <button class="entry-btn entry-puzzle" onclick="switchMainMode('puzzle')">🧩 문장 조립</button>
+                        <button class="entry-btn entry-puzzle" onclick="switchMainMode('puzzle')">🧩 문장 배열</button>
                     </div>
                 </div>
 
@@ -465,17 +474,32 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
                     <h2 class="section-title">마이페이지 & 학습 현황 통계</h2>
                     
                     <div class="mypage-card">
-                        <h3>📊 전체 카드 격파 성취도 현황 <span style="font-size:13px; font-weight:normal; color:#888;">(클릭 시 해당 카드로 퀴즈 진입)</span></h3>
-                        <div class="stats-grid">
-                            <div class="stat-box" style="background:var(--color-tg);" onclick="startGlobalQuizByStatus('통과')">통과 🔵<br><span id="stat-tg">0</span>개</div>
-                            <div class="stat-box" style="background:var(--color-br);" onclick="startGlobalQuizByStatus('발음')">발음 🟢<br><span id="stat-br">0</span>개</div>
-                            <div class="stat-box" style="background:var(--color-bb);" onclick="startGlobalQuizByStatus('버벅')">버벅 🟡<br><span id="stat-bb">0</span>개</div>
-                            <div class="stat-box" style="background:var(--color-bg);" onclick="startGlobalQuizByStatus('불가')">불가 🔴<br><span id="stat-bg">0</span>개</div>
+                        <h3 style="margin:0 0 15px 0;">📊 전체 카드 격파 성취도 현황 <span style="font-size:13px; font-weight:normal; color:#888;">(클릭 시 버닝모드 진입)</span></h3>
+                        
+                        <div style="font-size:14px; font-weight:bold; color:var(--text); margin-bottom:8px;">🎙️ 툭탁 연습</div>
+                        <div class="stats-grid" style="margin-top:0; margin-bottom: 20px;">
+                            <div class="stat-box" style="background:var(--color-tg);" onclick="startGlobalQuizByStatus('통과', 'quiz')">통과 🔵<br><span id="stat-tg">0</span>개</div>
+                            <div class="stat-box" style="background:var(--color-br);" onclick="startGlobalQuizByStatus('발음', 'quiz')">발음 🟢<br><span id="stat-br">0</span>개</div>
+                            <div class="stat-box" style="background:var(--color-bb);" onclick="startGlobalQuizByStatus('버벅', 'quiz')">버벅 🟡<br><span id="stat-bb">0</span>개</div>
+                            <div class="stat-box" style="background:var(--color-bg);" onclick="startGlobalQuizByStatus('불가', 'quiz')">불가 🔴<br><span id="stat-bg">0</span>개</div>
+                        </div>
+
+                        <div style="font-size:14px; font-weight:bold; color:var(--text); margin-bottom:8px;">🧩 문장 조립</div>
+                        <div class="stats-grid" style="grid-template-columns: repeat(2, 1fr); margin-top:0;">
+                            <div class="stat-box" style="background:var(--pastel-blue); color:var(--pastel-blue-text);" onclick="startGlobalQuizByStatus('통과', 'puzzle')">Pass 🔵<br><span id="stat-puzzle-pass">0</span>개</div>
+                            <div class="stat-box" style="background:#ffebee; color:#e53935;" onclick="startGlobalQuizByStatus('불가', 'puzzle')">Fail 🔴<br><span id="stat-puzzle-fail">0</span>개</div>
                         </div>
                     </div>
 
                     <div class="mypage-card">
-                        <h3>📈 챕터별 세부 성취도 현황 <span style="font-size:13px; font-weight:normal; color:#888;">(클릭 시 해당 챕터 퀴즈 진입. 성취도 클릭 시 버닝모드 진입)</span></h3>
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; flex-wrap:wrap; gap:10px;">
+                            <h3 style="margin:0;">📈 챕터별 세부 성취도 현황 <span style="font-size:13px; font-weight:normal; color:#888;">(클릭 시 해당 퀴즈 진입)</span></h3>
+                            
+                            <div style="display:flex; gap:4px; background:var(--bg); padding:3px; border-radius:6px; border:1px solid var(--border);">
+                                <button class="btn" id="tab-mypage-quiz" onclick="switchMypageTab('quiz')" style="border:none; box-shadow:none; height:28px; background:transparent; color:var(--gray-text);">🎙️ 툭탁 연습</button>
+                                <button class="btn" id="tab-mypage-puzzle" onclick="switchMypageTab('puzzle')" style="border:none; box-shadow:none; height:28px; background:transparent; color:var(--gray-text);">🧩 문장 배열</button>
+                            </div>
+                        </div>
                         <div id="chapter-stats-list"></div>
                     </div>
 
@@ -484,9 +508,19 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
                         <input type="password" id="new-pw" class="login-input" placeholder="새로운 비밀번호 입력 (6자리 이상)" style="max-width:300px; display:block;">
                         <button class="btn active" onclick="handleChangePassword()" style="height:40px; padding:0 20px;">비밀번호 수정 확정</button>
                     </div>
+
+                    <div class="mypage-card" style="border-color: #fca7a7; background: #fff8f8;">
+                        <h3 style="color: #c5221f;">⚠️ 데이터 초기화</h3>
+                        <p style="font-size:13px; color:var(--gray-text); margin-bottom:15px;">지금까지 기록된 모든 툭탁/조립 성취도와 녹음 데이터를 초기화합니다. (되돌릴 수 없습니다!)</p>
+                        <button class="btn" onclick="handleResetProgressData()" style="height:40px; padding:0 20px; background:#f44336; color:white; border:none; font-weight:bold;">🔄 성취도 및 녹음 기록 초기화</button>
+                    </div>
+
                     <button class="btn" onclick="toggleMyPageView()" style="margin-top:15px; height:40px;">← 화면으로 돌아가기</button>
                     <button class="btn" onclick="handleLogout()" style="margin-top:15px; height:40px; margin-left:10px; background:#f44336; color:white; border:none;">로그아웃</button>
                 </div>
+
+
+
 
                 <div id="main-study-container" style="display:none;">
                     <div style="text-align: center; margin-top: 50px; color: #9aa0a6;"><h3>반갑습니다! 👋</h3><p>좌측에서 학습하실 챕터를 선택해주세요.</p></div>
@@ -495,19 +529,46 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
                 <div id="quiz-setup-area">
                     <h2 class="section-title" id="setup-title">🎯 연습 세팅</h2>
                     <div class="quiz-setup-box">
-                        <h4>1. 학습할 모드를 선택하세요 (중복 가능)</h4>
-                        <div class="quiz-type-filters">
-                            <button class="filter-btn active" id="f-all" onclick="toggleQuizType('all')">전체</button>
-                            <button class="filter-btn" id="f-mystory" onclick="toggleQuizType('mystory')">MS</button>
-                            <button class="filter-btn" id="f-realconvo" onclick="toggleQuizType('realconvo')">RC</button>
-                            <button class="filter-btn" id="f-useful" onclick="toggleQuizType('useful')">UE</button>
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; flex-wrap:wrap; gap:10px;">
+                            <h4 style="margin:0;">1. 학습할 파트를 선택하세요</h4>
+                            <div style="display:flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+                                <label style="cursor:pointer; font-size:13px; font-weight:bold; color:var(--text); display:flex; align-items:center; gap:4px;">
+                                    <input type="checkbox" id="chk-all-modes" onclick="toggleQuizTypeGroup('all')" checked style="cursor:pointer;"> 전체
+                                </label>
+                                <label style="cursor:pointer; font-size:13px; font-weight:bold; color:var(--text); display:flex; align-items:center; gap:4px;">
+                                    <input type="checkbox" id="chk-ms-modes" onclick="toggleQuizTypeGroup('ms')" checked style="cursor:pointer;"> MS
+                                </label>
+                                <label style="cursor:pointer; font-size:13px; font-weight:bold; color:var(--text); display:flex; align-items:center; gap:4px;">
+                                    <input type="checkbox" id="chk-rc-modes" onclick="toggleQuizTypeGroup('rc')" checked style="cursor:pointer;"> RC
+                                </label>
+                                <label style="cursor:pointer; font-size:13px; font-weight:bold; color:var(--text); display:flex; align-items:center; gap:4px;">
+                                    <input type="checkbox" id="chk-gf-modes" onclick="toggleQuizTypeGroup('gf')" checked style="cursor:pointer;"> GF
+                                </label>
+                            </div>
                         </div>
                         
-                        <h4>2. 학습할 챕터를 선택하세요 (중복 가능)</h4>
+                        <div class="quiz-type-filters" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 30px;">
+                            <button class="filter-btn active" id="f-mystory" onclick="toggleQuizTypeMulti('mystory')">MS 본문</button>
+                            <button class="filter-btn active" id="f-useful_mystory" onclick="toggleQuizTypeMulti('useful_mystory')">MS UE</button>
+                            <button class="filter-btn active" id="f-live_mystory" onclick="toggleQuizTypeMulti('live_mystory')">MS Live</button>
+                            <button class="filter-btn active" id="f-realconvo" onclick="toggleQuizTypeMulti('realconvo')">RC 본문</button>
+                            <button class="filter-btn active" id="f-useful_realconvo" onclick="toggleQuizTypeMulti('useful_realconvo')">RC UE</button>
+                            <button class="filter-btn active" id="f-live_realconvo" onclick="toggleQuizTypeMulti('live_realconvo')">RC Live</button>
+                            <button class="filter-btn active" id="f-grammar" onclick="toggleQuizTypeMulti('grammar')">Grammar</button>
+                        </div>
+                        
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                            <h4 style="margin:0;">2. 학습할 챕터를 선택하세요</h4>
+                            <label style="cursor:pointer; font-size:13px; font-weight:bold; color:var(--text); display:flex; align-items:center; gap:6px;">
+                                <input type="checkbox" id="chk-all-chapters" onclick="toggleAllChapters()" style="width:16px; height:16px; cursor:pointer;"> 전체
+                            </label>
+                        </div>
                         <div class="chapter-grid" id="quiz-chapter-grid"></div>
                         
                         <button class="login-btn" id="start-action-btn" onclick="startSelectedMode()" style="width:100%; height:54px; margin-top:20px; font-size:18px;">🚀 시작하기</button>
                     </div>
+
+
                 </div>
 
                 <div id="quiz-play-area">
@@ -600,7 +661,7 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
         currentUserUid = null, userProgressCache = {}; 
 
     let currentAppMode = 'study'; // 'study', 'quiz', 'puzzle'
-    let activeQuizTypes = ['mystory', 'realconvo', 'useful']; 
+    let activeQuizTypes = ['mystory', 'useful_mystory', 'live_mystory', 'grammar', 'realconvo', 'useful_realconvo', 'live_realconvo'];
     let activeQuizChapters = [];
     let fullQuizPool = []; 
     let quizPool = [];
@@ -680,18 +741,7 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
             .catch((error) => console.error("데이터 불러오기 에러:", error)); 
     }
 
-    function saveSentenceStatusToCloud(chapterWk, type, index, statusName) {
-        if (!currentUserUid || !db) return;
-        const dataKey = `${chapterWk}_${type}_${index}`;
-        userProgressCache[dataKey] = statusName;
-
-        db.collection("users").doc(currentUserUid).collection("data").doc("progress").set(userProgressCache, { merge: true })
-            .then(() => { updateMyPageStatisticsUI(); })
-            .catch((error) => {
-                alert("파이어베이스 저장에 실패했습니다!");
-                console.error("데이터 저장 에러:", error);
-            });
-    }
+    
 
     function getStatusIconChar(status) {
         if (status === '통과') return ' 🔵'; 
@@ -716,95 +766,199 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
         }
     }
 
+// 💡 [새로 추가된 변수] 마이페이지 현재 선택 탭 ('quiz' 또는 'puzzle')
+    let currentMypageTab = 'quiz';
+
+    // 💡 마이페이지 우측 상단 탭 스위처
+    function switchMypageTab(tab) {
+        currentMypageTab = tab;
+        document.getElementById('tab-mypage-quiz').classList.toggle('active', tab === 'quiz');
+        document.getElementById('tab-mypage-puzzle').classList.toggle('active', tab === 'puzzle');
+        updateMyPageStatisticsUI();
+    }
+
+    // 💡 툭탁 / 조립 성취도를 독립적으로 저장하는 클라우드 세이브 함수
+    function saveSentenceStatusToCloud(chapterWk, type, index, statusName, mode = 'quiz') {
+        if (!currentUserUid || !db) return;
+        
+        // 🧩 퍼즐(문장 조립) 데이터는 'puzzle_' 접두사를 붙여 저장
+        const dataKey = (mode === 'puzzle') ? `puzzle_${chapterWk}_${type}_${index}` : `${chapterWk}_${type}_${index}`;
+        userProgressCache[dataKey] = statusName;
+
+        db.collection("users").doc(currentUserUid).collection("data").doc("progress").set(userProgressCache, { merge: true })
+            .then(() => { updateMyPageStatisticsUI(); })
+            .catch((error) => {
+                console.error("데이터 저장 에러:", error);
+            });
+    }
+
+    // 💡 마이페이지 통계 UI 실시간 업데이트 함수
+    // 💡 마이페이지 통계 UI 실시간 업데이트 함수
     function updateMyPageStatisticsUI() {
-        let tg = 0, br = 0, bb = 0, bg = 0;
+        // 전체 통계 카운터
+        let qTg = 0, qBr = 0, qBb = 0, qBg = 0;
+        let pPass = 0, pFail = 0;
+
         const chapterListContainer = document.getElementById('chapter-stats-list');
+        if (!chapterListContainer) return;
         chapterListContainer.innerHTML = ''; 
+
+        const isPuzzleTab = (currentMypageTab === 'puzzle');
 
         Object.keys(studyData).sort().forEach(wk => {
             const cData = studyData[wk];
-            let cTotal = 0, cTg = 0, cBr = 0, cBb = 0, cBg = 0;
+            let cTotal = 0, cTg = 0, cBr = 0, cBb = 0, cBg = 0; // 챕터 리스트용 카운터
 
-            if (cData.mystory) cTotal += cData.mystory.sentences.length;
-            if (cData.realconvo) cTotal += cData.realconvo.chat.length;
-
-            Object.keys(userProgressCache).forEach(key => {
-                if (key.startsWith(`${wk}_`)) {
-                    const s = userProgressCache[key];
-                    if (s === '통과') { cTg++; tg++; }
-                    if (s === '발음') { cBr++; br++; }
-                    if (s === '버벅') { cBb++; bb++; }
-                    if (s === '불가') { cBg++; bg++; }
+            const allTypes = ['mystory', 'useful_mystory', 'live_mystory', 'grammar', 'realconvo', 'useful_realconvo', 'live_realconvo'];
+            allTypes.forEach(t => {
+                if (cData[t]) {
+                    const items = t.includes('realconvo') && cData[t].chat ? cData[t].chat : (cData[t].sentences || []);
+                    if (isPuzzleTab) {
+                        cTotal += items.filter(i => i.chunks && i.chunks.length > 0).length;
+                    } else {
+                        cTotal += items.length;
+                    }
                 }
             });
 
-            const completed = cTg + cBr; 
+            // 전체 및 챕터별 카운팅
+            Object.keys(userProgressCache).forEach(key => {
+                const s = userProgressCache[key];
+                if (key.startsWith(`puzzle_${wk}_`)) {
+                    if (s === '통과') pPass++;
+                    if (s === '불가') pFail++;
+                    if (isPuzzleTab) {
+                        if (s === '통과') cTg++;
+                        if (s === '불가') cBg++;
+                    }
+                } else if (key.startsWith(`${wk}_`)) {
+                    if (s === '통과') qTg++;
+                    if (s === '발음') qBr++;
+                    if (s === '버벅') qBb++;
+                    if (s === '불가') qBg++;
+                    if (!isPuzzleTab) {
+                        if (s === '통과') cTg++;
+                        if (s === '발음') cBr++;
+                        if (s === '버벅') cBb++;
+                        if (s === '불가') cBg++;
+                    }
+                }
+            });
+
+            const completed = cTg + (isPuzzleTab ? 0 : cBr); 
             const rate = cTotal === 0 ? 0 : Math.round((completed / cTotal) * 100);
+
+            // 탭에 따라 우측 현황판 HTML 분기
+            let chRightHtml = '';
+            if (isPuzzleTab) {
+                chRightHtml = `
+                    <span style="color:var(--pastel-blue-text); width:60px;" onclick="startChapterBurningMode('${wk}', '통과', 'puzzle')">🔵 ${cTg}</span>
+                    <span style="color:#e53935; width:60px;" onclick="startChapterBurningMode('${wk}', '불가', 'puzzle')">🔴 ${cBg}</span>
+                `;
+            } else {
+                chRightHtml = `
+                    <span style="color:var(--color-tg);" onclick="startChapterBurningMode('${wk}', '통과', 'quiz')">🔵 ${cTg}</span>
+                    <span style="color:var(--color-br);" onclick="startChapterBurningMode('${wk}', '발음', 'quiz')">🟢 ${cBr}</span>
+                    <span style="color:var(--color-bb);" onclick="startChapterBurningMode('${wk}', '버벅', 'quiz')">🟡 ${cBb}</span>
+                    <span style="color:var(--color-bg);" onclick="startChapterBurningMode('${wk}', '불가', 'quiz')">🔴 ${cBg}</span>
+                `;
+            }
 
             const html = `
                 <div class="chapter-stat-item">
-                    <div class="ch-left" onclick="startDirectChapterQuiz('${wk}')">
+                    <div class="ch-left" onclick="startDirectChapterQuiz('${wk}', '${isPuzzleTab ? 'puzzle' : 'quiz'}')">
                         <div class="ch-title">Chapter ${wk}</div>
                         <div class="ch-rate">${rate}% <span style="font-size:12px; color:#5f6368; font-weight:normal;">(${completed} / ${cTotal})</span></div>
                     </div>
                     <div class="ch-right">
-                        <span style="color:var(--color-tg);" onclick="startChapterBurningMode('${wk}', '통과')">🔵 ${cTg}</span>
-                        <span style="color:var(--color-br);" onclick="startChapterBurningMode('${wk}', '발음')">🟢 ${cBr}</span>
-                        <span style="color:var(--color-bb);" onclick="startChapterBurningMode('${wk}', '버벅')">🟡 ${cBb}</span>
-                        <span style="color:var(--color-bg);" onclick="startChapterBurningMode('${wk}', '불가')">🔴 ${cBg}</span>
+                        ${chRightHtml}
                     </div>
                 </div>
             `;
             chapterListContainer.insertAdjacentHTML('beforeend', html);
         });
 
-        document.getElementById('stat-tg').innerText = tg; document.getElementById('stat-br').innerText = br; document.getElementById('stat-bb').innerText = bb; document.getElementById('stat-bg').innerText = bg;
+        document.getElementById('stat-tg').innerText = qTg; 
+        document.getElementById('stat-br').innerText = qBr; 
+        document.getElementById('stat-bb').innerText = qBb; 
+        document.getElementById('stat-bg').innerText = qBg;
+        document.getElementById('stat-puzzle-pass').innerText = pPass;
+        document.getElementById('stat-puzzle-fail').innerText = pFail;
     }
 
-    function startDirectChapterQuiz(wk) {
+    // 💡 지워졌던 비밀번호 변경 함수 복구!
+    function handleChangePassword() {
+        const newPw = document.getElementById('new-pw').value;
+        if (newPw.length < 6) { alert("비밀번호는 6자리 이상이어야 합니다."); return; }
+        if (auth.currentUser) {
+            auth.currentUser.updatePassword(newPw).then(() => {
+                alert("비밀번호가 성공적으로 변경되었습니다!");
+                document.getElementById('new-pw').value = '';
+            }).catch(err => alert("비밀번호 변경 실패: " + err.message));
+        }
+    }
+    
+
+    // 💡 마이페이지 -> 챕터 클릭 시 퀴즈/퍼즐 진입
+    function startDirectChapterQuiz(wk, mode = 'quiz') {
         activeQuizChapters = [wk];
-        activeQuizTypes = ['all']; 
+        activeQuizTypes = ['mystory', 'useful_mystory', 'live_mystory', 'grammar', 'realconvo', 'useful_realconvo', 'live_realconvo'];
         isBurningMode = false;
-        switchMainMode('quiz');
-        startQuizPool();
+        switchMainMode(mode);
+        if(mode === 'quiz') startQuizPool();
+        else startPuzzlePool();
     }
 
-    function startChapterBurningMode(wk, status) {
+    // 💡 마이페이지 -> 챕터별 성취도(🔵🟢🟡🔴) 클릭 시 버닝모드 진입
+    function startChapterBurningMode(wk, status, mode = 'quiz') {
         activeQuizChapters = [wk];
-        activeQuizTypes = ['all'];
+        activeQuizTypes = ['mystory', 'useful_mystory', 'live_mystory', 'grammar', 'realconvo', 'useful_realconvo', 'live_realconvo'];
         isBurningMode = true;
         activeBurningFilters = [status];
         
-        switchMainMode('quiz');
+        switchMainMode(mode);
         buildFullQuizPool(); 
-        document.getElementById('btn-burning-mode').classList.add('active');
-        burningDashboard.style.display = 'block';
         
-        syncBurningFilterUI();
-        applyBurningFilters();
+        if (mode === 'quiz') {
+            document.getElementById('btn-burning-mode').classList.add('active');
+            document.getElementById('burning-mode-dashboard').style.display = 'block';
+            syncBurningFilterUI();
+        }
         
-        quizSetupArea.style.display = 'none';
-        quizPlayArea.style.display = 'block';
+        applyBurningFilters(mode);
+        
+        document.getElementById('quiz-setup-area').style.display = 'none';
+        if(mode === 'quiz') document.getElementById('quiz-play-area').style.display = 'block';
+        else document.getElementById('puzzle-play-area').style.display = 'block';
     }
 
-    function startGlobalQuizByStatus(statusName) {
+    // 💡 마이페이지 -> 전체 성취도 상단 버튼 클릭 시 글로벌 버닝모드 진입
+    function startGlobalQuizByStatus(statusName, mode = 'quiz') {
         isBurningMode = true;
         activeBurningFilters = [statusName];
         
         activeQuizChapters = Object.keys(studyData);
-        activeQuizTypes = ['all'];
+        activeQuizTypes = ['mystory', 'useful_mystory', 'live_mystory', 'grammar', 'realconvo', 'useful_realconvo', 'live_realconvo'];
         
-        switchMainMode('quiz');
+        switchMainMode(mode);
         buildFullQuizPool();
-        document.getElementById('btn-burning-mode').classList.add('active');
-        burningDashboard.style.display = 'block';
         
-        syncBurningFilterUI();
-        applyBurningFilters();
+        if (mode === 'quiz') {
+            document.getElementById('btn-burning-mode').classList.add('active');
+            document.getElementById('burning-mode-dashboard').style.display = 'block';
+            syncBurningFilterUI();
+        }
+        
+        applyBurningFilters(mode);
 
-        quizSetupArea.style.display = 'none';
-        quizPlayArea.style.display = 'block';
+        document.getElementById('quiz-setup-area').style.display = 'none';
+        if(mode === 'quiz') document.getElementById('quiz-play-area').style.display = 'block';
+        else document.getElementById('puzzle-play-area').style.display = 'block';
     }
+
+
+
+
 
     function toggleSidebar() { 
         sidebar.style.display = (sidebar.style.display === 'block') ? 'none' : 'block'; 
@@ -877,8 +1031,8 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
             quizSetupArea.style.display = 'block';
             
             // 제목과 버튼 문구 동적 변경
-            document.getElementById('setup-title').innerText = mode === 'quiz' ? '🎯 툭탁 연습 세팅' : '🧩 문장 조립 세팅';
-            document.getElementById('start-action-btn').innerText = mode === 'quiz' ? '🚀 툭탁 연습 시작하기' : '🚀 문장 조립 시작하기';
+            document.getElementById('setup-title').innerText = mode === 'quiz' ? '🎯 툭탁 연습 세팅' : '🧩 문장 배열 세팅';
+            document.getElementById('start-action-btn').innerText = mode === 'quiz' ? '🚀 툭탁 연습 시작하기' : '🚀 문장 배열 시작하기';
 
             document.querySelectorAll('.chapter-chk-btn').forEach(btn => {
                 const wk = btn.innerText.replace('Ch ', '');
@@ -1014,14 +1168,77 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
         stopAll();
     }
 
-    function toggleQuizType(type) {
-        document.querySelectorAll('.quiz-type-filters .filter-btn').forEach(btn => btn.classList.remove('active'));
-        document.getElementById(`f-${type}`).classList.add('active');
 
-        if (type === 'all') { activeQuizTypes = ['mystory', 'realconvo', 'useful']; } 
-        else { activeQuizTypes = [type]; }
+
+
+    // 화면의 버튼 상태(색상) & 4개의 그룹 체크박스를 동기화해주는 함수
+    function syncTypeButtons() {
+        const allTypes = ['mystory', 'useful_mystory', 'live_mystory', 'grammar', 'realconvo', 'useful_realconvo', 'live_realconvo'];
+        allTypes.forEach(t => {
+            const btn = document.getElementById(`f-${t}`);
+            if (btn) btn.classList.toggle('active', activeQuizTypes.includes(t));
+        });
+        
+        // 4개의 체크박스 켜고 끄기 상태 계산
+        const msAll = ['mystory', 'useful_mystory', 'live_mystory'].every(t => activeQuizTypes.includes(t));
+        const rcAll = ['realconvo', 'useful_realconvo', 'live_realconvo'].every(t => activeQuizTypes.includes(t));
+        const gfAll = activeQuizTypes.includes('grammar');
+        const isAll = activeQuizTypes.length === 7;
+
+        if (document.getElementById('chk-all-modes')) document.getElementById('chk-all-modes').checked = isAll;
+        if (document.getElementById('chk-ms-modes')) document.getElementById('chk-ms-modes').checked = msAll;
+        if (document.getElementById('chk-rc-modes')) document.getElementById('chk-rc-modes').checked = rcAll;
+        if (document.getElementById('chk-gf-modes')) document.getElementById('chk-gf-modes').checked = gfAll;
     }
 
+    // 💡 개별 파트 버튼 (MS본문, RC Live 등) 클릭 시
+    function toggleQuizTypeMulti(type) {
+        if (activeQuizTypes.includes(type)) {
+            activeQuizTypes = activeQuizTypes.filter(t => t !== type);
+        } else {
+            activeQuizTypes.push(type);
+        }
+        syncTypeButtons();
+    }
+
+    // 💡 4가지 그룹 체크박스 (전체, MS, RC, GF) 클릭 시
+    function toggleQuizTypeGroup(group) {
+        const ms = ['mystory', 'useful_mystory', 'live_mystory'];
+        const rc = ['realconvo', 'useful_realconvo', 'live_realconvo'];
+        
+        if (group === 'all') {
+            const chkAll = document.getElementById('chk-all-modes');
+            if (chkAll.checked) {
+                activeQuizTypes = ['mystory', 'useful_mystory', 'live_mystory', 'grammar', 'realconvo', 'useful_realconvo', 'live_realconvo'];
+            } else {
+                activeQuizTypes = [];
+            }
+        } else if (group === 'ms') {
+            const chkMs = document.getElementById('chk-ms-modes');
+            if (chkMs.checked) {
+                ms.forEach(t => { if(!activeQuizTypes.includes(t)) activeQuizTypes.push(t); });
+            } else {
+                activeQuizTypes = activeQuizTypes.filter(t => !ms.includes(t));
+            }
+        } else if (group === 'rc') {
+            const chkRc = document.getElementById('chk-rc-modes');
+            if (chkRc.checked) {
+                rc.forEach(t => { if(!activeQuizTypes.includes(t)) activeQuizTypes.push(t); });
+            } else {
+                activeQuizTypes = activeQuizTypes.filter(t => !rc.includes(t));
+            }
+        } else if (group === 'gf') {
+            const chkGf = document.getElementById('chk-gf-modes');
+            if (chkGf.checked) {
+                if (!activeQuizTypes.includes('grammar')) activeQuizTypes.push('grammar');
+            } else {
+                activeQuizTypes = activeQuizTypes.filter(t => t !== 'grammar');
+            }
+        }
+        syncTypeButtons();
+    }
+
+    // 💡 개별 챕터(Ch 01 등) 버튼 클릭 시
     function toggleQuizChapter(wk, btnEl) {
         if (activeQuizChapters.includes(wk)) {
             activeQuizChapters = activeQuizChapters.filter(ch => ch !== wk);
@@ -1030,20 +1247,67 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
             activeQuizChapters.push(wk);
             btnEl.classList.add('active');
         }
+        
+        // 챕터 한 개라도 빠지면 챕터 '전체 선택' 체크박스도 자동 해제
+        const totalChapters = Object.keys(studyData);
+        const chkAllChapters = document.getElementById('chk-all-chapters');
+        if (chkAllChapters) chkAllChapters.checked = (activeQuizChapters.length === totalChapters.length && totalChapters.length > 0);
+    }
+
+    // 💡 '전체 선택' 체크박스 클릭 시 (챕터 선택 부분)
+    function toggleAllChapters() {
+        const totalChapters = Object.keys(studyData);
+        const chkAllChapters = document.getElementById('chk-all-chapters');
+        
+        if (chkAllChapters.checked) {
+            activeQuizChapters = [...totalChapters]; 
+        } else {
+            activeQuizChapters = []; 
+        }
+        
+        document.querySelectorAll('.chapter-chk-btn').forEach(btn => {
+            const wk = btn.innerText.replace('Ch ', '');
+            if (activeQuizChapters.includes(wk)) btn.classList.add('active');
+            else btn.classList.remove('active');
+        });
     }
 
     function buildFullQuizPool() {
         fullQuizPool = [];
         activeQuizChapters.sort().forEach(wk => {
             const cData = studyData[wk]; if (!cData) return;
-            if ((activeQuizTypes.includes('mystory') || activeQuizTypes.includes('all')) && cData.mystory) {
+            
+            // 💡 MS 계열 3종
+            if (activeQuizTypes.includes('mystory') && cData.mystory) {
                 cData.mystory.sentences.forEach((s, i) => fullQuizPool.push({ wk, type: 'mystory', typeBadge: 'MS', idx: i, data: s, audio: cData.mystory.audio }));
             }
-            if ((activeQuizTypes.includes('realconvo') || activeQuizTypes.includes('all')) && cData.realconvo) {
+            if (activeQuizTypes.includes('useful_mystory') && cData.useful_mystory) {
+                cData.useful_mystory.sentences.forEach((s, i) => fullQuizPool.push({ wk, type: 'useful_mystory', typeBadge: 'MS UE', idx: i, data: s, audio: cData.useful_mystory.audio }));
+            }
+            if (activeQuizTypes.includes('live_mystory') && cData.live_mystory) {
+                cData.live_mystory.sentences.forEach((s, i) => fullQuizPool.push({ wk, type: 'live_mystory', typeBadge: 'MS Live', idx: i, data: s, audio: cData.live_mystory.audio }));
+            }
+            
+            // 💡 Grammar (문법) 계열 추가! 뱃지 이름은 'GR'
+            if (activeQuizTypes.includes('grammar') && cData.grammar) {
+                cData.grammar.sentences.forEach((s, i) => fullQuizPool.push({ wk, type: 'grammar', typeBadge: 'GR', idx: i, data: s, audio: cData.grammar.audio }));
+            }
+            
+            // 💡 RC 계열 3종
+            if (activeQuizTypes.includes('realconvo') && cData.realconvo) {
                 cData.realconvo.chat.forEach((s, i) => fullQuizPool.push({ wk, type: 'realconvo', typeBadge: 'RC', idx: i, data: s, audio: cData.realconvo.audio }));
+            }
+            if (activeQuizTypes.includes('useful_realconvo') && cData.useful_realconvo) {
+                cData.useful_realconvo.sentences.forEach((s, i) => fullQuizPool.push({ wk, type: 'useful_realconvo', typeBadge: 'RC UE', idx: i, data: s, audio: cData.useful_realconvo.audio }));
+            }
+            if (activeQuizTypes.includes('live_realconvo') && cData.live_realconvo) {
+                cData.live_realconvo.sentences.forEach((s, i) => fullQuizPool.push({ wk, type: 'live_realconvo', typeBadge: 'RC Live', idx: i, data: s, audio: cData.live_realconvo.audio }));
             }
         });
     }
+
+
+
 
     function startQuizPool() {
         if (activeQuizChapters.length === 0) { alert("학습할 챕터를 1개 이상 선택해 주세요!"); return; }
@@ -1187,22 +1451,30 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
         const currentWords = Array.from(answerBox.children).map(el => el.dataset.word.toLowerCase());
         const currentSentence = currentWords.join(' ').trim();
         
+        const qItem = puzzlePool[currentPuzzleIndex];
+
         if (currentSentence === original) {
-            // 정답!
+            // 정답! 🧩 퍼즐 모드로 🔵 자동 통과 저장
+            saveSentenceStatusToCloud(qItem.wk, qItem.type, qItem.idx, '통과', 'puzzle'); 
+            
             document.getElementById('puzzle-active-area').style.display = 'none';
             document.getElementById('puzzle-success-area').style.display = 'block';
         } else {
-            // 오답!
+            // 오답! 🧩 퍼즐 모드로 🔴 자동 불가 저장
+            saveSentenceStatusToCloud(qItem.wk, qItem.type, qItem.idx, '불가', 'puzzle'); 
+            
             answerBox.classList.add('puzzle-error');
             if (feedbackMsg) feedbackMsg.style.opacity = '1';
             
-            // 버튼을 '다시 시도하기'로 교체
             if (btnCheck) btnCheck.style.display = 'none';
             if (btnRetry) btnRetry.style.display = 'block';
             
             setTimeout(() => { answerBox.classList.remove('puzzle-error'); }, 400);
         }
     }
+
+
+
 
 
      function clearPuzzleErrorState() {
@@ -1335,17 +1607,37 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
         });
     }
 
-    function applyBurningFilters() {
-        quizPool = fullQuizPool.filter(qItem => {
-            const progressKey = `${qItem.wk}_${qItem.type}_${qItem.idx}`;
+    function applyBurningFilters(mode = 'quiz') {
+        const pool = mode === 'quiz' ? fullQuizPool : fullQuizPool.filter(q => q.data.chunks && q.data.chunks.length > 0);
+        
+        const filteredPool = pool.filter(qItem => {
+            const progressKey = mode === 'puzzle' ? `puzzle_${qItem.wk}_${qItem.type}_${qItem.idx}` : `${qItem.wk}_${qItem.type}_${qItem.idx}`;
             const status = userProgressCache[progressKey];
             return status && activeBurningFilters.includes(status);
         });
 
-        currentQuizIndex = 0;
-        recordedAudioUrl = null;
-        renderQuizCard();
+        if (mode === 'quiz') {
+            quizPool = filteredPool;
+            currentQuizIndex = 0;
+            recordedAudioUrl = null;
+            if (quizPool.length === 0) {
+                document.getElementById('quiz-card-render-zone').innerHTML = `<div style="text-align:center; padding: 40px; color:var(--gray-text);">해당 성취도에 해당하는 카드가 없습니다.</div>`;
+            } else {
+                renderQuizCard();
+            }
+        } else {
+            puzzlePool = filteredPool;
+            currentPuzzleIndex = 0;
+            if (puzzlePool.length === 0) {
+                document.getElementById('puzzle-card-render-zone').innerHTML = `<div style="text-align:center; padding: 40px; color:var(--gray-text);">해당 성취도에 해당하는 카드가 없습니다.</div>`;
+            } else {
+                initPuzzleRandom();
+                renderPuzzleCard();
+            }
+        }
     }
+
+
 
     function resetQuizSetup() {
         stopAll(); 
@@ -1401,7 +1693,8 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
                 <div class="quiz-card-top-korean-zone">
                     <div style="position:absolute; top:15px; right:20px; cursor:pointer; font-size:20px; filter: grayscale(${isRandomQuiz ? '0' : '100%'}); opacity: ${isRandomQuiz ? '1' : '0.4'}; transition: 0.2s; user-select: none;" onclick="event.stopPropagation(); toggleRandomQuiz(this)">🔀</div>
 
-                    <div class="trans-text" style="font-size:22px; color:#1a0dab; font-weight:700;">${item.trans} <span id="badge-indicator-${idx}" style="display:${badgeDisplay};">${statusIconBadge}</span></div>
+                    <div class="trans-text" style="font-size:22px; color:#1a0dab; font-weight:700;">${item.trans}</div>
+
                 </div>
                 <div class="quiz-card-bottom-english-zone">
                     <div id="quiz-english-fields-box" style="display: none; width:100%;">
@@ -1714,6 +2007,47 @@ function playQuizSentence(s, e) {
             });
         }
     };
+
+
+// 💡 클라우드 성취도 기록 및 로컬 녹음 데이터 초기화 함수
+    function handleResetProgressData() {
+        if (!confirm("정말 모든 성취도 기록과 녹음 데이터를 초기화하시겠습니까? 이 작업은 되돌릴 수 없습니다!")) {
+            return;
+        }
+
+        if (!currentUserUid || !db) {
+            alert("로그인 정보가 유효하지 않습니다.");
+            return;
+        }
+
+        // 1. 파이어베이스(Firestore)의 진도/성취도 문서 자체를 삭제 또는 빈 값으로 교체
+        db.collection("users").doc(currentUserUid).collection("data").doc("progress").set({}, { merge: false })
+            .then(() => {
+                // 2. 프론트엔드 캐시 초기화
+                userProgressCache = {};
+
+                // 3. 현재 퀴즈 풀(Pool)에 남아있는 임시 녹음 파일(recordedAudio)도 싹 날려버리기
+                if (typeof fullQuizPool !== 'undefined') {
+                    fullQuizPool.forEach(q => { delete q.recordedAudio; });
+                }
+                if (typeof quizPool !== 'undefined') {
+                    quizPool.forEach(q => { delete q.recordedAudio; });
+                }
+
+                // 4. UI 통계판 실시간 새로고침
+                updateMyPageStatisticsUI();
+                alert("모든 성취도 및 녹음 기록이 성공적으로 초기화되었습니다!");
+            })
+            .catch((error) => {
+                alert("초기화 중 오류가 발생했습니다: " + error.message);
+                console.error("초기화 에러:", error);
+            });
+    }
+
+
+
+
+
 
     // 💡 화면 빈 공간 클릭 시 왼쪽 네비게이션 닫기 기능 (모바일/좁은 화면 전용)
     document.addEventListener('click', function(event) {
