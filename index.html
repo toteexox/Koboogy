@@ -214,7 +214,7 @@
             border: none !important;
             background: transparent !important;
             color: #888 !important;
-            font-size: 14px;
+            font-size: 16px;
             font-weight: 600;
             padding: 3px 6px;
             height: 26px;
@@ -460,7 +460,7 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
 
     /* 반복 & 배속 버튼 슬림화 */
     #repeat-count { height: 24px !important; font-size: 12px !important; padding: 0 2px !important; }
-    .speed-controls-row .btn { font-size: 11px !important; padding: 2px 4px !important; height: 24px !important; }
+    .speed-controls-row .btn { font-size: 14px !important; padding: 2px 4px !important; height: 24px !important; }
 
 
     /* 전체 성취도 4열 유지 */
@@ -630,7 +630,7 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
 </style>
 </head>
 
-<body>
+<body class="lang-ko hide-details">
 <div id="login-screen">
         <div class="login-card">
             <div class="brand">
@@ -684,35 +684,36 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
                         </div>
                         <div style="display: flex; gap: 8px; align-items: center;">
                             <div class="switch-box">
-                                <div class="shadow-toggle-wrapper" id="btn-lang-toggle" onclick="toggleLangMode()">
-                                    <div class="shadow-toggle-slider"></div>
-                                    <span class="shadow-toggle-text toggle-left">🇺🇸</span>
-                                    <span class="shadow-toggle-text toggle-right">🇰🇷</span>
-                                </div>
+                            <div class="shadow-toggle-wrapper active" id="btn-lang-toggle" onclick="toggleLangMode()">
+                                <div class="shadow-toggle-slider"></div>
+                                <span class="shadow-toggle-text toggle-left">🇺🇸</span>
+                                <span class="shadow-toggle-text toggle-right">🇰🇷</span>
                             </div>
-                            <div class="switch-box">
-                                <div class="shadow-toggle-wrapper active" id="btn-detail-toggle" onclick="toggleDetailMode()">
-                                    <div class="shadow-toggle-slider"></div>
-                                    <span class="shadow-toggle-text toggle-left">보조 OFF</span>
-                                    <span class="shadow-toggle-text toggle-right">ON</span>
-                                </div>
+                        </div>
+                        
+                        <div class="switch-box">
+                            <div class="shadow-toggle-wrapper" id="btn-detail-toggle" onclick="toggleDetailMode()">
+                                <div class="shadow-toggle-slider"></div>
+                                <span class="shadow-toggle-text toggle-left">보조 OFF</span>
+                                <span class="shadow-toggle-text toggle-right">ON</span>
                             </div>
+                        </div>
                         </div>
                     </div>
 
                     <div class="practice-row2">
                         <div style="display: flex; gap: 12px; align-items: center;">
                             <div class="switch-box">
-                                <div class="shadow-toggle-wrapper" id="shadow-toggle-ui" onclick="toggleShadowModeUI()">
-                                    <div class="shadow-toggle-slider"></div>
-                                    <span class="shadow-toggle-text toggle-left">리스닝</span>
-                                    <span class="shadow-toggle-text toggle-right">섀도잉</span>
-                                </div>
+                            <div class="shadow-toggle-wrapper active" id="shadow-toggle-ui" onclick="toggleShadowModeUI()">
+                                <div class="shadow-toggle-slider"></div>
+                                <span class="shadow-toggle-text toggle-left">리스닝</span>
+                                <span class="shadow-toggle-text toggle-right">섀도잉</span>
                             </div>
+                        </div>
                             <div class="switch-box">
                                 <span style="font-size:13px; font-weight:bold;">반복</span>
                                 <select id="repeat-count" onchange="syncSettings('repeat', this.value)">
-                                    <option value="1" selected>1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option>
+                                    <option value="1">1</option><option value="2">2</option><option value="3" selected>3</option><option value="4">4</option><option value="5">5</option>
                                 </select>
                                 <span id="current-count"></span>
                             </div>
@@ -951,7 +952,7 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
         });
     } catch (error) { console.error("Firebase 초기화 에러:", error); }
 
-    let isShadowing = false, 
+    let isShadowing = true, 
         isQuizMode = false,
         currentRepeat = 0, stopTime = 0, isAutoPlaying = false,
         currentUserUid = null, userProgressCache = {}; 
@@ -1450,6 +1451,10 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
 
     // 세팅창에서 [시작하기] 버튼을 누를 때 현재 모드에 따라 분기
     function startSelectedMode() {
+        // 💡 [추가] 시작하기 버튼을 누를 때 현재 체크된 값을 영구 저장!
+        localStorage.setItem('koboogy_saved_types', JSON.stringify(activeQuizTypes));
+        localStorage.setItem('koboogy_saved_chapters', JSON.stringify(activeQuizChapters));
+
         if (currentAppMode === 'quiz') startQuizPool();
         else if (currentAppMode === 'puzzle') startPuzzlePool();
     }
@@ -2138,11 +2143,8 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
         quizSetupArea.style.display = 'block';
         isBurningMode = false;
 
-        document.querySelectorAll('.chapter-chk-btn').forEach(btn => {
-            const wk = btn.innerText.replace('Ch ', '');
-            if (activeQuizChapters.includes(wk)) btn.classList.add('active');
-            else btn.classList.remove('active');
-        });
+        // 💡 [추가] 세팅 화면으로 돌아올 때 마지막 설정 복구
+        loadSavedQuizSetup();
     }
 
     function toggleRandomQuiz(el) {
@@ -2498,6 +2500,7 @@ function playQuizSentence(s, e) {
                 quizGrid.insertAdjacentHTML('beforeend', `<button class="chapter-chk-btn" onclick="toggleQuizChapter('${wk}', this)">Ch ${wk}</button>`);
             });
         }
+loadSavedQuizSetup();
     };
 
 
@@ -2555,6 +2558,35 @@ function playQuizSentence(s, e) {
             }
         }
     });
+
+
+// 💡 퀴즈 세팅(파트 및 챕터) 마지막 저장값 불러오기 엔진
+    function loadSavedQuizSetup() {
+        const savedTypes = localStorage.getItem('koboogy_saved_types');
+        const savedChapters = localStorage.getItem('koboogy_saved_chapters');
+        
+        if (savedTypes) activeQuizTypes = JSON.parse(savedTypes);
+        if (savedChapters) activeQuizChapters = JSON.parse(savedChapters);
+        
+        syncTypeButtons(); // 파트 버튼(MS본문, 줍줍 등) UI 동기화
+        
+        // 챕터 버튼 UI 동기화
+        document.querySelectorAll('.chapter-chk-btn').forEach(btn => {
+            const wk = btn.innerText.replace('Ch ', '');
+            if (activeQuizChapters.includes(wk)) btn.classList.add('active');
+            else btn.classList.remove('active');
+        });
+        
+        // '전체' 체크박스 상태 동기화
+        const totalChapters = Object.keys(typeof studyData !== 'undefined' ? studyData : {});
+        const chkAllChapters = document.getElementById('chk-all-chapters');
+        if (chkAllChapters && totalChapters.length > 0) {
+            chkAllChapters.checked = (activeQuizChapters.length === totalChapters.length);
+        }
+    }
+
+
+
 
 // ==========================================
 // 🔝 탑 버튼 전용 스크롤 감지 로직 (하단 노출 제어)
