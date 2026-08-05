@@ -66,20 +66,35 @@
         .stat-box { text-align: center; padding: 12px; border-radius: 10px; font-weight: bold; font-size: 14px; cursor: pointer; transition: 0.2s; color: #333; }
         .stat-box:hover { filter: brightness(0.95); transform: translateY(-2px); }
         
-        .chapter-stat-item { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; border: 1px solid var(--border); border-radius: 12px; background: #fff; margin-bottom: 10px; }
-        .ch-left { display: flex; align-items: center; gap: 15px; }
-        .ch-title { font-weight: 800; font-size: 16px; color: var(--text); width: 90px; cursor: pointer; transition: 0.2s; }
-        .ch-title:hover { color: var(--primary); text-decoration: underline; }
-        .ch-rate { font-size: 14px; font-weight: 800; color: var(--primary); background: #e8f0fe; padding: 6px 12px; border-radius: 8px; }
-        .ch-right { display: flex; gap: 15px; font-size: 14px; font-weight: bold; }
-        .ch-right span { width: 45px; text-align: center; background: #f1f3f4; padding: 4px 0; border-radius: 6px; cursor: pointer; transition: 0.2s; color: #333; }
-        .ch-right span:hover { background: #e0e0e0; transform: scale(1.05); }
+        /* 💡 챕터 성취도 카드 (제목 위, 내용 아래) */
+        .chapter-stat-item { display: flex; flex-direction: column; gap: 10px; padding: 15px 20px; border: 1px solid var(--border); border-radius: 12px; background: #fff; margin-bottom: 10px; }
+        .ch-title-row { font-weight: 800; font-size: 16px; color: var(--text); cursor: pointer; transition: 0.2s; width: 100%; }
+        .ch-title-row:hover { color: var(--primary); text-decoration: underline; }
+        
+        /* 💡 퍼센트 박스와 버튼 영역이 동일한 높이를 가지도록 stretch 적용! */
+        .ch-main-row { display: flex; align-items: stretch; gap: 12px; width: 100%; }
+        
+        .ch-rate-box { background: #e8f0fe; color: var(--primary); border-radius: 8px; padding: 10px; display: flex; flex-direction: column; justify-content: center; align-items: center; cursor: pointer; min-width: 80px; transition: 0.2s; }
+        .ch-rate-box:hover { filter: brightness(0.95); }
+        .rate-val { font-size: 16px; font-weight: 800; }
+        .ch-rate-box .rate-count { font-size: 11px; color: #5f6368; font-weight: normal; margin-top: 4px; }
+        
+        .ch-right { flex: 1; display: flex; gap: 8px; align-items: stretch; }
+        .ch-right span.stat-click-btn { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; background: #f1f3f4; border-radius: 8px; cursor: pointer; transition: 0.2s; padding: 8px 0; }
+        .ch-right span.stat-click-btn:hover { background: #e0e0e0; transform: translateY(-2px); }
+        .ch-right span.stat-click-btn i { font-style: normal; font-size: 15px; margin-bottom: 4px; }
+        .ch-right span.stat-click-btn b { font-size: 15px; color: #333; }
 
         .sidebar { display: none; width: 280px; border-right: 1px solid var(--border); overflow-y: auto; flex-shrink: 0; padding: 20px 10px; background: var(--white); transition: 0.3s; position: relative; z-index: 100; }
         
         .menu-group { margin-bottom: 5px; border-radius: 8px; }
         .menu-item { cursor: pointer; padding: 10px 15px; display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 18px; color: #3c4043; border-radius: 8px; }
         .menu-item:hover { background: #f8f9fa; }
+
+
+
+
+
         .menu-item .arrow { font-size: 10px; transition: 0.3s; }
         .expanded .arrow { transform: rotate(90deg); }
         .expanded .menu-item { color: var(--primary); }
@@ -90,15 +105,18 @@
 
         .main-content { flex: 1; display: flex; flex-direction: column; background: var(--bg); position: relative; transition: background-color 0.4s; overflow: hidden; }
         
-        .sticky-header { background: var(--white); padding: 8px 0; border-bottom: 1px solid var(--border); position: sticky; top: 0; width: 100%; z-index: 99; }
-        .top-nav-row { display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 95%; margin: 0 auto; gap: 20px; }
+        /* 💡 상단 헤더 레이아웃 스타일 */
+        .sticky-header { background: var(--white); padding: 10px 0; border-bottom: 1px solid var(--border); position: sticky; top: 0; width: 100%; z-index: 99; }
+        .top-nav-container { width: 100%; max-width: 95%; margin: 0 auto; display: flex; flex-direction: column; gap: 8px; }
+        .top-nav-row1 { display: flex; justify-content: space-between; align-items: center; width: 100%; }
         .nav-brand { display: flex; align-items: center; gap: 8px; font-size: 20px; font-weight: bold; cursor: pointer; flex-shrink: 0; }
         .nav-brand img { width: 32px; border-radius: 6px; }
-        .left-modes { display: flex; gap: 8px; align-items: center; flex: 1; }
+        .left-modes { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
         .right-user { display: flex; align-items: center; font-size: 14px; font-weight: bold; color: var(--gray-text); gap: 10px; flex-shrink: 0; cursor: pointer; transition: color 0.2s; }
         .right-user:hover { color: var(--primary); }
         .mobile-menu-btn { display: none; background: none; border: none; font-size: 24px; cursor: pointer; padding: 0; margin-right: 10px; }
 
+        /* 💡 버튼 및 기본 컴포넌트 유지 */
         .btn { border: 1px solid var(--dull-gray); background: var(--white); color: var(--dull-gray); cursor: pointer; border-radius: 4px; padding: 5px 10px; font-size: 12px; font-weight: 600; height: 32px; transition: 0.2s; }
         .btn.active { background: var(--dull-blue) !important; color: var(--white) !important; border-color: var(--dull-blue) !important; }
 
@@ -107,11 +125,14 @@
 
         audio { display: none; }
 
-        .gray-header.practice-bar-section { background: var(--bg); padding: 10px 0; position: sticky; top: 50px; width: 100%; z-index: 98; display: none; border-bottom: 1px solid #e0e0e0; }
-        .gray-header.practice-bar-section .full-width-container { width: 100%; max-width: 90%; margin: 0 auto; display: flex; flex-direction: column; align-items: flex-start; }
+        /* 💡 컨트롤 바 2줄 스택 스타일 */
+        .gray-header.practice-bar-section { background: var(--bg); padding: 10px 0; position: sticky; top: 82px; width: 100%; z-index: 98; display: none; border-bottom: 1px solid #e0e0e0; }
+        .gray-header.practice-bar-section .full-width-container { width: 100%; max-width: 95%; margin: 0 auto; }
+        .practice-bar-stacked { display: flex; flex-direction: column; gap: 10px; width: 100%; }
+        .practice-row1 { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+        .practice-row2 { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 
-        .practice-bar { background:transparent; padding: 10px 20px; border-radius: 12px; display: flex; justify-content: flex-start; align-items: center; box-shadow: none; max-width: 800px; margin: 0; height: 50px; gap: 20px; }
-        .left-controls { display: flex; align-items: center; gap: 15px; }
+
         #global-status-icon { font-size: 18px; width: 24px; text-align: center; cursor: pointer; transition: 0.2s; }
         
         .switch-box { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: bold; white-space: nowrap; }
@@ -265,87 +286,71 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
             75% { transform: translateX(-6px); }
         }
 
- @media (max-width: 768px) { 
-    /* 사이드바 및 상단 네비게이션 모바일 대응 */
+
+/* 💡 마이페이지 세부 성취도 진짜 탭(Folder Tab) 디자인 */
+        .mypage-tab-container {
+            display: flex;
+            gap: 6px;
+            margin-bottom: -2px; /* 하단 border와 겹치게 덮음 */
+        }
+        .mypage-tab-btn { 
+            background: #f1f3f4; 
+            border: 2px solid #ddd; 
+            border-bottom: none; 
+            padding: 8px 24px; 
+            border-radius: 10px 10px 0 0; 
+            font-size: 14px; 
+            font-weight: 600; 
+            color: #777; 
+            cursor: pointer; 
+            transition: 0.2s; 
+            position: relative;
+            z-index: 1;
+        }
+        .mypage-tab-btn:hover {
+            background: #e8eaea;
+            color: #333;
+        }
+        .mypage-tab-btn.active { 
+            background: var(--white); 
+            color: var(--primary); 
+            border-color: #ddd; 
+            border-bottom: 2px solid var(--white); /* 밑선을 하얀색으로 덮어서 뚫린 것처럼 연출 */
+            font-weight: 800; 
+            z-index: 3;
+        }
+
+
+
+
+/* 📱 모바일 (768px 이하) 대응 */
+@media (max-width: 768px) { 
     .sidebar { position: fixed; left: -280px; height: 100%; z-index: 1001; } 
     .sidebar.open { left: 0; display: block !important; } 
     
-    /* 💡 로고(좌측)와 마이페이지(우측)를 1번째 줄에, 버튼들을 2번째 줄에 배치 */
-    .top-nav-row { 
-        max-width: 100% !important; 
-        padding: 0 12px !important;
-        display: flex !important; 
-        flex-wrap: wrap !important;
-        justify-content: space-between !important; 
-        align-items: center !important; 
-    }
-    .nav-brand { 
-        order: 1; /* 1번째 줄 왼쪽 */
-        width: auto !important; 
-        justify-content: flex-start !important; 
-        margin-bottom: 0 !important; 
-        font-size: 17px !important;
-    } 
-    .right-user { 
-        order: 2; /* 1번째 줄 오른쪽 */
-        width: auto !important; 
-        font-size: 12px !important; 
-        margin: 0 !important;
-        flex-shrink: 0;
-    }
-    .left-modes { 
-        order: 3; /* 2번째 줄로 내리기 */
-        width: 100%;
-        justify-content: flex-start; 
-        gap: 4px;
-        margin-top: 10px;
-    }
-    .left-modes .btn { padding: 4px 6px; font-size: 11px; }
+    .gray-header.practice-bar-section { position: sticky; top: 82px; z-index: 98; padding: 8px 0; }
+    .practice-row1 { gap: 8px; }
+    .practice-row2 { gap: 8px; }
 
-    /* 모바일에서 컨트롤 바를 상단 메뉴바 아래에 고정 */
-    .gray-header.practice-bar-section { 
-        position: sticky; top: 78px; /* 메뉴바 2줄 높이에 맞춰 여백 조정 */
-        z-index: 98; padding: 10px 0; box-shadow: 0 2px 5px rgba(0,0,0,0.05); 
-    }
-    .gray-header.practice-bar-section .practice-bar { 
-        flex-direction: column; align-items: flex-start; height: auto; gap: 10px; 
-    }
-    .gray-header.practice-bar-section .left-controls { flex-wrap: wrap; }
-
-    .mobile-float-ctrl-btn { display: none !important; }
-    .quiz-audio-action-row { flex-wrap: wrap; }
-    .quiz-bar-action-btn { font-size: 11px; padding: 0 4px; }
-    
-    /* 💡 모바일 그리드 최적화 (퀴즈 버튼 & 챕터 3열) */
-    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .stats-grid { grid-template-columns: repeat(4, 1fr); gap: 6px; }
+    .stat-box { padding: 8px 2px; font-size: 11px; letter-spacing: -0.5px; }
     .quiz-type-filters { grid-template-columns: repeat(3, 1fr) !important; }
     .chapter-grid { grid-template-columns: repeat(3, 1fr) !important; }
     
-    /* 💡 [모바일 최적화] 세부 성취도 퍼센트 줄바꿈 & 남는 여백으로 버튼 꽉 채우기! */
-    .chapter-stat-item { align-items: stretch; padding: 12px 10px; gap: 8px; }
-    .ch-left { flex-direction: column; justify-content: center; align-items: center; width: 70px; flex-shrink: 0; gap: 6px; }
-    .ch-title { width: auto; font-size: 14px; text-align: center; }
+    /* 💡 모바일 세부 성취도 최적화 (여백 줄이고 꽉 채우기) */
+    .chapter-stat-item { padding: 12px; gap: 8px; }
+    .ch-title-row { font-size: 15px; }
+    .ch-main-row { gap: 8px; }
     
-    /* 1. 퍼센트(%) 다음 괄호 영역 위아래로 줄바꿈! */
-    .ch-rate { display: flex !important; flex-direction: column; justify-content: center; align-items: center; padding: 6px 0; width: 100%; }
-    .ch-rate .rate-count { margin-left: 0; margin-top: 4px; font-size: 10.5px; }
+    .ch-rate-box { min-width: 65px; padding: 8px 4px; }
+    .rate-val { font-size: 15px; }
+    .ch-rate-box .rate-count { font-size: 10.5px; margin-top: 3px; letter-spacing: -0.5px; }
     
-    /* 2. 우측 버튼 높이와 너비를 시원하게 위아래로 꽉 채우기! */
-    .ch-right { flex: 1; display: flex; gap: 6px; justify-content: space-between; align-items: stretch; width: 100%; }
-    .ch-right span.stat-click-btn { 
-        display: flex; 
-        flex-direction: column; /* 동그라미와 숫자를 위/아래로 쌓음 */
-        flex: 1; /* 너비를 모두 동일하고 넓게 가져감 */
-        width: auto !important; 
-        height: auto; 
-        min-height: 56px; /* 💡 높이를 기존보다 훌쩍 키워서 터치 영역 확보 */
-        justify-content: center; 
-        align-items: center; 
-        padding: 6px 2px;
-        border-radius: 8px;
-    }
-    .ch-right span.stat-click-btn i { margin-bottom: 3px; font-size: 14px; }
+    .ch-right { gap: 6px; }
+    .ch-right span.stat-click-btn { padding: 6px 0; }
+    .ch-right span.stat-click-btn i { font-size: 13px; margin-bottom: 2px; }
     .ch-right span.stat-click-btn b { font-size: 14px; }
+}
 
 
     /* 💡 챕터 성취도 기본 텍스트 및 우측 버튼 정렬 */
@@ -434,70 +439,73 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
     
     <div class="main-content">
         <header class="sticky-header">
-            <div class="top-nav-row">
-                <div class="nav-brand" onclick="showEntryScreen()">
-                    <img src="Koboogy.png" alt="Logo" onerror="this.style.display='none'"> Koboogy
+            <div class="top-nav-container">
+                <div class="top-nav-row1">
+                    <div class="nav-brand" onclick="showEntryScreen()">
+                        <img src="Koboogy.png" alt="Logo" onerror="this.style.display='none'"> Koboogy
+                    </div>
+                    
+                    <div class="right-user" id="user-badge-area" style="display:none;" onclick="toggleMyPageView()">
+                        <span>🎓 <span id="welcome-username">유저</span> 코치님</span>
+                    </div>
                 </div>
                 
                 <div class="left-modes" id="top-left-modes" style="display:none;">
-                    <button class="mobile-menu-btn" onclick="toggleSidebar()">☰</button>
                     <button class="btn active" id="btn-study-mode" onclick="switchMainMode('study')" style="height:32px;">📖 학습 모드</button>
                     <button class="btn" id="btn-quiz-mode" onclick="switchMainMode('quiz')" style="height:32px;">🎙️ 툭탁 연습</button>
                     <button class="btn" id="btn-puzzle-mode" onclick="switchMainMode('puzzle')" style="height:32px;">🧩 문장 배열</button>
-                </div>
-                
-                <div class="right-user" id="user-badge-area" style="display:none;" onclick="toggleMyPageView()">
-                    <span>🎓 <span id="welcome-username">유저</span> 코치님</span>
                 </div>
             </div>
         </header>
 
         <section class="gray-header practice-bar-section" id="practice-bar-section">
             <div class="full-width-container">
-                <div class="practice-bar">
-                    <div class="left-controls">
-    <button class="btn" onclick="toggleSidebar()" style="font-size:25px; padding:0 8px; border:none; background:transparent; margin-right:5px; color:#5f6368;">☰</button>
-    <span id="global-status-icon" onclick="toggleAutoPlayAll(document.querySelector('.section-title'))">▶️</span>
-    
-    <div class="switch-box">
-        <div class="shadow-toggle-wrapper" id="btn-lang-toggle" onclick="toggleLangMode()">
-            <div class="shadow-toggle-slider"></div>
-            <span class="shadow-toggle-text toggle-left">🇺🇸</span>
-            <span class="shadow-toggle-text toggle-right">🇰🇷</span>
-        </div>
-    </div>
-
-    <div class="switch-box">
-        <div class="shadow-toggle-wrapper active" id="btn-detail-toggle" onclick="toggleDetailMode()">
-            <div class="shadow-toggle-slider"></div>
-            <span class="shadow-toggle-text toggle-left">보조 OFF</span>
-            <span class="shadow-toggle-text toggle-right">ON</span>
-        </div>
-    </div>
-
-    <div class="switch-box">
-        <div class="shadow-toggle-wrapper" id="shadow-toggle-ui" onclick="toggleShadowModeUI()">
-            <div class="shadow-toggle-slider"></div>
-            <span class="shadow-toggle-text toggle-left">리스닝</span>
-            <span class="shadow-toggle-text toggle-right">섀도잉</span>
-        </div>
-    </div>
+                <div class="practice-bar-stacked">
+                    <div class="practice-row1">
+                        <button class="btn" onclick="toggleSidebar()" style="font-size:22px; padding:0 8px; border:none; background:transparent; color:#5f6368; cursor:pointer;">☰</button>
+                        <span id="global-status-icon" onclick="toggleAutoPlayAll(document.querySelector('.section-title'))" style="font-size:20px; cursor:pointer;">▶️</span>
+                        
+                        <div class="switch-box">
+                            <div class="shadow-toggle-wrapper" id="btn-lang-toggle" onclick="toggleLangMode()">
+                                <div class="shadow-toggle-slider"></div>
+                                <span class="shadow-toggle-text toggle-left">🇺🇸</span>
+                                <span class="shadow-toggle-text toggle-right">🇰🇷</span>
+                            </div>
+                        </div>
 
                         <div class="switch-box">
-                            <span>반복</span>
+                            <div class="shadow-toggle-wrapper active" id="btn-detail-toggle" onclick="toggleDetailMode()">
+                                <div class="shadow-toggle-slider"></div>
+                                <span class="shadow-toggle-text toggle-left">보조 OFF</span>
+                                <span class="shadow-toggle-text toggle-right">ON</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="practice-row2">
+                        <div class="switch-box">
+                            <div class="shadow-toggle-wrapper" id="shadow-toggle-ui" onclick="toggleShadowModeUI()">
+                                <div class="shadow-toggle-slider"></div>
+                                <span class="shadow-toggle-text toggle-left">리스닝</span>
+                                <span class="shadow-toggle-text toggle-right">섀도잉</span>
+                            </div>
+                        </div>
+
+                        <div class="switch-box">
+                            <span style="font-size:13px; font-weight:bold;">반복</span>
                             <select id="repeat-count" onchange="syncSettings('repeat', this.value)">
                                 <option value="1" selected>1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option>
                             </select>
                             <span id="current-count"></span>
                         </div>
-                    </div>
-                    
-                    <div class="speed-controls-row" id="speed-controls-row">
-                        <div class="btn-grp">
-                            <button class="btn" onclick="setSpeed(0.3, this)">x0.3</button>
-                            <button class="btn" onclick="setSpeed(0.5, this)">x0.5</button>
-                            <button class="btn" onclick="setSpeed(0.7, this)">x0.7</button>
-                            <button class="btn active" onclick="setSpeed(1.0, this)">x1.0</button>
+
+                        <div class="speed-controls-row" id="speed-controls-row">
+                            <div class="btn-grp">
+                                <button class="btn" onclick="setSpeed(0.3, this)">x0.3</button>
+                                <button class="btn" onclick="setSpeed(0.5, this)">x0.5</button>
+                                <button class="btn" onclick="setSpeed(0.7, this)">x0.7</button>
+                                <button class="btn active" onclick="setSpeed(1.0, this)">x1.0</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -533,41 +541,50 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
                             <div class="stat-box" style="background:var(--color-bg);" onclick="startGlobalQuizByStatus('불가', 'quiz')">불가 🔴<br><span id="stat-bg">0</span>개</div>
                         </div>
 
-                        <div style="font-size:14px; font-weight:bold; color:var(--text); margin-bottom:8px;">🧩 문장 조립</div>
+                        <div style="font-size:14px; font-weight:bold; color:var(--text); margin-bottom:8px;">🧩 문장 배열</div>
                         <div class="stats-grid" style="grid-template-columns: repeat(2, 1fr); margin-top:0;">
                             <div class="stat-box" style="background:var(--pastel-blue); color:var(--pastel-blue-text);" onclick="startGlobalQuizByStatus('통과', 'puzzle')">Pass 🔵<br><span id="stat-puzzle-pass">0</span>개</div>
                             <div class="stat-box" style="background:#ffebee; color:#e53935;" onclick="startGlobalQuizByStatus('불가', 'puzzle')">Fail 🔴<br><span id="stat-puzzle-fail">0</span>개</div>
                         </div>
                     </div>
 
-                    <div class="mypage-card">
-                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; flex-wrap:wrap; gap:10px;">
-                            <h3 style="margin:0;">📈 챕터별 세부 성취도 현황 <span style="font-size:13px; font-weight:normal; color:#888;">(클릭 시 해당 퀴즈 진입)</span></h3>
+                    <div class="mypage-card" style="padding-top: 20px;">
+                        <div style="display:flex; justify-content:space-between; align-items:flex-end; border-bottom: 2px solid #ddd; flex-wrap:wrap; gap:10px;">
+                            <h3 style="margin:0; padding-bottom:10px;">📈 챕터별 세부 성취도 현황 <span style="font-size:12px; font-weight:normal; color:#888;">(클릭 시 진입)</span></h3>
                             
-                            <div style="display:flex; gap:4px; background:var(--bg); padding:3px; border-radius:6px; border:1px solid var(--border);">
-                                <button class="btn" id="tab-mypage-quiz" onclick="switchMypageTab('quiz')" style="border:none; box-shadow:none; height:28px; background:transparent; color:var(--gray-text);">🎙️ 툭탁 연습</button>
-                                <button class="btn" id="tab-mypage-puzzle" onclick="switchMypageTab('puzzle')" style="border:none; box-shadow:none; height:28px; background:transparent; color:var(--gray-text);">🧩 문장 배열</button>
+                            <div class="mypage-tab-container">
+                                <button class="mypage-tab-btn active" id="tab-mypage-quiz" onclick="switchMypageTab('quiz')">툭탁</button>
+                                <button class="mypage-tab-btn" id="tab-mypage-puzzle" onclick="switchMypageTab('puzzle')">문장배열</button>
                             </div>
                         </div>
-                        <div id="chapter-stats-list"></div>
+                        <div id="chapter-stats-list" style="margin-top: 15px;"></div>
                     </div>
 
-                    <div class="mypage-card">
-                        <h3>🔒 비밀번호 변경</h3>
-                        <input type="password" id="new-pw" class="login-input" placeholder="새로운 비밀번호 입력 (6자리 이상)" style="max-width:300px; display:block;">
-                        <button class="btn active" onclick="handleChangePassword()" style="height:40px; padding:0 20px;">비밀번호 수정 확정</button>
+                    <div class="mypage-card" style="padding: 20px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;">
+                            <div style="font-weight: 800; font-size: 15px; color: var(--text); min-width: 100px;">🔒 비밀번호 변경</div>
+                            <div style="display: flex; gap: 8px; align-items: center; flex: 1; max-width: 320px; justify-content: flex-end;">
+                                <input type="password" id="new-pw" class="login-input" placeholder="새 비밀번호 입력(6자리 이상)" style="margin-bottom:0; height:36px; font-size:13px; flex: 1;">
+                                <button class="btn active" onclick="handleChangePassword()" style="height:36px; padding:0 18px; flex-shrink:0;">수정</button>
+                            </div>
+                        </div>
+
+                        <hr style="border: none; border-top: 1px solid var(--border); margin: 0 0 15px 0;">
+
+                        <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap;">
+                            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                                <span style="font-weight: 800; font-size: 15px; color: #c5221f; min-width: 100px;">⚠️ 데이터 초기화</span>
+                                <span style="font-size: 13px; color: var(--gray-text); font-weight: 600;">!! 모든 성취도 및 녹음 기록 영구 삭제</span>
+                            </div>
+                            <button class="btn" onclick="handleResetProgressData()" style="height:36px; padding:0 14px; background:#f44336; color:white; border:none; font-weight:bold; flex-shrink:0;">초기화</button>
+                        </div>
                     </div>
 
-                    <div class="mypage-card" style="border-color: #fca7a7; background: #fff8f8;">
-                        <h3 style="color: #c5221f;">⚠️ 데이터 초기화</h3>
-                        <p style="font-size:13px; color:var(--gray-text); margin-bottom:15px;">지금까지 기록된 모든 툭탁/조립 성취도와 녹음 데이터를 초기화합니다. (되돌릴 수 없습니다!)</p>
-                        <button class="btn" onclick="handleResetProgressData()" style="height:40px; padding:0 20px; background:#f44336; color:white; border:none; font-weight:bold;">🔄 성취도 및 녹음 기록 초기화</button>
+                    <div style="display: flex; gap: 10px; margin-top: 15px;">
+                        <button class="btn" onclick="toggleMyPageView()" style="height:40px; flex:1;">← 화면으로 돌아가기</button>
+                        <button class="btn" onclick="handleLogout()" style="height:40px; width: 100px; background:#f44336; color:white; border:none;">로그아웃</button>
                     </div>
-
-                    <button class="btn" onclick="toggleMyPageView()" style="margin-top:15px; height:40px;">← 화면으로 돌아가기</button>
-                    <button class="btn" onclick="handleLogout()" style="margin-top:15px; height:40px; margin-left:10px; background:#f44336; color:white; border:none;">로그아웃</button>
                 </div>
-
 
 
 
@@ -905,11 +922,12 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
             const rate = cTotal === 0 ? 0 : Math.round((completed / cTotal) * 100);
 
             // 💡 탭에 따라 우측 현황판 HTML 분기 (태그 구조화)
+            // 💡 탭에 따라 우측 현황판 HTML 분기
             let chRightHtml = '';
             if (isPuzzleTab) {
                 chRightHtml = `
-                    <span class="stat-click-btn" style="color:var(--pastel-blue-text);" onclick="startChapterBurningMode('${wk}', '통과', 'puzzle')"><i>Pass</i> <b>${cTg}</b></span>
-                    <span class="stat-click-btn" style="color:#e53935;" onclick="startChapterBurningMode('${wk}', '불가', 'puzzle')"><i>Fail</i> <b>${cBg}</b></span>
+                    <span class="stat-click-btn" style="color:var(--pastel-blue-text); background:#e3f2fd;" onclick="startChapterBurningMode('${wk}', '통과', 'puzzle')"><i>Pass</i> <b>${cTg}</b></span>
+                    <span class="stat-click-btn" style="color:#e53935; background:#ffebee;" onclick="startChapterBurningMode('${wk}', '불가', 'puzzle')"><i>Fail</i> <b>${cBg}</b></span>
                 `;
             } else {
                 chRightHtml = `
@@ -920,14 +938,20 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
                 `;
             }
 
+            // 💡 [핵심] 챕터명 1줄, 퍼센트+버튼을 같은 줄(stretch)에 묶는 완벽한 구조!
             const html = `
                 <div class="chapter-stat-item">
-                    <div class="ch-left" onclick="startDirectChapterQuiz('${wk}', '${isPuzzleTab ? 'puzzle' : 'quiz'}')">
-                        <div class="ch-title">Chapter ${wk}</div>
-                        <div class="ch-rate">${rate}%<span class="rate-count">(${completed} / ${cTotal})</span></div>
+                    <div class="ch-title-row" onclick="startDirectChapterQuiz('${wk}', '${isPuzzleTab ? 'puzzle' : 'quiz'}')">
+                        Chapter ${wk}
                     </div>
-                    <div class="ch-right">
-                        ${chRightHtml}
+                    <div class="ch-main-row">
+                        <div class="ch-rate-box" onclick="startDirectChapterQuiz('${wk}', '${isPuzzleTab ? 'puzzle' : 'quiz'}')">
+                            <span class="rate-val">${rate}%</span>
+                            <span class="rate-count">(${completed} / ${cTotal})</span>
+                        </div>
+                        <div class="ch-right">
+                            ${chRightHtml}
+                        </div>
                     </div>
                 </div>
             `;
