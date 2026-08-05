@@ -131,8 +131,17 @@
         .sub-item { padding: 8px 15px 8px 40px; cursor: pointer; font-size: 15px; color: #5f6368; border-radius: 0 20px 20px 0; }
         .sub-item.active { background: #e8f0fe; color: var(--primary) !important; font-weight: 800 !important; }
 
-        .main-content { flex: 1; display: flex; flex-direction: column; background: var(--bg); position: relative; transition: background-color 0.4s; overflow: hidden; }
-        
+        /* 💡 배경색 애니메이션 지연(transition)을 완전히 없애서 즉시 바뀌도록 수정! */
+        .main-content { 
+            flex: 1; 
+            display: flex; 
+            flex-direction: column; 
+            background: var(--bg); 
+            position: relative; 
+            transition: none !important; /* 👈 즉시 배경색 변경 */
+            overflow: hidden; 
+        }
+
         /* 💡 2. PC 기본 상단 헤더 - 가로 한 줄(1Row) 배치 보장 */
         .sticky-header { background: var(--white); padding: 10px 0; border-bottom: 1px solid var(--border); position: sticky; top: 0; width: 100%; z-index: 99; }
         .top-nav-row { display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 95%; margin: 0 auto; gap: 20px; flex-direction: row; flex-wrap: nowrap; }
@@ -661,6 +670,19 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
             }
         }
 
+
+/* 🧩 퍼즐 모드 전용 배경색 (파스텔 연두색 강제 적용) */
+        body.puzzle-mode-active .main-content { 
+            background-color: #e8f5e9 !important; 
+        }
+
+        /* 🌸 마이페이지 전용 배경색 (파스텔 핑크 강제 적용) */
+        body.mypage-mode-active .main-content { 
+            background-color: var(--pastel-pink) !important; 
+        }
+
+
+
 </style>
 </head>
 
@@ -1061,6 +1083,7 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
         sidebar.style.display = 'none';
         document.body.classList.remove('quiz-mode-active');
         document.body.classList.remove('puzzle-mode-active');
+        document.body.classList.remove('mypage-mode-active');
         stopAll();
 
         // 🔝 엔트리 화면 진입 시 탑 버튼 무조건 강제 숨김
@@ -1102,6 +1125,8 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
         entryScreen.style.display = 'none';
         if (mypageArea.style.display === 'block') { 
             mypageArea.style.display = 'none'; 
+            // 💡 마이페이지 닫을 때 핑크 배경 끄기
+            document.body.classList.remove('mypage-mode-active'); 
             switchMainMode(currentAppMode === 'study' ? 'study' : currentAppMode); 
         } else { 
             updateMyPageStatisticsUI(); 
@@ -1109,6 +1134,10 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
             sidebar.style.display = 'none';
             mypageArea.style.display = 'block'; 
             document.getElementById('top-left-modes').style.display = 'flex';
+            
+            // 💡 마이페이지 열 때 핑크 배경 켜고, 다른 배경색은 끄기
+            document.body.classList.add('mypage-mode-active');
+            document.body.classList.remove('quiz-mode-active', 'puzzle-mode-active');
         }
     }
 
@@ -1432,7 +1461,10 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
     // 💡 메인 모드 스위처 (학습 / 툭탁 연습 / 문장 조립)
     function switchMainMode(mode) {
         currentAppMode = mode;
-        isQuizMode = (mode === 'quiz' || mode === 'puzzle'); // 툭탁과 조립 모두 퀴즈 베이스 UI 활용
+        isQuizMode = (mode === 'quiz' || mode === 'puzzle');
+        
+        // 💡 학습 모드나 다른 탭으로 넘어갈 때 핑크 배경 스위치를 즉시 제거!
+        document.body.classList.remove('mypage-mode-active');
         
         entryScreen.style.display = 'none';
         document.getElementById('top-left-modes').style.display = 'flex'; 
@@ -1441,7 +1473,6 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
         document.getElementById('btn-quiz-mode').classList.toggle('active', mode === 'quiz');
         document.getElementById('btn-puzzle-mode').classList.toggle('active', mode === 'puzzle');
         
-        // 💡 이 두 줄이 핵심! (퀴즈 모드 공통 스위치 + 퍼즐 전용 연두색 스위치)
         document.body.classList.toggle('quiz-mode-active', isQuizMode);
         document.body.classList.toggle('puzzle-mode-active', mode === 'puzzle');
         
@@ -1455,11 +1486,8 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
             mainStudyContainer.style.display = 'none';
             quizPlayArea.style.display = 'none';
             puzzlePlayArea.style.display = 'none';
-            
-            // 공용 세팅창 띄우기
             quizSetupArea.style.display = 'block';
             
-            // 제목과 버튼 문구 동적 변경
             document.getElementById('setup-title').innerText = mode === 'quiz' ? '🎯 툭탁 연습 세팅' : '🧩 문장 배열 세팅';
             document.getElementById('start-action-btn').innerText = mode === 'quiz' ? '🚀 툭탁 연습 시작하기' : '🚀 문장 배열 시작하기';
 
@@ -1469,7 +1497,6 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
                 else btn.classList.remove('active');
             });
         } else {
-            // 학습 모드
             if(window.innerWidth > 768) { sidebar.style.display = 'block'; }
             quizSetupArea.style.display = 'none';
             quizPlayArea.style.display = 'none';
