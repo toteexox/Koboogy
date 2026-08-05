@@ -483,7 +483,6 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
     .ch-right span.stat-click-btn { padding: 6px 0; }
     .ch-right span.stat-click-btn i { font-size: 13px; margin-bottom: 2px; }
     .ch-right span.stat-click-btn b { font-size: 14px; }
-}
 
     /* 💡 진입 화면 모드 선택 버튼 모바일 최적화 (세로 3줄) */
     .entry-btn-wrap { 
@@ -498,38 +497,40 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
         height: 52px !important; 
         font-size: 16px !important; 
     }
-}
+} /* 📱 모바일 미디어쿼리 정상적으로 닫기 */
 
 
-    /* 💡 챕터 성취도 기본 텍스트 및 우측 버튼 정렬 */
-        .ch-rate { display: inline-flex; align-items: center; justify-content: center; }
-        .ch-rate .rate-count { font-size: 12px; color: #5f6368; font-weight: normal; margin-left: 6px; }
-        .ch-right span.stat-click-btn { display: inline-flex; align-items: center; justify-content: center; gap: 4px; width: auto; min-width: 48px; }
-        .ch-right span.stat-click-btn i { font-style: normal; }
-}
-
-
+/* 💡 챕터 성취도 기본 텍스트 및 우측 버튼 정렬 */
+.ch-rate { display: inline-flex; align-items: center; justify-content: center; }
+.ch-rate .rate-count { font-size: 12px; color: #5f6368; font-weight: normal; margin-left: 6px; }
+.ch-right span.stat-click-btn { display: inline-flex; align-items: center; justify-content: center; gap: 4px; width: auto; min-width: 48px; }
+.ch-right span.stat-click-btn i { font-style: normal; }
 
 
 /* 🔝 탑 버튼 스타일 (화면 맨 우측 하단 고정) */
-        #scrollTopBtn {
-            position: fixed;
-            bottom: 25px;
-            right: 20px;
-            background: var(--dull-blue);
-            color: white;
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            z-index: 9999;
-        }
+#scrollTopBtn {
+    position: fixed !important;
+    bottom: 25px !important;
+    right: 20px !important;
+    background: var(--dull-blue) !important;
+    color: white !important;
+    width: 45px !important;
+    height: 45px !important;
+    border-radius: 50% !important;
+    display: none; /* 기본 숨김, 스크롤시 나타남 */
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 22px !important;
+    cursor: pointer !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3) !important;
+    z-index: 99999 !important;
+    transition: transform 0.2s, background 0.2s;
+}
 
+#scrollTopBtn:hover {
+    transform: scale(1.1);
+    background: var(--primary) !important;
+}
 
 /* 📱 모바일(768px 이하)에서 로고와 마이페이지 한 줄 배치 */
 @media (max-width: 768px) {
@@ -546,15 +547,85 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
     }
 }
 
-
 /* 💡 마이페이지 인덱스 탭 전용 활성화 스타일 */
-        #mypage-area .btn.active {
-            background: var(--white) !important;
-            color: var(--primary) !important;
-            font-weight: 800 !important;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1) !important;
-            border: 1px solid var(--border) !important;
+#mypage-area .btn.active {
+    background: var(--white) !important;
+    color: var(--primary) !important;
+    font-weight: 800 !important;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1) !important;
+    border: 1px solid var(--border) !important;
+}
+
+
+/* 💡 추가: 상단 모드 선택 버튼 탭(Tab) 디자인 */
+        .mode-tab-container { display: flex; gap: 4px; align-items: flex-end; }
+        .mode-tab-btn { 
+            background: #f1f3f4; border: 1px solid var(--border); border-bottom: none; 
+            padding: 6px 14px; border-radius: 10px 10px 0 0; font-size: 14px; font-weight: 600; 
+            color: #777; cursor: pointer; transition: 0.2s; position: relative; z-index: 1; 
+            height: 34px; box-shadow: inset 0 -2px 5px rgba(0,0,0,0.02);
         }
+        .mode-tab-btn:hover { background: #e8eaea; color: #333; }
+        .mode-tab-btn.active { 
+            background: var(--white); color: var(--primary); border-color: var(--border); 
+            border-bottom: 2px solid var(--white); font-weight: 800; z-index: 3; height: 36px; 
+        }
+
+        /* 📱 추가: 모바일 전용 레이아웃 강제 덮어쓰기 (자동 적용됨) */
+        @media (max-width: 768px) { 
+            .top-nav-row { flex-wrap: wrap !important; padding: 10px 15px 0 15px !important; }
+            .nav-brand { order: 1; width: auto !important; margin-bottom: 8px !important; font-size: 17px !important; } 
+            .right-user { order: 2; width: auto !important; margin-bottom: 8px !important; font-size: 12px !important; flex-shrink: 0; }
+            
+            .left-modes { 
+                order: 3; width: 100% !important; justify-content: flex-start; 
+                margin-top: 5px !important; border-top: none !important; padding-top: 0 !important;
+            }
+            .mode-tab-btn { flex: 1 !important; text-align: center !important; padding: 8px 4px !important; font-size: 12px !important; height: 36px !important; }
+            .mode-tab-btn.active { height: 38px !important; }
+
+            /* 컨트롤 바 2줄 정렬 설정 강제 적용 */
+            .gray-header.practice-bar-section { top: 88px !important; padding: 8px 0 !important; }
+            .practice-row1, .practice-row2 { display: flex !important; justify-content: space-between !important; width: 100% !important; }
+        }
+
+
+/* 💡 퍼즐 모드 전용 배경색 (파스텔 그린) */
+        body.puzzle-mode-active .main-content { background-color: #e8f5e9 !important; }
+
+        /* 💡 독립형 줍줍 버튼 및 래퍼 스타일 */
+        .card-with-jub {
+            display: flex; gap: 8px; align-items: stretch; margin-bottom: 10px; width: 100%;
+        }
+        .card-with-jub .card { margin-bottom: 0 !important; flex: 1; }
+        .card-with-jub .chat-main-wrapper { width: 100%; flex: 1; }
+        
+        .jub-side-btn {
+            width: 52px; background: #fff; border: 2px solid #ddd; border-radius: 12px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            cursor: pointer; transition: 0.2s; box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            filter: grayscale(100%); opacity: 0.5; flex-shrink: 0;
+        }
+        .jub-side-btn.active {
+            border-color: #9c27b0; background: #f3e5f5; filter: grayscale(0%); opacity: 1;
+        }
+        .jub-side-btn:hover { filter: grayscale(0%); opacity: 0.8; transform: scale(1.05); }
+        .jub-side-btn .jub-icon { font-size: 20px; }
+        .jub-side-btn .jub-text { font-size: 11px; font-weight: 800; color: #9c27b0; margin-top: 2px; }
+
+        /* 💡 PC에서는 1줄, 모바일에서는 2줄 정렬되도록 반응형 재설정 */
+        .practice-bar-stacked {
+            display: flex; flex-direction: row; justify-content: space-between; align-items: center; gap: 20px; width: 100%;
+        }
+        @media (max-width: 768px) {
+            .practice-bar-stacked { flex-direction: column !important; gap: 10px !important; }
+        }
+
+/* 🧩 퍼즐 모드 전용 배경색 (파스텔 연두색 강제 적용) */
+        body.puzzle-mode-active .main-content { 
+            background-color: #e8f5e9 !important; 
+        }
+
 
 </style>
 </head>
@@ -591,10 +662,10 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
                     <img src="Koboogy.png" alt="Logo" onerror="this.style.display='none'"> Koboogy
                 </div>
                 
-                <div class="left-modes" id="top-left-modes" style="display:none;">
-                    <button class="btn active" id="btn-study-mode" onclick="switchMainMode('study')" style="height:32px;">📖 학습 모드</button>
-                    <button class="btn" id="btn-quiz-mode" onclick="switchMainMode('quiz')" style="height:32px;">🎙️ 툭탁 연습</button>
-                    <button class="btn" id="btn-puzzle-mode" onclick="switchMainMode('puzzle')" style="height:32px;">🧩 문장 배열</button>
+                <div class="left-modes mode-tab-container" id="top-left-modes" style="display:none;">
+                    <button class="mode-tab-btn active" id="btn-study-mode" onclick="switchMainMode('study')">📖 학습 모드</button>
+                    <button class="mode-tab-btn" id="btn-quiz-mode" onclick="switchMainMode('quiz')">🎙️ 툭탁 연습</button>
+                    <button class="mode-tab-btn" id="btn-puzzle-mode" onclick="switchMainMode('puzzle')">🧩 문장 배열</button>
                 </div>
                 
                 <div class="right-user" id="user-badge-area" style="display:none;" onclick="toggleMyPageView()">
@@ -607,54 +678,57 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
             <div class="full-width-container">
                 <div class="practice-bar-stacked">
                     <div class="practice-row1">
-                        <button class="btn" onclick="toggleSidebar()" style="font-size:22px; padding:0 8px; border:none; background:transparent; color:#5f6368; cursor:pointer;">☰</button>
-                        <span id="global-status-icon" onclick="toggleAutoPlayAll(document.querySelector('.section-title'))" style="font-size:20px; cursor:pointer;">▶️</span>
-                        
-                        <div class="switch-box">
-                            <div class="shadow-toggle-wrapper" id="btn-lang-toggle" onclick="toggleLangMode()">
-                                <div class="shadow-toggle-slider"></div>
-                                <span class="shadow-toggle-text toggle-left">🇺🇸</span>
-                                <span class="shadow-toggle-text toggle-right">🇰🇷</span>
-                            </div>
+                        <div style="display: flex; gap: 12px; align-items: center;">
+                            <button class="btn" onclick="toggleSidebar()" style="font-size:22px; padding:0 8px; border:none; background:transparent; color:#5f6368; cursor:pointer;">☰</button>
+                            <span id="global-status-icon" onclick="toggleAutoPlayAll(document.querySelector('.section-title'))" style="font-size:20px; cursor:pointer;">▶️</span>
                         </div>
-
-                        <div class="switch-box">
-                            <div class="shadow-toggle-wrapper active" id="btn-detail-toggle" onclick="toggleDetailMode()">
-                                <div class="shadow-toggle-slider"></div>
-                                <span class="shadow-toggle-text toggle-left">보조 OFF</span>
-                                <span class="shadow-toggle-text toggle-right">ON</span>
+                        <div style="display: flex; gap: 8px; align-items: center;">
+                            <div class="switch-box">
+                                <div class="shadow-toggle-wrapper" id="btn-lang-toggle" onclick="toggleLangMode()">
+                                    <div class="shadow-toggle-slider"></div>
+                                    <span class="shadow-toggle-text toggle-left">🇺🇸</span>
+                                    <span class="shadow-toggle-text toggle-right">🇰🇷</span>
+                                </div>
+                            </div>
+                            <div class="switch-box">
+                                <div class="shadow-toggle-wrapper active" id="btn-detail-toggle" onclick="toggleDetailMode()">
+                                    <div class="shadow-toggle-slider"></div>
+                                    <span class="shadow-toggle-text toggle-left">보조 OFF</span>
+                                    <span class="shadow-toggle-text toggle-right">ON</span>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="practice-row2">
-                        <div class="switch-box">
-                            <div class="shadow-toggle-wrapper" id="shadow-toggle-ui" onclick="toggleShadowModeUI()">
-                                <div class="shadow-toggle-slider"></div>
-                                <span class="shadow-toggle-text toggle-left">리스닝</span>
-                                <span class="shadow-toggle-text toggle-right">섀도잉</span>
+                        <div style="display: flex; gap: 12px; align-items: center;">
+                            <div class="switch-box">
+                                <div class="shadow-toggle-wrapper" id="shadow-toggle-ui" onclick="toggleShadowModeUI()">
+                                    <div class="shadow-toggle-slider"></div>
+                                    <span class="shadow-toggle-text toggle-left">리스닝</span>
+                                    <span class="shadow-toggle-text toggle-right">섀도잉</span>
+                                </div>
+                            </div>
+                            <div class="switch-box">
+                                <span style="font-size:13px; font-weight:bold;">반복</span>
+                                <select id="repeat-count" onchange="syncSettings('repeat', this.value)">
+                                    <option value="1" selected>1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option>
+                                </select>
+                                <span id="current-count"></span>
                             </div>
                         </div>
-
-                        <div class="switch-box">
-                            <span style="font-size:13px; font-weight:bold;">반복</span>
-                            <select id="repeat-count" onchange="syncSettings('repeat', this.value)">
-                                <option value="1" selected>1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option>
-                            </select>
-                            <span id="current-count"></span>
-                        </div>
-
-                        <div class="speed-controls-row" id="speed-controls-row">
-                            <div class="btn-grp">
-                                <button class="btn" onclick="setSpeed(0.3, this)">x0.3</button>
-                                <button class="btn" onclick="setSpeed(0.5, this)">x0.5</button>
-                                <button class="btn" onclick="setSpeed(0.7, this)">x0.7</button>
-                                <button class="btn active" onclick="setSpeed(1.0, this)">x1.0</button>
+                        <div style="display: flex; gap: 8px; align-items: center;">
+                            <div class="speed-controls-row" id="speed-controls-row">
+                                <div class="btn-grp">
+                                    <button class="btn" onclick="setSpeed(0.3, this)">x0.3</button>
+                                    <button class="btn" onclick="setSpeed(0.5, this)">x0.5</button>
+                                    <button class="btn" onclick="setSpeed(0.7, this)">x0.7</button>
+                                    <button class="btn active" onclick="setSpeed(1.0, this)">x1.0</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
         </section>
 
         <audio id="player"></audio> 
@@ -1331,7 +1405,9 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
         document.getElementById('btn-quiz-mode').classList.toggle('active', mode === 'quiz');
         document.getElementById('btn-puzzle-mode').classList.toggle('active', mode === 'puzzle');
         
+        // 💡 이 두 줄이 핵심! (퀴즈 모드 공통 스위치 + 퍼즐 전용 연두색 스위치)
         document.body.classList.toggle('quiz-mode-active', isQuizMode);
+        document.body.classList.toggle('puzzle-mode-active', mode === 'puzzle');
         
         mypageArea.style.display = 'none';
         practiceBarSection.style.display = mode === 'study' ? 'block' : 'none';
@@ -1402,7 +1478,6 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
         const hasGroups = items && items.length > 0 && items[0].group !== undefined;
 
         if (hasGroups) {
-            // 그룹별로 문장 묶기
             let groupedMap = {};
             items.forEach((item, idx) => {
                 let gName = item.group || "Expressions";
@@ -1411,7 +1486,6 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
             });
 
             Object.keys(groupedMap).forEach(groupName => {
-                // 💡 교재처럼 영어 뱃지와 한글 뜻 분리하기 ("spending time | 시간을 보내다" 대응)
                 let engTitle = groupName;
                 let korTitle = "";
                 if(groupName.includes("|")) {
@@ -1424,7 +1498,6 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
                     korTitle = parts[1].trim();
                 }
                 
-                // 1. 교재와 똑같은 [파란 뱃지] + [파란 텍스트] 타이틀 생성
                 html += `
                     <div style="display: flex; align-items: center; gap: 12px; margin: 35px 0 14px 0;">
                         <span style="background: #5ba4ff; color: white; padding: 6px 16px; border-radius: 6px; font-size: 20px; font-weight: 800;">${engTitle}</span>
@@ -1432,11 +1505,16 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
                     </div>
                 `;
 
-                // 2. 해당 그룹 예문들 렌더링
                 groupedMap[groupName].forEach(obj => {
                     const item = obj.item;
                     const isJub = userProgressCache[`jub_${wk}_${type}_${obj.idx}`] === true;
-                    const jubBtn = `<button class="jub-btn ${isJub?'active':''}" onclick="event.stopPropagation(); toggleJub('${wk}','${type}',${obj.idx},this)">🛒</button>`;
+                    // 💡 우측 분리형 줍줍 버튼 디자인
+                    const jubBtn = `
+                    <div class="jub-side-btn ${isJub?'active':''}" onclick="event.stopPropagation(); toggleJub('${wk}','${type}',${obj.idx},this)">
+                        <span class="jub-icon">🛒</span>
+                        <span class="jub-text">줍줍</span>
+                    </div>`;
+                    
                     const chunks = item.chunks ? item.chunks.map(c => `<span class="chunk" ${hasAudio ? `data-s="${c.s || 0}" data-e="${c.e || 0}"` : ''}>${c.text}</span>`).join('') : '';
                     const content = `
                         <div class="text-content">
@@ -1445,13 +1523,25 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
                             ${item.trans ? `<div class="trans-text">${item.trans}</div>` : ''}
                         </div>`;
                         
-                    html += `<div class="card ${hasAudio ? '' : 'no-audio'}" ${hasAudio ? `data-start="${item.start || 0}" data-end="${item.end || 0}"` : ''} style="${hasAudio ? '' : 'cursor:default;'}"><div class="card-main-row">${hasAudio ? '<div class="play-btn"></div>' : ''}${content}${jubBtn}</div></div>`;
+                    html += `
+                    <div class="card-with-jub">
+                        <div class="card ${hasAudio ? '' : 'no-audio'}" ${hasAudio ? `data-start="${item.start || 0}" data-end="${item.end || 0}"` : ''} style="${hasAudio ? '' : 'cursor:default;'}"><div class="card-main-row">${hasAudio ? '<div class="play-btn"></div>' : ''}${content}</div></div>
+                        ${jubBtn}
+                    </div>`;
                 });
             });
 
         } else {
             // 그룹이 없는 일반 세션 (My Story, Real Convo 등)
             items.forEach((item, idx) => {
+                const isJub = userProgressCache[`jub_${wk}_${type}_${idx}`] === true;
+                // 💡 우측 분리형 줍줍 버튼 디자인
+                const jubBtn = `
+                <div class="jub-side-btn ${isJub?'active':''}" onclick="event.stopPropagation(); toggleJub('${wk}','${type}',${idx},this)">
+                    <span class="jub-icon">🛒</span>
+                    <span class="jub-text">줍줍</span>
+                </div>`;
+
                 const chunks = item.chunks ? item.chunks.map(c => `<span class="chunk" ${hasAudio ? `data-s="${c.s || 0}" data-e="${c.e || 0}"` : ''}>${c.text}</span>`).join('') : '';
                 const content = `
                     <div class="text-content">
@@ -1463,13 +1553,18 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
                 if(type === 'realconvo') { 
                     html += `
                     <div class="chat-row ${hasAudio ? '' : 'no-audio'}" data-speaker="${item.speaker}" ${hasAudio ? `data-start="${item.start || 0}" data-end="${item.end || 0}"` : ''}>
-                        <div class="chat-main-wrapper">
+                        <div class="chat-main-wrapper card-with-jub">
                             <div class="badge badge-${item.speaker}">${item.speaker}</div>
-                            <div class="card" style="flex:1; margin:0; ${hasAudio ? '' : 'cursor:default;'}">${content}</div>
+                            <div class="card" style="margin:0; ${hasAudio ? '' : 'cursor:default;'}"><div class="card-main-row">${hasAudio ? '<div class="play-btn"></div>' : ''}${content}</div></div>
+                            ${jubBtn}
                         </div>
                     </div>`; 
                 } else { 
-                    html += `<div class="card ${hasAudio ? '' : 'no-audio'}" ${hasAudio ? `data-start="${item.start || 0}" data-end="${item.end || 0}"` : ''} style="${hasAudio ? '' : 'cursor:default;'}"><div class="card-main-row">${hasAudio ? '<div class="play-btn"></div>' : ''}${content}</div></div>`; 
+                    html += `
+                    <div class="card-with-jub">
+                        <div class="card ${hasAudio ? '' : 'no-audio'}" ${hasAudio ? `data-start="${item.start || 0}" data-end="${item.end || 0}"` : ''} style="${hasAudio ? '' : 'cursor:default;'}"><div class="card-main-row">${hasAudio ? '<div class="play-btn"></div>' : ''}${content}</div></div>
+                        ${jubBtn}
+                    </div>`; 
                 }
             });
         }
