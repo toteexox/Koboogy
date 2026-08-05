@@ -625,7 +625,41 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
         body.puzzle-mode-active .main-content { 
             background-color: #e8f5e9 !important; 
         }
-
+/* 📱 모바일(768px 이하) 화이트 메뉴바 완벽 2줄 강제 정렬 */
+        @media (max-width: 768px) { 
+            .top-nav-row { 
+                display: flex !important;
+                flex-wrap: wrap !important; 
+                justify-content: space-between !important;
+                padding: 10px 15px 0 15px !important; 
+            }
+            .nav-brand { 
+                order: 1 !important; 
+                width: auto !important; 
+                margin-bottom: 8px !important; 
+            } 
+            .right-user { 
+                order: 2 !important; 
+                width: auto !important; 
+                margin-bottom: 8px !important; 
+                flex-shrink: 0 !important; 
+            }
+            .left-modes { 
+                order: 3 !important; 
+                width: 100% !important; 
+                display: flex !important;
+                justify-content: space-between !important; 
+                margin-top: 5px !important; 
+                padding: 0 !important;
+            }
+            .mode-tab-btn { 
+                flex: 1 !important; 
+                text-align: center !important; 
+                padding: 8px 2px !important; 
+                font-size: 13px !important; 
+                height: 38px !important; 
+            }
+        }
 
 </style>
 </head>
@@ -1026,18 +1060,19 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
         practiceBarSection.style.display = 'none';
         sidebar.style.display = 'none';
         document.body.classList.remove('quiz-mode-active');
+        document.body.classList.remove('puzzle-mode-active');
         stopAll();
 
         // 🔝 엔트리 화면 진입 시 탑 버튼 무조건 강제 숨김
         const topBtn = document.getElementById('scrollTopBtn');
         if (topBtn) topBtn.style.display = 'none';
 
-        // 💡 딜레이를 주어 화면 렌더링 후 스크롤을 무조건 0으로 끌어올림!
+        // 💡 딜레이를 300ms로 늘려 모바일 렌더링 후 스크롤을 완벽하게 0으로 끌어올림!
         setTimeout(() => {
-            window.scrollTo(0, 0);
+            window.scrollTo({ top: 0, behavior: 'instant' });
             const scrollArea = document.getElementById('main-scroll-area');
-            if (scrollArea) scrollArea.scrollTop = 0;
-        }, 10);
+            if (scrollArea) scrollArea.scrollTo({ top: 0, behavior: 'instant' });
+        }, 300);
     }
 
 
