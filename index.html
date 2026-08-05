@@ -53,15 +53,43 @@
         .login-btn:hover { background: #3574de; }
         
         #entry-screen { display: none; flex-direction: column; align-items: center; justify-content: center; height: 100%; width: 100%; }
-        .entry-btn-wrap { display: flex; gap: 15px; margin-top: 20px; flex-wrap: wrap; justify-content: center; }
-        .entry-btn { width: 150px; height: 140px; border-radius: 16px; border: none; font-size: 20px; font-weight: 800; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 6px 16px rgba(0,0,0,0.1); }
+        
+
+         /* 💡 진입 화면 모드 선택 버튼 (PC 기본: 가로 1줄 큼직하게) */
+        .entry-btn-wrap { 
+            display: flex; 
+            flex-direction: row; /* 가로 배열 */
+            gap: 15px; 
+            margin-top: 20px; 
+            width: 100%; 
+            justify-content: center;
+            max-width: none;
+        }
+        .entry-btn { 
+            width: 150px; 
+            height: 140px; 
+            border-radius: 16px; 
+            border: none; 
+            font-size: 20px; 
+            font-weight: 800; 
+            cursor: pointer; 
+            transition: transform 0.2s, box-shadow 0.2s; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.06); 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+        }
         .entry-btn:hover { transform: translateY(-4px); box-shadow: 0 10px 20px rgba(0,0,0,0.15); }
         .entry-study { background: #e3f2fd; color: #1565c0; } 
         .entry-quiz { background: #fff9c4; color: #f57f17; } 
-        .entry-puzzle { background: #e8f5e9; color: #2e7d32; } /* 💡 문장조립 버튼 컬러 */
+        .entry-puzzle { background: #e8f5e9; color: #2e7d32; }
 
-        .mypage-view { display: none; width: 100%; padding: 20px 0; }
+
+
+        /* 💡 1. 마이페이지 폭 축소 (퀴즈 모드 카드와 동일하게 640px 고정 및 가운데 정렬) */
+        .mypage-view { display: none; width: 100%; max-width: 640px; margin: 0 auto; padding: 20px 0; }
         .mypage-card { background: white; border-radius: 16px; padding: 25px; border: 1px solid var(--border); box-shadow: 0 1px 3px rgba(0,0,0,0.05); width: 100%; margin-bottom: 20px; }
+
         .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 15px; }
         .stat-box { text-align: center; padding: 12px; border-radius: 10px; font-weight: bold; font-size: 14px; cursor: pointer; transition: 0.2s; color: #333; }
         .stat-box:hover { filter: brightness(0.95); transform: translateY(-2px); }
@@ -105,16 +133,14 @@
 
         .main-content { flex: 1; display: flex; flex-direction: column; background: var(--bg); position: relative; transition: background-color 0.4s; overflow: hidden; }
         
-        /* 💡 상단 헤더 레이아웃 스타일 */
+        /* 💡 2. PC 기본 상단 헤더 - 가로 한 줄(1Row) 배치 보장 */
         .sticky-header { background: var(--white); padding: 10px 0; border-bottom: 1px solid var(--border); position: sticky; top: 0; width: 100%; z-index: 99; }
-        .top-nav-container { width: 100%; max-width: 95%; margin: 0 auto; display: flex; flex-direction: column; gap: 8px; }
-        .top-nav-row1 { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+        .top-nav-row { display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 95%; margin: 0 auto; gap: 20px; flex-direction: row; flex-wrap: nowrap; }
         .nav-brand { display: flex; align-items: center; gap: 8px; font-size: 20px; font-weight: bold; cursor: pointer; flex-shrink: 0; }
         .nav-brand img { width: 32px; border-radius: 6px; }
-        .left-modes { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+        .left-modes { display: flex; gap: 8px; align-items: center; flex: 1; flex-direction: row; }
         .right-user { display: flex; align-items: center; font-size: 14px; font-weight: bold; color: var(--gray-text); gap: 10px; flex-shrink: 0; cursor: pointer; transition: color 0.2s; }
-        .right-user:hover { color: var(--primary); }
-        .mobile-menu-btn { display: none; background: none; border: none; font-size: 24px; cursor: pointer; padding: 0; margin-right: 10px; }
+
 
         /* 💡 버튼 및 기본 컴포넌트 유지 */
         .btn { border: 1px solid var(--dull-gray); background: var(--white); color: var(--dull-gray); cursor: pointer; border-radius: 4px; padding: 5px 10px; font-size: 12px; font-weight: 600; height: 32px; transition: 0.2s; }
@@ -125,12 +151,32 @@
 
         audio { display: none; }
 
-        /* 💡 컨트롤 바 2줄 스택 스타일 */
-        .gray-header.practice-bar-section { background: var(--bg); padding: 10px 0; position: sticky; top: 82px; width: 100%; z-index: 98; display: none; border-bottom: 1px solid #e0e0e0; }
-        .gray-header.practice-bar-section .full-width-container { width: 100%; max-width: 95%; margin: 0 auto; }
-        .practice-bar-stacked { display: flex; flex-direction: column; gap: 10px; width: 100%; }
-        .practice-row1 { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-        .practice-row2 { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+        /* 💡 PC 컨트롤 바 위아래 여백 증대 & 상단 라인 밀착 해소 */
+        .gray-header.practice-bar-section { 
+            background: var(--bg); 
+            padding: 14px 0; /* 💡 위아래 여백을 늘려 답답함 해소 */
+            position: sticky; 
+            top: 53px; /* 💡 상단 헤더 라인과의 붙음 위치 보정 */
+            width: 100%; 
+            z-index: 98; 
+            display: none; 
+            border-bottom: 1px solid #e0e0e0; 
+        }
+        .gray-header.practice-bar-section .full-width-container { 
+            width: 100%; 
+            max-width: 95%; 
+            margin: 0 auto; 
+        }
+        .practice-bar-stacked { 
+            display: flex; 
+            flex-direction: row; 
+            gap: 20px; 
+            width: 100%; 
+            align-items: center; 
+            flex-wrap: nowrap; 
+        }
+        .practice-row1 { display: flex; align-items: center; gap: 12px; flex-wrap: nowrap; white-space: nowrap; }
+        .practice-row2 { display: flex; align-items: center; gap: 12px; flex-wrap: nowrap; white-space: nowrap; }
 
 
         #global-status-icon { font-size: 18px; width: 24px; text-align: center; cursor: pointer; transition: 0.2s; }
@@ -154,6 +200,38 @@
 
         .speed-controls-row { display: flex; align-items: center; margin: 0; }
         .btn-grp { display: flex; gap: 6px; align-items: center; flex-shrink: 0; }
+
+
+
+        /* 💡 배속 버튼 네모 박스 제거 및 텍스트 라이트 디자인 */
+        .speed-controls-row .btn-grp {
+            display: flex;
+            gap: 2px;
+            align-items: center;
+            background: transparent;
+        }
+        .speed-controls-row .btn {
+            border: none !important;
+            background: transparent !important;
+            color: #888 !important;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 3px 6px;
+            height: 26px;
+            cursor: pointer;
+            transition: 0.2s;
+            border-radius: 6px;
+            box-shadow: none !important;
+        }
+        .speed-controls-row .btn.active {
+            color: var(--primary) !important;
+            background: #e8f0fe !important;
+            font-weight: 800 !important;
+        }
+
+
+
+
 
         .scroll-area { flex: 1; overflow-y: auto; padding: 30px 0; }
         .content-wrap { max-width: 90%; margin: 0 auto; width: 100%; padding-bottom: 75vh; }
@@ -323,21 +401,53 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
 
 
 
-/* 📱 모바일 (768px 이하) 대응 */
+/* 📱 모바일 (768px 이하) 전용 대응 */
 @media (max-width: 768px) { 
     .sidebar { position: fixed; left: -280px; height: 100%; z-index: 1001; } 
     .sidebar.open { left: 0; display: block !important; } 
-    
-    .gray-header.practice-bar-section { position: sticky; top: 82px; z-index: 98; padding: 8px 0; }
-    .practice-row1 { gap: 8px; }
-    .practice-row2 { gap: 8px; }
+
+    /* 💡 [요청] 헤더 1줄: 로고/마이페이지, 2줄: 모드 선택 (강제 줄바꿈 적용) */
+    .top-nav-row { 
+        display: flex !important; 
+        flex-wrap: wrap !important; /* 줄바꿈 허용 */
+        justify-content: space-between !important; 
+        align-items: center !important; 
+        padding: 0 14px !important;
+    }
+    .nav-brand { 
+        order: 1; 
+        flex: 0 0 auto !important; /* 찌그러짐 방지 */
+        font-size: 18px !important; 
+    } 
+    .right-user { 
+        order: 2; 
+        flex: 0 0 auto !important; /* 찌그러짐 방지 */
+        font-size: 13px !important; 
+        margin: 0 !important; 
+    }
+    .left-modes { 
+        order: 3; 
+        flex: 0 0 100% !important; /* 💡 핵심: 무조건 가로 100%를 차지하게 만들어 2번째 줄로 쫓아냄! */
+        justify-content: flex-start !important; 
+        gap: 6px !important; 
+        margin-top: 12px !important; 
+    }
+    .left-modes .btn { padding: 6px 4px !important; font-size: 12px !important; flex: 1; text-align: center; }
+
+
+    /* 💡 컨트롤 바 (모바일: 강제로 2줄 세로 배치!) */
+    .gray-header.practice-bar-section { position: sticky; top: 78px; z-index: 98; padding: 8px 0; }
+    .practice-bar-stacked { flex-direction: column !important; align-items: flex-start !important; gap: 10px !important; }
+    .practice-row1 { flex-wrap: wrap !important; gap: 8px !important; }
+    .practice-row2 { flex-wrap: wrap !important; gap: 8px !important; }
+
 
     .stats-grid { grid-template-columns: repeat(4, 1fr); gap: 6px; }
     .stat-box { padding: 8px 2px; font-size: 11px; letter-spacing: -0.5px; }
+    
     .quiz-type-filters { grid-template-columns: repeat(3, 1fr) !important; }
     .chapter-grid { grid-template-columns: repeat(3, 1fr) !important; }
-    
-    /* 💡 모바일 세부 성취도 최적화 (여백 줄이고 꽉 채우기) */
+
     .chapter-stat-item { padding: 12px; gap: 8px; }
     .ch-title-row { font-size: 15px; }
     .ch-main-row { gap: 8px; }
@@ -350,6 +460,20 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
     .ch-right span.stat-click-btn { padding: 6px 0; }
     .ch-right span.stat-click-btn i { font-size: 13px; margin-bottom: 2px; }
     .ch-right span.stat-click-btn b { font-size: 14px; }
+
+    /* 💡 진입 화면 모드 선택 버튼 모바일 최적화 (세로 3줄) */
+    .entry-btn-wrap { 
+        flex-direction: column !important; 
+        max-width: 320px; 
+        margin-left: auto; 
+        margin-right: auto; 
+        gap: 10px; 
+    }
+    .entry-btn { 
+        width: 100% !important; 
+        height: 52px !important; 
+        font-size: 16px !important; 
+    }
 }
 
 
@@ -363,25 +487,24 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
 
 
 
-/* 🔝 탑 버튼 디자인 */
-#scrollTopBtn {
-    position: fixed;
-    bottom: 90px; 
-    right: 20px;
-    background: var(--dull-blue); 
-    color: white;
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    display: none; 
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-    z-index: 9999;
-}
-
+/* 🔝 탑 버튼 스타일 (화면 맨 우측 하단 고정) */
+        #scrollTopBtn {
+            position: fixed;
+            bottom: 25px;
+            right: 20px;
+            background: var(--dull-blue);
+            color: white;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            z-index: 9999;
+        }
 
 
 /* 📱 모바일(768px 이하)에서 로고와 마이페이지 한 줄 배치 */
@@ -439,21 +562,19 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
     
     <div class="main-content">
         <header class="sticky-header">
-            <div class="top-nav-container">
-                <div class="top-nav-row1">
-                    <div class="nav-brand" onclick="showEntryScreen()">
-                        <img src="Koboogy.png" alt="Logo" onerror="this.style.display='none'"> Koboogy
-                    </div>
-                    
-                    <div class="right-user" id="user-badge-area" style="display:none;" onclick="toggleMyPageView()">
-                        <span>🎓 <span id="welcome-username">유저</span> 코치님</span>
-                    </div>
+            <div class="top-nav-row">
+                <div class="nav-brand" onclick="showEntryScreen()">
+                    <img src="Koboogy.png" alt="Logo" onerror="this.style.display='none'"> Koboogy
                 </div>
                 
                 <div class="left-modes" id="top-left-modes" style="display:none;">
                     <button class="btn active" id="btn-study-mode" onclick="switchMainMode('study')" style="height:32px;">📖 학습 모드</button>
                     <button class="btn" id="btn-quiz-mode" onclick="switchMainMode('quiz')" style="height:32px;">🎙️ 툭탁 연습</button>
                     <button class="btn" id="btn-puzzle-mode" onclick="switchMainMode('puzzle')" style="height:32px;">🧩 문장 배열</button>
+                </div>
+                
+                <div class="right-user" id="user-badge-area" style="display:none;" onclick="toggleMyPageView()">
+                    <span>🎓 <span id="welcome-username">유저</span> 코치님</span>
                 </div>
             </div>
         </header>
@@ -581,7 +702,7 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
                     </div>
 
                     <div style="display: flex; gap: 10px; margin-top: 15px;">
-                        <button class="btn" onclick="toggleMyPageView()" style="height:40px; flex:1;">← 화면으로 돌아가기</button>
+                        <button class="btn" onclick="showEntryScreen()" style="height:40px; flex:1;">← 처음 화면으로 돌아가기</button>
                         <button class="btn" onclick="handleLogout()" style="height:40px; width: 100px; background:#f44336; color:white; border:none;">로그아웃</button>
                     </div>
                 </div>
@@ -789,6 +910,7 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
     document.getElementById('user-pw').addEventListener('keypress', e => { if (e.key === 'Enter') handleLoginSubmit(); });
     function handleLogout() { if(auth) auth.signOut().then(() => location.reload()); }
 
+    // 💡 첫 진입 화면 제어 (탑 버튼 완벽 숨김 + 최상단 스크롤 강제 적용)
     function showEntryScreen() {
         document.getElementById('top-left-modes').style.display = 'none'; 
         entryScreen.style.display = 'flex'; 
@@ -802,7 +924,20 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
         sidebar.style.display = 'none';
         document.body.classList.remove('quiz-mode-active');
         stopAll();
+
+        // 🔝 엔트리 화면 진입 시 탑 버튼 무조건 강제 숨김
+        const topBtn = document.getElementById('scrollTopBtn');
+        if (topBtn) topBtn.style.display = 'none';
+
+        // 💡 딜레이를 주어 화면 렌더링 후 스크롤을 무조건 0으로 끌어올림!
+        setTimeout(() => {
+            window.scrollTo(0, 0);
+            const scrollArea = document.getElementById('main-scroll-area');
+            if (scrollArea) scrollArea.scrollTop = 0;
+        }, 10);
     }
+
+
 
     function fetchUserProgressFromFirestore() {
         if (!currentUserUid || !db) return;
@@ -2169,30 +2304,36 @@ function playQuizSentence(s, e) {
     });
 
 // ==========================================
-// 🔝 탑 버튼 전용 스크롤 감지 및 이동 로직 (Koboogy 맞춤형 + 타이밍 해결)
+// 🔝 탑 버튼 전용 스크롤 감지 로직 (하단 노출 제어)
 // ==========================================
 window.addEventListener('DOMContentLoaded', function() {
     const mainScrollArea = document.getElementById('main-scroll-area');
     const topBtn = document.getElementById('scrollTopBtn');
+    const entryScreen = document.getElementById('entry-screen');
+    const mypageArea = document.getElementById('mypage-area');
 
     if (mainScrollArea && topBtn) {
-        // 1. 진짜 스크롤이 일어나는 'main-scroll-area'만 정확히 감지!
         mainScrollArea.addEventListener('scroll', function() {
-            // 화면 절반 이상 내려가면 버튼 보이기
-            if (mainScrollArea.scrollTop > mainScrollArea.clientHeight / 2) {
+            // 엔트리 화면이나 마이페이지 화면일 때는 탑 버튼 작동 금지!
+            if ((entryScreen && entryScreen.style.display !== 'none') || 
+                (mypageArea && mypageArea.style.display !== 'none')) {
+                topBtn.style.display = 'none';
+                return;
+            }
+            
+            // 실제 학습 화면에서 200px 이상 내려갔을 때만 우측 하단에 노출
+            if (mainScrollArea.scrollTop > 200) {
                 topBtn.style.display = 'flex';
             } else {
                 topBtn.style.display = 'none';
             }
         });
 
-        // 2. 버튼 클릭 시 해당 구역을 맨 위로 쓩! 
         topBtn.addEventListener('click', function() {
             mainScrollArea.scrollTo({ top: 0, behavior: 'smooth' });
         });
     }
 });
-
 
 </script>
 
