@@ -398,6 +398,21 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
             z-index: 3;
         }
 
+/* 🛒 줍줍(장바구니) 버튼 스타일 */
+        .jub-btn {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            opacity: 0.25;
+            transition: 0.2s;
+            padding: 4px;
+            flex-shrink: 0;
+            filter: grayscale(100%);
+        }
+        .jub-btn:hover { transform: scale(1.15); opacity: 0.6; }
+        .jub-btn.active { opacity: 1; filter: grayscale(0%); transform: scale(1.1); }
+
 
 
 
@@ -724,26 +739,28 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
 
                 <div id="quiz-setup-area">
                     <h2 class="section-title" id="setup-title">🎯 연습 세팅</h2>
-                    <div class="quiz-setup-box">
-                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; flex-wrap:wrap; gap:10px;">
-                            <h4 style="margin:0;">1. 학습할 파트를 선택하세요</h4>
-                            <div style="display:flex; gap: 12px; align-items: center; flex-wrap: wrap;">
-                                <label style="cursor:pointer; font-size:13px; font-weight:bold; color:var(--text); display:flex; align-items:center; gap:4px;">
+                    <div class="quiz-setup-box" style="padding: 15px 20px;"> <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap:wrap; gap:10px;">
+                            <h4 style="margin:0; font-size: 15px;">1. 학습할 파트를 선택하세요</h4>
+                            <div style="display:flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                                <label style="cursor:pointer; font-size:12px; font-weight:bold; color:var(--text); display:flex; align-items:center; gap:3px;">
                                     <input type="checkbox" id="chk-all-modes" onclick="toggleQuizTypeGroup('all')" checked style="cursor:pointer;"> 전체
                                 </label>
-                                <label style="cursor:pointer; font-size:13px; font-weight:bold; color:var(--text); display:flex; align-items:center; gap:4px;">
+                                <label style="cursor:pointer; font-size:12px; font-weight:bold; color:var(--text); display:flex; align-items:center; gap:3px;">
                                     <input type="checkbox" id="chk-ms-modes" onclick="toggleQuizTypeGroup('ms')" checked style="cursor:pointer;"> MS
                                 </label>
-                                <label style="cursor:pointer; font-size:13px; font-weight:bold; color:var(--text); display:flex; align-items:center; gap:4px;">
+                                <label style="cursor:pointer; font-size:12px; font-weight:bold; color:var(--text); display:flex; align-items:center; gap:3px;">
                                     <input type="checkbox" id="chk-rc-modes" onclick="toggleQuizTypeGroup('rc')" checked style="cursor:pointer;"> RC
                                 </label>
-                                <label style="cursor:pointer; font-size:13px; font-weight:bold; color:var(--text); display:flex; align-items:center; gap:4px;">
+                                <label style="cursor:pointer; font-size:12px; font-weight:bold; color:var(--text); display:flex; align-items:center; gap:3px;">
                                     <input type="checkbox" id="chk-gf-modes" onclick="toggleQuizTypeGroup('gf')" checked style="cursor:pointer;"> GF
+                                </label>
+                                <label style="cursor:pointer; font-size:12px; font-weight:bold; color:var(--text); display:flex; align-items:center; gap:3px;">
+                                    <input type="checkbox" id="chk-jub-modes" onclick="toggleQuizTypeGroup('jub')" checked style="cursor:pointer;"> 🛒 줍줍
                                 </label>
                             </div>
                         </div>
                         
-                        <div class="quiz-type-filters" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 30px;">
+                        <div class="quiz-type-filters" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 20px;">
                             <button class="filter-btn active" id="f-mystory" onclick="toggleQuizTypeMulti('mystory')">MS 본문</button>
                             <button class="filter-btn active" id="f-useful_mystory" onclick="toggleQuizTypeMulti('useful_mystory')">MS UE</button>
                             <button class="filter-btn active" id="f-live_mystory" onclick="toggleQuizTypeMulti('live_mystory')">MS Live</button>
@@ -751,21 +768,23 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
                             <button class="filter-btn active" id="f-useful_realconvo" onclick="toggleQuizTypeMulti('useful_realconvo')">RC UE</button>
                             <button class="filter-btn active" id="f-live_realconvo" onclick="toggleQuizTypeMulti('live_realconvo')">RC Live</button>
                             <button class="filter-btn active" id="f-grammar" onclick="toggleQuizTypeMulti('grammar')">Grammar</button>
+                            <button class="filter-btn active" id="f-jubjub" onclick="toggleQuizTypeMulti('jubjub')">🛒 줍줍문장</button>
                         </div>
                         
-                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
-                            <h4 style="margin:0;">2. 학습할 챕터를 선택하세요</h4>
-                            <label style="cursor:pointer; font-size:13px; font-weight:bold; color:var(--text); display:flex; align-items:center; gap:6px;">
-                                <input type="checkbox" id="chk-all-chapters" onclick="toggleAllChapters()" style="width:16px; height:16px; cursor:pointer;"> 전체
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                            <h4 style="margin:0; font-size: 15px;">2. 학습할 챕터를 선택하세요</h4>
+                            <label style="cursor:pointer; font-size:12px; font-weight:bold; color:var(--text); display:flex; align-items:center; gap:6px;">
+                                <input type="checkbox" id="chk-all-chapters" onclick="toggleAllChapters()" style="width:15px; height:15px; cursor:pointer;"> 전체
                             </label>
                         </div>
-                        <div class="chapter-grid" id="quiz-chapter-grid"></div>
+                        <div class="chapter-grid" id="quiz-chapter-grid" style="margin-bottom: 15px;"></div>
                         
-                        <button class="login-btn" id="start-action-btn" onclick="startSelectedMode()" style="width:100%; height:54px; margin-top:20px; font-size:18px;">🚀 시작하기</button>
+                        <button class="login-btn" id="start-action-btn" onclick="startSelectedMode()" style="width:100%; height:48px; font-size:16px; margin-top:0;">🚀 시작하기</button>
                     </div>
-
-
                 </div>
+
+
+
 
                 <div id="quiz-play-area">
                     <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 640px; margin: 0 auto 15px auto;">
@@ -1010,9 +1029,7 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
     }
 
     // 💡 마이페이지 통계 UI 실시간 업데이트 함수
-    // 💡 마이페이지 통계 UI 실시간 업데이트 함수
     function updateMyPageStatisticsUI() {
-        // 전체 통계 카운터
         let qTg = 0, qBr = 0, qBb = 0, qBg = 0;
         let pPass = 0, pFail = 0;
 
@@ -1022,56 +1039,67 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
 
         const isPuzzleTab = (currentMypageTab === 'puzzle');
 
+        // 🛒 줍줍문장 통계 변수 (독립 카운터)
+        let jubTotal = 0, jubTg = 0, jubBr = 0, jubBb = 0, jubBg = 0;
+        let jubPPass = 0, jubPFail = 0;
+
+        // 💡 챕터별 HTML을 담아둘 배열
+        let chapterHtmlArr = [];
+
+        // 데이터 전체를 순회하며 글로벌/챕터/줍줍 통계를 한 번에 계산 (동기화 100%)
         Object.keys(studyData).sort().forEach(wk => {
             const cData = studyData[wk];
-            let cTotal = 0, cTg = 0, cBr = 0, cBb = 0, cBg = 0; // 챕터 리스트용 카운터
+            let cTotal = 0, cTg = 0, cBr = 0, cBb = 0, cBg = 0;
+            let cPPass = 0, cPFail = 0;
 
             const allTypes = ['mystory', 'useful_mystory', 'live_mystory', 'grammar', 'realconvo', 'useful_realconvo', 'live_realconvo'];
             allTypes.forEach(t => {
                 if (cData[t]) {
                     const items = t.includes('realconvo') && cData[t].chat ? cData[t].chat : (cData[t].sentences || []);
-                    if (isPuzzleTab) {
-                        cTotal += items.filter(i => i.chunks && i.chunks.length > 0).length;
-                    } else {
-                        cTotal += items.length;
-                    }
+                    items.forEach((item, idx) => {
+                        const isJub = userProgressCache[`jub_${wk}_${t}_${idx}`] === true;
+                        const progKey = isPuzzleTab ? `puzzle_${wk}_${t}_${idx}` : `${wk}_${t}_${idx}`;
+                        const status = userProgressCache[progKey];
+
+                        // 퍼즐 모드일 경우 영어 청크가 있는 문장만 카운트
+                        let isValidItem = false;
+                        if (isPuzzleTab) {
+                            if (item.chunks && item.chunks.length > 0) isValidItem = true;
+                        } else {
+                            isValidItem = true;
+                        }
+
+                        if (isValidItem) {
+                            // 1. 해당 챕터(cTotal)에 무조건 합산 (어디서 훈련하든 동기화)
+                            cTotal++;
+                            
+                            // 2. 줍줍(isJub)인 경우 줍줍 카운터(jubTotal)에도 동시 합산
+                            if (isJub) jubTotal++;
+
+                            // 3. 성취도(Status) 업데이트
+                            if (isPuzzleTab) {
+                                if (status === '통과') { pPass++; cPPass++; if (isJub) jubPPass++; }
+                                if (status === '불가') { pFail++; cPFail++; if (isJub) jubPFail++; }
+                            } else {
+                                if (status === '통과') { qTg++; cTg++; if (isJub) jubTg++; }
+                                if (status === '발음') { qBr++; cBr++; if (isJub) jubBr++; }
+                                if (status === '버벅') { qBb++; cBb++; if (isJub) jubBb++; }
+                                if (status === '불가') { qBg++; cBg++; if (isJub) jubBg++; }
+                            }
+                        }
+                    });
                 }
             });
 
-            // 전체 및 챕터별 카운팅
-            Object.keys(userProgressCache).forEach(key => {
-                const s = userProgressCache[key];
-                if (key.startsWith(`puzzle_${wk}_`)) {
-                    if (s === '통과') pPass++;
-                    if (s === '불가') pFail++;
-                    if (isPuzzleTab) {
-                        if (s === '통과') cTg++;
-                        if (s === '불가') cBg++;
-                    }
-                } else if (key.startsWith(`${wk}_`)) {
-                    if (s === '통과') qTg++;
-                    if (s === '발음') qBr++;
-                    if (s === '버벅') qBb++;
-                    if (s === '불가') qBg++;
-                    if (!isPuzzleTab) {
-                        if (s === '통과') cTg++;
-                        if (s === '발음') cBr++;
-                        if (s === '버벅') cBb++;
-                        if (s === '불가') cBg++;
-                    }
-                }
-            });
-
-            const completed = cTg + (isPuzzleTab ? 0 : cBr); 
+            // --- 챕터별 세부 통계 카드 HTML 생성 ---
+            const completed = isPuzzleTab ? cPPass : (cTg + cBr); 
             const rate = cTotal === 0 ? 0 : Math.round((completed / cTotal) * 100);
 
-            // 💡 탭에 따라 우측 현황판 HTML 분기 (태그 구조화)
-            // 💡 탭에 따라 우측 현황판 HTML 분기
             let chRightHtml = '';
             if (isPuzzleTab) {
                 chRightHtml = `
-                    <span class="stat-click-btn" style="color:var(--pastel-blue-text); background:#e3f2fd;" onclick="startChapterBurningMode('${wk}', '통과', 'puzzle')"><i>Pass</i> <b>${cTg}</b></span>
-                    <span class="stat-click-btn" style="color:#e53935; background:#ffebee;" onclick="startChapterBurningMode('${wk}', '불가', 'puzzle')"><i>Fail</i> <b>${cBg}</b></span>
+                    <span class="stat-click-btn" style="color:var(--pastel-blue-text); background:#e3f2fd;" onclick="startChapterBurningMode('${wk}', '통과', 'puzzle')"><i>Pass</i> <b>${cPPass}</b></span>
+                    <span class="stat-click-btn" style="color:#e53935; background:#ffebee;" onclick="startChapterBurningMode('${wk}', '불가', 'puzzle')"><i>Fail</i> <b>${cPFail}</b></span>
                 `;
             } else {
                 chRightHtml = `
@@ -1082,8 +1110,7 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
                 `;
             }
 
-            // 💡 [핵심] 챕터명 1줄, 퍼센트+버튼을 같은 줄(stretch)에 묶는 완벽한 구조!
-            const html = `
+            const chapterHtml = `
                 <div class="chapter-stat-item">
                     <div class="ch-title-row" onclick="startDirectChapterQuiz('${wk}', '${isPuzzleTab ? 'puzzle' : 'quiz'}')">
                         Chapter ${wk}
@@ -1099,9 +1126,50 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
                     </div>
                 </div>
             `;
-            chapterListContainer.insertAdjacentHTML('beforeend', html);
+            chapterHtmlArr.push(chapterHtml);
         });
 
+        // --- 🛒 줍줍문장 통계 카드 HTML 생성 (테두리 스타일 통일) ---
+        const jubCompleted = isPuzzleTab ? jubPPass : (jubTg + jubBr);
+        const jubRate = jubTotal === 0 ? 0 : Math.round((jubCompleted / jubTotal) * 100);
+
+        let jubRightHtml = '';
+        if (isPuzzleTab) {
+            jubRightHtml = `
+                <span class="stat-click-btn" style="color:var(--pastel-blue-text); background:#e3f2fd;" onclick="startJubJubBurningMode('통과', 'puzzle')"><i>Pass</i> <b>${jubPPass}</b></span>
+                <span class="stat-click-btn" style="color:#e53935; background:#ffebee;" onclick="startJubJubBurningMode('불가', 'puzzle')"><i>Fail</i> <b>${jubPFail}</b></span>
+            `;
+        } else {
+            jubRightHtml = `
+                <span class="stat-click-btn" style="color:var(--color-tg);" onclick="startJubJubBurningMode('통과', 'quiz')"><i>🔵</i> <b>${jubTg}</b></span>
+                <span class="stat-click-btn" style="color:var(--color-br);" onclick="startJubJubBurningMode('발음', 'quiz')"><i>🟢</i> <b>${jubBr}</b></span>
+                <span class="stat-click-btn" style="color:var(--color-bb);" onclick="startJubJubBurningMode('버벅', 'quiz')"><i>🟡</i> <b>${jubBb}</b></span>
+                <span class="stat-click-btn" style="color:var(--color-bg);" onclick="startJubJubBurningMode('불가', 'quiz')"><i>🔴</i> <b>${jubBg}</b></span>
+            `;
+        }
+
+        const jubCardHtml = `
+            <div class="chapter-stat-item" style="background: #fffde7;"> <!-- 💡 은은한 연노랑색으로 배경만 변경! -->
+                <div class="ch-title-row" onclick="startDirectJubJubQuiz('${isPuzzleTab ? 'puzzle' : 'quiz'}')">
+                    🛒 줍줍문장 모음
+                </div>
+                <div class="ch-main-row">
+                    <div class="ch-rate-box" style="background:#f3e5f5; color:#6a1b9a;" onclick="startDirectJubJubQuiz('${isPuzzleTab ? 'puzzle' : 'quiz'}')">
+                        <span class="rate-val">${jubRate}%</span>
+                        <span class="rate-count">(${jubCompleted} / ${jubTotal})</span>
+                    </div>
+                    <div class="ch-right">
+                        ${jubRightHtml}
+                    </div>
+                </div>
+            </div>
+        `;
+
+
+        // 💡 줍줍 카드를 맨 위에 렌더링하고, 그 밑에 챕터 목록 렌더링
+        chapterListContainer.innerHTML = jubCardHtml + chapterHtmlArr.join('');
+
+        // --- 📊 전체 성취도 카운터 업데이트 (순수 카운트 값만 반영, 중복 해결) ---
         document.getElementById('stat-tg').innerText = qTg; 
         document.getElementById('stat-br').innerText = qBr; 
         document.getElementById('stat-bb').innerText = qBb; 
@@ -1109,6 +1177,7 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
         document.getElementById('stat-puzzle-pass').innerText = pPass;
         document.getElementById('stat-puzzle-fail').innerText = pFail;
     }
+
 
     // 💡 지워졌던 비밀번호 변경 함수 복구!
     function handleChangePassword() {
@@ -1366,6 +1435,8 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
                 // 2. 해당 그룹 예문들 렌더링
                 groupedMap[groupName].forEach(obj => {
                     const item = obj.item;
+                    const isJub = userProgressCache[`jub_${wk}_${type}_${obj.idx}`] === true;
+                    const jubBtn = `<button class="jub-btn ${isJub?'active':''}" onclick="event.stopPropagation(); toggleJub('${wk}','${type}',${obj.idx},this)">🛒</button>`;
                     const chunks = item.chunks ? item.chunks.map(c => `<span class="chunk" ${hasAudio ? `data-s="${c.s || 0}" data-e="${c.e || 0}"` : ''}>${c.text}</span>`).join('') : '';
                     const content = `
                         <div class="text-content">
@@ -1374,7 +1445,7 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
                             ${item.trans ? `<div class="trans-text">${item.trans}</div>` : ''}
                         </div>`;
                         
-                    html += `<div class="card ${hasAudio ? '' : 'no-audio'}" ${hasAudio ? `data-start="${item.start || 0}" data-end="${item.end || 0}"` : ''} style="${hasAudio ? '' : 'cursor:default;'}"><div class="card-main-row">${hasAudio ? '<div class="play-btn"></div>' : ''}${content}</div></div>`;
+                    html += `<div class="card ${hasAudio ? '' : 'no-audio'}" ${hasAudio ? `data-start="${item.start || 0}" data-end="${item.end || 0}"` : ''} style="${hasAudio ? '' : 'cursor:default;'}"><div class="card-main-row">${hasAudio ? '<div class="play-btn"></div>' : ''}${content}${jubBtn}</div></div>`;
                 });
             });
 
@@ -1421,22 +1492,23 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
 
     // 화면의 버튼 상태(색상) & 4개의 그룹 체크박스를 동기화해주는 함수
     function syncTypeButtons() {
-        const allTypes = ['mystory', 'useful_mystory', 'live_mystory', 'grammar', 'realconvo', 'useful_realconvo', 'live_realconvo'];
+        const allTypes = ['mystory', 'useful_mystory', 'live_mystory', 'grammar', 'realconvo', 'useful_realconvo', 'live_realconvo', 'jubjub'];
         allTypes.forEach(t => {
             const btn = document.getElementById(`f-${t}`);
             if (btn) btn.classList.toggle('active', activeQuizTypes.includes(t));
         });
         
-        // 4개의 체크박스 켜고 끄기 상태 계산
         const msAll = ['mystory', 'useful_mystory', 'live_mystory'].every(t => activeQuizTypes.includes(t));
         const rcAll = ['realconvo', 'useful_realconvo', 'live_realconvo'].every(t => activeQuizTypes.includes(t));
         const gfAll = activeQuizTypes.includes('grammar');
-        const isAll = activeQuizTypes.length === 7;
+        const jubAll = activeQuizTypes.includes('jubjub');
+        const isAll = activeQuizTypes.length === 8;
 
         if (document.getElementById('chk-all-modes')) document.getElementById('chk-all-modes').checked = isAll;
         if (document.getElementById('chk-ms-modes')) document.getElementById('chk-ms-modes').checked = msAll;
         if (document.getElementById('chk-rc-modes')) document.getElementById('chk-rc-modes').checked = rcAll;
         if (document.getElementById('chk-gf-modes')) document.getElementById('chk-gf-modes').checked = gfAll;
+        if (document.getElementById('chk-jub-modes')) document.getElementById('chk-jub-modes').checked = jubAll;
     }
 
     // 💡 개별 파트 버튼 (MS본문, RC Live 등) 클릭 시
@@ -1457,7 +1529,7 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
         if (group === 'all') {
             const chkAll = document.getElementById('chk-all-modes');
             if (chkAll.checked) {
-                activeQuizTypes = ['mystory', 'useful_mystory', 'live_mystory', 'grammar', 'realconvo', 'useful_realconvo', 'live_realconvo'];
+                activeQuizTypes = ['mystory', 'useful_mystory', 'live_mystory', 'grammar', 'realconvo', 'useful_realconvo', 'live_realconvo', 'jubjub'];
             } else {
                 activeQuizTypes = [];
             }
@@ -1481,6 +1553,13 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
                 if (!activeQuizTypes.includes('grammar')) activeQuizTypes.push('grammar');
             } else {
                 activeQuizTypes = activeQuizTypes.filter(t => t !== 'grammar');
+            }
+        } else if (group === 'jub') {
+            const chkJub = document.getElementById('chk-jub-modes');
+            if (chkJub.checked) {
+                if (!activeQuizTypes.includes('jubjub')) activeQuizTypes.push('jubjub');
+            } else {
+                activeQuizTypes = activeQuizTypes.filter(t => t !== 'jubjub');
             }
         }
         syncTypeButtons();
@@ -1536,7 +1615,7 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
                 cData.live_mystory.sentences.forEach((s, i) => fullQuizPool.push({ wk, type: 'live_mystory', typeBadge: 'MS Live', idx: i, data: s, audio: cData.live_mystory.audio }));
             }
             
-            // 💡 Grammar (문법) 계열 추가! 뱃지 이름은 'GR'
+            // 💡 Grammar (문법) 계열
             if (activeQuizTypes.includes('grammar') && cData.grammar) {
                 cData.grammar.sentences.forEach((s, i) => fullQuizPool.push({ wk, type: 'grammar', typeBadge: 'GR', idx: i, data: s, audio: cData.grammar.audio }));
             }
@@ -1551,9 +1630,24 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
             if (activeQuizTypes.includes('live_realconvo') && cData.live_realconvo) {
                 cData.live_realconvo.sentences.forEach((s, i) => fullQuizPool.push({ wk, type: 'live_realconvo', typeBadge: 'RC Live', idx: i, data: s, audio: cData.live_realconvo.audio }));
             }
+
+            // 💡 [여기에 추가!] 줍줍문장('jubjub')이 활성화되어 있고, 이 문장에 jub_ 키가 true인 경우만 풀에 담기
+            if (activeQuizTypes.includes('jubjub')) {
+                const allTypes = ['mystory', 'useful_mystory', 'live_mystory', 'grammar', 'realconvo', 'useful_realconvo', 'live_realconvo'];
+                allTypes.forEach(t => {
+                    if (cData[t]) {
+                        const items = t.includes('realconvo') && cData[t].chat ? cData[t].chat : (cData[t].sentences || []);
+                        items.forEach((s, i) => {
+                            const checkJubKey = `jub_${wk}_${t}_${i}`;
+                            if (userProgressCache[checkJubKey] === true) {
+                                fullQuizPool.push({ wk, type: t, typeBadge: `🛒 CH ${wk}`, idx: i, data: s, audio: cData[t].audio || "" });
+                            }
+                        });
+                    }
+                });
+            }
         });
     }
-
 
 
 
@@ -1722,6 +1816,61 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
     }
 
 
+
+// 💡 줍줍 문장 저장/해제 함수 (클라우드 즉시 연동)
+    function toggleJub(wk, type, idx, btnEl) {
+        if (!currentUserUid || !db) return;
+        const key = `jub_${wk}_${type}_${idx}`;
+        const current = userProgressCache[key] || false;
+        const newState = !current;
+        
+        userProgressCache[key] = newState;
+        if (newState) btnEl.classList.add('active');
+        else btnEl.classList.remove('active');
+        
+        db.collection("users").doc(currentUserUid).collection("data").doc("progress").set({ [key]: newState }, { merge: true })
+            .catch((error) => console.error("줍줍 저장 에러:", error));
+    }
+
+
+// 💡 줍줍 단독 직행 연습
+    function startDirectJubJubQuiz(mode = 'quiz') {
+        activeQuizChapters = Object.keys(studyData);
+        activeQuizTypes = ['jubjub'];
+        isBurningMode = false;
+        switchMainMode(mode);
+        if(mode === 'quiz') startQuizPool();
+        else startPuzzlePool();
+    }
+
+    // 💡 줍줍 전용 성취도별 버닝모드 진입
+    function startJubJubBurningMode(status, mode = 'quiz') {
+        activeQuizChapters = Object.keys(studyData);
+        activeQuizTypes = ['jubjub'];
+        isBurningMode = true;
+        activeBurningFilters = [status];
+        
+        switchMainMode(mode);
+        buildFullQuizPool(); 
+        
+        if (mode === 'quiz') {
+            document.getElementById('btn-burning-mode').classList.add('active');
+            document.getElementById('burning-mode-dashboard').style.display = 'block';
+            syncBurningFilterUI();
+        }
+        
+        applyBurningFilters(mode);
+        
+        document.getElementById('quiz-setup-area').style.display = 'none';
+        if(mode === 'quiz') document.getElementById('quiz-play-area').style.display = 'block';
+        else document.getElementById('puzzle-play-area').style.display = 'block';
+
+        setTimeout(() => {
+            window.scrollTo(0, 0);
+            const scrollArea = document.getElementById('main-scroll-area');
+            if (scrollArea) scrollArea.scrollTop = 0;
+        }, 10);
+    }
 
 
 
