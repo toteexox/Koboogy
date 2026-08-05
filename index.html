@@ -401,53 +401,61 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
 
 
 
-/* 📱 모바일 (768px 이하) 전용 대응 */
+/* 📱 모바일 (768px 이하) 전용 대응 종합판 */
 @media (max-width: 768px) { 
+    /* 사이드바 */
     .sidebar { position: fixed; left: -280px; height: 100%; z-index: 1001; } 
     .sidebar.open { left: 0; display: block !important; } 
 
-    /* 💡 [요청] 헤더 1줄: 로고/마이페이지, 2줄: 모드 선택 (강제 줄바꿈 적용) */
+    /* 헤더 1줄: 로고/마이페이지, 2줄: 모드 선택 */
     .top-nav-row { 
         display: flex !important; 
-        flex-wrap: wrap !important; /* 줄바꿈 허용 */
+        flex-wrap: wrap !important;
         justify-content: space-between !important; 
         align-items: center !important; 
-        padding: 0 14px !important;
+        padding: 0 10px;
     }
-    .nav-brand { 
-        order: 1; 
-        flex: 0 0 auto !important; /* 찌그러짐 방지 */
-        font-size: 18px !important; 
-    } 
-    .right-user { 
-        order: 2; 
-        flex: 0 0 auto !important; /* 찌그러짐 방지 */
-        font-size: 13px !important; 
-        margin: 0 !important; 
-    }
-    .left-modes { 
-        order: 3; 
-        flex: 0 0 100% !important; /* 💡 핵심: 무조건 가로 100%를 차지하게 만들어 2번째 줄로 쫓아냄! */
-        justify-content: flex-start !important; 
-        gap: 6px !important; 
-        margin-top: 12px !important; 
-    }
-    .left-modes .btn { padding: 6px 4px !important; font-size: 12px !important; flex: 1; text-align: center; }
+    .nav-brand { order: 1; width: auto !important; margin-bottom: 0 !important; font-size: 17px !important; } 
+    .right-user { order: 2; width: auto !important; font-size: 12px !important; margin: 0 !important; flex-shrink: 0; }
+    .left-modes { order: 3; width: 100%; justify-content: flex-start; gap: 4px; margin-top: 8px; }
+    .left-modes .btn { padding: 4px 6px; font-size: 11px; flex: 1; text-align: center; }
 
-
-    /* 💡 컨트롤 바 (모바일: 강제로 2줄 세로 배치!) */
+    /* 💡 [핵심] 컨트롤 바 2줄 완벽 고정 및 슬림화! */
     .gray-header.practice-bar-section { position: sticky; top: 78px; z-index: 98; padding: 8px 0; }
-    .practice-bar-stacked { flex-direction: column !important; align-items: flex-start !important; gap: 10px !important; }
-    .practice-row1 { flex-wrap: wrap !important; gap: 8px !important; }
-    .practice-row2 { flex-wrap: wrap !important; gap: 8px !important; }
+    .practice-bar-stacked { width: 100%; display: flex; flex-direction: column !important; align-items: center !important; gap: 8px !important; }
+    
+    /* 절대 줄바꿈 되지 않고 양끝으로 예쁘게 퍼지도록 설정 */
+    .practice-row1, .practice-row2 { 
+        width: 100%; 
+        display: flex !important; 
+        flex-wrap: nowrap !important; /* 강제 줄바꿈 금지 */
+        justify-content: space-between !important; /* 간격 균등 분배 */
+        align-items: center !important; 
+        gap: 4px !important; 
+        overflow-x: auto; /* 만약 너무 좁으면 가로 스크롤 허용 */
+    }
+    .practice-row1::-webkit-scrollbar, .practice-row2::-webkit-scrollbar { display: none; }
+
+    /* 토글 스위치 모바일 전용 다이어트 (슬림 사이즈) */
+    .switch-box { gap: 4px !important; font-size: 12px !important; }
+    .shadow-toggle-wrapper { width: 94px !important; height: 26px !important; }
+    .shadow-toggle-slider { width: 44px !important; height: 22px !important; }
+    .shadow-toggle-wrapper.active .shadow-toggle-slider { transform: translateX(46px) !important; }
+    .shadow-toggle-text { font-size: 10.5px !important; }
+
+    /* 반복 & 배속 버튼 슬림화 */
+    #repeat-count { height: 24px !important; font-size: 12px !important; padding: 0 2px !important; }
+    .speed-controls-row .btn { font-size: 11px !important; padding: 2px 4px !important; height: 24px !important; }
 
 
+    /* 전체 성취도 4열 유지 */
     .stats-grid { grid-template-columns: repeat(4, 1fr); gap: 6px; }
     .stat-box { padding: 8px 2px; font-size: 11px; letter-spacing: -0.5px; }
     
     .quiz-type-filters { grid-template-columns: repeat(3, 1fr) !important; }
     .chapter-grid { grid-template-columns: repeat(3, 1fr) !important; }
 
+    /* 모바일 세부 성취도 버튼 높이 맞춤 */
     .chapter-stat-item { padding: 12px; gap: 8px; }
     .ch-title-row { font-size: 15px; }
     .ch-main-row { gap: 8px; }
@@ -460,6 +468,7 @@ body:not(.hide-details).lang-ko .card.details-off .ipa-text { display: none !imp
     .ch-right span.stat-click-btn { padding: 6px 0; }
     .ch-right span.stat-click-btn i { font-size: 13px; margin-bottom: 2px; }
     .ch-right span.stat-click-btn b { font-size: 14px; }
+}
 
     /* 💡 진입 화면 모드 선택 버튼 모바일 최적화 (세로 3줄) */
     .entry-btn-wrap { 
