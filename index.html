@@ -471,7 +471,7 @@
         .card-with-jub .chat-main-wrapper { width: 100%; flex: 1; }
         
         .jub-side-btn {
-            width: 52px; background: #fff; border: 2px solid #ddd; border-radius: 12px;
+            width: 42px; background: #fff; border: 2px solid #ddd; border-radius: 12px;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             cursor: pointer; transition: 0.2s; box-shadow: 0 1px 2px rgba(0,0,0,0.05);
             filter: grayscale(100%); opacity: 0.5; flex-shrink: 0;
@@ -654,6 +654,10 @@
             .ch-right span.stat-click-btn { padding: 6px 0; }
             .ch-right span.stat-click-btn i { font-size: 13px; margin-bottom: 2px; }
             .ch-right span.stat-click-btn b { font-size: 14px; }
+            
+            .card { padding: 12px 8px !important; }
+            .card-main-row { gap: 4px !important; }
+            .play-btn { width: 30px !important; height: 30px !important; margin-top: 2px !important; }
 
             /* --- 6. 기타 요소 --- */
             .entry-btn-wrap { flex-direction: column !important; max-width: 320px; margin: 20px auto 0 auto !important; gap: 10px; }
@@ -2356,7 +2360,26 @@ function playQuizSentence(s, e) {
 }
     
     function navigateQuiz(dir) {
+        // 💡 [요청 3] 성취도 체크를 안 하고 다음/이전으로 넘어가려고 하면 막기!
+        const wk = quizPool[currentQuizIndex].wk;
+        const type = quizPool[currentQuizIndex].type;
+        const idx = quizPool[currentQuizIndex].idx;
+        const progressKey = `${wk}_${type}_${idx}`;
+        
+        // 뒤로 갈 때는 자유롭게 허용, 앞으로(dir > 0) 갈 때는 체크 여부 검사
+        if (dir > 0 && !userProgressCache[progressKey]) {
+            alert("🎯 성취도를 먼저 체크해 주세요!");
+            return;
+        }
+
+        // 💡 [요청 1] 카드가 넘어갈 때 원어민 오디오 및 내 녹음 플레이어 강제 정지!
         stopAll();
+        const recordPlayer = document.getElementById('record-player');
+        if (recordPlayer) {
+            recordPlayer.pause();
+            recordPlayer.currentTime = 0;
+        }
+
         if (isRandomQuiz && quizPool.length > 1) {
             let nextIndex = currentQuizIndex;
             while(nextIndex === currentQuizIndex) {
@@ -2366,7 +2389,6 @@ function playQuizSentence(s, e) {
         } else {
             currentQuizIndex += dir;
         }
-        // 💡 카드를 넘길 때 recordedAudioUrl = null; 로 다 날려버리던 코드 삭제!
         renderQuizCard();
     }
 
@@ -2403,11 +2425,20 @@ function playQuizSentence(s, e) {
     function playRecording() { 
         if (recordedAudioUrl) { 
             const recordPlayer = document.getElementById('record-player');
+            const playBtn = document.getElementById('play-record-btn');
+
             if (!recordPlayer.paused) {
                 recordPlayer.pause();
+                if (playBtn) playBtn.style.background = ''; // 원래 색으로 복구
             } else {
                 recordPlayer.currentTime = 0; 
                 recordPlayer.play(); 
+                if (playBtn) playBtn.style.background = '#a8e6cf'; // 💡 [요청 2] 재생 중일 때 상큼한 초록색으로 변경!
+                
+                // 재생이 끝나면 자동으로 초록색 불이 꺼지도록 이벤트 연결
+                recordPlayer.onended = () => {
+                    if (playBtn) playBtn.style.background = '';
+                };
             }
         } 
     }
@@ -2419,7 +2450,16 @@ function playQuizSentence(s, e) {
             if (b === btnEl) b.classList.remove('disabled-gray');
             else b.classList.add('disabled-gray');
         });
+
+        // 💡 [센스 만점 추가 기능] 성취도를 누르는 순간 자동으로 다음 카드로 슝~ 넘어가면 훨씬 편하겠지?!
+        setTimeout(() => {
+            if (currentQuizIndex < quizPool.length - 1) {
+                navigateQuiz(1);
+            }
+        }, 250); // 0.25초 뒤 부드럽게 다음 카드로 이동
     }
+
+
 
     function scrollToActive(el) {
         if (!el) return;
@@ -2507,9 +2547,18 @@ function playQuizSentence(s, e) {
     function stopAll() {
         player.pause(); isAutoPlaying = false; stopTime = 0; clearTimeout(window.shadowTimer);
         statusIcon.innerText = "▶️";
+        
+        // 💡 내 녹음 플레이어와 초록색 불도 함께 확실하게 초기화
+        const recordPlayer = document.getElementById('record-player');
+        if (recordPlayer) recordPlayer.pause();
+        const playBtn = document.getElementById('play-record-btn');
+        if (playBtn) playBtn.style.background = '';
+
         if(document.getElementById('current-count')) document.getElementById('current-count').innerText = '';
         document.querySelectorAll('.playing, .active-play, .chunk.active').forEach(el => el.classList.remove('playing', 'active-play', 'active'));
     }
+
+
 
     player.addEventListener('timeupdate', () => {
         if (stopTime > 0 && player.currentTime >= stopTime) {
