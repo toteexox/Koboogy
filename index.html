@@ -528,14 +528,55 @@
         }
 
 
+        /* =======================================================
+           💻 PC (1025px 이상) 전용 사이드바 & 상단 헤더 레이아웃
+           ======================================================= */
+        @media (min-width: 1025px) {
+            .sticky-header {
+                position: fixed !important;
+                top: 0;
+                left: 0;
+                width: 100vw !important;
+                height: 54px !important;
+                z-index: 1000 !important;
+                display: flex;
+                align-items: center;
+            }
+
+            .sidebar {
+                margin-top: 54px !important;
+                height: calc(100vh - 54px) !important;
+                padding-top: 30px !important; /* 💡 PC에서 메뉴 글씨 시작 위치 내리기 */
+            }
+
+            .main-content {
+                padding-top: 54px !important;
+            }
+
+            .gray-header.practice-bar-section {
+                top: 54px !important; 
+            }
+        }
 
 
         /* =======================================================
-           📱 모바일 (768px 이하) 전용 대응 종합판 (이거 하나면 끝!)
+           📱 모바일 (1024px 이하) 전용 대응 종합판 (이거 하나면 끝!)
            ======================================================= */
         @media (max-width: 1024px) { 
             /* --- 1. 사이드바 --- */
-            .sidebar { position: fixed; left: -280px; height: 100%; z-index: 1001; } 
+
+            .sticky-header {
+                z-index: 9999 !important;
+            }
+            .sidebar { 
+                position: fixed; 
+                top: 48px !important; 
+                left: -280px; 
+                height: calc(100vh - 48px) !important; 
+                z-index: 10000 !important; 
+                padding-top: 60px !important; 
+                
+            }
             .sidebar.open { left: 0; display: block !important; } 
 
             /* --- 2. 상단 하얀색 메뉴바 (1줄 로고, 2줄 탭) --- */
@@ -620,6 +661,12 @@
             .header { display: flex !important; justify-content: space-between !important; align-items: center !important; width: 100%; padding: 10px 15px; }
             .mypage-btn { position: static !important; margin: 0 !important; }
         }
+
+
+
+
+
+
     </style>
 </head>
 
@@ -1496,15 +1543,13 @@
         const data = studyData[wk]?.[type]; if (!data) return;
         
         document.querySelectorAll('.sub-item').forEach(s => s.classList.remove('active')); el.classList.add('active');
-        if (window.innerWidth <= 768) { sidebar.classList.remove('open'); sidebar.style.display = 'none'; }
+        if (window.innerWidth <= 1024) { sidebar.classList.remove('open'); sidebar.style.display = 'none'; }
         
         const hasAudio = !!(data.audio && data.audio.trim() !== "");
 
         let html = `<h2 class="section-title" onclick="toggleAutoPlayAll(this)"><span>${wk}</span>| ${data.title || type} ${hasAudio ? '' : '<span style="font-size:14px; color:#888; font-weight:normal;">(🔇 텍스트 전용 세션)</span>'}</h2>`;
         
         const items = type === 'realconvo' ? data.chat : data.sentences;
-
-        // 💡 [핵심] Useful / Live 등 그룹(group)이 있는 파트인지 확인
         const hasGroups = items && items.length > 0 && items[0].group !== undefined;
 
         if (hasGroups) {
@@ -1538,7 +1583,6 @@
                 groupedMap[groupName].forEach(obj => {
                     const item = obj.item;
                     const isJub = userProgressCache[`jub_${wk}_${type}_${obj.idx}`] === true;
-                    // 💡 우측 분리형 줍줍 버튼 디자인
                     const jubBtn = `
                     <div class="jub-side-btn ${isJub?'active':''}" onclick="event.stopPropagation(); toggleJub('${wk}','${type}',${obj.idx},this)">
                         <span class="jub-icon">🛒</span>
@@ -1553,19 +1597,20 @@
                             ${item.trans ? `<div class="trans-text">${item.trans}</div>` : ''}
                         </div>`;
                         
+                    // 💡 [핵심 수정] 카드(.card)에 data-start와 data-end 속성을 장착하여 오토플레이 인식 가능하게 만듦!
                     html += `
                     <div class="card-with-jub">
-                        <div class="card ${hasAudio ? '' : 'no-audio'}" ${hasAudio ? `data-start="${item.start || 0}" data-end="${item.end || 0}"` : ''} style="${hasAudio ? '' : 'cursor:default;'}"><div class="card-main-row">${hasAudio ? '<div class="play-btn"></div>' : ''}${content}</div></div>
+                        <div class="card ${hasAudio ? '' : 'no-audio'}" ${hasAudio ? `data-start="${item.start || 0}" data-end="${item.end || 0}"` : ''} style="${hasAudio ? '' : 'cursor:default;'}">
+                            <div class="card-main-row">${hasAudio ? '<div class="play-btn"></div>' : ''}${content}</div>
+                        </div>
                         ${jubBtn}
                     </div>`;
                 });
             });
 
         } else {
-            // 그룹이 없는 일반 세션 (My Story, Real Convo 등)
             items.forEach((item, idx) => {
                 const isJub = userProgressCache[`jub_${wk}_${type}_${idx}`] === true;
-                // 💡 우측 분리형 줍줍 버튼 디자인
                 const jubBtn = `
                 <div class="jub-side-btn ${isJub?'active':''}" onclick="event.stopPropagation(); toggleJub('${wk}','${type}',${idx},this)">
                     <span class="jub-icon">🛒</span>
@@ -1585,15 +1630,17 @@
                     <div class="chat-row ${hasAudio ? '' : 'no-audio'}" data-speaker="${item.speaker}" ${hasAudio ? `data-start="${item.start || 0}" data-end="${item.end || 0}"` : ''}>
                         <div class="chat-main-wrapper card-with-jub">
                             <div class="badge badge-${item.speaker}">${item.speaker}</div>
-                           
                             <div class="card" style="margin:0; ${hasAudio ? '' : 'cursor:default;'}"><div class="card-main-row">${content}</div></div>
                             ${jubBtn}
                         </div>
                     </div>`; 
                 } else {
+                    // 💡 [핵심 수정] 일반 세션(My Story, Grammar 등) 카드에도 data-start와 data-end 추가!
                     html += `
                     <div class="card-with-jub">
-                        <div class="card ${hasAudio ? '' : 'no-audio'}" ${hasAudio ? `data-start="${item.start || 0}" data-end="${item.end || 0}"` : ''} style="${hasAudio ? '' : 'cursor:default;'}"><div class="card-main-row">${hasAudio ? '<div class="play-btn"></div>' : ''}${content}</div></div>
+                        <div class="card ${hasAudio ? '' : 'no-audio'}" ${hasAudio ? `data-start="${item.start || 0}" data-end="${item.end || 0}"` : ''} style="${hasAudio ? '' : 'cursor:default;'}">
+                            <div class="card-main-row">${hasAudio ? '<div class="play-btn"></div>' : ''}${content}</div>
+                        </div>
                         ${jubBtn}
                     </div>`; 
                 }
@@ -2433,10 +2480,16 @@ function playQuizSentence(s, e) {
         if (isAutoPlaying) { stopAll(); } 
         else {
             stopAll(); isAutoPlaying = true; statusIcon.innerText = "⏸️";
-            const first = mainStudyContainer.querySelector('.card, .chat-row');
-            if (first) { first.classList.add('active-play', 'playing'); scrollToActive(first); playPart(parseFloat(first.dataset.start), parseFloat(first.dataset.end)); }
+            // 💡 껍데기에 상관없이 data-start 속성을 가진 첫 번째 요소를 찾도록 수정!
+            const first = mainStudyContainer.querySelector('[data-start]');
+            if (first) { 
+                first.classList.add('active-play', 'playing'); 
+                scrollToActive(first); 
+                playPart(parseFloat(first.dataset.start), parseFloat(first.dataset.end)); 
+            }
         }
     }
+
 
     function playPart(s, e) { 
         clearTimeout(window.shadowTimer); 
@@ -2492,13 +2545,27 @@ function playQuizSentence(s, e) {
     }
 
     function handleNext(el) {
-        const all = Array.from(mainStudyContainer.children).filter(c => c.classList.contains('card') || c.classList.contains('chat-row'));
-        const idx = all.indexOf(el); el.classList.remove('playing', 'active-play');
-        if (idx < all.length - 1) {
-            const next = all[idx+1]; next.classList.add('active-play'); scrollToActive(next);
-            window.shadowTimer = setTimeout(() => { next.classList.add('playing'); playPart(parseFloat(next.dataset.start), parseFloat(next.dataset.end)); }, 400);
-        } else { stopAll(); }
+        // 💡 직계 자식(children)만 찾던 방식에서, 화면 전체의 data-start 요소를 모두 수집하도록 수정!
+        const all = Array.from(mainStudyContainer.querySelectorAll('[data-start]'));
+        const idx = all.indexOf(el); 
+        
+        el.classList.remove('playing', 'active-play');
+        
+        // 다음 인덱스가 존재하면 재생, 끝이면 멈춤
+        if (idx > -1 && idx < all.length - 1) {
+            const next = all[idx+1]; 
+            next.classList.add('active-play'); 
+            scrollToActive(next);
+            window.shadowTimer = setTimeout(() => { 
+                next.classList.add('playing'); 
+                playPart(parseFloat(next.dataset.start), parseFloat(next.dataset.end)); 
+            }, 400);
+        } else { 
+            stopAll(); 
+        }
     }
+
+
 
     function setSpeed(s, btn) {
         player.playbackRate = s; 
@@ -2611,7 +2678,8 @@ loadSavedQuizSetup();
         const isMenuBtn = event.target.closest('.mobile-menu-btn') || 
                           (event.target.closest('.btn') && event.target.closest('.btn').getAttribute('onclick') === 'toggleSidebar()');
         
-        if (window.innerWidth <= 768 && sidebarEl.classList.contains('open')) {
+        if (window.innerWidth <= 1024 && sidebarEl.classList.contains('open')) {
+            // 💡 사이드바 영역 '바깥쪽(!contains)'을 클릭했을 때만 닫히도록 수정!
             if (!sidebarEl.contains(event.target) && !isMenuBtn) {
                 sidebarEl.classList.remove('open');
                 sidebarEl.style.display = 'none';
