@@ -1333,19 +1333,22 @@
         sidebar.classList.toggle('open');
     }
     
-    function toggleShadowModeUI() {
+   function toggleShadowModeUI() {
         const ui = document.getElementById('shadow-toggle-ui');
         const isActive = !ui.classList.contains('active');
         if (isActive) ui.classList.add('active'); else ui.classList.remove('active');
         syncSettings('shadow', isActive);
+        // 💡 섀도잉 설정 폰에 저장!
+        localStorage.setItem('koboogy_shadowing', isActive);
     }
 
     function toggleLangMode() {
         document.body.classList.toggle('lang-ko');
         document.getElementById('btn-lang-toggle').classList.toggle('active');
+        // 💡 한/영 설정 폰에 저장!
+        localStorage.setItem('koboogy_lang_ko', document.body.classList.contains('lang-ko'));
     }
 
- 
     function toggleDetailMode() {
         document.body.classList.toggle('hide-details');
         const toggleUi = document.getElementById('btn-detail-toggle');
@@ -1355,19 +1358,20 @@
             toggleUi.classList.add('active');
         }
         
-        // 💡 전역 스위치를 누르면 개별 카드로 조작해둔 설정들 깔끔하게 초기화!
         document.querySelectorAll('.card.details-on, .card.details-off').forEach(c => {
             c.classList.remove('details-on', 'details-off');
         });
+        // 💡 보조 텍스트 설정 폰에 저장!
+        localStorage.setItem('koboogy_hide_details', document.body.classList.contains('hide-details'));
     }
-
-
-
-
 
     function syncSettings(type, value) {
         if (type === 'shadow') { isShadowing = value; stopAll(); }
-        else if (type === 'repeat') { document.getElementById('repeat-count').value = value; }
+        else if (type === 'repeat') { 
+            document.getElementById('repeat-count').value = value; 
+            // 💡 반복 횟수 폰에 저장!
+            localStorage.setItem('koboogy_repeat', value);
+        }
     }
 
     // 💡 메인 모드 스위처 (학습 / 툭탁 연습 / 문장 조립)
@@ -1741,6 +1745,13 @@
         quizSetupArea.style.display = 'none';
         quizPlayArea.style.display = 'block';
         renderQuizCard();
+
+        // 💡 [추가] 세팅 화면에서 시작하기 눌렀을 때도 스크롤 최상단 강제 리셋!
+        setTimeout(() => {
+            window.scrollTo(0, 0);
+            const scrollArea = document.getElementById('main-scroll-area');
+            if (scrollArea) scrollArea.scrollTop = 0;
+        }, 10);
     }
 
     // ==========================================
@@ -1750,15 +1761,20 @@
         if (activeQuizChapters.length === 0) { alert("학습할 챕터를 1개 이상 선택해 주세요!"); return; }
         buildFullQuizPool();
         
-        // 영어 문장이 아예 없는 라이브 세션 카드는 퍼즐에서 걸러줍니다.
         puzzlePool = fullQuizPool.filter(q => q.data.chunks && q.data.chunks.length > 0);
-        
         if (puzzlePool.length === 0) { alert("해당 조건의 문장 데이터가 없습니다."); return; }
 
         currentPuzzleIndex = 0;
         quizSetupArea.style.display = 'none';
         puzzlePlayArea.style.display = 'block';
         renderPuzzleCard();
+
+        // 💡 [추가] 세팅 화면에서 시작하기 눌렀을 때도 스크롤 최상단 강제 리셋!
+        setTimeout(() => {
+            window.scrollTo(0, 0);
+            const scrollArea = document.getElementById('main-scroll-area');
+            if (scrollArea) scrollArea.scrollTop = 0;
+        }, 10);
     }
 
     function renderPuzzleCard() {
@@ -2375,7 +2391,18 @@ function playQuizSentence(s, e) {
         }
     }
 
-    function playPart(s, e) { clearTimeout(window.shadowTimer); const rate = player.playbackRate; stopTime = e - (0.32 * rate); player.currentTime = Math.max(0, s - (0.17 * rate)); player.play(); }
+    function playPart(s, e) { 
+        clearTimeout(window.shadowTimer); 
+        
+        // 💡 [추가] 재생이 시작될 때마다 버튼 상태를 읽어서 배속을 한 번 더 확실하게 고정! (풀림 방지)
+        const rate = parseFloat(document.querySelector('.btn-grp .btn.active')?.innerText.replace('x','') || 1.0);
+        player.playbackRate = rate;
+        
+        stopTime = e - (0.32 * rate); 
+        player.currentTime = Math.max(0, s - (0.17 * rate)); 
+        player.play(); 
+    }
+
 
     function stopAll() {
         player.pause(); isAutoPlaying = false; stopTime = 0; clearTimeout(window.shadowTimer);
@@ -2427,8 +2454,19 @@ function playQuizSentence(s, e) {
     }
 
     function setSpeed(s, btn) {
-        player.playbackRate = s; document.querySelectorAll('.btn-grp .btn').forEach(b => { if(b.innerText.includes('x')) b.classList.remove('active'); });
-        if(btn) btn.classList.add('active');
+        player.playbackRate = s; 
+        document.querySelectorAll('.btn-grp .btn').forEach(b => { if(b.innerText.includes('x')) b.classList.remove('active'); });
+        if(btn) {
+            btn.classList.add('active');
+        } else {
+            // 버튼 없이 함수만 실행됐을 때 해당 배속 버튼에 불 켜주기
+            document.querySelectorAll('.btn-grp .btn').forEach(b => {
+                const label = 'x' + (Number.isInteger(s) ? s + '.0' : s);
+                if (b.innerText === label) b.classList.add('active');
+            });
+        }
+        // 💡 배속 설정 폰에 저장!
+        localStorage.setItem('koboogy_speed', s);
     }
 
     window.onload = () => {
@@ -2537,13 +2575,56 @@ loadSavedQuizSetup();
 
 // 💡 퀴즈 세팅(파트 및 챕터) 마지막 저장값 불러오기 엔진
     function loadSavedQuizSetup() {
+        // --- 1. 회색 컨트롤 바 5종 토글 마지막 세팅 불러오기 ---
+        const savedLang = localStorage.getItem('koboogy_lang_ko');
+        if (savedLang !== null) {
+            if (savedLang === 'true') {
+                document.body.classList.add('lang-ko');
+                document.getElementById('btn-lang-toggle').classList.add('active');
+            } else {
+                document.body.classList.remove('lang-ko');
+                document.getElementById('btn-lang-toggle').classList.remove('active');
+            }
+        }
+
+        const savedDetail = localStorage.getItem('koboogy_hide_details');
+        if (savedDetail !== null) {
+            if (savedDetail === 'true') {
+                document.body.classList.add('hide-details');
+                document.getElementById('btn-detail-toggle').classList.remove('active');
+            } else {
+                document.body.classList.remove('hide-details');
+                document.getElementById('btn-detail-toggle').classList.add('active');
+            }
+        }
+
+        const savedShadow = localStorage.getItem('koboogy_shadowing');
+        if (savedShadow !== null) {
+            isShadowing = (savedShadow === 'true');
+            const ui = document.getElementById('shadow-toggle-ui');
+            if (isShadowing) ui.classList.add('active');
+            else ui.classList.remove('active');
+        }
+
+        const savedRepeat = localStorage.getItem('koboogy_repeat');
+        if (savedRepeat !== null) {
+            const sel = document.getElementById('repeat-count');
+            if (sel) sel.value = savedRepeat;
+        }
+
+        const savedSpeed = localStorage.getItem('koboogy_speed');
+        if (savedSpeed !== null) {
+            setSpeed(parseFloat(savedSpeed));
+        }
+
+        // --- 2. 챕터 및 파트 세팅 불러오기 ---
         const savedTypes = localStorage.getItem('koboogy_saved_types');
         const savedChapters = localStorage.getItem('koboogy_saved_chapters');
         
         if (savedTypes) activeQuizTypes = JSON.parse(savedTypes);
         if (savedChapters) activeQuizChapters = JSON.parse(savedChapters);
         
-        syncTypeButtons(); // 파트 버튼(MS본문, 줍줍 등) UI 동기화
+        syncTypeButtons(); // 파트 버튼 UI 동기화
         
         // 챕터 버튼 UI 동기화
         document.querySelectorAll('.chapter-chk-btn').forEach(btn => {
