@@ -135,13 +135,20 @@
             overflow: hidden; 
         }
 
-        /* 💡 2. PC 기본 상단 헤더 - 가로 한 줄(1Row) 배치 보장 */
+        /* 💡 2. PC 기본 상단 헤더 - 반응형 줄바꿈 추가 */
         .sticky-header { background: var(--white); padding: 10px 0; border-bottom: 1px solid var(--border); position: sticky; top: 0; width: 100%; z-index: 99; }
-        .top-nav-row { display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 95%; margin: 0 auto; gap: 20px; flex-direction: row; flex-wrap: nowrap; }
-        .nav-brand { display: flex; align-items: center; gap: 8px; font-size: 20px; font-weight: bold; cursor: pointer; flex-shrink: 0; }
+        
+        /* 💡 flex-wrap: nowrap을 wrap으로 변경하여 공간이 부족하면 줄바꿈 허용! */
+        .top-nav-row { display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 95%; margin: 0 auto; gap: 15px; flex-direction: row; flex-wrap: wrap; }
+        
+        .nav-brand { display: flex; align-items: center; gap: 8px; font-size: 20px; font-weight: bold; cursor: pointer; flex-shrink: 0; order: 1; }
         .nav-brand img { width: 32px; border-radius: 6px; }
-        .left-modes { display: flex; gap: 8px; align-items: center; flex: 1; flex-direction: row; }
-        .right-user { display: flex; align-items: center; font-size: 14px; font-weight: bold; color: var(--gray-text); gap: 10px; flex-shrink: 0; cursor: pointer; transition: color 0.2s; }
+        
+        .left-modes { display: flex; gap: 8px; align-items: center; flex: 1; flex-direction: row; order: 2; }
+        
+        .right-user { display: flex; align-items: center; font-size: 14px; font-weight: bold; color: var(--gray-text); gap: 10px; flex-shrink: 0; cursor: pointer; transition: color 0.2s; order: 3; }
+
+
 
         /* 💡 버튼 및 기본 컴포넌트 유지 */
         .btn { border: 1px solid var(--dull-gray); background: var(--white); color: var(--dull-gray); cursor: pointer; border-radius: 4px; padding: 5px 10px; font-size: 12px; font-weight: 600; height: 32px; transition: 0.2s; }
@@ -481,10 +488,52 @@
             background-color: var(--pastel-pink) !important; 
         }
 
+
+
+/* 💡 모드 탭 3형제 파스텔 컬러 적용 (기존 레이아웃 변경 없음) */
+
+/* 1. 학습 모드 (파스텔 블루) */
+.left-modes button:nth-child(1) { 
+    background-color: #EAF4FF !important; 
+    color: #2A73CC !important; 
+    border: none !important;
+}
+
+/* 2. 툭탁 연습 (파스텔 옐로우) */
+.left-modes button:nth-child(2) { 
+    background-color: #FFF7C7 !important; 
+    color: #F2821A !important; 
+    border: none !important;
+}
+
+/* 3. 문장 배열 (파스텔 그린) */
+.left-modes button:nth-child(3) { 
+    background-color: #E8F5E9 !important; 
+    color: #3D8E41 !important; 
+    border: none !important;
+}
+
+/* 💡 마이페이지 툭탁 탭 활성화 시 파스텔 노랑 */
+        #tab-mypage-quiz.active {
+            background-color: #FFF7C7 !important;
+            color: #F2821A !important;
+            border-bottom: 2px solid #FFF7C7 !important; /* 밑선 덮어서 자연스럽게 연결 */
+        }
+
+        /* 💡 마이페이지 문장배열 탭 활성화 시 파스텔 그린 */
+        #tab-mypage-puzzle.active {
+            background-color: #E8F5E9 !important;
+            color: #3D8E41 !important;
+            border-bottom: 2px solid #E8F5E9 !important; 
+        }
+
+
+
+
         /* =======================================================
            📱 모바일 (768px 이하) 전용 대응 종합판 (이거 하나면 끝!)
            ======================================================= */
-        @media (max-width: 768px) { 
+        @media (max-width: 1024px) { 
             /* --- 1. 사이드바 --- */
             .sidebar { position: fixed; left: -280px; height: 100%; z-index: 1001; } 
             .sidebar.open { left: 0; display: block !important; } 
@@ -504,16 +553,12 @@
             }
             
             .nav-brand { order: 1 !important; width: auto !important; margin: 0 0 10px 0 !important; font-size: 17px !important; } 
-            .right-user { order: 2 !important; width: auto !important; margin: 0 0 10px 0 !important; font-size: 12px !important; flex-shrink: 0 !important; }
-            
+           .right-user { order: 2 !important; margin-left: auto; }
             .left-modes { 
                 order: 3 !important; 
-                width: 100% !important; 
-                display: flex !important;
-                justify-content: space-between !important; 
-                margin: 0 !important; 
-                padding: 0 !important;
-                gap: 4px !important;
+                flex: 1 1 100% !important; /* 100%의 넓이를 차지해서 다음 줄로 강제 넘김 */
+                justify-content: center !important; /* 가운데 정렬로 깔끔하게 */
+                margin-top: 12px; 
             }
             /* JS에서 숨겼을 때 모바일에서도 강제 숨김 보장 */
             .left-modes[style*="display: none"], .left-modes[style*="display:none"] { display: none !important; }
@@ -700,7 +745,7 @@
                     <h2 class="section-title">마이페이지 & 학습 현황 통계</h2>
                     
                     <div class="mypage-card">
-                        <h3 style="margin:0 0 15px 0;">📊 전체 카드 격파 성취도 현황 <span style="font-size:13px; font-weight:normal; color:#888;">(클릭 시 버닝모드 진입)</span></h3>
+                        <h3 style="margin:0 0 15px 0;">📊 전체 성취도 현황 </h3>
                         
                         <div style="font-size:14px; font-weight:bold; color:var(--text); margin-bottom:8px;">🎙️ 툭탁 연습</div>
                         <div class="stats-grid" style="margin-top:0; margin-bottom: 20px;">
@@ -719,7 +764,7 @@
 
                     <div class="mypage-card" style="padding-top: 20px;">
                         <div style="display:flex; justify-content:space-between; align-items:flex-end; border-bottom: 2px solid #ddd; flex-wrap:wrap; gap:10px;">
-                            <h3 style="margin:0; padding-bottom:10px;">📈 챕터별 세부 성취도 현황 <span style="font-size:12px; font-weight:normal; color:#888;">(클릭 시 진입)</span></h3>
+                            <h3 style="margin:0; padding-bottom:10px;">📈 챕터별 세부 성취도 현황 </h3>
                             
                             <div class="mypage-tab-container">
                                 <button class="mypage-tab-btn active" id="tab-mypage-quiz" onclick="switchMypageTab('quiz')">툭탁</button>
@@ -1045,7 +1090,9 @@
             mainStudyContainer.style.display = 'none'; quizSetupArea.style.display = 'none'; quizPlayArea.style.display = 'none'; puzzlePlayArea.style.display = 'none'; practiceBarSection.style.display = 'none';
             sidebar.style.display = 'none';
             mypageArea.style.display = 'block'; 
-            document.getElementById('top-left-modes').style.display = 'flex';
+            
+            // 💡 [수정됨] 마이페이지 진입 시 상단 모드 탭 완벽하게 숨기기!
+            document.getElementById('top-left-modes').style.display = 'none';
             
             // 💡 마이페이지 열 때 핑크 배경 켜고, 다른 배경색은 끄기
             document.body.classList.add('mypage-mode-active');
@@ -1200,7 +1247,7 @@
         }
 
         const jubCardHtml = `
-            <div class="chapter-stat-item" style="background: #fffde7;"> <!-- 💡 은은한 연노랑색으로 배경만 변경! -->
+            <div class="chapter-stat-item" style="background: #F8BBD0; border: none;"> 
                 <div class="ch-title-row" onclick="startDirectJubJubQuiz('${isPuzzleTab ? 'puzzle' : 'quiz'}')">
                     🛒 줍줍문장 모음
                 </div>
