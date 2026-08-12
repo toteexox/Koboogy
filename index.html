@@ -1541,7 +1541,7 @@
     }
 
 
-    function loadContent(wk, type, el) {
+function loadContent(wk, type, el) {
         if (isQuizMode) return; 
         const data = studyData[wk]?.[type]; if (!data) return;
         
@@ -1553,12 +1553,16 @@
         let html = `<h2 class="section-title" onclick="toggleAutoPlayAll(this)"><span>${wk}</span>| ${data.title || type} ${hasAudio ? '' : '<span style="font-size:14px; color:#888; font-weight:normal;">(🔇 텍스트 전용 세션)</span>'}</h2>`;
         
         const items = type === 'realconvo' ? data.chat : data.sentences;
-        const hasGroups = items && items.length > 0 && items[0].group !== undefined;
+        const hasGroups = items && items.length > 0 && items.some(item => item.group !== undefined);
 
         if (hasGroups) {
             let groupedMap = {};
+            let currentGroup = "Expressions";
+            
             items.forEach((item, idx) => {
-                let gName = item.group || "Expressions";
+                let gName = item.group || (item.type === "note" ? currentGroup : "Expressions");
+                currentGroup = gName;
+                
                 if (!groupedMap[gName]) groupedMap[gName] = [];
                 groupedMap[gName].push({ item, idx });
             });
@@ -1585,6 +1589,18 @@
 
                 groupedMap[groupName].forEach(obj => {
                     const item = obj.item;
+                    
+                    // 💡 [회색 톤 패치] 은은하고 깔끔한 차콜/회색 가이드 박스로 변경!
+                    if (item.type === "note") {
+                        html += `
+                            <div class="note-guide-box" style="background: #f1f3f5; border-left: 5px solid #868e96; padding: 14px 18px; margin: 10px 0 20px 0; border-radius: 6px; display: flex; align-items: flex-start; gap: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.03);">
+                                <span style="font-size: 18px; line-height: 1.4;">💡</span>
+                                <div style="font-size: 15px; color: #495057; line-height: 1.5; font-weight: 500;">${item.text}</div>
+                            </div>
+                        `;
+                        return;
+                    }
+
                     const isJub = userProgressCache[`jub_${wk}_${type}_${obj.idx}`] === true;
                     const jubBtn = `
                     <div class="jub-side-btn ${isJub?'active':''}" onclick="event.stopPropagation(); toggleJub('${wk}','${type}',${obj.idx},this)">
@@ -1600,7 +1616,6 @@
                             ${item.trans ? `<div class="trans-text">${item.trans}</div>` : ''}
                         </div>`;
                         
-                    // 💡 [핵심 수정] 카드(.card)에 data-start와 data-end 속성을 장착하여 오토플레이 인식 가능하게 만듦!
                     html += `
                     <div class="card-with-jub">
                         <div class="card ${hasAudio ? '' : 'no-audio'}" ${hasAudio ? `data-start="${item.start || 0}" data-end="${item.end || 0}"` : ''} style="${hasAudio ? '' : 'cursor:default;'}">
@@ -1613,6 +1628,18 @@
 
         } else {
             items.forEach((item, idx) => {
+                
+                // 💡 [회색 톤 패치] 은은하고 깔끔한 차콜/회색 가이드 박스로 변경!
+                if (item.type === "note") {
+                    html += `
+                        <div class="note-guide-box" style="background: #f1f3f5; border-left: 5px solid #868e96; padding: 14px 18px; margin: 10px 0 20px 0; border-radius: 6px; display: flex; align-items: flex-start; gap: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.03);">
+                            <span style="font-size: 18px; line-height: 1.4;">💡</span>
+                            <div style="font-size: 15px; color: #495057; line-height: 1.5; font-weight: 500;">${item.text}</div>
+                        </div>
+                    `;
+                    return;
+                }
+
                 const isJub = userProgressCache[`jub_${wk}_${type}_${idx}`] === true;
                 const jubBtn = `
                 <div class="jub-side-btn ${isJub?'active':''}" onclick="event.stopPropagation(); toggleJub('${wk}','${type}',${idx},this)">
@@ -1638,7 +1665,6 @@
                         </div>
                     </div>`; 
                 } else {
-                    // 💡 [핵심 수정] 일반 세션(My Story, Grammar 등) 카드에도 data-start와 data-end 추가!
                     html += `
                     <div class="card-with-jub">
                         <div class="card ${hasAudio ? '' : 'no-audio'}" ${hasAudio ? `data-start="${item.start || 0}" data-end="${item.end || 0}"` : ''} style="${hasAudio ? '' : 'cursor:default;'}">
@@ -1662,6 +1688,9 @@
         }
         stopAll();
     }
+
+
+
 
 
 
