@@ -163,7 +163,7 @@ const studyData = {
       audio: "audio/1-3 Useful Expressions.wav",
       sentences: [
         { group: "take a break", start: 4.190, end: 6.470, ipa: "/lɛts teɪk ə breɪk/", trans: "우리 좀 쉬자.", chunks: [{ text: "Let's take a break.", s: 4.190, e: 6.470 }] },
-        { group: "take a break", start: 8.820, end: 11.280, ipa: "/waɪ doʊnt juː teɪk ə breɪk/", trans: "좀 쉬는 게 어때?", chunks: [{ text: "Why don't you take a break?", s: 8.820, e: 11.280 }] },
+        { group: "take a break", start: 8.820, end: 11.280, ipa: "/waɪ doʊnt juː teɪk ə breɪk/", trans: "너 좀 쉬는 게 어때?", chunks: [{ text: "Why don't you take a break?", s: 8.820, e: 11.280 }] },
         { group: "take a break", start: 13.770, end: 16.480, ipa: "/aɪ ˈrɪəli niːd tuː teɪk ə breɪk/", trans: "나 진짜 좀 쉬어야 해.", chunks: [{ text: "I really need to take a break.", s: 13.770, e: 16.480 }] },
         { group: "looking for", start: 19.490, end: 22.400, ipa: "/aɪm ˈlʊkɪŋ fɔːr maɪ foʊn/", trans: "나 핸드폰 찾고 있어.", chunks: [{ text: "I'm looking for my phone.", s: 19.490, e: 22.400 }] },
         { group: "looking for", start: 25.340, end: 28.870, ipa: "/aɪm ˈlʊkɪŋ fɔːr ə ɡʊd kəˈfeɪ ˈnɪrbaɪ/", trans: "근처에 괜찮은 카페 찾고 있어.", chunks: [{ text: "I'm looking for a good cafe nearby.", s: 25.340, e: 28.870 }] },
