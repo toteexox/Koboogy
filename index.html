@@ -415,6 +415,10 @@
             overflow-y: auto; /* 혹시 모를 초장문 대비 안전 스크롤 */
             transition: 0.2s; 
         }
+ 
+        .sortable-drag, .sortable-fallback {
+            opacity: 0 !important; 
+        }
 
         #puzzle-word-pool {
             display: flex;
@@ -905,7 +909,7 @@
                         <div style="font-size:14px; font-weight:bold; color:var(--text); margin-bottom:8px;">🧩 문장 배열</div>
                         <div class="stats-grid" style="grid-template-columns: repeat(2, 1fr); margin-top:0;">
                             <div class="stat-box" style="background:var(--pastel-blue); color:var(--pastel-blue-text);" onclick="startGlobalQuizByStatus('통과', 'puzzle')">Pass 🔵<br><span id="stat-puzzle-pass">0</span>개</div>
-                            <div class="stat-box" style="background:#ffebee; color:#e53935;" onclick="startGlobalQuizByStatus('불가', 'puzzle')">Fail 🔴<br><span id="stat-puzzle-fail">0</span>개</div>
+                            <div class="stat-box" style="background:#ffebee; color:#e53935;" onclick="startGlobalQuizByStatus('불가', 'puzzle')">Retry 🔴<br><span id="stat-puzzle-fail">0</span>개</div>
                         </div>
                     </div>
 
@@ -1271,7 +1275,7 @@
             });
     }
 
-    // 💡 마이페이지 통계 UI 실시간 업데이트 함수
+    // 💡 마이페이지 통계 UI 실시간 업데이트 함수 (상단 전체 통계는 탭과 무관하게 항상 전체 집계!)
     function updateMyPageStatisticsUI() {
         let qTg = 0, qBr = 0, qBb = 0, qBg = 0;
         let pPass = 0, pFail = 0;
@@ -1286,10 +1290,8 @@
         let jubTotal = 0, jubTg = 0, jubBr = 0, jubBb = 0, jubBg = 0;
         let jubPPass = 0, jubPFail = 0;
 
-        // 💡 챕터별 HTML을 담아둘 배열
         let chapterHtmlArr = [];
 
-        // 데이터 전체를 순회하며 글로벌/챕터/줍줍 통계를 한 번에 계산 (동기화 100%)
         Object.keys(studyData).sort().forEach(wk => {
             const cData = studyData[wk];
             let cTotal = 0, cTg = 0, cBr = 0, cBb = 0, cBg = 0;
@@ -1301,34 +1303,30 @@
                     const items = t.includes('realconvo') && cData[t].chat ? cData[t].chat : (cData[t].sentences || []);
                     items.forEach((item, idx) => {
                         const isJub = userProgressCache[`jub_${wk}_${t}_${idx}`] === true;
-                        const progKey = isPuzzleTab ? `puzzle_${wk}_${t}_${idx}` : `${wk}_${t}_${idx}`;
-                        const status = userProgressCache[progKey];
 
-                        // 퍼즐 모드일 경우 영어 청크가 있는 문장만 카운트
-                        let isValidItem = false;
-                        if (isPuzzleTab) {
-                            if (item.chunks && item.chunks.length > 0) isValidItem = true;
-                        } else {
-                            isValidItem = true;
+                        // 1. 툭탁(Quiz) 성취도 무조건 집계
+                        const statusQuiz = userProgressCache[`${wk}_${t}_${idx}`];
+                        if (statusQuiz === '통과') { qTg++; cTg++; if (isJub) jubTg++; }
+                        if (statusQuiz === '발음') { qBr++; cBr++; if (isJub) jubBr++; }
+                        if (statusQuiz === '버벅') { qBb++; cBb++; if (isJub) jubBb++; }
+                        if (statusQuiz === '불가') { qBg++; cBg++; if (isJub) jubBg++; }
+
+                        // 2. 문장배열(Puzzle) 성취도 무조건 집계 (chunks가 있는 문장 대상)
+                        if (item.chunks && item.chunks.length > 0) {
+                            const statusPuzzle = userProgressCache[`puzzle_${wk}_${t}_${idx}`];
+                            if (statusPuzzle === '통과') { pPass++; cPPass++; if (isJub) jubPPass++; }
+                            if (statusPuzzle === '불가' || statusPuzzle === 'retry') { pFail++; cPFail++; if (isJub) jubPFail++; }
                         }
 
-                        if (isValidItem) {
-                            // 1. 해당 챕터(cTotal)에 무조건 합산 (어디서 훈련하든 동기화)
-                            cTotal++;
-                            
-                            // 2. 줍줍(isJub)인 경우 줍줍 카운터(jubTotal)에도 동시 합산
-                            if (isJub) jubTotal++;
-
-                            // 3. 성취도(Status) 업데이트
-                            if (isPuzzleTab) {
-                                if (status === '통과') { pPass++; cPPass++; if (isJub) jubPPass++; }
-                                if (status === '불가') { pFail++; cPFail++; if (isJub) jubPFail++; }
-                            } else {
-                                if (status === '통과') { qTg++; cTg++; if (isJub) jubTg++; }
-                                if (status === '발음') { qBr++; cBr++; if (isJub) jubBr++; }
-                                if (status === '버벅') { qBb++; cBb++; if (isJub) jubBb++; }
-                                if (status === '불가') { qBg++; cBg++; if (isJub) jubBg++; }
+                        // 3. 챕터 및 줍줍 총 개수 집계
+                        if (isPuzzleTab) {
+                            if (item.chunks && item.chunks.length > 0) {
+                                cTotal++;
+                                if (isJub) jubTotal++;
                             }
+                        } else {
+                            cTotal++;
+                            if (isJub) jubTotal++;
                         }
                     });
                 }
@@ -1342,7 +1340,7 @@
             if (isPuzzleTab) {
                 chRightHtml = `
                     <span class="stat-click-btn" style="color:var(--pastel-blue-text); background:#e3f2fd;" onclick="startChapterBurningMode('${wk}', '통과', 'puzzle')"><i>Pass</i> <b>${cPPass}</b></span>
-                    <span class="stat-click-btn" style="color:#e53935; background:#ffebee;" onclick="startChapterBurningMode('${wk}', '불가', 'puzzle')"><i>Fail</i> <b>${cPFail}</b></span>
+                    <span class="stat-click-btn" style="color:#e53935; background:#ffebee;" onclick="startChapterBurningMode('${wk}', '불가', 'puzzle')"><i>Retry</i> <b>${cPFail}</b></span>
                 `;
             } else {
                 chRightHtml = `
@@ -1372,7 +1370,7 @@
             chapterHtmlArr.push(chapterHtml);
         });
 
-        // --- 🛒 줍줍문장 통계 카드 HTML 생성 (테두리 스타일 통일) ---
+        // --- 🛒 줍줍문장 통계 카드 HTML 생성 ---
         const jubCompleted = isPuzzleTab ? jubPPass : (jubTg + jubBr);
         const jubRate = jubTotal === 0 ? 0 : Math.round((jubCompleted / jubTotal) * 100);
 
@@ -1380,7 +1378,7 @@
         if (isPuzzleTab) {
             jubRightHtml = `
                 <span class="stat-click-btn" style="color:var(--pastel-blue-text); background:#e3f2fd;" onclick="startJubJubBurningMode('통과', 'puzzle')"><i>Pass</i> <b>${jubPPass}</b></span>
-                <span class="stat-click-btn" style="color:#e53935; background:#ffebee;" onclick="startJubJubBurningMode('불가', 'puzzle')"><i>Fail</i> <b>${jubPFail}</b></span>
+                <span class="stat-click-btn" style="color:#e53935; background:#ffebee;" onclick="startJubJubBurningMode('불가', 'puzzle')"><i>Retry</i> <b>${jubPFail}</b></span>
             `;
         } else {
             jubRightHtml = `
@@ -1408,11 +1406,9 @@
             </div>
         `;
 
-
-        // 💡 줍줍 카드를 맨 위에 렌더링하고, 그 밑에 챕터 목록 렌더링
         chapterListContainer.innerHTML = jubCardHtml + chapterHtmlArr.join('');
 
-        // --- 📊 전체 성취도 카운터 업데이트 (순수 카운트 값만 반영, 중복 해결) ---
+        // --- 📊 상단 전체 성취도 카운터 업데이트 (탭에 관계없이 항상 툭탁/퍼즐 모두 집계!) ---
         document.getElementById('stat-tg').innerText = qTg; 
         document.getElementById('stat-br').innerText = qBr; 
         document.getElementById('stat-bb').innerText = qBb; 
@@ -2032,27 +2028,23 @@ function loadContent(wk, type, el) {
         
         const qItem = puzzlePool[currentPuzzleIndex];
         const item = qItem.data;
-        const wk = qItem.wk;
+        const wk = qItem.wk, type = qItem.type, idx = qItem.idx;
         
         const englishFullText = item.chunks ? item.chunks.map(c => c.text).join(' ') : '';
         const cleanSentence = englishFullText.replace(/[.,!?"]/g, '').trim();
         
-        // 💡 [핵심 수정] 단어를 분리할 때 'I', 'I'm', 'I'll' 등 빼고 모두 소문자로 강제 변환!
         let words = cleanSentence.split(/\s+/).filter(w => w.length > 0).map(w => {
-            // I로 시작하는 대명사 축약형은 그대로 유지, 나머지는 싹 다 소문자!
             if (/^I('m|'ll|'ve|'d)?$/.test(w)) return w; 
             return w.toLowerCase(); 
         });
         
         let scrambled = [...words].sort(() => Math.random() - 0.5);
 
-        // 💡 단어 개수에 따라 크기 클래스 자동 결정
         let sizeClass = "";
-        if (words.length >= 12) {
-            sizeClass = "size-small";
-        } else if (words.length >= 7) {
-            sizeClass = "size-medium";
-        }
+        if (words.length >= 12) sizeClass = "size-small";
+        else if (words.length >= 7) sizeClass = "size-medium";
+
+        const savedStatus = userProgressCache[`puzzle_${wk}_${type}_${idx}`];
 
         let html = `
         <div class="quiz-container">
@@ -2069,19 +2061,19 @@ function loadContent(wk, type, el) {
                     <div class="trans-text" style="font-size:22px; color:#1a0dab; font-weight:700;">${item.trans}</div>
                 </div>
                 
-                <div class="quiz-card-bottom-english-zone" style="flex-direction:column; padding: 25px 25px 60px 25px; min-height: 150px;">
+                <div class="quiz-card-bottom-english-zone" style="flex-direction:column; padding: 25px 25px 30px 25px; min-height: 150px;">
                     
                     <div id="puzzle-active-area" class="${sizeClass}" style="width:100%;">
                         <div id="puzzle-answer-box" class="answer-box" style="width:100%;"></div>
                         
                         <div id="puzzle-feedback-msg" style="color:#e53935; font-size:13px; font-weight:bold; min-height:20px; margin-bottom:10px; opacity:0; transition:0.2s; text-align:left; padding-left:4px;">앗! 순서가 맞지 않아요. 🧐</div>
 
-                        <div id="puzzle-word-pool">
+                        <div id="puzzle-word-pool" style="position: relative;">
                             ${scrambled.map((w) => `<div class="scramble-word" data-word="${w.replace(/"/g, '&quot;')}" onclick="handleWordClick(this)">${w}</div>`).join('')}
+                            
+                            <button id="btn-check-answer" class="login-btn" onclick="checkPuzzleAnswer()" style="display:none; position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); width:220px; height:48px; font-size:16px; margin:0; z-index:10; box-shadow:0 4px 12px rgba(66,133,244,0.3);">✅ 정답 확인</button>
+                            <button id="btn-retry-puzzle" class="btn" onclick="retryPuzzle()" style="display:none; position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); width:220px; height:48px; font-size:16px; background:#ffebee !important; color:#e53935 !important; border:1px solid #ef9a9a !important; margin:0; z-index:10; box-shadow:0 4px 12px rgba(229,57,53,0.2);">🔄 다시 시도하기</button>
                         </div>
-                        
-                        <button id="btn-check-answer" class="login-btn" onclick="checkPuzzleAnswer()" style="width:100%; height:48px; font-size:16px; margin:0;">✅ 정답 확인</button>
-                        <button id="btn-retry-puzzle" class="btn" onclick="retryPuzzle()" style="width:100%; height:48px; font-size:16px; background:#ffebee !important; color:#e53935 !important; border:1px solid #ef9a9a !important; display:none; margin:0;">🔄 다시 시도하기</button>
                     </div>
 
                     <div id="puzzle-success-area" style="display:none; width:100%; text-align:center;">
@@ -2095,20 +2087,57 @@ function loadContent(wk, type, el) {
                     </div>
                 </div>
             </div>
+
+            <div class="quiz-status-panel" style="width:100%; text-align:center; margin-top:10px;">
+                <h4 style="font-size: 14px; color: var(--gray-text); margin: 0 0 10px 0; font-weight: 700;">🎯 성취도 현황 선택</h4>
+                <div class="status-choice-grp" id="puzzle-status-choice-grp">
+                    <button class="status-badge-btn tg" onclick="submitPuzzleStatusClick('${wk}','${type}',${idx},'통과', this)">🔵 Pass</button>
+                    <button class="status-badge-btn bg" onclick="submitPuzzleStatusClick('${wk}','${type}',${idx},'불가', this)">🔴 Retry</button>
+                </div>
+            </div>
         </div>
         `;
         
         pZone.innerHTML = html;
-        // 기존 검증 로직이 소문자로 변환해서 비교하기 때문에, 카드가 소문자로 변해도 정답 확인은 완벽하게 작동해!
         pZone.dataset.original = cleanSentence.toLowerCase();
 
+        // 기존 저장된 성취도 버튼 활성화/비활성화 처리
+        if (savedStatus) {
+            const btns = document.getElementById('puzzle-status-choice-grp')?.querySelectorAll('.status-badge-btn');
+            btns?.forEach(btn => {
+                if ((savedStatus === '통과' && btn.innerText.includes('Pass')) ||
+                    ((savedStatus === '불가' || savedStatus === 'retry') && btn.innerText.includes('Retry'))) {
+                    btn.classList.remove('disabled-gray');
+                } else {
+                    btn.classList.add('disabled-gray');
+                }
+            });
+        }
+
+        // 💡 1. 정답 박스: 자유롭게 배열 변경 가능 + 클릭/드래그 완벽 구분
         new Sortable(document.getElementById('puzzle-answer-box'), {
-            group: 'puzzle', animation: 150, ghostClass: 'sortable-ghost',
-            onEnd: clearPuzzleErrorState, onAdd: clearPuzzleErrorState, onRemove: clearPuzzleErrorState
+            group: 'puzzle', 
+            animation: 150, 
+            ghostClass: 'sortable-ghost',
+            forceFallback: true, 
+            fallbackTolerance: 5, // 💡 터치(클릭)와 드래그를 완벽하게 구분해 주는 감도 설정!
+            onEnd: () => { clearPuzzleErrorState(); togglePuzzleActionBtns(); },
+            onAdd: () => { clearPuzzleErrorState(); togglePuzzleActionBtns(); },
+            onRemove: () => { clearPuzzleErrorState(); togglePuzzleActionBtns(); }
         });
         
+        // 💡 2. 단어 보관함: 클릭 전용 (안에서 순서 섞이지 않게 고정!)
         new Sortable(document.getElementById('puzzle-word-pool'), {
-            group: 'puzzle', animation: 150, ghostClass: 'sortable-ghost'
+            group: 'puzzle', 
+            animation: 150, 
+            ghostClass: 'sortable-ghost',
+            filter: 'button',
+            sort: false,          // 💡 보관함 안에서는 카드가 이리저리 섞이지 않도록 차단!
+            forceFallback: true, 
+            fallbackTolerance: 5, // 💡 클릭 먹통 현상 완벽 해결!
+            onEnd: togglePuzzleActionBtns,
+            onAdd: togglePuzzleActionBtns,
+            onRemove: togglePuzzleActionBtns
         });
         
         if (qItem.audio && qItem.audio.trim() !== "") {
@@ -2119,23 +2148,47 @@ function loadContent(wk, type, el) {
     }
 
 
+    // 💡 [신규] 단어 보관함 상태에 따라 버튼을 뿅! 나타나게 하는 컨트롤 타워
+    function togglePuzzleActionBtns() {
+        const pool = document.getElementById('puzzle-word-pool');
+        const checkBtn = document.getElementById('btn-check-answer');
+        const retryBtn = document.getElementById('btn-retry-puzzle');
+        if (!pool || !checkBtn) return;
+        
+        const remainingWords = pool.querySelectorAll('.scramble-word').length;
+        
+        // 단어 카드가 0장이면 중앙에 버튼 띄우기
+        if (remainingWords === 0) {
+            if (retryBtn.style.display === 'none' || retryBtn.style.display === '') {
+                checkBtn.style.display = 'block';
+            }
+        } else {
+            // 다시 단어가 내려오면 바로 숨기기
+            checkBtn.style.display = 'none';
+            retryBtn.style.display = 'none';
+        }
+    }
 
+
+
+    
+    // 💡 [신규 추가] 카드를 드래그하지 않고 '톡' 터치(클릭)만 해도 위아래로 이동하는 함수
     function handleWordClick(el) {
         const answerBox = document.getElementById('puzzle-answer-box');
         const wordPool = document.getElementById('puzzle-word-pool');
         
+        // 보관함에 있으면 정답 영역으로, 정답 영역에 있으면 보관함으로 이동
         if (el.parentElement === wordPool) answerBox.appendChild(el);
         else wordPool.appendChild(el);
         
-        clearPuzzleErrorState(); // 클릭해서 단어를 옮겨도 다시 '정답 확인' 상태로 복구
+        clearPuzzleErrorState();
+        togglePuzzleActionBtns(); // 💡 터치(클릭)해서 단어를 옮겼을 때도 버튼을 띄울지 말지 즉각 체크!
     }
 
 
 
 
-
-
-
+    // 💡 [수정] 정답 확인 시 자동 저장 로직 완전 제거! (수동 선택 전용)
     function checkPuzzleAnswer() {
         const answerBox = document.getElementById('puzzle-answer-box');
         const pZone = document.getElementById('puzzle-card-render-zone');
@@ -2146,28 +2199,34 @@ function loadContent(wk, type, el) {
         const original = pZone.dataset.original;
         const currentWords = Array.from(answerBox.children).map(el => el.dataset.word.toLowerCase());
         const currentSentence = currentWords.join(' ').trim();
-        
-        const qItem = puzzlePool[currentPuzzleIndex];
 
         if (currentSentence === original) {
-            // 정답! 🧩 퍼즐 모드로 🔵 자동 통과 저장
-            saveSentenceStatusToCloud(qItem.wk, qItem.type, qItem.idx, '통과', 'puzzle'); 
-            
             document.getElementById('puzzle-active-area').style.display = 'none';
             document.getElementById('puzzle-success-area').style.display = 'block';
         } else {
-            // 오답! 🧩 퍼즐 모드로 🔴 자동 불가 저장
-            saveSentenceStatusToCloud(qItem.wk, qItem.type, qItem.idx, '불가', 'puzzle'); 
-            
             answerBox.classList.add('puzzle-error');
             if (feedbackMsg) feedbackMsg.style.opacity = '1';
             
             if (btnCheck) btnCheck.style.display = 'none';
-            if (btnRetry) btnRetry.style.display = 'block';
+            if (btnRetry) btnRetry.style.display = 'block'; 
             
             setTimeout(() => { answerBox.classList.remove('puzzle-error'); }, 400);
         }
     }
+
+
+
+    // 💡 [신규] 퍼즐 수동 성취도 클릭 처리 함수 (Pass / Retry)
+    function submitPuzzleStatusClick(wk, type, idx, statusName, btnEl) {
+        saveSentenceStatusToCloud(wk, type, idx, statusName, 'puzzle');
+        const parent = btnEl.parentElement;
+        parent.querySelectorAll('.status-badge-btn').forEach(b => {
+            if (b === btnEl) b.classList.remove('disabled-gray');
+            else b.classList.add('disabled-gray');
+        });
+    }
+
+
 
 
 
@@ -2235,7 +2294,13 @@ function loadContent(wk, type, el) {
         
         if (feedbackMsg) feedbackMsg.style.opacity = '0';
         if (btnRetry) btnRetry.style.display = 'none';
-        if (btnCheck) btnCheck.style.display = 'block';
+        
+        // 💡 에러 상태를 풀 때, 보관함이 완전히 비어있을 때만 다시 '정답 확인' 버튼 살려줌
+        const pool = document.getElementById('puzzle-word-pool');
+        if (pool && btnCheck) {
+            const remaining = pool.querySelectorAll('.scramble-word').length;
+            btnCheck.style.display = (remaining === 0) ? 'block' : 'none';
+        }
     }
 
 
@@ -2244,8 +2309,9 @@ function loadContent(wk, type, el) {
         const answerBox = document.getElementById('puzzle-answer-box');
         const wordPool = document.getElementById('puzzle-word-pool');
         
-        // 박스에 올렸던 단어들을 다시 밑(풀)으로 싹 내려보내서 리셋!
-        Array.from(answerBox.children).forEach(word => wordPool.appendChild(word));
+        // 박스에 올렸던 단어들을 다시 보관함으로 싹 내려보내서 리셋!
+        Array.from(answerBox.querySelectorAll('.scramble-word')).forEach(word => wordPool.appendChild(word));
+        togglePuzzleActionBtns(); // 💡 단어들이 내려왔으니 버튼은 다시 자동으로 숨기기!
     }
 
 
@@ -2280,23 +2346,28 @@ function loadContent(wk, type, el) {
         if(isRandomQuiz) initPuzzleRandom();
     }
 
-    // 💡 이전/다음 이동 함수
+    // 💡 [수정] 퍼즐 카드 이동 시 성취도(Pass / Retry) 필수 체크 검사
     function navigatePuzzle(dir) {
+        const wk = puzzlePool[currentPuzzleIndex].wk;
+        const type = puzzlePool[currentPuzzleIndex].type;
+        const idx = puzzlePool[currentPuzzleIndex].idx;
+        const progressKey = `puzzle_${wk}_${type}_${idx}`;
+        
+        if (!userProgressCache[progressKey]) {
+            alert("🎯 성취도(Pass / Retry)를 먼저 선택해 주세요!");
+            return;
+        }
+
         stopAll();
         
         if (isRandomQuiz && puzzlePool.length > 1) {
-            // 바구니가 비었으면(다 풀었으면) 다시 채움
             if (puzzleUnvisited.length === 0) {
                 initPuzzleRandom(); 
             }
-            // 바구니 안에서 무작위로 하나 뽑기
             const randIdx = Math.floor(Math.random() * puzzleUnvisited.length);
             currentPuzzleIndex = puzzleUnvisited[randIdx];
-            
-            // 뽑은 문제는 중복 출제 안 되도록 바구니에서 제거
             puzzleUnvisited.splice(randIdx, 1);
         } else {
-            // 순차 모드일 경우 기존 방식대로 이동
             currentPuzzleIndex += dir;
             if (currentPuzzleIndex >= puzzlePool.length) currentPuzzleIndex = 0;
             if (currentPuzzleIndex < 0) currentPuzzleIndex = puzzlePool.length - 1;
