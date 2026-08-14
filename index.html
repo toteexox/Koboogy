@@ -319,12 +319,60 @@
         .quiz-type-badge { background: #3c4043; color: white; font-size: 14px; font-weight: 800; padding: 6px 14px; border-radius: 8px; letter-spacing: 0.5px; }
         .quiz-pagination-counter { font-size: 14px; color: var(--gray-text); font-weight: 800; background: rgba(255,255,255,0.8); padding: 4px 12px; border-radius: 12px; border: 1px solid #ddd; }
 
-        .quiz-split-card { width: 100%; background: var(--white); border: 2px solid #ddd; border-radius: 18px; box-shadow: 0 6px 22px rgba(0,0,0,0.06); overflow: hidden; transition: 0.2s; cursor: pointer; margin-bottom: 20px; position: relative; }
+        .quiz-split-card { 
+            width: 100%; 
+            display: flex !important;
+            flex-direction: column !important;
+            background: var(--white); 
+            border: 2px solid #ddd; 
+            border-radius: 18px; 
+            box-shadow: 0 6px 22px rgba(0,0,0,0.06); 
+            overflow: hidden; 
+            transition: 0.2s; 
+            cursor: pointer; 
+            margin-bottom: 20px; 
+            position: relative; 
+        }
         .quiz-split-card:hover { border-color: var(--primary); }
         
-        .quiz-card-top-korean-zone { padding: 35px 25px; text-align: center; background: #fff; border-bottom: 1px dashed #e0e0e0; position: relative; }
+        /* 💡 [핵심] 툭탁 연습 모드 전용 카드 높이 (슬림하게 줄여서 성취도가 한 화면에 쏙!) */
+        #quiz-play-area .quiz-split-card {
+            height: 240px !important; 
+        }
+
+        /* 💡 [핵심] 문장 배열(퍼즐) 모드 전용 카드 높이 (퍼즐 맞출 공간 넉넉하게 유지!) */
+        #puzzle-play-area .quiz-split-card {
+            height: 520px !important; 
+        }
         
-        .quiz-card-bottom-english-zone { position: relative; padding: 35px 25px 60px 25px; text-align: center; background: #fafafa; min-height: 110px; display: flex; align-items: center; justify-content: center; }
+        /* 💡 2. 상단 한글(문제) 영역 고정 */
+        .quiz-card-top-korean-zone { 
+            flex: 0 0 120px !important; /* 상단 높이를 120px로 살짝 다이어트 */
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            padding: 15px 20px !important; /* 🔀 버튼과 글씨가 겹치지 않게 여백 확보 */
+            text-align: center; 
+            background: #fff; 
+            border-bottom: 1px dashed #e0e0e0; 
+            position: relative; 
+            overflow-y: auto; 
+        }
+        
+        /* 💡 3. 하단 영어(정답/퍼즐) 영역 고정 */
+        .quiz-card-bottom-english-zone { 
+            flex: 1 !important; /* 상단을 뺀 나머지 영역을 모두 차지 */
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: flex-start !important;
+            position: relative; 
+            padding: 20px 20px 20px 20px !important; 
+            text-align: center; 
+            background: #fafafa; 
+            min-height: auto !important; /* 기존 JS 충돌 방지 */
+            overflow-y: auto; 
+        }
         .quiz-in-card-nav { position: absolute; bottom: 15px; right: 20px; display: flex; gap: 20px; }
         .quiz-nav-arrow { background: none; border: none; font-size: 26px; color: #9aa0a6; cursor: pointer; transition: 0.2s; padding: 0; }
         .quiz-nav-arrow:hover { color: var(--primary); transform: scale(1.15); }
@@ -400,11 +448,11 @@
         }
         /* 🧩 퍼즐 영역 고정 높이 지정 (버튼 들썩임 완전 방지) */
         .answer-box { 
-            height: 110px; /* 고정 높이 */
+            height: 150px; /* 💡 기존 110px -> 140px로 확장 */
             border: 2px dashed #b0b5b9; 
             border-radius: 12px; 
-            padding: 10px 12px; 
-            margin-bottom: 5px; 
+            padding: 0px 5px; 
+            margin-bottom: 0px; 
             display: flex; 
             flex-wrap: wrap; 
             gap: 6px; 
@@ -412,7 +460,7 @@
             align-items: center; 
             justify-content: flex-start !important; 
             background: #fafafa; 
-            overflow-y: auto; /* 혹시 모를 초장문 대비 안전 스크롤 */
+            overflow-y: auto; 
             transition: 0.2s; 
         }
  
@@ -427,8 +475,8 @@
             align-content: flex-start;
             align-items: center;
             gap: 6px;
-            height: 110px; /* 고정 높이 */
-            margin-bottom: 12px;
+            height: 140px; /* 💡 기존 110px -> 140px로 확장 */
+            margin-bottom: 4px;
             padding: 10px 12px;
             background: #f8f9fa;
             border-radius: 12px;
@@ -524,6 +572,16 @@
             background: var(--primary) !important;
         }
 
+
+
+        /* 💡 툭탁 / 퍼즐 모드 진입 시 상단 여백을 줄여 전체 카드를 위로 끌어올림 */
+        body.quiz-mode-active .scroll-area {
+            padding-top: 10px !important;
+        }
+
+
+
+
         /* 💡 마이페이지 인덱스 탭 전용 활성화 스타일 */
         #mypage-area .btn.active {
             background: var(--white) !important;
@@ -575,6 +633,7 @@
             background-color: var(--pastel-pink) !important; 
         }
 
+  
 
 
 /* 💡 모드 탭 3형제 파스텔 컬러 적용 (기존 레이아웃 변경 없음) */
@@ -1003,18 +1062,6 @@
                 </div>
 
                 <div id="quiz-play-area">
-                    <div style="display: flex; justify-content: flex-start; align-items: center; width: 100%; max-width: 640px; margin: 0 auto 15px auto; padding: 0 5px;">
-                        <div class="speed-controls-row">
-                            <span style="font-size: 15px; font-weight: bold; color: var(--gray-text); margin-right: 10px;">재생속도</span>
-                            <div class="btn-grp">
-                                <button class="btn" onclick="setSpeed(0.3, this)">x0.3</button>
-                                <button class="btn" onclick="setSpeed(0.5, this)">x0.5</button>
-                                <button class="btn" onclick="setSpeed(0.7, this)">x0.7</button>
-                                <button class="btn active" onclick="setSpeed(1.0, this)">x1.0</button>
-                            </div>
-                        </div>
-                    </div>
-
                     <div id="burning-mode-dashboard">
                         <div style="font-size:14px; font-weight:bold; margin-bottom:10px; color:var(--text);">🔥 집중 공략할 성취도를 선택하세요 (다중 선택 가능)</div>
                         <div class="status-choice-grp" style="margin-bottom:15px;">
@@ -1029,9 +1076,6 @@
                 </div>
 
                 <div id="puzzle-play-area">
-                    <div style="display: flex; justify-content: flex-start; align-items: center; width: 100%; max-width: 640px; margin: 0 auto 15px auto;">
-                        <button class="btn" onclick="resetQuizSetup()">🔙 연습 설정 다시하기</button>
-                    </div>
                     <div id="puzzle-card-render-zone"></div>
                 </div>
             </div>
@@ -2346,7 +2390,9 @@ function loadContent(wk, type, el) {
         if(isRandomQuiz) initPuzzleRandom();
     }
 
-    // 💡 [수정] 퍼즐 카드 이동 시 성취도(Pass / Retry) 필수 체크 검사
+
+
+    // 💡 [수정] 문장 배열 이동: 마지막 퍼즐 완료 시 위트있는 알림창 후 세팅화면 복귀
     function navigatePuzzle(dir) {
         const wk = puzzlePool[currentPuzzleIndex].wk;
         const type = puzzlePool[currentPuzzleIndex].type;
@@ -2361,20 +2407,32 @@ function loadContent(wk, type, el) {
         stopAll();
         
         if (isRandomQuiz && puzzlePool.length > 1) {
+            // 💡 랜덤 모드: 바구니에 남은 카드가 없을 때 위트 있는 안내
             if (puzzleUnvisited.length === 0) {
-                initPuzzleRandom(); 
+                alert("🎉 오마이갓!\n 랜덤 퍼즐까지 싹 다 클리어하다니... 진짜 찢었다! 😎👍");
+                resetQuizSetup();
+                return;
             }
             const randIdx = Math.floor(Math.random() * puzzleUnvisited.length);
             currentPuzzleIndex = puzzleUnvisited[randIdx];
             puzzleUnvisited.splice(randIdx, 1);
         } else {
-            currentPuzzleIndex += dir;
-            if (currentPuzzleIndex >= puzzlePool.length) currentPuzzleIndex = 0;
-            if (currentPuzzleIndex < 0) currentPuzzleIndex = puzzlePool.length - 1;
+            // 💡 순차 모드: 마지막 카드에서 '다음(▶)'을 눌렀을 때 위트 있는 안내
+            if (dir > 0 && currentPuzzleIndex === puzzlePool.length - 1) {
+                alert("👏 퍼펙트!\n 흩어진 단어들을 완벽하게 조립 성공!\n");
+                resetQuizSetup();
+                return;
+            } else {
+                currentPuzzleIndex += dir;
+                if (currentPuzzleIndex >= puzzlePool.length) currentPuzzleIndex = 0;
+                if (currentPuzzleIndex < 0) currentPuzzleIndex = puzzlePool.length - 1;
+            }
         }
         
         renderPuzzleCard();
     }
+
+
 
 
     // ==========================================
@@ -2473,6 +2531,7 @@ function loadContent(wk, type, el) {
     }
 
     // 💡 툭탁연습(Quiz) 카드 렌더러 - 녹음 저장 기능 탑재 완료
+    // 💡 툭탁연습(Quiz) 카드 렌더러 - 배속 버튼을 카드 안쪽으로 이동!
     function renderQuizCard() {
         if (quizPool.length === 0) {
             quizCardRenderZone.innerHTML = `<div style="text-align:center; padding: 40px; color:var(--gray-text);">해당 조건의 카드가 없습니다.<br><br>필터를 변경하거나 챕터를 다시 선택해주세요.</div>`;
@@ -2491,7 +2550,9 @@ function loadContent(wk, type, el) {
         const statusIconBadge = getStatusIconChar(savedStatus || '');
         const englishFullText = item.chunks ? item.chunks.map(c => c.text).join(' ') : '';
 
-        const badgeDisplay = isBurningMode ? 'none' : 'inline';
+        // 💡 현재 저장된 배속을 불러와서 활성화 상태(active) 유지
+        const currentSpeed = parseFloat(localStorage.getItem('koboogy_speed')) || 1.0;
+        const getSpeedClass = (s) => currentSpeed === s ? 'active' : '';
 
         let html = `
         <div class="quiz-container">
@@ -2506,9 +2567,7 @@ function loadContent(wk, type, el) {
             <div class="quiz-split-card" id="quiz-card-element" data-step="korean" onclick="toggleQuizCardFields()">
                 <div class="quiz-card-top-korean-zone">
                     <div style="position:absolute; top:15px; right:20px; cursor:pointer; font-size:20px; filter: grayscale(${isRandomQuiz ? '0' : '100%'}); opacity: ${isRandomQuiz ? '1' : '0.4'}; transition: 0.2s; user-select: none;" onclick="event.stopPropagation(); toggleRandomQuiz(this)">🔀</div>
-
                     <div class="trans-text" style="font-size:22px; color:#1a0dab; font-weight:700;">${item.trans}</div>
-
                 </div>
                 <div class="quiz-card-bottom-english-zone">
                     <div id="quiz-english-fields-box" style="display: none; width:100%;">
@@ -2526,11 +2585,23 @@ function loadContent(wk, type, el) {
                 </div>
             </div>
 
-            <div class="quiz-audio-action-row">
+            <div class="quiz-audio-action-row" style="margin-bottom: 12px;">
                 ${(qItem.audio && qItem.audio.trim() !== "") ? `<button class="quiz-bar-action-btn native-sound" onclick="playQuizSentence(${item.start || 0}, ${item.end || 0})">🔊 원어민 음성 듣기</button>` : ''}
                 <button class="quiz-bar-action-btn" id="start-record-btn" onclick="startRecording()">🎙️ 녹음 시작</button>
                 <button class="quiz-bar-action-btn recording-active" id="stop-record-btn" onclick="stopRecording()" style="display:none;">⏹️ 녹음 중지</button>
                 <button class="quiz-bar-action-btn" id="play-record-btn" onclick="playRecording()" ${qItem.recordedAudio ? '' : 'disabled'}>🎧 내 발음 듣기</button>
+            </div>
+
+            <div style="display: flex; justify-content: flex-start; align-items: center; width: 100%; margin-bottom: 15px; padding: 0 4px;">
+                <div class="speed-controls-row">
+                    <span style="font-size: 13px; font-weight: bold; color: var(--gray-text); margin-right: 10px;">오디오 배속</span>
+                    <div class="btn-grp">
+                        <button class="btn ${getSpeedClass(0.3)}" onclick="setSpeed(0.3, this)">x0.3</button>
+                        <button class="btn ${getSpeedClass(0.5)}" onclick="setSpeed(0.5, this)">x0.5</button>
+                        <button class="btn ${getSpeedClass(0.7)}" onclick="setSpeed(0.7, this)">x0.7</button>
+                        <button class="btn ${getSpeedClass(1.0)}" onclick="setSpeed(1.0, this)">x1.0</button>
+                    </div>
+                </div>
             </div>
 
             <div class="quiz-status-panel" style="width:100%; text-align:center;">
@@ -2558,7 +2629,6 @@ function loadContent(wk, type, el) {
             player.src = qItem.audio; player.load();
         }
 
-        // 💡 [핵심] 카드가 렌더링될 때, 이 카드에 저장해둔 내 목소리가 있으면 플레이어에 셋팅!
         const recordPlayer = document.getElementById('record-player');
         if (qItem.recordedAudio) {
             recordedAudioUrl = qItem.recordedAudio;
@@ -2569,6 +2639,10 @@ function loadContent(wk, type, el) {
             recordPlayer.removeAttribute('src');
         }
     }
+
+
+
+
 
     function toggleQuizCardFields() {
         const card = document.getElementById('quiz-card-element'); if (!card) return;
@@ -2590,20 +2664,18 @@ function playQuizSentence(s, e) {
     }
 }
     
+    // 💡 [수정] 툭탁 연습 이동: 마지막 카드 완료 시 위트있는 알림창 후 세팅화면 복귀
     function navigateQuiz(dir) {
-        // 💡 [요청 반영] 앞/뒤 방향 상관없이 성취도 체크 여부 무조건 검사!
         const wk = quizPool[currentQuizIndex].wk;
         const type = quizPool[currentQuizIndex].type;
         const idx = quizPool[currentQuizIndex].idx;
         const progressKey = `${wk}_${type}_${idx}`;
         
-        // 방향(dir) 조건 삭제: 성취도 없으면 무조건 막음
         if (!userProgressCache[progressKey]) {
             alert("🎯 성취도를 먼저 체크해 주세요!");
             return;
         }
 
-        // 💡 원어민 오디오 및 내 녹음 플레이어 강제 정지!
         stopAll();
         const recordPlayer = document.getElementById('record-player');
         if (recordPlayer) {
@@ -2611,6 +2683,14 @@ function playQuizSentence(s, e) {
             recordPlayer.currentTime = 0;
         }
 
+        // 💡 마지막 카드에서 '다음(▶)'을 눌렀을 때 위트 있는 완료 안내 팝업
+        if (dir > 0 && !isRandomQuiz && currentQuizIndex === quizPool.length - 1) {
+            alert("👏 크으~ 멋지다!\n 준비한 툭탁 연습 종료! 🗣️🔥");
+            resetQuizSetup(); // 설정 화면으로 즉시 복귀
+            return;
+        }
+
+        // 기존 이동 로직
         if (isRandomQuiz && quizPool.length > 1) {
             let nextIndex = currentQuizIndex;
             while(nextIndex === currentQuizIndex) {
@@ -2619,7 +2699,10 @@ function playQuizSentence(s, e) {
             currentQuizIndex = nextIndex;
         } else {
             currentQuizIndex += dir;
+            if (currentQuizIndex >= quizPool.length) currentQuizIndex = 0;
+            if (currentQuizIndex < 0) currentQuizIndex = quizPool.length - 1;
         }
+        
         renderQuizCard();
     }
 
