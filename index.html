@@ -1102,7 +1102,7 @@
         auth = firebase.auth(); 
         db = firebase.firestore();
 
-        auth.setPersistence(firebase.auth.Auth.Persistence.SESSION);
+        auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 
         auth.onAuthStateChanged((user) => {
             if (user) {
@@ -1687,8 +1687,8 @@ function toggleAutoQuizMode() {
     if (isAutoQuizMode) {
         player.play().then(() => player.pause()).catch(() => {});
         
-        renderQuizCard();
-        runAutoQuizSequence();
+        // renderQuizCard 내부에서 자동으로 시퀀스를 실행하므로 여기서 중복 호출 금지!
+        renderQuizCard(); 
     } else {
         clearTimeout(autoStepTimer1);
         clearTimeout(autoStepTimer2);
@@ -1696,6 +1696,7 @@ function toggleAutoQuizMode() {
         renderQuizCard();
     }
 }
+
 
 // 🤖 자동 연습 시퀀스 실행
 function runAutoQuizSequence() {
@@ -2855,25 +2856,42 @@ function navigateQuiz(dir, isAuto = false) {
 }
 
     function startRecording() {
-        navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
-            mediaRecorder = new MediaRecorder(stream); audioChunks = [];
-            mediaRecorder.ondataavailable = e => { audioChunks.push(e.data); };
-            mediaRecorder.onstop = () => {
-                const audioBlob = new Blob(audioChunks, { type: mediaRecorder.mimeType || 'audio/webm' }); 
-                recordedAudioUrl = URL.createObjectURL(audioBlob);
-                
-                // 💡 [핵심] 현재 보고 있는 카드 데이터에 내 녹음 파일 주소를 찰싹 붙여서 저장해둠!
-                quizPool[currentQuizIndex].recordedAudio = recordedAudioUrl;
-                
+    // 💡 [핵심] 녹음이 시작될 때의 카드 번호를 영구 박제!
+    const lockedQuizIndex = currentQuizIndex; 
+
+    navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+        mediaRecorder = new MediaRecorder(stream); 
+        audioChunks = [];
+        mediaRecorder.ondataavailable = e => { audioChunks.push(e.data); };
+        mediaRecorder.onstop = () => {
+            const audioBlob = new Blob(audioChunks, { type: mediaRecorder.mimeType || 'audio/webm' }); 
+            const url = URL.createObjectURL(audioBlob);
+            
+            // 💡 현재 바뀌었을지도 모를 번호 대신, 박제해둔 번호(lockedQuizIndex)에 정확히 저장!
+            quizPool[lockedQuizIndex].recordedAudio = url;
+            
+            // 만약 아직 카드가 안 넘어갔다면, 재생 버튼에도 즉시 오디오 장전
+            if (currentQuizIndex === lockedQuizIndex) {
+                recordedAudioUrl = url;
                 const recordPlayer = document.getElementById('record-player');
-                recordPlayer.src = recordedAudioUrl;
-                recordPlayer.load(); // 안정적인 재생을 위해 강제 로드
-                document.getElementById('play-record-btn').disabled = false;
-            };
-            mediaRecorder.start();
-            document.getElementById('start-record-btn').style.display = 'none'; document.getElementById('stop-record-btn').style.display = 'flex';
-        }).catch(err => { alert("마이크 장치 접근 권한이 필요합니다."); });
-    }
+                if (recordPlayer) {
+                    recordPlayer.src = url;
+                    recordPlayer.load(); 
+                }
+                const playBtn = document.getElementById('play-record-btn');
+                if (playBtn) playBtn.disabled = false;
+            }
+        };
+        mediaRecorder.start();
+        const startBtn = document.getElementById('start-record-btn');
+        const stopBtn = document.getElementById('stop-record-btn');
+        if (startBtn) startBtn.style.display = 'none'; 
+        if (stopBtn) stopBtn.style.display = 'flex';
+    }).catch(err => { alert("마이크 장치 접근 권한이 필요합니다."); });
+}
+
+
+
 
     function stopRecording() {
         if (mediaRecorder && mediaRecorder.state !== 'inactive') {
