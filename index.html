@@ -42,7 +42,7 @@
         body.quiz-mode-active .main-content { background-color: var(--memo-bg); }
         body.quiz-mode-active .sidebar { display: none !important; }
 
-        #login-screen { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #f1f3f4; display: flex; align-items: center; justify-content: center; z-index: 9999; }
+        #login-screen { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #f1f3f4; display: none; align-items: center; justify-content: center; z-index: 9999; }
         .login-card { background: white; padding: 40px 30px; border-radius: 16px; box-shadow: 0 4px 24px rgba(0,0,0,0.08); width: 100%; max-width: 380px; text-align: center; }
         .login-card .brand { flex-direction: column; justify-content: center; padding: 0 0 20px 0; font-size: 24px; font-weight: 800; display: flex; align-items: center; gap: 15px; }
         .login-card .brand img { width: 100%; max-width: 320px; border-radius: 4px; object-fit: contain; }
@@ -1701,43 +1701,48 @@ function toggleAutoQuizMode() {
 // 🤖 자동 연습 시퀀스 실행
 function runAutoQuizSequence() {
     if (!isAutoQuizMode) return;
-    
+
     const qItem = quizPool[currentQuizIndex];
     const item = qItem.data;
-    
+
     // 오디오 길이를 기반으로 대기 시간 계산 (오디오가 없으면 기본 3초)
     const duration = ((item.end || 0) - (item.start || 0));
     const recordWaitTime = duration > 0 ? (duration * 1000) + 3000 : 3000; 
 
-    // 1. 카드가 뜨자마자 녹음 시작
-    startRecording();
-
-    // 2. [해당 카드 재생시간 + 3초] 뒤 동작 실행
-    autoStepTimer1 = setTimeout(() => {
-        if (!isAutoQuizMode) return;
-        
-        // 녹음 중지
-        stopRecording();
-        
-        // 카드 오픈 (닫혀있을 때만 열기)
-        const cardEl = document.getElementById('quiz-card-element');
-        if (cardEl && cardEl.getAttribute('data-step') === 'korean') {
-            toggleQuizCardFields();
+    // 1. 카드가 뜨자마자 녹음 시작 (비동기로 마이크 권한을 얻은 후 확실하게 타이머 시작!)
+    startRecording(() => {
+        if (!isAutoQuizMode) {
+            stopRecording();
+            return;
         }
 
-        // 원어민 소리 함께 재생
-        if (qItem.audio && qItem.audio.trim() !== "") {
-            playQuizSentence(item.start || 0, item.end || 0);
-        }
-
-        // 3. (오디오 재생 시간) + (다시 따라 말할 여유 시간: 재생 시간 + 1초) 후 다음 카드로 이동
-        const playWaitTime = duration > 0 ? (duration * 2000) + 1000 : 3000;
-        autoStepTimer2 = setTimeout(() => {
+        // 2. [해당 카드 재생시간 + 3초] 뒤 동작 실행
+        autoStepTimer1 = setTimeout(() => {
             if (!isAutoQuizMode) return;
-            navigateQuiz(1, true); // true를 넘겨 자동 이동임을 알림
-        }, playWaitTime);
 
-    }, recordWaitTime);
+            // 녹음 중지
+            stopRecording();
+
+            // 카드 오픈 (닫혀있을 때만 열기)
+            const cardEl = document.getElementById('quiz-card-element');
+            if (cardEl && cardEl.getAttribute('data-step') === 'korean') {
+                toggleQuizCardFields();
+            }
+
+            // 원어민 소리 함께 재생
+            if (qItem.audio && qItem.audio.trim() !== "") {
+                playQuizSentence(item.start || 0, item.end || 0);
+            }
+
+            // 3. (오디오 재생 시간) + (다시 따라 말할 여유 시간: 재생 시간 + 1초) 후 다음 카드로 이동
+            const playWaitTime = duration > 0 ? (duration * 2000) + 1000 : 3000;
+            autoStepTimer2 = setTimeout(() => {
+                if (!isAutoQuizMode) return;
+                navigateQuiz(1, true); // true를 넘겨 자동 이동임을 알림
+            }, playWaitTime);
+
+        }, recordWaitTime);
+    });
 }
 
 
@@ -2855,22 +2860,20 @@ function navigateQuiz(dir, isAuto = false) {
     renderQuizCard();
 }
 
-    function startRecording() {
-    // 💡 [핵심] 녹음이 시작될 때의 카드 번호를 영구 박제!
+    function startRecording(onStarted) {
     const lockedQuizIndex = currentQuizIndex; 
-
     navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
         mediaRecorder = new MediaRecorder(stream); 
         audioChunks = [];
         mediaRecorder.ondataavailable = e => { audioChunks.push(e.data); };
         mediaRecorder.onstop = () => {
-            const audioBlob = new Blob(audioChunks, { type: mediaRecorder.mimeType || 'audio/webm' }); 
+            // 💡 [버그 픽스] 아이폰(Safari) 등에서 MIME 타입이 없어서 음원이 깨지는 현상 방지
+            const options = mediaRecorder.mimeType ? { type: mediaRecorder.mimeType } : {};
+            const audioBlob = new Blob(audioChunks, options); 
             const url = URL.createObjectURL(audioBlob);
-            
-            // 💡 현재 바뀌었을지도 모를 번호 대신, 박제해둔 번호(lockedQuizIndex)에 정확히 저장!
+
             quizPool[lockedQuizIndex].recordedAudio = url;
-            
-            // 만약 아직 카드가 안 넘어갔다면, 재생 버튼에도 즉시 오디오 장전
+
             if (currentQuizIndex === lockedQuizIndex) {
                 recordedAudioUrl = url;
                 const recordPlayer = document.getElementById('record-player');
@@ -2883,11 +2886,22 @@ function navigateQuiz(dir, isAuto = false) {
             }
         };
         mediaRecorder.start();
+        
         const startBtn = document.getElementById('start-record-btn');
         const stopBtn = document.getElementById('stop-record-btn');
         if (startBtn) startBtn.style.display = 'none'; 
         if (stopBtn) stopBtn.style.display = 'flex';
-    }).catch(err => { alert("마이크 장치 접근 권한이 필요합니다."); });
+
+        // 💡 [버그 픽스] 마이크가 켜지고 녹음이 시작된 '직후'에 타이머를 돌리도록 신호 전송!
+        if (typeof onStarted === 'function') onStarted(); 
+        
+    }).catch(err => { 
+        alert("마이크 장치 접근 권한이 필요합니다."); 
+        if (isAutoQuizMode) {
+            isAutoQuizMode = false;
+            renderQuizCard(); // 권한 없으면 자동모드 강제 종료
+        }
+    });
 }
 
 
