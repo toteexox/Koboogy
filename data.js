@@ -1235,7 +1235,7 @@ const studyData = {
         { group: "What about", start: 74.570, end: 76.640, ipa: "/wʌt əˈbaʊt ˈdʒɛni/", trans: "제니는 어때?", chunks: [{ text: "What about Jenny?", s: 74.570, e: 76.640 }] }
       ]
     },
-    "realconvo_live": {
+    "live_realconvo": {
       title: "Live Session (RC)",
       audio: "",
       sentences: [
