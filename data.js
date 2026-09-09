@@ -1221,18 +1221,18 @@ const studyData = {
       title: "Useful Expressions (RC)",
       audio: "audio/5-3 Useful Expressions.wav",
       sentences: [
-        { group: "grab", start: 4.570, end: 7.530, ipa: "/lɛts ɡræb ˈdɪnər ˈæftər klæs/", trans: "수업 끝나고 저녁 먹자.", chunks: [{ text: "Let's grab dinner after class", s: 4.570, e: 7.530 }] },
-        { group: "grab", start: 10.470, end: 13.310, ipa: "/wɑːnt tuː ɡræb ə ˈkɔːfi ðɪs ˈwiːkˌɛnd/", trans: "이번 주말에 커피 한잔할래?", chunks: [{ text: "Want to grab a coffee this weekend?", s: 10.470, e: 13.310 }] },
-        { group: "grab", start: 16.490, end: 20.930, ipa: "/aɪ ˈjuːʒuəli dʒʌst ɡræb ˈsʌmθɪŋ kwɪk tuː iːt ɪn ðə ˌkæfəˈtɪriə/", trans: "난 보통 구내식당에서 대충 빨리 먹어.", chunks: [{ text: "I usually just grab something quick to eat in the cafeteria", s: 16.490, e: 20.930 }] },
-        { group: "free", start: 25.880, end: 28.450, ipa: "/wɛn ɑːr juː friː/", trans: "언제 시간 돼?", chunks: [{ text: "When are you free?", s: 25.880, e: 28.450 }] },
-        { group: "free", start: 30.880, end: 33.790, ipa: "/aɪm friː ˈæftər sɪks piː-ɛm/", trans: "나 오후 6시 이후에 시간 돼.", chunks: [{ text: "I'm free after 6 PM", s: 30.880, e: 33.790 }] },
+        { group: "grab", start: 4.570, end: 7.530, ipa: "/lɛts ɡræb ˈdɪnər ˈæftər klæs/", trans: "수업 끝나고 저녁 같이 먹자.", chunks: [{ text: "Let's grab dinner after class", s: 4.570, e: 7.530 }] },
+        { group: "grab", start: 10.470, end: 13.310, ipa: "/wɑːnt tuː ɡræb ə ˈkɔːfi ðɪs ˈwiːkˌɛnd/", trans: "이번 주말에 커피 마실래?", chunks: [{ text: "Want to grab a coffee this weekend?", s: 10.470, e: 13.310 }] },
+        { group: "grab", start: 16.490, end: 20.930, ipa: "/aɪ ˈjuːʒuəli dʒʌst ɡræb ˈsʌmθɪŋ kwɪk tuː iːt ɪn ðə ˌkæfəˈtɪriə/", trans: "나는 보통 카페테리아에서 빨리 먹을 것만 집어 와.", chunks: [{ text: "I usually just grab something quick to eat in the cafeteria", s: 16.490, e: 20.930 }] },
+        { group: "free", start: 25.880, end: 28.450, ipa: "/wɛn ɑːr juː friː/", trans: "너 언제 시간 돼?", chunks: [{ text: "When are you free?", s: 25.880, e: 28.450 }] },
+        { group: "free", start: 30.880, end: 33.790, ipa: "/aɪm friː ˈæftər sɪks piː-ɛm/", trans: "저녁 6시 이후에 시간 돼.", chunks: [{ text: "I'm free after 6 PM", s: 30.880, e: 33.790 }] },
         { group: "free", start: 36.770, end: 40.000, ipa: "/ʃiːl biː friː ɔːl deɪ təˈmɑːroʊ/", trans: "걔 내일 하루 종일 시간 돼.", chunks: [{ text: "She'll be free all day tomorrow", s: 36.770, e: 40.000 }] },
-        { group: "work for", start: 43.200, end: 46.250, ipa: "/dʌz ˈmʌndeɪ wɜːrks fɔːr juː/", trans: "월요일 괜찮아?", chunks: [{ text: "Does Monday work for you?", s: 43.200, e: 46.250 }] },
-        { group: "work for", start: 49.230, end: 52.190, ipa: "/eɪt piː-ɛm wɜːrks fɔːr miː/", trans: "오후 8시 괜찮아.", chunks: [{ text: "8 PM works for me", s: 49.230, e: 52.190 }] },
-        { group: "work for", start: 55.200, end: 58.870, ipa: "/lɛts faɪnd ə taɪm ðæt wɜːrks fɔːr ˈɛvriˌwʌn/", trans: "모두에게 괜찮은 시간을 찾아보자.", chunks: [{ text: "Let's find a time that works for everyone", s: 55.200, e: 58.870 }] },
+        { group: "work", start: 43.200, end: 46.250, ipa: "/dʌz ˈmʌndeɪ wɜːrks fɔːr juː/", trans: "월요일 돼?", chunks: [{ text: "Does Monday work for you?", s: 43.200, e: 46.250 }] },
+        { group: "work", start: 49.230, end: 52.190, ipa: "/eɪt piː-ɛm wɜːrks fɔːr miː/", trans: "저녁 8시가 나한텐 괜찮아.", chunks: [{ text: "8 PM works for me", s: 49.230, e: 52.190 }] },
+        { group: "work", start: 55.200, end: 58.870, ipa: "/lɛts faɪnd ə taɪm ðæt wɜːrks fɔːr ˈɛvriˌwʌn/", trans: "다들 편한 시간으로 맞춰 보자.", chunks: [{ text: "Let's find a time that works for everyone", s: 55.200, e: 58.870 }] },
         { group: "What about", start: 62.580, end: 65.590, ipa: "/wʌt əˈbaʊt ˈfraɪdeɪ ɪnˈstɛd/", trans: "대신 금요일은 어때?", chunks: [{ text: "What about Friday instead?", s: 62.580, e: 65.590 }] },
         { group: "What about", start: 68.630, end: 71.580, ipa: "/wʌt əˈbaʊt ˈɡoʊɪŋ tuː ðə ˈmuːviz/", trans: "영화 보러 가는 건 어때?", chunks: [{ text: "What about going to the movies?", s: 68.630, e: 71.580 }] },
-        { group: "What about", start: 74.570, end: 76.640, ipa: "/wʌt əˈbaʊt ˈdʒɛni/", trans: "제니는 어때?", chunks: [{ text: "What about Jenny?", s: 74.570, e: 76.640 }] }
+        { group: "What about", start: 74.570, end: 76.640, ipa: "/wʌt əˈbaʊt ˈdʒɛni/", trans: "그럼 Jennie는?", chunks: [{ text: "What about Jenny?", s: 74.570, e: 76.640 }] }
       ]
     },
     "live_realconvo": {
