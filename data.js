@@ -1217,79 +1217,111 @@ const studyData = {
         { speaker: "A", start: 53.470, end: 55.040, ipa: "/siː juː ðɛn/", trans: "그때 보자~", chunks: [{ text: "See you then", s: 53.470, e: 55.040 }] }
       ]
     },
-    "useful_realconvo": {
+     "useful_realconvo": {
       title: "Useful Expressions (RC)",
       audio: "audio/5-3 Useful Expressions.wav",
       sentences: [
-        { group: "get lost", start: 4.410, end: 7.680, ipa: "/ɪts ˈiːzi tuː ɡɛt lɔːst ɪn ˈmjʌŋdɔːŋ/", trans: "명동에서는 길 잃기 쉬워.", chunks: [{ text: "It's easy to get lost in Myeong-dong", s: 4.410, e: 7.680 }] },
-        { group: "get lost", start: 11.100, end: 14.050, ipa: "/aɪ ɡɑːt lɔːst ɑːn ðə weɪ hɪr/", trans: "여기 오는 길에 길 헤맸어.", chunks: [{ text: "I got lost on the way here", s: 11.100, e: 14.050 }] },
-        { group: "get lost", start: 17.140, end: 20.100, ipa: "/ðeɪ ɡɑːt lɔːst ɪn ðə mjuːˈziːəm/", trans: "그 사람들 박물관 안에서 길을 잃었어.", chunks: [{ text: "They got lost in the museum", s: 17.140, e: 20.100 }] },
-        { group: "on foot", start: 23.350, end: 26.360, ipa: "/wiː ɪkˈsplɔːrd ðə taʊn ɑːn fʊt/", trans: "우린 그 마을을 걸어서 구경했어.", chunks: [{ text: "We explored the town on foot", s: 23.350, e: 26.360 }] },
-        { group: "on foot", start: 29.370, end: 32.470, ipa: "/ɪt ˈoʊnli teɪks tɛn ˈmɪnɪts ɑːn fʊt/", trans: "걸어서 10분밖에 안 걸려.", chunks: [{ text: "It only takes 10 minutes on foot", s: 29.370, e: 32.470 }] },
-        { group: "on foot", start: 35.650, end: 39.600, ipa: "/ðə ˈmɑːrkɪt ɪz ˈoʊnli ˈtwɛnti ˈmɪnɪts əˈweɪ ɑːn fʊt/", trans: "시장까지는 걸어서 20분 거리야.", chunks: [{ text: "The market is only 20 minutes away on foot", s: 35.650, e: 39.600 }] },
-        { group: "it says", start: 43.490, end: 46.500, ipa: "/ɪt sɛz ðæt wiː kænt pɑːrk hɪr/", trans: "여기 주차 금지라고 적혀 있어.", chunks: [{ text: "It says that we can't park here", s: 43.490, e: 46.500 }] },
-        { group: "it says", start: 49.730, end: 52.620, ipa: "/ɪt sɛz ðæt ɪts breɪk taɪm/", trans: "지금 쉬는 시간이라고 써 있네.", chunks: [{ text: "It says that it's break time", s: 49.730, e: 52.620 }] },
-        { group: "it says", start: 55.650, end: 58.460, ipa: "/ɪt sɛz doʊnt fiːd ðə bɜːrdz/", trans: "새들 먹이 주지 말라고 써 있어.", chunks: [{ text: "It says don't feed the birds", s: 55.650, e: 58.460 }] },
-        { group: "take", start: 61.980, end: 65.100, ipa: "/ɪt kæn teɪk ʌp tuː ən aʊər/", trans: "한 시간까지 걸릴 수도 있어.", chunks: [{ text: "It can take up to an hour", s: 61.980, e: 65.100 }] },
-        { group: "take", start: 68.130, end: 72.190, ipa: "/ɪt tʊk miː tuː jɪrz tuː spiːk ˈɪŋɡlɪʃ ˈfriːli/", trans: "영어를 자유롭게 말하는 데 2년 걸렸어.", chunks: [{ text: "It took me two years to speak English freely", s: 68.130, e: 72.190 }] },
-        { group: "take", start: 76.160, end: 79.940, ipa: "/ɪt teɪks θriː mʌnθs tuː ˈfɪnɪʃ ðə but kæmp/", trans: "그 부트캠프 끝내는 데 3개월 걸려.", chunks: [{ text: "It takes 3 months to finish the boot camp", s: 76.160, e: 79.940 }] },
-        { group: "Do you know", start: 83.900, end: 86.820, ipa: "/duː juː noʊ hwɪtʃ treɪn tuː teɪk/", trans: "어떤 기차 타야 하는지 알아?", chunks: [{ text: "Do you know which train to take?", s: 83.900, e: 86.820 }] },
-        { group: "Do you know", start: 89.980, end: 93.120, ipa: "/duː juː noʊ hwɛr ðə ˈrɛstərənt ɪz/", trans: "그 식당 어디 있는지 알아?", chunks: [{ text: "Do you know where the restaurant is?", s: 89.980, e: 93.120 }] },
-        { group: "Do you know", start: 96.530, end: 99.590, ipa: "/duː juː noʊ hwʌt hɜːr neɪm ɪz/", trans: "걔 이름이 뭔지 알아?", chunks: [{ text: "Do you know what her name is?", s: 96.530, e: 99.590 }] },
-        { group: "appreciate", start: 102.360, end: 105.620, ipa: "/aɪ ˈrɪli əˈpriːʃiˌeɪt jɔːr taɪm/", trans: "시간 내줘서 진짜 고마워.", chunks: [{ text: "I really appreciate your time", s: 102.360, e: 105.620 }] },
-        { group: "appreciate", start: 109.180, end: 112.640, ipa: "/ˈæmbər ˈrɪli əˈpriːʃiˌeɪtɪd ðə ɡɪft/", trans: "Amber가 그 선물을 정말 고마워했어.", chunks: [{ text: "Amber really appreciated the gift", s: 109.180, e: 112.640 }] },
-        { group: "appreciate", start: 116.190, end: 119.030, ipa: "/aɪ doʊnt əˈpriːʃiˌeɪt jɔːr toʊn/", trans: "너 말투 별로 맘에 안 들어.", chunks: [{ text: "I don't appreciate your tone", s: 116.190, e: 119.030 }] }
+        { group: "grab", start: 4.570, end: 7.530, ipa: "/lɛts ɡræb ˈdɪnər ˈæftər klæs/", trans: "수업 끝나고 저녁 먹자.", chunks: [{ text: "Let's grab dinner after class", s: 4.570, e: 7.530 }] },
+        { group: "grab", start: 10.470, end: 13.310, ipa: "/wɑːnt tuː ɡræb ə ˈkɔːfi ðɪs ˈwiːkˌɛnd/", trans: "이번 주말에 커피 한잔할래?", chunks: [{ text: "Want to grab a coffee this weekend?", s: 10.470, e: 13.310 }] },
+        { group: "grab", start: 16.490, end: 20.930, ipa: "/aɪ ˈjuːʒuəli dʒʌst ɡræb ˈsʌmθɪŋ kwɪk tuː iːt ɪn ðə ˌkæfəˈtɪriə/", trans: "난 보통 구내식당에서 대충 빨리 먹어.", chunks: [{ text: "I usually just grab something quick to eat in the cafeteria", s: 16.490, e: 20.930 }] },
+        { group: "free", start: 25.880, end: 28.450, ipa: "/wɛn ɑːr juː friː/", trans: "언제 시간 돼?", chunks: [{ text: "When are you free?", s: 25.880, e: 28.450 }] },
+        { group: "free", start: 30.880, end: 33.790, ipa: "/aɪm friː ˈæftər sɪks piː-ɛm/", trans: "나 오후 6시 이후에 시간 돼.", chunks: [{ text: "I'm free after 6 PM", s: 30.880, e: 33.790 }] },
+        { group: "free", start: 36.770, end: 40.000, ipa: "/ʃiːl biː friː ɔːl deɪ təˈmɑːroʊ/", trans: "걔 내일 하루 종일 시간 돼.", chunks: [{ text: "She'll be free all day tomorrow", s: 36.770, e: 40.000 }] },
+        { group: "work for", start: 43.200, end: 46.250, ipa: "/dʌz ˈmʌndeɪ wɜːrks fɔːr juː/", trans: "월요일 괜찮아?", chunks: [{ text: "Does Monday work for you?", s: 43.200, e: 46.250 }] },
+        { group: "work for", start: 49.230, end: 52.190, ipa: "/eɪt piː-ɛm wɜːrks fɔːr miː/", trans: "오후 8시 괜찮아.", chunks: [{ text: "8 PM works for me", s: 49.230, e: 52.190 }] },
+        { group: "work for", start: 55.200, end: 58.870, ipa: "/lɛts faɪnd ə taɪm ðæt wɜːrks fɔːr ˈɛvriˌwʌn/", trans: "모두에게 괜찮은 시간을 찾아보자.", chunks: [{ text: "Let's find a time that works for everyone", s: 55.200, e: 58.870 }] },
+        { group: "What about", start: 62.580, end: 65.590, ipa: "/wʌt əˈbaʊt ˈfraɪdeɪ ɪnˈstɛd/", trans: "대신 금요일은 어때?", chunks: [{ text: "What about Friday instead?", s: 62.580, e: 65.590 }] },
+        { group: "What about", start: 68.630, end: 71.580, ipa: "/wʌt əˈbaʊt ˈɡoʊɪŋ tuː ðə ˈmuːviz/", trans: "영화 보러 가는 건 어때?", chunks: [{ text: "What about going to the movies?", s: 68.630, e: 71.580 }] },
+        { group: "What about", start: 74.570, end: 76.640, ipa: "/wʌt əˈbaʊt ˈdʒɛni/", trans: "제니는 어때?", chunks: [{ text: "What about Jenny?", s: 74.570, e: 76.640 }] }
       ]
     },
-    "live_realconvo": {
+    "realconvo_live": {
       title: "Live Session (RC)",
       audio: "",
       sentences: [
-        { group: "got lost", ipa: "/aɪ ɡɑːt lɔːst ɑːn ðə weɪ/", trans: "오는 길에 길 잃었잖아.", chunks: [{ text: "I got lost on the way." }] },
-        { group: "got lost", ipa: "/aɪ θɪŋk wiː ɡɑːt lɔːst/", trans: "우리 길 잃은거 같어.", chunks: [{ text: "I think we got lost." }] },
-        { group: "got lost", ipa: "/aɪ fiːl lɔːst/", trans: "길을 잃은 기분이야.", chunks: [{ text: "I feel lost." }] },
-        { group: "got lost", ipa: "/ˈsʌmˌtaɪmz, juː fiːl lɔːst ɪn laɪf/", trans: "살다보면 인생에서 길을 잃은 기분이 들 때가 있지.", chunks: [{ text: "Sometimes, you feel lost in life." }] },
-        { group: "on foot", ipa: "/juː kæn ɡɛt ðɛr ɑːn fʊt/", trans: "거기 걸어서 갈 수 있어.", chunks: [{ text: "You can get there on foot." }] },
-        { group: "on foot", ipa: "/ɪt teɪks əˈbaʊt ˈtwɛnti ˈmɪnɪts ɑːn fʊt/", trans: "걸어서 20분 정도 걸려.", chunks: [{ text: "It takes about 20 minutes on foot." }] },
-        { group: "It says...", ipa: "/ɪt sɛz juː niːd tuː teɪk laɪn wʌn təˈwɔːrdz ˈsɪti hɔːl/", trans: "시청쪽으로 가는 1호선 타야 한다고 나오네요.", chunks: [{ text: "It says you need to take Line 1 towards City Hall." }] },
-        { group: "It says...", ipa: "/ɪt sɛz juː kæn ɡɛt ðɛr ɑːn fʊt/", trans: "거기 걸어서 갈 수 있다고 나오네요.", chunks: [{ text: "It says you can get there on foot." }] },
-        { group: "It says...", ipa: "/ɪt sɛz ðə rɪˈflɛkʃən laɪv stɑːrts æt eɪt/", trans: "회고라이브는 8시에 시작한다고 되어 있어.", chunks: [{ text: "It says the reflection live starts at 8." }] },
-        { group: "It says...", ipa: "/ɪt sɛz draɪ ˈkliːnɪŋ ˈoʊnli/", trans: "드라이클리닝만 하라고 나와있어.", chunks: [{ text: "It says dry cleaning only." }] },
-        { group: "It says...", ipa: "/ɪt sɛz kiːp ɪt ɪn ðə frɪdʒ/", trans: "냉장고에 보관하라고 나와있어.", chunks: [{ text: "It says keep it in the fridge." }] },
-        { group: "I would...", ipa: "/aɪ wʊd teɪk ðə ˈsʌbˌweɪ. ɪt ˈoʊnli teɪks ˈtwɛnti ˈmɪnɪts/", trans: "나라면 지하철 탈 거 같아. 20분밖에 안걸리거든.", chunks: [{ text: "I would take the subway. It only takes 20 minutes." }] },
-        { group: "I would...", ipa: "/aɪ wʊd dʒɔɪn ə ˈstʌdi ɡruːp/", trans: "나라면 스터디 그룹에 들어가겠어.", chunks: [{ text: "I would join a study group." }] },
-        { group: "I would...", ipa: "/aɪ wʊd wɑːtʃ ə lɑːt ʌv ˈɪŋɡlɪʃ ˈkɑːntɛnt/", trans: "나라면 영어 컨텐츠를 많이 보겠어.", chunks: [{ text: "I would watch a lot of English content." }] },
-        { group: "I would...", ipa: "/aɪ wʊd ɡoʊ tuː ˈmɛlbərn/", trans: "나라면 멜버른에 가겠어 (나라면 ___ 택하겠어).", chunks: [{ text: "I would go to Melbourne." }] },
-        { group: "I don't know which...", ipa: "/aɪ doʊnt noʊ hwɪtʃ wʌn ɪz ˈbɛtər/", trans: "어떤게 더 나은지 모르겠어.", chunks: [{ text: "I don't know which one is better." }] },
-        { group: "I don't know which...", ipa: "/aɪ doʊnt noʊ hwɪtʃ bʌs tuː teɪk/", trans: "어떤 버스를 타야 하는지 모르겠어.", chunks: [{ text: "I don't know which bus to take." }] },
-        { group: "I don't know which...", ipa: "/aɪ doʊnt noʊ hwɪtʃ kæˈfeɪ tuː traɪ. ðɛr ɑːr soʊ ˈmɛni ˈtrɛndi nuː ˈpleɪsɪz/", trans: "어떤 카페를 가볼 지 모르겠어. 요즘 핫한 곳이 너무 많아.", chunks: [{ text: "I don't know which cafe to try (go to). There are so many trendy new places." }] },
-        { group: "the other side", ipa: "/juː niːd tuː ɡoʊ tuː ðə ˈʌðər saɪd/", trans: "반대편으로 가셔야 해요.", chunks: [{ text: "You need to go to the other side." }] },
-        { group: "the other side", ipa: "/ɪt sɛz ɪts ɑːn ðə ˈʌðər saɪd/", trans: "반대편에 있다고 나오네요.", chunks: [{ text: "It says it's on the other side." }] },
-        { group: "the other side", ipa: "/ðɛrz ə kənˈviːnjəns stɔːr ɑːn ðə ˈʌðər saɪd/", trans: "반대편에 편의점이 있어요.", chunks: [{ text: "There's a convenience store on the other side." }] },
-        { group: "appreciate", ipa: "/aɪ ˈrɪli əˈpriːʃiˌeɪt ɪt/", trans: "정말 너무 감사해요.", chunks: [{ text: "I really appreciate it." }] },
-        { group: "appreciate", ipa: "/aɪ əˈpriːʃiˌeɪt juː/", trans: "난 너에게 감사해.", chunks: [{ text: "I appreciate you." }] },
-        { group: "appreciate", ipa: "/naʊ ðæt aɪ lɪv əˈbrɔːd, aɪ əˈpriːʃiˌeɪt kəˈriːə mɔːr/", trans: "이젠 내가 해외에 사니까, 한국에 더 감사하게 됐어.", chunks: [{ text: "Now that I live abroad, I appreciate Korea more." }] },
-        { group: "appreciate", ipa: "/hiː ˈdʌzənt əˈpriːʃiˌeɪt juː. juː dɪˈzɜːrv ˈbɛtər/", trans: "걘 너의 감사함을 몰라. 니가 아까워!", chunks: [{ text: "He doesn't appreciate you. You deserve better!" }] },
-        { group: "should have", ipa: "/aɪ ʃʊdəv ˈrɛntɪd ə kɑːr/", trans: "차를 빌렸어야 됐어.", chunks: [{ text: "I should've rented a car." }] },
-        { group: "should have", ipa: "/wiː ʃʊdəv tʃɑːrdʒd aʊər foʊnz/", trans: "우리 핸드폰을 충전했었어야 됐어.", chunks: [{ text: "We should've charged our phones." }] },
-        { group: "should have", ipa: "/wiː ʃʊdəv lɛft ˈɜːrliər/", trans: "우리 일찍 나왔어야 했어.", chunks: [{ text: "We should've left earlier." }] },
-        { group: "should have", ipa: "/aɪ ʃʊdəv ˈstʌdid ˈhɑːrdər/", trans: "공부를 더 열심히 했었어야 했는데…", chunks: [{ text: "I should've studied harder…" }] },
-        { group: "I think it's better to...", ipa: "/aɪ θɪŋk ɪts ˈbɛtər tuː teɪk laɪn fɔːr/", trans: "4호선 타는게 더 나은 것 같아.", chunks: [{ text: "I think it's better to take Line 4." }] },
-        { group: "I think it's better to...", ipa: "/aɪ θɪŋk ɪts ˈbɛtər tuː əˈpɑːləˌdʒaɪz tuː hɜːr/", trans: "걔한테 사과하는게 더 나을 것 같아.", chunks: [{ text: "I think it's better to apologize to her." }] },
-        { group: "I think it's better to...", ipa: "/aɪ θɪŋk ɪts ˈbɛtər tuː ˈfɪnɪʃ ˈstʌdiɪŋ fɜːrst, soʊ juː doʊnt ɡɛt strɛst ˈleɪtər/", trans: "공부를 먼저 끝내는게 좋을 것 같아. 나중에 스트레스 안받게.", chunks: [{ text: "I think it's better to finish studying first, so you don't get stressed later." }] },
-        { group: "traffic", ipa: "/aɪ θɪŋk aɪm ˈɡoʊɪŋ tuː biː leɪt. ðə ˈtræfɪk ɪz ˈrɪli bæd/", trans: "나 늦을 것 같아. 길이 너무 막혀.", chunks: [{ text: "I think I'm going to be late. The traffic is really bad." }] },
-        { group: "traffic", ipa: "/ðə ˈtræfɪk wɪl biː ˈrɪli bæd ənˈlɛs juː liːv ˈɜːrli/", trans: "일찍 나가지 않으면 길 엄청 막힐거야.", chunks: [{ text: "The traffic will be really bad unless you leave early." }] },
-        { group: "Where are you from?", ipa: "/hwɛr ɪn ɔːˈstreɪljə ɑːr juː frʌm/", trans: "호주 어디서 왔어?", chunks: [{ text: "Where in Australia are you from?" }] },
-        { group: "Where are you from?", ipa: "/oʊ, hwɛr æt/", trans: "호주 어디서 왔어? (어디쯤?)", chunks: [{ text: "Oh, where at?" }] },
-        { group: "Where are you from?", ipa: "/ɪt teɪks wʌn ænd ə hæf ˈaʊərz frʌm soʊl baɪ keɪ tiː ɛks/", trans: "KTX로 서울에서 한시간 반 걸려.", chunks: [{ text: "It takes one and a half hours from Seoul by KTX." }] },
-        { group: "Where are you from?", ipa: "/duː juː noʊ ɡwɑːŋdʒuː? ɪts ɪn ðə ˌsaʊθˈwɛst ʌv kəˈriːə/", trans: "광주 알아? 한국 남서쪽에 있어.", chunks: [{ text: "Do you know 광주? It's in the southwest of Korea." }] },
-        { group: "Where are you from?", ipa: "/ɪts ɪn ðə ˈsʌðərn pɑːrt ʌv kəˈriːə/", trans: "한국 남쪽 지역에 있어.", chunks: [{ text: "It's in the southern part of Korea." }] },
-        { group: "Where are you from?", ipa: "/ɪts ɑːn ðə ˈaʊtˌskɜːrts ʌv soʊl/", trans: "서울 외곽에 살아.", chunks: [{ text: "It's on the outskirts of Seoul." }] },
-        { group: "Where are you from?", ipa: "/aɪ lɪv ɪn ðə ˈsʌbɜːrbz ʌv soʊl/", trans: "서울 근교에 살아.", chunks: [{ text: "I live in the suburbs of Seoul." }] },
-        { group: "might", ipa: "/aɪ maɪt ɡoʊ tuː ˈɪndiə nɛkst jɪr/", trans: "나 아마 내년에 인도 갈 수도 있어.", chunks: [{ text: "I might go to India next year." }] },
-        { group: "might", ipa: "/aɪ maɪt ɡoʊ fɔːr ə wɔːk ˈleɪtər. duː juː wɑːnt tuː kʌm wɪθ miː/", trans: "이따 산책 갈 수도 있는데, 너도 갈래?", chunks: [{ text: "I might go for a walk later. Do you want to come with me?" }] },
-        { group: "might", ipa: "/aɪ maɪt biː leɪt. aɪ ɡɑːt kɔːt ɪn ˈtræfɪk/", trans: "나 늦을 수도 있어. 길이 꽉 막혔어.", chunks: [{ text: "I might be late. I got caught in traffic." }] },
-        { group: "might", ipa: "/aɪ maɪt biː ˈeɪbəl tuː dʒɔɪn ðə laɪv klæs təˈdeɪ/", trans: "나 오늘 라이브 수업 들어갈 수도 있겠다!", chunks: [{ text: "I might be able to join the live class today!" }] }
+        // 그룹 1: grab
+        { group: "grab", ipa: "/lɛts ɡræb ˈdɪnər ɑːn ˈfraɪdeɪ/", trans: "금요일에 저녁 먹자.", chunks: [{ text: "Let's grab dinner on Friday." }] },
+        { group: "grab", ipa: "/haʊ əˈbaʊt wiː ɡræb ˈkɔːfi ˈæftər klæs/", trans: "수업 끝나고 커피 한 잔 어때?", chunks: [{ text: "How about we grab coffee after class?" }] },
+        { group: "grab", ipa: "/aɪm ˈθɪŋkɪŋ ʌv ˈɡoʊɪŋ tuː ɡræb ə ˈkɔːfi/", trans: "커피 사러갈까 생각 중인데,", chunks: [{ text: "I'm thinking of going to grab a coffee." }] },
+        { group: "grab", ipa: "/duː juː wɑːnt tuː dʒɔɪn/", trans: "너도 갈래?", chunks: [{ text: "Do you want to join?" }] },
+
+        // 그룹 2: free / available
+        { group: "free / available", ipa: "/ɑːr juː friː ɑːn ˈsʌndeɪ ˈæftərˈnuːn/", trans: "일요일 오후에 시간 돼?", chunks: [{ text: "Are you free on Sunday afternoon?" }] },
+        { group: "free / available", ipa: "/ɑːr juː əˈveɪləbəl ɑːn ˈsʌndeɪ ˈæftərˈnuːn/", trans: "일요일 오후에 시간 돼?", chunks: [{ text: "Are you available on Sunday afternoon?" }] },
+        { group: "free / available", ipa: "/aɪm friː ˈæftər sɪks/", trans: "6시 이후엔 널럴해.", chunks: [{ text: "I'm free after 6." }] },
+        { group: "free / available", ipa: "/haʊ əˈbaʊt wiː ɡræb ə bɪr ænd kætʃ ʌp/", trans: "맥주 한잔 하고 오랜만에 이야기 할까?", chunks: [{ text: "How about we grab a beer and catch up?" }] },
+        { group: "free / available", ipa: "/wɛn ɑːr juː friː nɛkst wiːk/", trans: "다음주 언제 시간 돼?", chunks: [{ text: "When are you free next week?" }] },
+
+        // 그룹 3: let me
+        { group: "let me", ipa: "/lɛt miː tʃɛk/", trans: "확인해 볼게.", chunks: [{ text: "Let me check." }] },
+        { group: "let me", ipa: "/lɛt miː siː/", trans: "어디 보자...", chunks: [{ text: "Let me see..." }] },
+        { group: "let me", ipa: "/lɛt miː θɪŋk/", trans: "생각좀 해보자.", chunks: [{ text: "Let me think." }] },
+        { group: "let me", ipa: "/lɛt miː θɪŋk əˈbaʊt ɪt/", trans: "그거 생각해 볼게.", chunks: [{ text: "Let me think about it." }] },
+        { group: "let me", ipa: "/lɛt miː noʊ/", trans: "알려줘./연락줘.", chunks: [{ text: "Let me know." }] },
+        { group: "let me", ipa: "/lɛt miː noʊ wɛn jʊr friː nɛkst mʌnθ/", trans: "다음달 시간될 때 알려줘.", chunks: [{ text: "Let me know when you're free next month." }] },
+        { group: "let me", ipa: "/lɛt miː ɡɛt juː ə pleɪt/", trans: "내가 밥 차려줄게 (접시 가져다 줄게)", chunks: [{ text: "Let me get you a plate." }] },
+        { group: "let me", ipa: "/lɛt miː duː ɪt/", trans: "내가 할 게.", chunks: [{ text: "Let me do it." }] },
+        { group: "let me", ipa: "/lɛt miː hɛlp juː/", trans: "내가 도와줄게.", chunks: [{ text: "Let me help you." }] },
+        { group: "let me", ipa: "/lɛt miː duː ðə ˈdɪʃɪz/", trans: "내가 설거지 할게.", chunks: [{ text: "Let me do the dishes." }] },
+        { group: "let me", ipa: "/lɛt miː kɔːl juː ˈleɪtər/", trans: "나중에 전화할게.", chunks: [{ text: "Let me call you later." }] },
+        { group: "let me", ipa: "/lɛt miː tɔːk tuː maɪ ˈhʌzbənd/", trans: "남편이랑 이야기 해 볼게.", chunks: [{ text: "Let me talk to my husband." }] },
+        { group: "let me", ipa: "/lɛt miː tʃɛk maɪ ˈskɛdʒuːl/", trans: "스케줄 확인해 볼게.", chunks: [{ text: "Let me check my schedule." }] },
+
+        // 그룹 4: work / work out
+        { group: "work / work out", ipa: "/dʌz ˈsʌndeɪ wɜːrk fɔːr juː/", trans: "일요일 괜찮아?", chunks: [{ text: "Does Sunday work for you?" }] },
+        { group: "work / work out", ipa: "/sɛvən wɜːrks fɔːr miː/", trans: "7시 괜찮아.", chunks: [{ text: "7 works for me." }] },
+        { group: "work / work out", ipa: "/ɪt lʊks laɪk ˈɛvriwʌnz ˈbɪzi, bʌt ˈtuːzdeɪ maɪt wɜːrk/", trans: "다들 바쁜것 같긴 한데, 화요일은 될 수도 있어.", chunks: [{ text: "It looks like everyone's busy, but Tuesday might work." }] },
+        { group: "work / work out", ipa: "/ɪt wɜːrks/", trans: "되네!", chunks: [{ text: "It works!" }] },
+        { group: "work / work out", ipa: "/ðə ˈpæswɜːrd ˈdɪdnt wɜːrk/", trans: "그 패스워드로 안 됐어.", chunks: [{ text: "The password didn't work." }] },
+        { group: "work / work out", ipa: "/ɪts nɑːt ˈwɜːrkɪŋ/", trans: "이거 작동 안 돼.", chunks: [{ text: "It's not working." }] },
+        { group: "work / work out", ipa: "/aɪm stɪl ˈwɜːrkɪŋ ɑːn ɪt/", trans: "아직 다 먹고 있는 중이에요. (음식 덜 먹었을 때)", chunks: [{ text: "I'm still working on it." }] },
+        { group: "work / work out", ipa: "/aɪ traɪd soʊ hɑːrd, bʌt ɪt ˈdɪdnt wɜːrk aʊt/", trans: "정말 노력했지만, 잘 안 됐어.", chunks: [{ text: "I tried so hard, but it didn't work out." }] },
+        { group: "work / work out", ipa: "/ɪt ˈdɪdnt wɜːrk aʊt bɪˈtwiːn ʌs/", trans: "우리 사이는 잘 안 됐어. (헤어짐)", chunks: [{ text: "It didn't work out between us." }] },
+
+        // 그룹 5: I've been / It's been
+        { group: "I've been / It's been", ipa: "/aɪv biːn ˈstʌdiɪŋ ˈɪŋɡlɪʃ fɔːr ə mʌnθ/", trans: "한달동안 영어공부를 하고있는 중이야.", chunks: [{ text: "I've been studying English for a month." }] },
+        { group: "I've been / It's been", ipa: "/aɪ fiːl laɪk aɪm ˈfaɪnəli ˈmeɪkɪŋ ˈprɑːɡrəs/", trans: "드디어 실력이 느는 것 같아.", chunks: [{ text: "I feel like I'm finally making progress." }] },
+        { group: "I've been / It's been", ipa: "/ɪts biːn ə mʌnθ sɪns aɪ ˈstɑːrtɪd ˈstʌdiɪŋ ˈɪŋɡlɪʃ/", trans: "영어공부 시작한지 한 달 됐어.", chunks: [{ text: "It's been a month since I started studying English." }] },
+        { group: "I've been / It's been", ipa: "/aɪv biːn ˈfoʊkəsɪŋ ɑːn maɪ ˈæksɛnt ˈleɪtli/", trans: "나 요즘 엑센트에 집중하고 있어.", chunks: [{ text: "I've been focusing on my accent lately." }] },
+        { group: "I've been / It's been", ipa: "/aɪv biːn ˈweɪtɪŋ fɔːr ən ˈaʊər/", trans: "1시간동안 기다리고 있었어.", chunks: [{ text: "I've been waiting for an hour." }] },
+        { group: "I've been / It's been", ipa: "/aɪv biːn ˈmiːnɪŋ tuː kɔːl ˈkeɪlə, bʌt aɪv biːn tuː ˈbɪzi/", trans: "케일라한테 계속 전화하려고 싶었는데, 요새 너무 바빴어.", chunks: [{ text: "I've been meaning to call Kayla, but I've been too busy." }] },
+        { group: "I've been / It's been", ipa: "/aɪv biːn ˈtraɪɪŋ tuː tɔːk mɔːr ɪn ˈɪŋɡlɪʃ/", trans: "요새 영어로 더 말하려고 노력 중이야.", chunks: [{ text: "I've been trying to talk more in English." }] },
+
+        // 그룹 6: on (social media)
+        { group: "on (social media)", ipa: "/aɪ sɔː ɪt ɑːn ˈɪnstəɡræm ˈjɛstərdeɪ/", trans: "그거 어제 인스타에서 봤어.", chunks: [{ text: "I saw it on Instagram yesterday." }] },
+        { group: "on (social media)", ipa: "/aɪ foʊnd ˈkoʊhæm ɑːn ˈjuːtuːb/", trans: "난 유튜브에서 코햄을 찾았어.", chunks: [{ text: "I found Koham on YouTube." }] },
+        { group: "on (social media)", ipa: "/ˈɛvriwʌnz ˈtɔːkɪŋ əˈbaʊt ɪt ɑːn ˈɪnstəɡræm/", trans: "요즘 인스타에서 다 그 얘기하더라.", chunks: [{ text: "Everyone's talking about it on Instagram." }] },
+        { group: "on (social media)", ipa: "/ɪt lʊks laɪk ʃiːz ˈriːəli ˈpɑːpjələr ɑːn ˈsoʊʃəl ˈmiːdiə/", trans: "걔 SNS에서 진짜 인기 많아보이더라.", chunks: [{ text: "It looks like she's really popular on social media." }] },
+
+        // 그룹 7: I heard
+        { group: "I heard", ipa: "/aɪ hɜːrd ðɛrz ˈɔːlweɪz ə laɪn æt ðə ˈrɛstərənt/", trans: "그 식당은 항상 줄 선다고 들었어.", chunks: [{ text: "I heard there's always a line at the restaurant." }] },
+        { group: "I heard", ipa: "/aɪ hɜːrd ˈkoʊhæmz ˈɡoʊɪŋ tuː ɔːˈstreɪljə nɛkst jɪər/", trans: "코햄이 내년에 호주에 간다고 들었어.", chunks: [{ text: "I heard Koham's going to Australia next year." }] },
+        { group: "I heard", ipa: "/aɪ hɜːrd ðeɪ mɛt ɑːn ˈtɪndər/", trans: "걔네 틴더에서 만났대.", chunks: [{ text: "I heard they met on Tinder." }] },
+
+        // 그룹 8: by vs until
+        { group: "by vs until", ipa: "/aɪ hæv tuː ɡɛt ðɛr baɪ faɪv/", trans: "5시까지는 도착해야돼.", chunks: [{ text: "I have to get there by 5." }] },
+        { group: "by vs until", ipa: "/aɪ hæv tuː sɛnd maɪ ˈhoʊmwɜːrk baɪ tuː eɪ-ɛm/", trans: "새벽 2시까지는 숙제 내야 돼.", chunks: [{ text: "I have to send my homework by 2 a.m." }] },
+        { group: "by vs until", ipa: "/aɪl ˈfɪnɪʃ ɪt baɪ ˈfraɪdeɪ/", trans: "금요일까지 끝낼게.", chunks: [{ text: "I'll finish it by Friday." }] },
+        { group: "by vs until", ipa: "/aɪ ˈstʌdid ənˈtɪl wʌn eɪ-ɛm læst naɪt/", trans: "어제 새벽 한시까지 공부했어.", chunks: [{ text: "I studied until 1 a.m. last night." }] },
+        { group: "by vs until", ipa: "/ʃiːz ɑːn veɪˈkeɪʃən ənˈtɪl ˈfraɪdeɪ/", trans: "부장님 금요일까지 휴가예요.", chunks: [{ text: "She's on vacation until Friday." }] },
+        { group: "by vs until", ipa: "/ðə ˈrɛstərənt ɪz ˈoʊpən ənˈtɪl naɪn/", trans: "식당 9시까지 영업해.", chunks: [{ text: "The restaurant is open until 9." }] },
+
+        // 그룹 9: What about / How about
+        { group: "What about / How about", ipa: "/wʌt əˈbaʊt sɪks/", trans: "6시는 어때?", chunks: [{ text: "What about 6?" }] },
+        { group: "What about / How about", ipa: "/aɪ ɡɛt ɔːf wɜːrk æt faɪv-ˈθɜːrti/", trans: "나 회사가 5:30분에 끝나거든.", chunks: [{ text: "I get off work at 5:30." }] },
+        { group: "What about / How about", ipa: "/wʌt əˈbaʊt ˈmiːtɪŋ ɑːn ðə tɛnθ/", trans: "10일에 만나는건 어때?", chunks: [{ text: "What about meeting on the 10th?" }] },
+        { group: "What about / How about", ipa: "/wʌt əˈbaʊt ˈstʌdiɪŋ təˈɡɛðər ɑːn ˈsætərdeɪ/", trans: "토요일에 같이 공부하는 거 어때?", chunks: [{ text: "What about studying together on Saturday?" }] },
+        { group: "What about / How about", ipa: "/wʌt əˈbaʊt wiː ˈstʌdi təˈɡɛðər/", trans: "같이 공부하는 거 어때?", chunks: [{ text: "What about we study together?" }] },
+        { group: "What about / How about", ipa: "/wʌt əˈbaʊt miː/", trans: "그럼 나는 어쩌고?", chunks: [{ text: "What about me?" }] },
+        { group: "What about / How about", ipa: "/ðɛn wʌt əˈbaʊt ˈkoʊhæmz laɪv/", trans: "그럼 코햄 라이브는 어쩌고?", chunks: [{ text: "Then what about Koham's live?" }] },
+
+        // 그룹 10: Homework (숙제)
+        { group: "Homework (숙제)", ipa: "/ɑːr juː friː nɛkst wiːk/", trans: "다음주에 시간 나?", chunks: [{ text: "Are you free next week?" }] },
+        { group: "Homework (숙제)", ipa: "/aɪm əˈveɪləbəl ɑːn ˈwɛnzdeɪ ˈæftərˈnuːn/", trans: "나는 수요일 오후에 시간 나거든.", chunks: [{ text: "I'm available on Wednesday afternoon." }] },
+        { group: "Homework (숙제)", ipa: "/waɪ doʊnt wiː ɡræb lʌntʃ ðæt deɪ/", trans: "우리 그 날 점심 먹는거 어때?", chunks: [{ text: "Why don't we grab lunch that day?" }] },
+        { group: "Homework (숙제)", ipa: "/ɪf ðæt wɜːrks fɔːr juː, lɛts miːt æt mɑːŋwʌn ˈsteɪʃən, aʊtˈsaɪd ˈɛɡzɪt tuː/", trans: "그 날에 너 되면, 망원역 2번 출구 밖에서 만나자.", chunks: [{ text: "If that works for you, let's meet at Mangwon Station, outside exit 2." }] },
+        { group: "Homework (숙제)", ipa: "/ðɛrz ə pleɪs ðæt aɪv biːn ˈwɑːntɪŋ tuː teɪk juː tuː/", trans: "너 계속 데리고 가고 싶었던 식당이 있어.", chunks: [{ text: "There's a place that I've been wanting to take you to." }] },
+        { group: "Homework (숙제)", ipa: "/lɛt miː noʊ/", trans: "확인해보고 알려줘!", chunks: [{ text: "Let me know!" }] }
       ]
     }
   },
