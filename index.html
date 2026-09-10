@@ -2671,16 +2671,16 @@ function renderQuizCard() {
 
     let html = `
         <div class="quiz-container">
-            <div class="quiz-card-meta-row" style="align-items: center;">
-                <div style="display:flex; gap:12px; align-items:center;">
-                    <div class="quiz-type-badge">${qItem.typeBadge} ${wk}</div>
-                    <div class="quiz-pagination-counter">${currentQuizIndex + 1} / ${quizPool.length}</div>
-                </div>
-                <div style="display:flex; flex-direction:column; gap:6px; align-items:flex-end;">
-                    <button class="btn-burning ${isAutoQuizMode ? 'active' : ''}" onclick="event.stopPropagation(); toggleAutoQuizMode()" style="margin:0; height:28px; padding:0 12px; font-size:12px; background: ${isAutoQuizMode ? '#bbdefb' : '#f1f3f4'}; color: ${isAutoQuizMode ? '#1976d2' : '#777'};">🤖 자동 연습</button>
-                    <button class="btn-burning ${isBurningMode ? 'active' : ''}" onclick="event.stopPropagation(); toggleBurningModeUI()" style="margin:0; height:28px; padding:0 12px; font-size:12px;">🔥 버닝 모드</button>
-                </div>
+            <div class="quiz-card-meta-row">
+            <div style="display:flex; gap:15px; align-items:center;">
+                <div class="quiz-type-badge">${qItem.typeBadge} ${wk}</div>
+                <div class="quiz-pagination-counter">${currentQuizIndex + 1} / ${quizPool.length}</div>
             </div>
+            <div style="display:flex; gap:8px;">
+                <button class="btn-burning ${isAutoQuizMode ? 'active' : ''}" onclick="event.stopPropagation(); toggleAutoQuizMode()" style="margin:0; background: ${isAutoQuizMode ? '#bbdefb' : '#f1f3f4'}; color: ${isAutoQuizMode ? '#1976d2' : '#777'};">🤖<span class="btn-text"> 자동 연습</span></button>
+                <button class="btn-burning ${isBurningMode ? 'active' : ''}" onclick="event.stopPropagation(); toggleBurningModeUI()" style="margin:0;">🔥<span class="btn-text"> 버닝 모드</span></button>
+            </div>
+        </div>
             
             <div class="quiz-split-card" id="quiz-card-element" data-step="korean" onclick="toggleQuizCardFields()">            <div class="quiz-card-top-korean-zone">
                 <div style="position:absolute; top:15px; right:20px; cursor:pointer; font-size:20px; filter: grayscale(${isRandomQuiz ? '0' : '100%'}); opacity: ${isRandomQuiz ? '1' : '0.4'}; transition: 0.2s; user-select: none;" onclick="event.stopPropagation(); toggleRandomQuiz(this)">🔀</div>
