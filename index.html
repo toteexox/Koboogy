@@ -15,7 +15,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 
     <script src="data.js"></script>
@@ -25,20 +25,20 @@
             --primary: #4285f4; --bg: #f1f3f4; --border: #eee; --white: #fff; --text: #3c4043; 
             --gray-btn: #f1f3f4; --gray-text: #5f6368; --memo-bg: #fdf6e3;
             --dull-blue: #7a97c2; --dull-gray: #9ba3af;
-            
+
             /* 성취도별 메인 컬러 파스텔 톤 */
             --color-tg: #a1c9f4; /* 파스텔 블루: 통과 */
             --color-br: #a8e6cf; /* 파스텔 그린: 발음 */
             --color-bb: #ffeb84; /* 파스텔 옐로우: 버벅 */
             --color-bg: #fca7a7; /* 파스텔 레드: 불가 */
-            
+
             --pastel-blue: #e3f2fd; --pastel-blue-text: #1976d2;
             --pastel-green: #e8f5e9; --pastel-green-text: #388e3c;
             --pastel-pink: #fce4ec; --pastel-pink-text: #c2185b;
         }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Inter', 'Malgun Gothic', sans-serif; margin: 0; display: flex; height: 100vh; overflow: hidden; background: var(--white); color: var(--text); }
-        
+
         body.quiz-mode-active .main-content { background-color: var(--memo-bg); }
         body.quiz-mode-active .sidebar { display: none !important; }
 
@@ -50,9 +50,9 @@
         .login-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(66,133,244,0.15); }
         .login-btn { width: 100%; height: 48px; background: var(--primary); color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.2s; margin-top: 10px; }
         .login-btn:hover { background: #3574de; }
-        
+
         #entry-screen { display: none; flex-direction: column; align-items: center; justify-content: center; height: 100%; width: 100%; }
-        
+
          /* 💡 진입 화면 모드 선택 버튼 (PC 기본: 가로 1줄 큼직하게) */
         .entry-btn-wrap { 
             display: flex; 
@@ -89,20 +89,20 @@
         .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 15px; }
         .stat-box { text-align: center; padding: 12px; border-radius: 10px; font-weight: bold; font-size: 14px; cursor: pointer; transition: 0.2s; color: #333; }
         .stat-box:hover { filter: brightness(0.95); transform: translateY(-2px); }
-        
+
         /* 💡 챕터 성취도 카드 (제목 위, 내용 아래) */
         .chapter-stat-item { display: flex; flex-direction: column; gap: 10px; padding: 15px 20px; border: 1px solid var(--border); border-radius: 12px; background: #fff; margin-bottom: 10px; }
         .ch-title-row { font-weight: 800; font-size: 16px; color: var(--text); cursor: pointer; transition: 0.2s; width: 100%; }
         .ch-title-row:hover { color: var(--primary); text-decoration: underline; }
-        
+
         /* 💡 퍼센트 박스와 버튼 영역이 동일한 높이를 가지도록 stretch 적용! */
         .ch-main-row { display: flex; align-items: stretch; gap: 12px; width: 100%; }
-        
+
         .ch-rate-box { background: #e8f0fe; color: var(--primary); border-radius: 8px; padding: 10px; display: flex; flex-direction: column; justify-content: center; align-items: center; cursor: pointer; min-width: 80px; transition: 0.2s; }
         .ch-rate-box:hover { filter: brightness(0.95); }
         .rate-val { font-size: 16px; font-weight: 800; }
         .ch-rate-box .rate-count { font-size: 11px; color: #5f6368; font-weight: normal; margin-top: 4px; }
-        
+
         .ch-right { flex: 1; display: flex; gap: 8px; align-items: stretch; }
         .ch-right span.stat-click-btn { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; background: #f1f3f4; border-radius: 8px; cursor: pointer; transition: 0.2s; padding: 8px 0; }
         .ch-right span.stat-click-btn:hover { background: #e0e0e0; transform: translateY(-2px); }
@@ -110,7 +110,7 @@
         .ch-right span.stat-click-btn b { font-size: 15px; color: #333; }
 
         .sidebar { display: none; width: 280px; border-right: 1px solid var(--border); overflow-y: auto; flex-shrink: 0; padding: 20px 10px; background: var(--white); transition: 0.3s; position: relative; z-index: 100; }
-        
+
         .menu-group { margin-bottom: 5px; border-radius: 8px; }
         .menu-item { cursor: pointer; padding: 10px 15px; display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 18px; color: #3c4043; border-radius: 8px; }
         .menu-item:hover { background: #f8f9fa; }
@@ -136,15 +136,15 @@
 
         /* 💡 2. PC 기본 상단 헤더 - 반응형 줄바꿈 추가 */
         .sticky-header { background: var(--white); padding: 10px 0; border-bottom: 1px solid var(--border); position: sticky; top: 0; width: 100%; z-index: 99; }
-        
+
         /* 💡 flex-wrap: nowrap을 wrap으로 변경하여 공간이 부족하면 줄바꿈 허용! */
         .top-nav-row { display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 95%; margin: 0 auto; gap: 15px; flex-direction: row; flex-wrap: wrap; }
-        
+
         .nav-brand { display: flex; align-items: center; gap: 8px; font-size: 20px; font-weight: bold; cursor: pointer; flex-shrink: 0; order: 1; }
         .nav-brand img { width: 32px; border-radius: 6px; }
-        
+
         .left-modes { display: flex; gap: 8px; align-items: center; flex: 1; flex-direction: row; order: 2; }
-        
+
         .right-user { display: flex; align-items: center; font-size: 14px; font-weight: bold; color: var(--gray-text); gap: 10px; flex-shrink: 0; cursor: pointer; transition: color 0.2s; order: 3; }
 
 
@@ -187,7 +187,7 @@
         .practice-row2 { display: flex; align-items: center; gap: 12px; flex-wrap: nowrap; white-space: nowrap; }
 
         #global-status-icon { font-size: 18px; width: 24px; text-align: center; cursor: pointer; transition: 0.2s; }
-        
+
         .switch-box { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: bold; white-space: nowrap; }
 
         .shadow-toggle-wrapper { position: relative; width: 120px; height: 30px; background: #e0e0e0; border-radius: 15px; display: flex; cursor: pointer; align-items: center; justify-content: space-between; padding: 0 4px; border: 1px solid #ccc; box-shadow: inset 0 1px 3px rgba(0,0,0,0.1); }
@@ -236,7 +236,7 @@
         .scroll-area { flex: 1; overflow-y: auto; padding: 30px 0; }
         .content-wrap { max-width: 90%; margin: 0 auto; width: 100%; padding-bottom: 75vh; }
         .section-title { font-size: 28px; color: var(--primary); margin-bottom: 25px; cursor: pointer; font-weight: bold; }
-        
+
         .status-choice-grp { display: flex; gap: 8px; margin-top: 10px; flex-wrap: nowrap; width: 100%; }
         .status-badge-btn { border: none; padding: 12px 10px; border-radius: 8px; font-size: 14px; font-weight: bold; cursor: pointer; color: #333; transition: 0.2s; flex: 1; text-align: center; }
         .status-badge-btn.tg { background: var(--color-tg); }
@@ -254,7 +254,7 @@
         .card:not(.playing) .play-btn { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%239aa0a6'%3E%3Cpath d='M8 5v14l11-7z'/%3E%3C/svg%3E"); }
 
         .text-content { flex: 1; display: flex; flex-direction: column; width: 100%; }
-        
+
         /* 텍스트 컨테이너 Flex 설정 (위아래 순서 변경을 위함) */
         body:not(.quiz-mode-active) .text-content { display: flex; flex-direction: column; }
 
@@ -274,7 +274,7 @@
 
         body.hide-details.lang-ko:not(.quiz-mode-active) .sentence-eng,
         body.hide-details.lang-ko:not(.quiz-mode-active) .ipa-text { display: none; }
-        
+
         /* 🃏 개별 카드 보조 텍스트 토글 (클릭 시) */
         body.hide-details:not(.lang-ko) .card.details-on .ipa-text,
         body.hide-details:not(.lang-ko) .card.details-on .trans-text { display: block !important; }
@@ -288,7 +288,7 @@
 
         .chunk { cursor: pointer; border-radius: 4px; padding: 2px 4px; }
         .chunk.active { background: #d2e3fc !important; color: #174ea6 !important; font-weight: bold; }
-        
+
         .chat-row { display: flex; gap: 12px; margin-bottom: 12px; align-items: flex-start; flex-direction: column; width: 100%; }
         .chat-main-wrapper { display: flex; gap: 12px; width: 100%; align-items: flex-start; }
         .badge { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0; cursor: pointer; margin-top: 4px; }
@@ -309,12 +309,12 @@
         .chapter-chk-btn.active { background: #e8f0fe; color: #1967d2; border-color: #8ab4f8; }
 
         #quiz-play-area { display: none; }
-        
+
         /* 💡 퍼즐 플레이 영역 추가 */
         #puzzle-play-area { display: none; }
 
         .quiz-container { display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 640px; margin: 0 auto; padding: 5px; }
-        
+
         .quiz-card-meta-row { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 10px; padding: 0 4px; }
         .quiz-type-badge { background: #3c4043; color: white; font-size: 14px; font-weight: 800; padding: 6px 14px; border-radius: 8px; letter-spacing: 0.5px; }
         .quiz-pagination-counter { font-size: 14px; color: var(--gray-text); font-weight: 800; background: rgba(255,255,255,0.8); padding: 4px 12px; border-radius: 12px; border: 1px solid #ddd; }
@@ -334,7 +334,7 @@
             position: relative; 
         }
         .quiz-split-card:hover { border-color: var(--primary); }
-        
+
         /* 💡 [핵심] 툭탁 연습 모드 전용 카드 높이 (슬림하게 줄여서 성취도가 한 화면에 쏙!) */
         #quiz-play-area .quiz-split-card {
             height: 400px !important; 
@@ -344,7 +344,7 @@
         #puzzle-play-area .quiz-split-card {
             height: 480px !important; 
         }
-        
+
         /* 💡 2. 상단 한글(문제) 영역 고정 */
         .quiz-card-top-korean-zone { 
             flex: 0 0 120px !important; /* 상단 높이를 120px로 살짝 다이어트 */
@@ -358,7 +358,7 @@
             position: relative; 
             overflow-y: auto; 
         }
-        
+
         /* 💡 3. 하단 영어(정답/퍼즐) 영역 고정 */
         .quiz-card-bottom-english-zone { 
             flex: 1 !important; /* 상단을 뺀 나머지 영역을 모두 차지 */
@@ -463,7 +463,7 @@
             overflow-y: auto; 
             transition: 0.2s; 
         }
- 
+
         .sortable-drag, .sortable-fallback {
             opacity: 0 !important; 
         }
@@ -614,7 +614,7 @@
         }
         .card-with-jub .card { margin-bottom: 0 !important; flex: 1; }
         .card-with-jub .chat-main-wrapper { width: 100%; flex: 1; }
-        
+
         .jub-side-btn {
             width: 42px; background: #fff; border: 2px solid #ddd; border-radius: 12px;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -633,7 +633,7 @@
             background-color: var(--pastel-pink) !important; 
         }
 
-  
+
 
 
 /* 💡 모드 탭 3형제 파스텔 컬러 적용 (기존 레이아웃 변경 없음) */
@@ -734,7 +734,7 @@
                 height: calc(100vh - 48px) !important; 
                 z-index: 10000 !important; 
                 padding-top: 60px !important; 
-                
+
             }
             .sidebar.open { left: 0; display: block !important; } 
 
@@ -751,7 +751,7 @@
                 height: auto !important; /* 💡 로고 겹침 완벽 방지 */
                 min-height: max-content !important; 
             }
-            
+
             .nav-brand { order: 1 !important; width: auto !important; margin: 0 0 10px 0 !important; font-size: 17px !important; } 
            .right-user { order: 2 !important; margin-left: auto; }
             .left-modes { 
@@ -762,7 +762,7 @@
             }
             /* JS에서 숨겼을 때 모바일에서도 강제 숨김 보장 */
             .left-modes[style*="display: none"], .left-modes[style*="display:none"] { display: none !important; }
-            
+
             .mode-tab-btn { 
                 flex: 1 !important; text-align: center !important; padding: 8px 2px !important; 
                 font-size: 13px !important; height: 38px !important; 
@@ -813,7 +813,7 @@
             .ch-right span.stat-click-btn { padding: 6px 0; }
             .ch-right span.stat-click-btn i { font-size: 13px; margin-bottom: 2px; }
             .ch-right span.stat-click-btn b { font-size: 14px; }
-            
+
             .card { padding: 12px 8px !important; }
             .card-main-row { gap: 4px !important; }
             .play-btn { width: 30px !important; height: 30px !important; margin-top: 2px !important; }
@@ -824,7 +824,7 @@
             .header { display: flex !important; justify-content: space-between !important; align-items: center !important; width: 100%; padding: 10px 15px; }
             .mypage-btn { position: static !important; margin: 0 !important; }
         }
- 
+
             .btn-burning .btn-text { display: none; }
             .btn-burning { padding: 0 10px !important; min-width: 36px; justify-content: center; }
 
@@ -843,10 +843,10 @@
                 <div>Koboogy</div>
             </div>
             <p style="font-size:14px; color:var(--gray-text); margin-bottom:20px;">공부방 전용 시스템입니다. 아이디를 입력해 주세요.</p>
-            
+
             <input type="text" id="user-id" class="login-input" placeholder="순수 ID 입력 (예: jenny)">
             <input type="password" id="user-pw" class="login-input" placeholder="비밀번호 입력">
-            
+
             <div style="display:flex; align-items:center; justify-content:flex-start; margin-bottom:12px; gap:8px;">
                 <input type="checkbox" id="remember-id" style="cursor:pointer;">
                 <label for="remember-id" style="font-size:13px; color:var(--gray-text); cursor:pointer;">ID 기억하기</label>
@@ -859,20 +859,20 @@
     <div class="sidebar" id="sidebar">
         <div id="nav-list" style="margin-top: 10px;"></div>
     </div>
-    
+
     <div class="main-content">
         <header class="sticky-header">
             <div class="top-nav-row">
                 <div class="nav-brand" onclick="showEntryScreen()">
                     <img src="Koboogy.png" alt="Logo" onerror="this.style.display='none'"> Koboogy
                 </div>
-                
+
                 <div class="left-modes mode-tab-container" id="top-left-modes" style="display:none;">
                     <button class="mode-tab-btn active" id="btn-study-mode" onclick="switchMainMode('study')">📖 학습 모드</button>
                     <button class="mode-tab-btn" id="btn-quiz-mode" onclick="switchMainMode('quiz')">🎙️ 툭탁 연습</button>
                     <button class="mode-tab-btn" id="btn-puzzle-mode" onclick="switchMainMode('puzzle')">🧩 문장 배열</button>
                 </div>
-                
+
                 <div class="right-user" id="user-badge-area" style="display:none;" onclick="toggleMyPageView()">
                     <span>🎓 <span id="welcome-username">유저</span> 코치님</span>
                 </div>
@@ -895,7 +895,7 @@
                                     <span class="shadow-toggle-text toggle-right">🇰🇷한글</span>
                                 </div>
                             </div>
-                            
+
                             <div class="switch-box">
                                 <div class="shadow-toggle-wrapper" id="btn-detail-toggle" onclick="toggleDetailMode()">
                                     <div class="shadow-toggle-slider"></div>
@@ -940,7 +940,7 @@
 
         <audio id="player"></audio> 
         <audio id="record-player" style="display:none;"></audio> 
-        
+
         <main class="scroll-area" id="main-scroll-area">
             <div class="content-wrap">
                 <div id="entry-screen">
@@ -955,10 +955,10 @@
 
                 <div id="mypage-area" class="mypage-view">
                     <h2 class="section-title">마이페이지 & 학습 현황 통계</h2>
-                    
+
                     <div class="mypage-card">
                         <h3 style="margin:0 0 15px 0;">📊 전체 성취도 현황 </h3>
-                        
+
                         <div style="font-size:14px; font-weight:bold; color:var(--text); margin-bottom:8px;">🎙️ 툭탁 연습</div>
                         <div class="stats-grid" style="margin-top:0; margin-bottom: 20px;">
                             <div class="stat-box" style="background:var(--color-tg);" onclick="startGlobalQuizByStatus('통과', 'quiz')">통과 🔵<br><span id="stat-tg">0</span>개</div>
@@ -977,7 +977,7 @@
                     <div class="mypage-card" style="padding-top: 20px;">
                         <div style="display:flex; justify-content:space-between; align-items:flex-end; border-bottom: 2px solid #ddd; flex-wrap:wrap; gap:10px;">
                             <h3 style="margin:0; padding-bottom:10px;">📈 챕터별 세부 성취도 현황 </h3>
-                            
+
                             <div class="mypage-tab-container">
                                 <button class="mypage-tab-btn active" id="tab-mypage-quiz" onclick="switchMypageTab('quiz')">툭탁</button>
                                 <button class="mypage-tab-btn" id="tab-mypage-puzzle" onclick="switchMypageTab('puzzle')">문장배열</button>
@@ -1039,7 +1039,7 @@
                                 </label>
                             </div>
                         </div>
-                        
+
                         <div class="quiz-type-filters" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 20px;">
                             <button class="filter-btn active" id="f-mystory" onclick="toggleQuizTypeMulti('mystory')">MS 본문</button>
                             <button class="filter-btn active" id="f-useful_mystory" onclick="toggleQuizTypeMulti('useful_mystory')">MS UE</button>
@@ -1050,7 +1050,7 @@
                             <button class="filter-btn active" id="f-grammar" onclick="toggleQuizTypeMulti('grammar')">Grammar</button>
                             <button class="filter-btn active" id="f-jubjub" onclick="toggleQuizTypeMulti('jubjub')">🛒 줍줍문장</button>
                         </div>
-                        
+
                         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
                             <h4 style="margin:0; font-size: 15px;">2. 학습할 챕터를 선택하세요</h4>
                             <label style="cursor:pointer; font-size:12px; font-weight:bold; color:var(--text); display:flex; align-items:center; gap:6px;">
@@ -1058,7 +1058,7 @@
                             </label>
                         </div>
                         <div class="chapter-grid" id="quiz-chapter-grid" style="margin-bottom: 15px;"></div>
-                        
+
                         <button class="login-btn" id="start-action-btn" onclick="startSelectedMode()" style="width:100%; height:48px; font-size:16px; margin-top:0;">🚀 시작하기</button>
                     </div>
                 </div>
@@ -1073,7 +1073,7 @@
                             <button class="status-badge-btn bg" id="b-filter-bg" onclick="toggleBurningFilter('불가', this)">🔴 불가</button>
                         </div>
                     </div>
-                    
+
                     <div id="quiz-card-render-zone"></div>
                 </div>
 
@@ -1121,13 +1121,13 @@
 
                 showEntryScreen();
                 fetchUserProgressFromFirestore();
-                
+
                 // 💡 [수정] 모바일 기기의 모든 스크롤 속성을 강제로 0으로 리셋
                 const forceScrollTop = () => {
                     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
                     document.body.scrollTop = 0; 
                     document.documentElement.scrollTop = 0;
-                    
+
                     const scrollArea = document.getElementById('main-scroll-area');
                     if (scrollArea) {
                         scrollArea.scrollTo({ top: 0, left: 0, behavior: 'instant' });
@@ -1160,7 +1160,7 @@
     let fullQuizPool = []; 
     let quizPool = [];
     let currentQuizIndex = 0;
-    
+
     // 퍼즐용 풀 (영어 문장이 있는 것들만)
     let puzzlePool = [];
     let currentPuzzleIndex = 0;
@@ -1178,36 +1178,27 @@
     let mediaRecorder = null, audioChunks = [], recordedAudioUrl = null;
     let sessionRecordCache = {}; // 💡 세팅 화면을 나갔다 와도 녹음을 유지해 줄 보관함!
 
-    let isMicEnabled = false; 
-    let hasAskedMic = false;  
-    let globalAudioStream = null; // 💡 블루투스 버벅임 방지용 '마이크 상시 유지' 통로
+    let isMicEnabled = false; // 마이크 활성화 상태
+    let hasAskedMic = false;  // 팝업을 띄웠는지 체크
 
-    function stopGlobalMic() {
-        if (globalAudioStream) {
-            globalAudioStream.getTracks().forEach(t => t.stop());
-            globalAudioStream = null;
-        }
+// 🎙️ 마이크 ON/OFF 토글 함수
+function toggleMicMode() {
+    isMicEnabled = !isMicEnabled;
+    if (isMicEnabled) {
+        navigator.mediaDevices.getUserMedia({ audio: true })
+            .then(stream => {
+                stream.getTracks().forEach(t => t.stop());
+                renderQuizCard(); // 권한 획득 시 UI 즉시 갱신
+            })
+            .catch(() => {
+                alert("⚠️ 마이크 접근 권한이 차단되어 있습니다. 브라우저 설정에서 허용해주세요.");
+                isMicEnabled = false;
+                renderQuizCard();
+            });
+    } else {
+        renderQuizCard();
     }
-
-    // 🎙️ 마이크 ON/OFF 토글 함수
-    function toggleMicMode() {
-        isMicEnabled = !isMicEnabled;
-        if (isMicEnabled) {
-            navigator.mediaDevices.getUserMedia({ audio: true })
-                .then(stream => {
-                    globalAudioStream = stream; // 💡 마이크 끄지 않고 계속 유지!
-                    renderQuizCard(); 
-                })
-                .catch(() => {
-                    alert("⚠️ 마이크 접근 권한이 차단되어 있습니다. 브라우저 설정에서 허용해주세요.");
-                    isMicEnabled = false;
-                    renderQuizCard();
-                });
-        } else {
-            stopGlobalMic(); // 💡 끄기 버튼 눌렀을 때만 통로 닫기
-            renderQuizCard();
-        }
-    }
+}
 
     // 📱 현재 기기가 모바일(스마트폰/태블릿)인지 확인하는 변수
     const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
@@ -1247,19 +1238,18 @@
         auth.signInWithEmailAndPassword(convertIdToEmail(idInput), pwInput)
             .catch((err) => alert("로그인 실패: " + err.message));
     }
-    
+
     document.getElementById('user-pw').addEventListener('keypress', e => { if (e.key === 'Enter') handleLoginSubmit(); });
     function handleLogout() { if(auth) auth.signOut().then(() => location.reload()); }
 
     // 💡 첫 진입 화면 제어 (엔트리 화면 모드 탭 완벽 숨김 + 스크롤 최상단 3단 리셋)
     function showEntryScreen() {
-        stopGlobalMic(); // 💡 처음 화면으로 나가면 마이크 완전히 끄기
         // 엔트리 화면 진입 시 상단 모드 탭 보이지 않게 숨기기
         const topLeftModes = document.getElementById('top-left-modes');
         if (topLeftModes) topLeftModes.style.display = 'none';
 
         entryScreen.style.display = 'flex'; 
-        
+
         mainStudyContainer.style.display = 'none';
         quizSetupArea.style.display = 'none';
         quizPlayArea.style.display = 'none';
@@ -1267,7 +1257,7 @@
         mypageArea.style.display = 'none';
         practiceBarSection.style.display = 'none';
         sidebar.style.display = 'none';
-        
+
         document.body.classList.remove('quiz-mode-active', 'puzzle-mode-active', 'mypage-mode-active');
         stopAll();
 
@@ -1281,7 +1271,7 @@
             window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
             document.body.scrollTop = 0; 
             document.documentElement.scrollTop = 0;
-            
+
             const scrollArea = document.getElementById('main-scroll-area');
             if (scrollArea) {
                 scrollArea.scrollTo({ top: 0, left: 0, behavior: 'instant' });
@@ -1306,7 +1296,7 @@
             .catch((error) => console.error("데이터 불러오기 에러:", error)); 
     }
 
-    
+
 
     function getStatusIconChar(status) {
         if (status === '통과') return ' 🔵'; 
@@ -1329,10 +1319,10 @@
             mainStudyContainer.style.display = 'none'; quizSetupArea.style.display = 'none'; quizPlayArea.style.display = 'none'; puzzlePlayArea.style.display = 'none'; practiceBarSection.style.display = 'none';
             sidebar.style.display = 'none';
             mypageArea.style.display = 'block'; 
-            
+
             // 💡 [수정됨] 마이페이지 진입 시 상단 모드 탭 완벽하게 숨기기!
             document.getElementById('top-left-modes').style.display = 'none';
-            
+
             // 💡 마이페이지 열 때 핑크 배경 켜고, 다른 배경색은 끄기
             document.body.classList.add('mypage-mode-active');
             document.body.classList.remove('quiz-mode-active', 'puzzle-mode-active');
@@ -1353,7 +1343,7 @@
     // 💡 툭탁 / 조립 성취도를 독립적으로 저장하는 클라우드 세이브 함수
     function saveSentenceStatusToCloud(chapterWk, type, index, statusName, mode = 'quiz') {
         if (!currentUserUid || !db) return;
-        
+
         // 🧩 퍼즐(문장 조립) 데이터는 'puzzle_' 접두사를 붙여 저장
         const dataKey = (mode === 'puzzle') ? `puzzle_${chapterWk}_${type}_${index}` : `${chapterWk}_${type}_${index}`;
         userProgressCache[dataKey] = statusName;
@@ -1519,7 +1509,7 @@
             }).catch(err => alert("비밀번호 변경 실패: " + err.message));
         }
     }
-    
+
 
     // 💡 마이페이지 -> 챕터 클릭 시 퀴즈/퍼즐 진입
     function startDirectChapterQuiz(wk, mode = 'quiz') {
@@ -1529,7 +1519,7 @@
         switchMainMode(mode);
         if(mode === 'quiz') startQuizPool();
         else startPuzzlePool();
-        
+
         // 💡 [요청4] 화면 전환 후 딜레이를 주어 스크롤을 최상단으로 강제 견인!
         setTimeout(() => {
             window.scrollTo(0, 0);
@@ -1544,18 +1534,18 @@
         activeQuizTypes = ['mystory', 'useful_mystory', 'live_mystory', 'grammar', 'realconvo', 'useful_realconvo', 'live_realconvo'];
         isBurningMode = true;
         activeBurningFilters = [status];
-        
+
         switchMainMode(mode);
         buildFullQuizPool(); 
-        
+
         if (mode === 'quiz') {
             document.getElementById('btn-burning-mode').classList.add('active');
             document.getElementById('burning-mode-dashboard').style.display = 'block';
             syncBurningFilterUI();
         }
-        
+
         applyBurningFilters(mode);
-        
+
         document.getElementById('quiz-setup-area').style.display = 'none';
         if(mode === 'quiz') document.getElementById('quiz-play-area').style.display = 'block';
         else document.getElementById('puzzle-play-area').style.display = 'block';
@@ -1575,19 +1565,19 @@
     function startGlobalQuizByStatus(statusName, mode = 'quiz') {
         isBurningMode = true;
         activeBurningFilters = [statusName];
-        
+
         activeQuizChapters = Object.keys(studyData);
         activeQuizTypes = ['mystory', 'useful_mystory', 'live_mystory', 'grammar', 'realconvo', 'useful_realconvo', 'live_realconvo'];
-        
+
         switchMainMode(mode);
         buildFullQuizPool();
-        
+
         if (mode === 'quiz') {
             document.getElementById('btn-burning-mode').classList.add('active');
             document.getElementById('burning-mode-dashboard').style.display = 'block';
             syncBurningFilterUI();
         }
-        
+
         applyBurningFilters(mode);
 
         document.getElementById('quiz-setup-area').style.display = 'none';
@@ -1610,7 +1600,7 @@
         sidebar.style.display = (sidebar.style.display === 'block') ? 'none' : 'block'; 
         sidebar.classList.toggle('open');
     }
-    
+
    function toggleShadowModeUI() {
         const ui = document.getElementById('shadow-toggle-ui');
         const isActive = !ui.classList.contains('active');
@@ -1635,7 +1625,7 @@
         } else {
             toggleUi.classList.add('active');
         }
-        
+
         document.querySelectorAll('.card.details-on, .card.details-off').forEach(c => {
             c.classList.remove('details-on', 'details-off');
         });
@@ -1654,23 +1644,22 @@
 
     // 💡 메인 모드 스위처 (학습 / 툭탁 연습 / 문장 조립)
     function switchMainMode(mode) {
-        if (mode === 'study') stopGlobalMic(); // 💡 학습모드로 가면 마이크 끄기
         currentAppMode = mode;
         isQuizMode = (mode === 'quiz' || mode === 'puzzle');
-        
+
         // 💡 학습 모드나 다른 탭으로 넘어갈 때 핑크 배경 스위치를 즉시 제거!
         document.body.classList.remove('mypage-mode-active');
-        
+
         entryScreen.style.display = 'none';
         document.getElementById('top-left-modes').style.display = 'flex'; 
-        
+
         document.getElementById('btn-study-mode').classList.toggle('active', mode === 'study');
         document.getElementById('btn-quiz-mode').classList.toggle('active', mode === 'quiz');
         document.getElementById('btn-puzzle-mode').classList.toggle('active', mode === 'puzzle');
-        
+
         document.body.classList.toggle('quiz-mode-active', isQuizMode);
         document.body.classList.toggle('puzzle-mode-active', mode === 'puzzle');
-        
+
         mypageArea.style.display = 'none';
         practiceBarSection.style.display = mode === 'study' ? 'block' : 'none';
 
@@ -1682,7 +1671,7 @@
             quizPlayArea.style.display = 'none';
             puzzlePlayArea.style.display = 'none';
             quizSetupArea.style.display = 'block';
-            
+
             document.getElementById('setup-title').innerText = mode === 'quiz' ? '🎯 툭탁 연습 세팅' : '🧩 문장 배열 세팅';
             document.getElementById('start-action-btn').innerText = mode === 'quiz' ? '🚀 툭탁 연습 시작하기' : '🚀 문장 배열 시작하기';
 
@@ -1697,7 +1686,7 @@
             quizPlayArea.style.display = 'none';
             puzzlePlayArea.style.display = 'none';
             mainStudyContainer.style.display = 'block';
-            
+
             const activeSub = document.querySelector('.sub-item.active');
             if (activeSub) {
                 const group = document.querySelector('.menu-group.expanded');
@@ -1725,10 +1714,10 @@
 // 🤖 자동 연습 모드 토글
 function toggleAutoQuizMode() {
     isAutoQuizMode = !isAutoQuizMode;
-    
+
     if (isAutoQuizMode) {
         player.play().then(() => player.pause()).catch(() => {});
-        
+
         // renderQuizCard 내부에서 자동으로 시퀀스를 실행하므로 여기서 중복 호출 금지!
         renderQuizCard(); 
     } else {
@@ -1754,11 +1743,11 @@ function runAutoQuizSequence() {
             stopRecording();
             return;
         }
-        
+
         autoStepTimer1 = setTimeout(() => {
             if (!isAutoQuizMode) return;
             stopRecording();
-            
+
             const cardEl = document.getElementById('quiz-card-element');
             if (cardEl && cardEl.getAttribute('data-step') === 'korean') {
                 toggleQuizCardFields();
@@ -1783,25 +1772,25 @@ function runAutoQuizSequence() {
 function loadContent(wk, type, el) {
         if (isQuizMode) return; 
         const data = studyData[wk]?.[type]; if (!data) return;
-        
+
         document.querySelectorAll('.sub-item').forEach(s => s.classList.remove('active')); el.classList.add('active');
         if (window.innerWidth <= 1024) { sidebar.classList.remove('open'); sidebar.style.display = 'none'; }
-        
+
         const hasAudio = !!(data.audio && data.audio.trim() !== "");
 
         let html = `<h2 class="section-title" onclick="toggleAutoPlayAll(this)"><span>${wk}</span>| ${data.title || type} ${hasAudio ? '' : '<span style="font-size:14px; color:#888; font-weight:normal;">(🔇 텍스트 전용 세션)</span>'}</h2>`;
-        
+
         const items = type === 'realconvo' ? data.chat : data.sentences;
         const hasGroups = items && items.length > 0 && items.some(item => item.group !== undefined);
 
         if (hasGroups) {
             let groupedMap = {};
             let currentGroup = "Expressions";
-            
+
             items.forEach((item, idx) => {
                 let gName = item.group || (item.type === "note" ? currentGroup : "Expressions");
                 currentGroup = gName;
-                
+
                 if (!groupedMap[gName]) groupedMap[gName] = [];
                 groupedMap[gName].push({ item, idx });
             });
@@ -1818,7 +1807,7 @@ function loadContent(wk, type, el) {
                     engTitle = parts[0].trim();
                     korTitle = parts[1].trim();
                 }
-                
+
                 html += `
                     <div style="display: flex; align-items: center; gap: 12px; margin: 35px 0 14px 0;">
                         <span style="background: #5ba4ff; color: white; padding: 6px 16px; border-radius: 6px; font-size: 20px; font-weight: 800;">${engTitle}</span>
@@ -1828,7 +1817,7 @@ function loadContent(wk, type, el) {
 
                 groupedMap[groupName].forEach(obj => {
                     const item = obj.item;
-                    
+
                     // 💡 [회색 톤 패치] 은은하고 깔끔한 차콜/회색 가이드 박스로 변경!
                     if (item.type === "note") {
                         html += `
@@ -1846,7 +1835,7 @@ function loadContent(wk, type, el) {
                         <span class="jub-icon">🛒</span>
                         <span class="jub-text">줍줍</span>
                     </div>`;
-                    
+
                     const chunks = item.chunks ? item.chunks.map(c => `<span class="chunk" ${hasAudio ? `data-s="${c.s || 0}" data-e="${c.e || 0}"` : ''}>${c.text}</span>`).join('') : '';
                     const content = `
                         <div class="text-content">
@@ -1854,7 +1843,7 @@ function loadContent(wk, type, el) {
                             ${item.ipa ? `<div class="ipa-text">${item.ipa}</div>` : ''}
                             ${item.trans ? `<div class="trans-text">${item.trans}</div>` : ''}
                         </div>`;
-                        
+
                     html += `
                     <div class="card-with-jub">
                         <div class="card ${hasAudio ? '' : 'no-audio'}" ${hasAudio ? `data-start="${item.start || 0}" data-end="${item.end || 0}"` : ''} style="${hasAudio ? '' : 'cursor:default;'}">
@@ -1867,7 +1856,7 @@ function loadContent(wk, type, el) {
 
         } else {
             items.forEach((item, idx) => {
-                
+
                 // 💡 [회색 톤 패치] 은은하고 깔끔한 차콜/회색 가이드 박스로 변경!
                 if (item.type === "note") {
                     html += `
@@ -1893,7 +1882,7 @@ function loadContent(wk, type, el) {
                         ${item.ipa ? `<div class="ipa-text">${item.ipa}</div>` : ''}
                         ${item.trans ? `<div class="trans-text">${item.trans}</div>` : ''}
                     </div>`;
-                    
+
                 if(type === 'realconvo') { 
                     html += `
                     <div class="chat-row ${hasAudio ? '' : 'no-audio'}" data-speaker="${item.speaker}" ${hasAudio ? `data-start="${item.start || 0}" data-end="${item.end || 0}"` : ''}>
@@ -1914,9 +1903,9 @@ function loadContent(wk, type, el) {
                 }
             });
         }
-        
+
         mainStudyContainer.innerHTML = html; 
-        
+
         if (hasAudio) {
             player.src = data.audio; 
             player.load(); 
@@ -1941,7 +1930,7 @@ function loadContent(wk, type, el) {
             const btn = document.getElementById(`f-${t}`);
             if (btn) btn.classList.toggle('active', activeQuizTypes.includes(t));
         });
-        
+
         const msAll = ['mystory', 'useful_mystory', 'live_mystory'].every(t => activeQuizTypes.includes(t));
         const rcAll = ['realconvo', 'useful_realconvo', 'live_realconvo'].every(t => activeQuizTypes.includes(t));
         const gfAll = activeQuizTypes.includes('grammar');
@@ -1969,7 +1958,7 @@ function loadContent(wk, type, el) {
     function toggleQuizTypeGroup(group) {
         const ms = ['mystory', 'useful_mystory', 'live_mystory'];
         const rc = ['realconvo', 'useful_realconvo', 'live_realconvo'];
-        
+
         if (group === 'all') {
             const chkAll = document.getElementById('chk-all-modes');
             if (chkAll.checked) {
@@ -2018,7 +2007,7 @@ function loadContent(wk, type, el) {
             activeQuizChapters.push(wk);
             btnEl.classList.add('active');
         }
-        
+
         // 챕터 한 개라도 빠지면 챕터 '전체 선택' 체크박스도 자동 해제
         const totalChapters = Object.keys(studyData);
         const chkAllChapters = document.getElementById('chk-all-chapters');
@@ -2029,13 +2018,13 @@ function loadContent(wk, type, el) {
     function toggleAllChapters() {
         const totalChapters = Object.keys(studyData);
         const chkAllChapters = document.getElementById('chk-all-chapters');
-        
+
         if (chkAllChapters.checked) {
             activeQuizChapters = [...totalChapters]; 
         } else {
             activeQuizChapters = []; 
         }
-        
+
         document.querySelectorAll('.chapter-chk-btn').forEach(btn => {
             const wk = btn.innerText.replace('Ch ', '');
             if (activeQuizChapters.includes(wk)) btn.classList.add('active');
@@ -2047,7 +2036,7 @@ function loadContent(wk, type, el) {
         fullQuizPool = [];
         activeQuizChapters.sort().forEach(wk => {
             const cData = studyData[wk]; if (!cData) return;
-            
+
             // 💡 MS 계열 3종
             if (activeQuizTypes.includes('mystory') && cData.mystory) {
                 cData.mystory.sentences.forEach((s, i) => fullQuizPool.push({ wk, type: 'mystory', typeBadge: 'MS', idx: i, data: s, audio: cData.mystory.audio }));
@@ -2058,12 +2047,12 @@ function loadContent(wk, type, el) {
             if (activeQuizTypes.includes('live_mystory') && cData.live_mystory) {
                 cData.live_mystory.sentences.forEach((s, i) => fullQuizPool.push({ wk, type: 'live_mystory', typeBadge: 'MS Live', idx: i, data: s, audio: cData.live_mystory.audio }));
             }
-            
+
             // 💡 Grammar (문법) 계열
             if (activeQuizTypes.includes('grammar') && cData.grammar) {
                 cData.grammar.sentences.forEach((s, i) => fullQuizPool.push({ wk, type: 'grammar', typeBadge: 'GR', idx: i, data: s, audio: cData.grammar.audio }));
             }
-            
+
             // 💡 RC 계열 3종
             if (activeQuizTypes.includes('realconvo') && cData.realconvo) {
                 cData.realconvo.chat.forEach((s, i) => fullQuizPool.push({ wk, type: 'realconvo', typeBadge: 'RC', idx: i, data: s, audio: cData.realconvo.audio }));
@@ -2107,7 +2096,7 @@ function loadContent(wk, type, el) {
             hasAskedMic = true;
             if (isMicEnabled) {
                 navigator.mediaDevices.getUserMedia({ audio: true })
-                    .then(stream => { globalAudioStream = stream; }) // 💡 마이크 끄지 않기!
+                    .then(stream => stream.getTracks().forEach(t => t.stop()))
                     .catch(() => {
                         alert("⚠️ 마이크 권한이 차단되어 녹음 기능을 꺼둡니다.");
                         isMicEnabled = false;
@@ -2117,8 +2106,8 @@ function loadContent(wk, type, el) {
 
         isBurningMode = false;
         burningDashboard.style.display = 'none';
-        
-   
+
+
 
         // 💡 [요청 3] 미학습(성취도 체크 안됨) 카드만 필터링!
         let unstudiedPool = fullQuizPool.filter(qItem => {
@@ -2161,7 +2150,7 @@ function loadContent(wk, type, el) {
     function startPuzzlePool() {
         if (activeQuizChapters.length === 0) { alert("학습할 챕터를 1개 이상 선택해 주세요!"); return; }
         buildFullQuizPool();
-        
+
         let rawPool = fullQuizPool.filter(q => q.data.chunks && q.data.chunks.length > 0);
         if (rawPool.length === 0) { alert("해당 조건의 문장 데이터가 없습니다."); return; }
 
@@ -2204,19 +2193,19 @@ function loadContent(wk, type, el) {
     function renderPuzzleCard() {
         const pZone = document.getElementById('puzzle-card-render-zone');
         if (puzzlePool.length === 0) { pZone.innerHTML = '...'; return; }
-        
+
         const qItem = puzzlePool[currentPuzzleIndex];
         const item = qItem.data;
         const wk = qItem.wk, type = qItem.type, idx = qItem.idx;
-        
+
         const englishFullText = item.chunks ? item.chunks.map(c => c.text).join(' ') : '';
         const cleanSentence = englishFullText.replace(/[.,!?"]/g, '').trim();
-        
+
         let words = cleanSentence.split(/\s+/).filter(w => w.length > 0).map(w => {
             if (/^I('m|'ll|'ve|'d)?$/.test(w)) return w; 
             return w.toLowerCase(); 
         });
-        
+
         let scrambled = [...words].sort(() => Math.random() - 0.5);
 
         let sizeClass = "";
@@ -2233,23 +2222,23 @@ function loadContent(wk, type, el) {
                     <div class="quiz-pagination-counter">${currentPuzzleIndex + 1} / ${puzzlePool.length}</div>
                 </div>
             </div>
-            
+
             <div class="quiz-split-card" style="cursor:default; position:relative;">
                 <div class="quiz-card-top-korean-zone" style="padding: 35px 25px;">
                     <div style="position:absolute; top:15px; right:20px; cursor:pointer; font-size:20px; filter: grayscale(${isRandomQuiz ? '0' : '100%'}); opacity: ${isRandomQuiz ? '1' : '0.4'}; transition: 0.2s; user-select: none;" onclick="event.stopPropagation(); toggleRandomPuzzle(this)">🔀</div>
                     <div class="trans-text" style="font-size:22px; color:#1a0dab; font-weight:700;">${item.trans}</div>
                 </div>
-                
+
                 <div class="quiz-card-bottom-english-zone" style="flex-direction:column; padding: 25px 25px 30px 25px; min-height: 150px;">
-                    
+
                     <div id="puzzle-active-area" class="${sizeClass}" style="width:100%;">
                         <div id="puzzle-answer-box" class="answer-box" style="width:100%;"></div>
-                        
+
                         <div id="puzzle-feedback-msg" style="color:#e53935; font-size:13px; font-weight:bold; min-height:20px; margin-bottom:10px; opacity:0; transition:0.2s; text-align:left; padding-left:4px;">앗! 순서가 맞지 않아요. 🧐</div>
 
                         <div id="puzzle-word-pool" style="position: relative;">
                             ${scrambled.map((w) => `<div class="scramble-word" data-word="${w.replace(/"/g, '&quot;')}" onclick="handleWordClick(this)">${w}</div>`).join('')}
-                            
+
                             <button id="btn-check-answer" class="login-btn" onclick="checkPuzzleAnswer()" style="display:none; position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); width:220px; height:48px; font-size:16px; margin:0; z-index:10; box-shadow:0 4px 12px rgba(66,133,244,0.3);">✅ 정답 확인</button>
                             <button id="btn-retry-puzzle" class="btn" onclick="retryPuzzle()" style="display:none; position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); width:220px; height:48px; font-size:16px; background:#ffebee !important; color:#e53935 !important; border:1px solid #ef9a9a !important; margin:0; z-index:10; box-shadow:0 4px 12px rgba(229,57,53,0.2);">🔄 다시 시도하기</button>
                         </div>
@@ -2259,7 +2248,7 @@ function loadContent(wk, type, el) {
                         <div class="sentence-eng" style="font-size:24px; font-weight:800; color:#388e3c; margin-bottom:20px;">${englishFullText}</div>
                         ${(qItem.audio && qItem.audio.trim() !== "") ? `<button class="quiz-bar-action-btn" onclick="playPuzzleAudio()" style="margin: 0 auto; background: #e8f5e9; color: #2e7d32; border-color: #a5d6a7; padding: 10px 24px; display:inline-flex; width:auto; font-size:16px;">🎧 원어민 음성 듣기</button>` : ''}
                     </div>
-                    
+
                     <div class="quiz-in-card-nav">
                         <button class="quiz-nav-arrow" onclick="event.stopPropagation(); navigatePuzzle(-1)">◀</button>
                         <button class="quiz-nav-arrow" onclick="event.stopPropagation(); navigatePuzzle(1)">▶</button>
@@ -2276,7 +2265,7 @@ function loadContent(wk, type, el) {
             </div>
         </div>
         `;
-        
+
         pZone.innerHTML = html;
         pZone.dataset.original = cleanSentence.toLowerCase();
 
@@ -2304,7 +2293,7 @@ function loadContent(wk, type, el) {
             onAdd: () => { clearPuzzleErrorState(); togglePuzzleActionBtns(); },
             onRemove: () => { clearPuzzleErrorState(); togglePuzzleActionBtns(); }
         });
-        
+
         // 💡 2. 단어 보관함: 클릭 전용 (안에서 순서 섞이지 않게 고정!)
         new Sortable(document.getElementById('puzzle-word-pool'), {
             group: 'puzzle', 
@@ -2318,7 +2307,7 @@ function loadContent(wk, type, el) {
             onAdd: togglePuzzleActionBtns,
             onRemove: togglePuzzleActionBtns
         });
-        
+
         if (qItem.audio && qItem.audio.trim() !== "") {
             player.src = qItem.audio; player.load();
         } else {
@@ -2333,9 +2322,9 @@ function loadContent(wk, type, el) {
         const checkBtn = document.getElementById('btn-check-answer');
         const retryBtn = document.getElementById('btn-retry-puzzle');
         if (!pool || !checkBtn) return;
-        
+
         const remainingWords = pool.querySelectorAll('.scramble-word').length;
-        
+
         // 단어 카드가 0장이면 중앙에 버튼 띄우기
         if (remainingWords === 0) {
             if (retryBtn.style.display === 'none' || retryBtn.style.display === '') {
@@ -2350,16 +2339,16 @@ function loadContent(wk, type, el) {
 
 
 
-    
+
     // 💡 [신규 추가] 카드를 드래그하지 않고 '톡' 터치(클릭)만 해도 위아래로 이동하는 함수
     function handleWordClick(el) {
         const answerBox = document.getElementById('puzzle-answer-box');
         const wordPool = document.getElementById('puzzle-word-pool');
-        
+
         // 보관함에 있으면 정답 영역으로, 정답 영역에 있으면 보관함으로 이동
         if (el.parentElement === wordPool) answerBox.appendChild(el);
         else wordPool.appendChild(el);
-        
+
         clearPuzzleErrorState();
         togglePuzzleActionBtns(); // 💡 터치(클릭)해서 단어를 옮겼을 때도 버튼을 띄울지 말지 즉각 체크!
     }
@@ -2374,7 +2363,7 @@ function loadContent(wk, type, el) {
         const feedbackMsg = document.getElementById('puzzle-feedback-msg');
         const btnCheck = document.getElementById('btn-check-answer');
         const btnRetry = document.getElementById('btn-retry-puzzle');
-        
+
         const original = pZone.dataset.original;
         const currentWords = Array.from(answerBox.children).map(el => el.dataset.word.toLowerCase());
         const currentSentence = currentWords.join(' ').trim();
@@ -2385,10 +2374,10 @@ function loadContent(wk, type, el) {
         } else {
             answerBox.classList.add('puzzle-error');
             if (feedbackMsg) feedbackMsg.style.opacity = '1';
-            
+
             if (btnCheck) btnCheck.style.display = 'none';
             if (btnRetry) btnRetry.style.display = 'block'; 
-            
+
             setTimeout(() => { answerBox.classList.remove('puzzle-error'); }, 400);
         }
     }
@@ -2415,11 +2404,11 @@ function loadContent(wk, type, el) {
         const key = `jub_${wk}_${type}_${idx}`;
         const current = userProgressCache[key] || false;
         const newState = !current;
-        
+
         userProgressCache[key] = newState;
         if (newState) btnEl.classList.add('active');
         else btnEl.classList.remove('active');
-        
+
         db.collection("users").doc(currentUserUid).collection("data").doc("progress").set({ [key]: newState }, { merge: true })
             .catch((error) => console.error("줍줍 저장 에러:", error));
     }
@@ -2441,18 +2430,18 @@ function loadContent(wk, type, el) {
         activeQuizTypes = ['jubjub'];
         isBurningMode = true;
         activeBurningFilters = [status];
-        
+
         switchMainMode(mode);
         buildFullQuizPool(); 
-        
+
         if (mode === 'quiz') {
             document.getElementById('btn-burning-mode').classList.add('active');
             document.getElementById('burning-mode-dashboard').style.display = 'block';
             syncBurningFilterUI();
         }
-        
+
         applyBurningFilters(mode);
-        
+
         document.getElementById('quiz-setup-area').style.display = 'none';
         if(mode === 'quiz') document.getElementById('quiz-play-area').style.display = 'block';
         else document.getElementById('puzzle-play-area').style.display = 'block';
@@ -2470,10 +2459,10 @@ function loadContent(wk, type, el) {
         const feedbackMsg = document.getElementById('puzzle-feedback-msg');
         const btnCheck = document.getElementById('btn-check-answer');
         const btnRetry = document.getElementById('btn-retry-puzzle');
-        
+
         if (feedbackMsg) feedbackMsg.style.opacity = '0';
         if (btnRetry) btnRetry.style.display = 'none';
-        
+
         // 💡 에러 상태를 풀 때, 보관함이 완전히 비어있을 때만 다시 '정답 확인' 버튼 살려줌
         const pool = document.getElementById('puzzle-word-pool');
         if (pool && btnCheck) {
@@ -2487,7 +2476,7 @@ function loadContent(wk, type, el) {
         clearPuzzleErrorState();
         const answerBox = document.getElementById('puzzle-answer-box');
         const wordPool = document.getElementById('puzzle-word-pool');
-        
+
         // 박스에 올렸던 단어들을 다시 보관함으로 싹 내려보내서 리셋!
         Array.from(answerBox.querySelectorAll('.scramble-word')).forEach(word => wordPool.appendChild(word));
         togglePuzzleActionBtns(); // 💡 단어들이 내려왔으니 버튼은 다시 자동으로 숨기기!
@@ -2533,12 +2522,12 @@ function loadContent(wk, type, el) {
     // 랜덤이 켜지는 순간 즉시 오디오를 멈추고 새로운 무작위 퍼즐로 이동
     if (isRandomQuiz && puzzlePool.length > 1) {
         stopAll();
-        
+
         initPuzzleRandom(); // 바구니 채우기 (현재 1번 퍼즐 제외)
         const randIdx = Math.floor(Math.random() * puzzleUnvisited.length);
         currentPuzzleIndex = puzzleUnvisited[randIdx];
         puzzleUnvisited.splice(randIdx, 1); // 뽑은 퍼즐은 바구니에서 제거
-        
+
         renderPuzzleCard(); // 화면 새로고침
     }
 }
@@ -2551,14 +2540,14 @@ function loadContent(wk, type, el) {
         const type = puzzlePool[currentPuzzleIndex].type;
         const idx = puzzlePool[currentPuzzleIndex].idx;
         const progressKey = `puzzle_${wk}_${type}_${idx}`;
-        
+
         if (!userProgressCache[progressKey]) {
             alert("🎯 성취도(Pass / Retry)를 먼저 선택해 주세요!");
             return;
         }
 
         stopAll();
-        
+
         if (isRandomQuiz && puzzlePool.length > 1) {
             // 💡 랜덤 모드: 바구니에 남은 카드가 없을 때 위트 있는 안내
             if (puzzleUnvisited.length === 0) {
@@ -2581,7 +2570,7 @@ function loadContent(wk, type, el) {
                 if (currentPuzzleIndex < 0) currentPuzzleIndex = puzzlePool.length - 1;
             }
         }
-        
+
         renderPuzzleCard();
     }
 
@@ -2636,7 +2625,7 @@ function loadContent(wk, type, el) {
 
     function applyBurningFilters(mode = 'quiz') {
         const pool = mode === 'quiz' ? fullQuizPool : fullQuizPool.filter(q => q.data.chunks && q.data.chunks.length > 0);
-        
+
         const filteredPool = pool.filter(qItem => {
             const progressKey = mode === 'puzzle' ? `puzzle_${qItem.wk}_${qItem.type}_${qItem.idx}` : `${qItem.wk}_${qItem.type}_${qItem.idx}`;
             const status = userProgressCache[progressKey];
@@ -2695,7 +2684,7 @@ function loadContent(wk, type, el) {
         const randIdx = Math.floor(Math.random() * quizUnvisited.length);
         currentQuizIndex = quizUnvisited[randIdx];
         quizUnvisited.splice(randIdx, 1); // 뽑은 문제는 바구니에서 제거
-        
+
         renderQuizCard(); // 화면 새로고침
     }
 }
@@ -2708,11 +2697,11 @@ function renderQuizCard() {
 
     if (currentQuizIndex >= quizPool.length) currentQuizIndex = 0;
     if (currentQuizIndex < 0) currentQuizIndex = quizPool.length - 1;
-    
+
     const qItem = quizPool[currentQuizIndex];
     const item = qItem.data;
     const wk = qItem.wk, type = qItem.type, idx = qItem.idx;
-    
+
     const progressKey = `${wk}_${type}_${idx}`;
 
     // 💡 세팅 화면을 나갔다 와도 기존 녹음 파일이 유지되도록 캐시에서 복구!
@@ -2738,7 +2727,7 @@ function renderQuizCard() {
                 <button class="btn-burning ${isBurningMode ? 'active' : ''}" onclick="event.stopPropagation(); toggleBurningModeUI()" style="margin:0;">🔥<span class="btn-text"> 버닝 모드</span></button>
             </div>
         </div>
-            
+
             <div class="quiz-split-card" id="quiz-card-element" data-step="korean" onclick="toggleQuizCardFields()">            <div class="quiz-card-top-korean-zone">
                 <div style="position:absolute; top:15px; right:20px; cursor:pointer; font-size:20px; filter: grayscale(${isRandomQuiz ? '0' : '100%'}); opacity: ${isRandomQuiz ? '1' : '0.4'}; transition: 0.2s; user-select: none;" onclick="event.stopPropagation(); toggleRandomQuiz(this)">🔀</div>
                 <div class="trans-text" style="font-size:22px; color:#1a0dab; font-weight:700;">${item.trans}</div>
@@ -2751,7 +2740,7 @@ function renderQuizCard() {
                 <div id="quiz-tap-guide-lbl" style="display: block; font-size:13px; color:var(--gray-text); font-weight:400;">
                     💡 카드를 터치하면 영어 정답과 발음기호가 나옵니다.
                 </div>
-                
+
                 <div class="quiz-in-card-nav">
                     <button class="quiz-nav-arrow" onclick="event.stopPropagation(); navigateQuiz(-1)">◀</button>
                     <button class="quiz-nav-arrow" onclick="event.stopPropagation(); navigateQuiz(1)">▶</button>
@@ -2761,7 +2750,7 @@ function renderQuizCard() {
 
         <div class="quiz-audio-action-row" style="margin-bottom: 12px;">
             ${(qItem.audio && qItem.audio.trim() !== "") ? `<button class="quiz-bar-action-btn native-sound" onclick="playQuizSentence(${item.start || 0}, ${item.end || 0})">🔊 원어민 음성 듣기</button>` : ''}
-            
+
             <!-- 💡 마이크가 꺼지면 녹음 버튼들은 숨김 처리 -->
             <button class="quiz-bar-action-btn" id="start-record-btn" onclick="startRecording()" style="display: ${isMicEnabled ? 'flex' : 'none'};">🎙️ 녹음 시작</button>
             <button class="quiz-bar-action-btn recording-active" id="stop-record-btn" onclick="stopRecording()" style="display:none;">⏹️ 녹음 중지</button>
@@ -2779,7 +2768,7 @@ function renderQuizCard() {
                     <button class="btn ${getSpeedClass(1.0)}" onclick="setSpeed(1.0, this)">x1.0</button>
                 </div>
             </div>
-            
+
             <!-- 🎙️ 마이크 ON/OFF 상태 토글 버튼 -->
             <button onclick="toggleMicMode()" style="background: none; border: 1px solid ${isMicEnabled ? '#8ab4f8' : '#ddd'}; border-radius: 8px; padding: 4px 10px; font-size: 13px; font-weight: 800; color: ${isMicEnabled ? '#1967d2' : '#9aa0a6'}; cursor: pointer; transition: 0.2s; background-color: ${isMicEnabled ? '#e8f0fe' : '#f8f9fa'};">
                 🎙️ ${isMicEnabled ? 'ON' : 'OFF'}
@@ -2847,14 +2836,14 @@ function renderQuizCard() {
         const card = document.getElementById('quiz-card-element'); if (!card) return;
         const currentStep = card.getAttribute('data-step');
         const engFieldsBox = document.getElementById('quiz-english-fields-box'), guideLbl = document.getElementById('quiz-tap-guide-lbl');
-        
+
         if (currentStep === 'korean') { card.setAttribute('data-step', 'english'); engFieldsBox.style.display = 'block'; guideLbl.style.display = 'none'; } 
         else { card.setAttribute('data-step', 'korean'); engFieldsBox.style.display = 'none'; guideLbl.style.display = 'block'; }
     }
 
 function playQuizSentence(s, e) {
     stopAll(); 
-    
+
     const executePlay = () => {
         player.currentTime = Math.max(0, s - 0.15);
         player.play().catch(err => console.error("오디오 재생 에러:", err));
@@ -2871,13 +2860,13 @@ function playQuizSentence(s, e) {
     }
 }
 
-    
+
 function navigateQuiz(dir, isAuto = false) {
     const wk = quizPool[currentQuizIndex].wk;
     const type = quizPool[currentQuizIndex].type;
     const idx = quizPool[currentQuizIndex].idx;
     const progressKey = `${wk}_${type}_${idx}`;
-    
+
     // 💡 핵심: 자동 모드가 아닐 때만 성취도 필수 체크
     if (!isAutoQuizMode && !userProgressCache[progressKey]) {
         alert("🎯 성취도를 먼저 체크해 주세요!");
@@ -2889,7 +2878,7 @@ function navigateQuiz(dir, isAuto = false) {
     clearTimeout(autoStepTimer1);
     clearTimeout(autoStepTimer2);
     if (isAutoQuizMode) stopRecording();
-    
+
     const recordPlayer = document.getElementById('record-player');
     if (recordPlayer) {
         recordPlayer.pause();
@@ -2919,34 +2908,35 @@ function navigateQuiz(dir, isAuto = false) {
         if (currentQuizIndex >= quizPool.length) currentQuizIndex = 0;
         if (currentQuizIndex < 0) currentQuizIndex = quizPool.length - 1;
     }
-    
+
     renderQuizCard();
 }
 
     function startRecording(onStarted) {
+        // ✨ 마이크가 꺼져 있다면 녹음만 패스하고 시퀀스는 계속 진행!
         if (!isMicEnabled) {
             if (typeof onStarted === 'function') onStarted();
             return; 
         }
 
         const lockedQuizIndex = currentQuizIndex; 
-
-        // 💡 이미 열린 마이크 통로(globalAudioStream)를 그대로 가져다 씀
-        const startRecordProcess = (stream) => {
+        navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
             mediaRecorder = new MediaRecorder(stream); 
             audioChunks = [];
             mediaRecorder.ondataavailable = e => { audioChunks.push(e.data); };
             mediaRecorder.onstop = () => {
-                // 🚨 주의: 여기서 track.stop() 절대 금지! (블루투스 끊김의 원인)
-                
-                const mimeType = mediaRecorder.mimeType || 'audio/mp4'; 
-                const audioBlob = new Blob(audioChunks, { type: mimeType }); 
-                
+                mediaRecorder.stream.getTracks().forEach(track => track.stop()); 
+
+                const options = mediaRecorder.mimeType ? { type: mediaRecorder.mimeType } : {};
+                const audioBlob = new Blob(audioChunks, options); 
+
                 const reader = new FileReader();
                 reader.readAsDataURL(audioBlob);
                 reader.onloadend = () => {
                     const base64String = reader.result; 
+
                     quizPool[lockedQuizIndex].recordedAudio = base64String;
+
                     const lockedItem = quizPool[lockedQuizIndex];
                     sessionRecordCache[`${lockedItem.wk}_${lockedItem.type}_${lockedItem.idx}`] = base64String;
 
@@ -2967,27 +2957,18 @@ function navigateQuiz(dir, isAuto = false) {
             const stopBtn = document.getElementById('stop-record-btn');
             if (startBtn) startBtn.style.display = 'none'; 
             if (stopBtn) stopBtn.style.display = 'flex';
-            
-            if (typeof onStarted === 'function') onStarted();
-        };
 
-        if (globalAudioStream && globalAudioStream.active) {
-            startRecordProcess(globalAudioStream);
-        } else {
-            // 통로가 닫혀있다면 새로 열어주기
-            navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
-                globalAudioStream = stream;
-                startRecordProcess(stream);
-            }).catch(err => { 
-                isMicEnabled = false;
-                if(isMobileDevice) {
-                    alert("마이크 권한이 차단되었습니다. 설정에서 허용해 주세요.");
-                    if (isAutoQuizMode) { isAutoQuizMode = false; renderQuizCard(); }
-                } else {
-                    if (typeof onStarted === 'function') onStarted(); 
-                }
-            });
-        }
+            if (typeof onStarted === 'function') onStarted();
+       }).catch(err => { 
+            // 만약 도중에 권한이 뺏겼다면
+            isMicEnabled = false; // ✅ 이걸로 변경!
+            if(isMobileDevice) {
+                alert("마이크 권한이 차단되었습니다. 설정에서 허용해 주세요.");
+                if (isAutoQuizMode) { isAutoQuizMode = false; renderQuizCard(); }
+            } else {
+                 if (typeof onStarted === 'function') onStarted(); // PC는 무시하고 진행
+            }
+        });
     }
 
 
@@ -3004,7 +2985,7 @@ function navigateQuiz(dir, isAuto = false) {
     }
 }
 
- 
+
 
     function playRecording() { 
         if (recordedAudioUrl) { 
@@ -3018,7 +2999,7 @@ function navigateQuiz(dir, isAuto = false) {
                 recordPlayer.currentTime = 0; 
                 recordPlayer.play(); 
                 if (playBtn) playBtn.style.background = '#a8e6cf'; // 💡 [요청 2] 재생 중일 때 상큼한 초록색으로 변경!
-                
+
                 // 재생이 끝나면 자동으로 초록색 불이 꺼지도록 이벤트 연결
                 recordPlayer.onended = () => {
                     if (playBtn) playBtn.style.background = '';
@@ -3026,7 +3007,7 @@ function navigateQuiz(dir, isAuto = false) {
             }
         } 
     }
-    
+
     function submitStatusClick(wk, type, idx, statusName, btnEl) {
         saveSentenceStatusToCloud(wk, type, idx, statusName);
         const parent = btnEl.parentElement;
@@ -3048,7 +3029,7 @@ function navigateQuiz(dir, isAuto = false) {
 
     mainStudyContainer.addEventListener('click', (e) => {
         if (isQuizMode) return;
-        
+
         const noAudioCard = e.target.closest('.no-audio');
         const chunk = e.target.closest('.chunk');
         const playBtn = e.target.closest('.play-btn');
@@ -3112,11 +3093,11 @@ function navigateQuiz(dir, isAuto = false) {
 
     function playPart(s, e) { 
         clearTimeout(window.shadowTimer); 
-        
+
         // 💡 [추가] 재생이 시작될 때마다 버튼 상태를 읽어서 배속을 한 번 더 확실하게 고정! (풀림 방지)
         const rate = parseFloat(document.querySelector('.btn-grp .btn.active')?.innerText.replace('x','') || 1.0);
         player.playbackRate = rate;
-        
+
         stopTime = e - (0.32 * rate); 
         player.currentTime = Math.max(0, s - (0.17 * rate)); 
         player.play(); 
@@ -3126,7 +3107,7 @@ function navigateQuiz(dir, isAuto = false) {
     function stopAll() {
         player.pause(); isAutoPlaying = false; stopTime = 0; clearTimeout(window.shadowTimer);
         statusIcon.innerText = "▶️";
-        
+
         // 💡 내 녹음 플레이어와 초록색 불도 함께 확실하게 초기화
         const recordPlayer = document.getElementById('record-player');
         if (recordPlayer) recordPlayer.pause();
@@ -3155,7 +3136,7 @@ function navigateQuiz(dir, isAuto = false) {
         const limit = parseInt(document.getElementById('repeat-count').value) || 1;
         const lbl = `${currentRepeat} / ${limit}`;
         if(document.getElementById('current-count')) document.getElementById('current-count').innerText = lbl;
-        
+
         const duration = (parseFloat(el.dataset.end) - parseFloat(el.dataset.start)) / player.playbackRate;
         const pauseTime = isShadowing ? (duration + 1.5) * 1000 : 800; 
 
@@ -3176,9 +3157,9 @@ function navigateQuiz(dir, isAuto = false) {
         // 💡 직계 자식(children)만 찾던 방식에서, 화면 전체의 data-start 요소를 모두 수집하도록 수정!
         const all = Array.from(mainStudyContainer.querySelectorAll('[data-start]'));
         const idx = all.indexOf(el); 
-        
+
         el.classList.remove('playing', 'active-play');
-        
+
         // 다음 인덱스가 존재하면 재생, 끝이면 멈춤
         if (idx > -1 && idx < all.length - 1) {
             const next = all[idx+1]; 
@@ -3224,14 +3205,14 @@ function navigateQuiz(dir, isAuto = false) {
             "05 Catching up", "06 Directions", "07 Dating", "08 Health", 
             "09 Favorite Food", "10 Travel", "11 Boot camp", "12 Beautiful Memories"
         ];
-        
+
         const navList = document.getElementById('nav-list');
         const quizGrid = document.getElementById('quiz-chapter-grid');
 
         if (navList && quizGrid) {
             menuItems.forEach((name, idx) => {
                 const wk = (idx + 1).toString().padStart(2, '0');
-                
+
                 const subMenuHtml = `
                     <div class="sub-item" onclick="loadContent('${wk}', 'mystory', this)">1. My Story</div>
                     <div class="sub-item" onclick="loadContent('${wk}', 'useful_mystory', this)">1-1. Useful (MS)</div>
@@ -3252,7 +3233,7 @@ function navigateQuiz(dir, isAuto = false) {
                         </div>
                     </div>
                 `);
-                
+
                 quizGrid.insertAdjacentHTML('beforeend', `<button class="chapter-chk-btn" onclick="toggleQuizChapter('${wk}', this)">Ch ${wk}</button>`);
             });
         }
@@ -3304,10 +3285,10 @@ loadSavedQuizSetup();
     // 💡 화면 빈 공간 클릭 시 왼쪽 네비게이션 닫기 기능 (모바일/좁은 화면 전용)
     document.addEventListener('click', function(event) {
         const sidebarEl = document.getElementById('sidebar');
-        
+
         const isMenuBtn = event.target.closest('.mobile-menu-btn') || 
                           (event.target.closest('.btn') && event.target.closest('.btn').getAttribute('onclick') === 'toggleSidebar()');
-        
+
         if (window.innerWidth <= 1024 && sidebarEl.classList.contains('open')) {
             // 💡 사이드바 영역 '바깥쪽(!contains)'을 클릭했을 때만 닫히도록 수정!
             if (!sidebarEl.contains(event.target) && !isMenuBtn) {
@@ -3365,19 +3346,19 @@ loadSavedQuizSetup();
         // --- 2. 챕터 및 파트 세팅 불러오기 ---
         const savedTypes = localStorage.getItem('koboogy_saved_types');
         const savedChapters = localStorage.getItem('koboogy_saved_chapters');
-        
+
         if (savedTypes) activeQuizTypes = JSON.parse(savedTypes);
         if (savedChapters) activeQuizChapters = JSON.parse(savedChapters);
-        
+
         syncTypeButtons(); // 파트 버튼 UI 동기화
-        
+
         // 챕터 버튼 UI 동기화
         document.querySelectorAll('.chapter-chk-btn').forEach(btn => {
             const wk = btn.innerText.replace('Ch ', '');
             if (activeQuizChapters.includes(wk)) btn.classList.add('active');
             else btn.classList.remove('active');
         });
-        
+
         // '전체' 체크박스 상태 동기화
         const totalChapters = Object.keys(typeof studyData !== 'undefined' ? studyData : {});
         const chkAllChapters = document.getElementById('chk-all-chapters');
@@ -3406,7 +3387,7 @@ window.addEventListener('DOMContentLoaded', function() {
                 topBtn.style.display = 'none';
                 return;
             }
-            
+
             // 실제 학습 화면에서 200px 이상 내려갔을 때만 우측 하단에 노출
             if (mainScrollArea.scrollTop > 200) {
                 topBtn.style.display = 'flex';
