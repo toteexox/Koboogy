@@ -2859,45 +2859,51 @@ function navigateQuiz(dir, isAuto = false) {
 }
 
     function startRecording(onStarted) {
-    const lockedQuizIndex = currentQuizIndex; 
-    navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
-        mediaRecorder = new MediaRecorder(stream); 
-        audioChunks = [];
-        mediaRecorder.ondataavailable = e => { audioChunks.push(e.data); };
-        mediaRecorder.onstop = () => {
-            // 💡 안전하게 음원 파일 변환이 보장되는 시점에 마이크 종료
-            mediaRecorder.stream.getTracks().forEach(track => track.stop()); 
-            
-            const options = mediaRecorder.mimeType ? { type: mediaRecorder.mimeType } : {};
-            const audioBlob = new Blob(audioChunks, options); 
-            const url = URL.createObjectURL(audioBlob);
-            
-            quizPool[lockedQuizIndex].recordedAudio = url;
-            
-            const lockedItem = quizPool[lockedQuizIndex];
-            sessionRecordCache[`${lockedItem.wk}_${lockedItem.type}_${lockedItem.idx}`] = url;
+        const lockedQuizIndex = currentQuizIndex; 
+        navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+            mediaRecorder = new MediaRecorder(stream); 
+            audioChunks = [];
+            mediaRecorder.ondataavailable = e => { audioChunks.push(e.data); };
+            mediaRecorder.onstop = () => {
+                // 💡 안전하게 음원 파일 변환이 보장되는 시점에 마이크 종료
+                mediaRecorder.stream.getTracks().forEach(track => track.stop()); 
+                
+                const options = mediaRecorder.mimeType ? { type: mediaRecorder.mimeType } : {};
+                const audioBlob = new Blob(audioChunks, options); 
+                
+                // 💡 [핵심 버그 해결] 임시 링크(Blob) 대신 Base64 문자열로 완전 변환하여 메모리 증발 방지!
+                const reader = new FileReader();
+                reader.readAsDataURL(audioBlob);
+                reader.onloadend = () => {
+                    const base64String = reader.result; // 영구 보존되는 음원 데이터
+                    
+                    quizPool[lockedQuizIndex].recordedAudio = base64String;
+                    
+                    const lockedItem = quizPool[lockedQuizIndex];
+                    sessionRecordCache[`${lockedItem.wk}_${lockedItem.type}_${lockedItem.idx}`] = base64String;
 
-            if (currentQuizIndex === lockedQuizIndex) {
-                recordedAudioUrl = url;
-                const recordPlayer = document.getElementById('record-player');
-                if (recordPlayer) {
-                    recordPlayer.src = url;
-                    recordPlayer.load(); 
-                }
-                const playBtn = document.getElementById('play-record-btn');
-                if (playBtn) playBtn.disabled = false;
-            }
-        };
-        mediaRecorder.start();
-        const startBtn = document.getElementById('start-record-btn');
-        const stopBtn = document.getElementById('stop-record-btn');
-        if (startBtn) startBtn.style.display = 'none'; 
-        if (stopBtn) stopBtn.style.display = 'flex';
-        
-        // 💡 마이크가 켜진 직후에 타이머를 실행하도록 콜백 호출
-        if (typeof onStarted === 'function') onStarted();
-    }).catch(err => { alert("마이크 장치 접근 권한이 필요합니다."); });
-}
+                    if (currentQuizIndex === lockedQuizIndex) {
+                        recordedAudioUrl = base64String;
+                        const recordPlayer = document.getElementById('record-player');
+                        if (recordPlayer) {
+                            recordPlayer.src = base64String;
+                            recordPlayer.load(); 
+                        }
+                        const playBtn = document.getElementById('play-record-btn');
+                        if (playBtn) playBtn.disabled = false;
+                    }
+                };
+            };
+            mediaRecorder.start();
+            const startBtn = document.getElementById('start-record-btn');
+            const stopBtn = document.getElementById('stop-record-btn');
+            if (startBtn) startBtn.style.display = 'none'; 
+            if (stopBtn) stopBtn.style.display = 'flex';
+            
+            // 💡 마이크가 켜진 직후에 타이머를 실행하도록 콜백 호출
+            if (typeof onStarted === 'function') onStarted();
+        }).catch(err => { alert("마이크 장치 접근 권한이 필요합니다."); });
+    }
 
 
 
