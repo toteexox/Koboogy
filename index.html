@@ -1121,8 +1121,6 @@
 
                 showEntryScreen();
                 fetchUserProgressFromFirestore();
-
-                }
                 
                 // 💡 [수정] 모바일 기기의 모든 스크롤 속성을 강제로 0으로 리셋
                 const forceScrollTop = () => {
@@ -2961,9 +2959,9 @@ function navigateQuiz(dir, isAuto = false) {
             if (stopBtn) stopBtn.style.display = 'flex';
             
             if (typeof onStarted === 'function') onStarted();
-        }).catch(err => { 
+       }).catch(err => { 
             // 만약 도중에 권한이 뺏겼다면
-            micPermissionGranted = false;
+            isMicEnabled = false; // ✅ 이걸로 변경!
             if(isMobileDevice) {
                 alert("마이크 권한이 차단되었습니다. 설정에서 허용해 주세요.");
                 if (isAutoQuizMode) { isAutoQuizMode = false; renderQuizCard(); }
