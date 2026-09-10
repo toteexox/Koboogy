@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-
     <meta charset="UTF-8">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">  <title>Koboogy</title>
@@ -2226,11 +2225,14 @@ function loadContent(wk, type, el) {
 
         const savedStatus = userProgressCache[`puzzle_${wk}_${type}_${idx}`];
 
+        // 💡 [추가] 성취도 아이콘 변수 생성
+        const statusIconBadge = getStatusIconChar(savedStatus || '');
+
         let html = `
         <div class="quiz-container">
             <div class="quiz-card-meta-row">
                 <div style="display:flex; gap:15px; align-items:center;">
-                    <div class="quiz-type-badge">${qItem.typeBadge} ${wk}</div>
+                                        <div class="quiz-type-badge">${statusIconBadge} ${qItem.typeBadge} ${wk}</div>
                     <div class="quiz-pagination-counter">${currentPuzzleIndex + 1} / ${puzzlePool.length}</div>
                 </div>
             </div>
@@ -2722,6 +2724,10 @@ function renderQuizCard() {
     }
 
     const savedStatus = userProgressCache[progressKey];
+    
+    // 💡 [추가] 성취도 아이콘 변수 생성
+    const statusIconBadge = getStatusIconChar(savedStatus || '');
+
     const englishFullText = item.chunks ? item.chunks.map(c => c.text).join(' ') : '';
 
     const currentSpeed = parseFloat(localStorage.getItem('koboogy_speed')) || 1.0;
@@ -2731,7 +2737,7 @@ function renderQuizCard() {
         <div class="quiz-container">
             <div class="quiz-card-meta-row">
             <div style="display:flex; gap:15px; align-items:center;">
-                <div class="quiz-type-badge">${qItem.typeBadge} ${wk}</div>
+                                <div class="quiz-type-badge">${statusIconBadge} ${qItem.typeBadge} ${wk}</div>
                 <div class="quiz-pagination-counter">${currentQuizIndex + 1} / ${quizPool.length}</div>
             </div>
             <div style="display:flex; gap:8px;">
