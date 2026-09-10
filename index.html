@@ -1206,6 +1206,28 @@
     let mediaRecorder = null, audioChunks = [], recordedAudioUrl = null;
     let sessionRecordCache = {}; // 💡 세팅 화면을 나갔다 와도 녹음을 유지해 줄 보관함!
 
+    let isMicEnabled = false; // 마이크 활성화 상태
+    let hasAskedMic = false;  // 팝업을 띄웠는지 체크
+
+// 🎙️ 마이크 ON/OFF 토글 함수
+function toggleMicMode() {
+    isMicEnabled = !isMicEnabled;
+    if (isMicEnabled) {
+        navigator.mediaDevices.getUserMedia({ audio: true })
+            .then(stream => {
+                stream.getTracks().forEach(t => t.stop());
+                renderQuizCard(); // 권한 획득 시 UI 즉시 갱신
+            })
+            .catch(() => {
+                alert("⚠️ 마이크 접근 권한이 차단되어 있습니다. 브라우저 설정에서 허용해주세요.");
+                isMicEnabled = false;
+                renderQuizCard();
+            });
+    } else {
+        renderQuizCard();
+    }
+}
+
     // 📱 현재 기기가 모바일(스마트폰/태블릿)인지 확인하는 변수
     const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     let micPermissionGranted = false; // 마이크 권한이 확보되었는지 체크
@@ -2093,12 +2115,28 @@ function loadContent(wk, type, el) {
 
     function startQuizPool() {
         if (activeQuizChapters.length === 0) { alert("학습할 챕터를 1개 이상 선택해 주세요!"); return; }
-        
+
         buildFullQuizPool();
         if (fullQuizPool.length === 0) { alert("선택한 챕터/모드에 해당하는 데이터가 없습니다."); return; }
 
+        // ✨ 추가된 부분: 툭탁 연습 진입 시 최초 1회 마이크 권한 묻기
+        if (!hasAskedMic) {
+            isMicEnabled = confirm("🎙️ 툭탁 연습에서 내 발음 녹음 기능을 켜시겠습니까?\n(카드 화면 배속 설정 우측에서 언제든 끄고 켤 수 있습니다.)");
+            hasAskedMic = true;
+            if (isMicEnabled) {
+                navigator.mediaDevices.getUserMedia({ audio: true })
+                    .then(stream => stream.getTracks().forEach(t => t.stop()))
+                    .catch(() => {
+                        alert("⚠️ 마이크 권한이 차단되어 녹음 기능을 꺼둡니다.");
+                        isMicEnabled = false;
+                    });
+            }
+        }
+
         isBurningMode = false;
         burningDashboard.style.display = 'none';
+        
+   
 
         // 💡 [요청 3] 미학습(성취도 체크 안됨) 카드만 필터링!
         let unstudiedPool = fullQuizPool.filter(qItem => {
@@ -2741,12 +2779,15 @@ function renderQuizCard() {
 
         <div class="quiz-audio-action-row" style="margin-bottom: 12px;">
             ${(qItem.audio && qItem.audio.trim() !== "") ? `<button class="quiz-bar-action-btn native-sound" onclick="playQuizSentence(${item.start || 0}, ${item.end || 0})">🔊 원어민 음성 듣기</button>` : ''}
-            <button class="quiz-bar-action-btn" id="start-record-btn" onclick="startRecording()">🎙️ 녹음 시작</button>
+            
+            <!-- 💡 마이크가 꺼지면 녹음 버튼들은 숨김 처리 -->
+            <button class="quiz-bar-action-btn" id="start-record-btn" onclick="startRecording()" style="display: ${isMicEnabled ? 'flex' : 'none'};">🎙️ 녹음 시작</button>
             <button class="quiz-bar-action-btn recording-active" id="stop-record-btn" onclick="stopRecording()" style="display:none;">⏹️ 녹음 중지</button>
-            <button class="quiz-bar-action-btn" id="play-record-btn" onclick="playRecording()" ${qItem.recordedAudio ? '' : 'disabled'}>🎧 내 발음 듣기</button>
+            <button class="quiz-bar-action-btn" id="play-record-btn" onclick="playRecording()" style="display: ${isMicEnabled ? 'flex' : 'none'};" ${qItem.recordedAudio ? '' : 'disabled'}>🎧 내 발음 듣기</button>
         </div>
 
-        <div style="display: flex; justify-content: flex-start; align-items: center; width: 100%; margin-bottom: 15px; padding: 0 4px;">
+        <!-- 💡 justify-content: space-between 으로 양끝 정렬 -->
+        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 15px; padding: 0 4px;">
             <div class="speed-controls-row">
                 <span style="font-size: 13px; font-weight: bold; color: var(--gray-text); margin-right: 10px;">오디오 배속</span>
                 <div class="btn-grp">
@@ -2756,6 +2797,12 @@ function renderQuizCard() {
                     <button class="btn ${getSpeedClass(1.0)}" onclick="setSpeed(1.0, this)">x1.0</button>
                 </div>
             </div>
+            
+            <!-- 🎙️ 마이크 ON/OFF 상태 토글 버튼 -->
+            <button onclick="toggleMicMode()" style="background: none; border: 1px solid ${isMicEnabled ? '#8ab4f8' : '#ddd'}; border-radius: 8px; padding: 4px 10px; font-size: 13px; font-weight: 800; color: ${isMicEnabled ? '#1967d2' : '#9aa0a6'}; cursor: pointer; transition: 0.2s; background-color: ${isMicEnabled ? '#e8f0fe' : '#f8f9fa'};">
+                🎙️ ${isMicEnabled ? 'ON' : 'OFF'}
+            </button>
+
         </div>
 
         <div class="quiz-status-panel" style="width:100%; text-align:center;">
@@ -2895,23 +2942,13 @@ function navigateQuiz(dir, isAuto = false) {
 }
 
     function startRecording(onStarted) {
-        const lockedQuizIndex = currentQuizIndex; 
-
-        // 💡 1. 마이크 권한이 없는 경우 (PC에서 거부했거나 지원 안 하는 브라우저)
-        if (!micPermissionGranted) {
-            console.log("마이크 권한 없음: 녹음을 건너뜁니다.");
-            // UI 버튼 처리 (에러 방지용)
-            const startBtn = document.getElementById('start-record-btn');
-            const stopBtn = document.getElementById('stop-record-btn');
-            if (startBtn) startBtn.style.display = 'none'; 
-            if (stopBtn) stopBtn.style.display = 'flex';
-            
-            // 녹음은 안 하지만, 자동 모드의 다음 시퀀스를 위해 콜백 즉시 실행!
+        // ✨ 마이크가 꺼져 있다면 녹음만 패스하고 시퀀스는 계속 진행!
+        if (!isMicEnabled) {
             if (typeof onStarted === 'function') onStarted();
-            return; // 여기서 함수 종료!
+            return; 
         }
 
-        // 💡 2. 마이크 권한이 있는 경우 (정상 녹음 진행)
+        const lockedQuizIndex = currentQuizIndex; 
         navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
             mediaRecorder = new MediaRecorder(stream); 
             audioChunks = [];
