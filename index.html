@@ -1701,44 +1701,35 @@ function toggleAutoQuizMode() {
 // 🤖 자동 연습 시퀀스 실행
 function runAutoQuizSequence() {
     if (!isAutoQuizMode) return;
-
     const qItem = quizPool[currentQuizIndex];
     const item = qItem.data;
-
-    // 오디오 길이를 기반으로 대기 시간 계산 (오디오가 없으면 기본 3초)
     const duration = ((item.end || 0) - (item.start || 0));
     const recordWaitTime = duration > 0 ? (duration * 1000) + 3000 : 3000; 
 
-    // 1. 카드가 뜨자마자 녹음 시작 (비동기로 마이크 권한을 얻은 후 확실하게 타이머 시작!)
+    // 💡 마이크 권한을 얻은 후 확실하게 타이머 시작
     startRecording(() => {
         if (!isAutoQuizMode) {
             stopRecording();
             return;
         }
-
-        // 2. [해당 카드 재생시간 + 3초] 뒤 동작 실행
+        
         autoStepTimer1 = setTimeout(() => {
             if (!isAutoQuizMode) return;
-
-            // 녹음 중지
             stopRecording();
-
-            // 카드 오픈 (닫혀있을 때만 열기)
+            
             const cardEl = document.getElementById('quiz-card-element');
             if (cardEl && cardEl.getAttribute('data-step') === 'korean') {
                 toggleQuizCardFields();
             }
 
-            // 원어민 소리 함께 재생
             if (qItem.audio && qItem.audio.trim() !== "") {
                 playQuizSentence(item.start || 0, item.end || 0);
             }
 
-            // 3. (오디오 재생 시간) + (다시 따라 말할 여유 시간: 재생 시간 + 1초) 후 다음 카드로 이동
             const playWaitTime = duration > 0 ? (duration * 2000) + 1000 : 3000;
             autoStepTimer2 = setTimeout(() => {
                 if (!isAutoQuizMode) return;
-                navigateQuiz(1, true); // true를 넘겨 자동 이동임을 알림
+                navigateQuiz(1, true);
             }, playWaitTime);
 
         }, recordWaitTime);
@@ -2867,13 +2858,15 @@ function navigateQuiz(dir, isAuto = false) {
         audioChunks = [];
         mediaRecorder.ondataavailable = e => { audioChunks.push(e.data); };
         mediaRecorder.onstop = () => {
-            // 💡 [버그 픽스] 아이폰(Safari) 등에서 MIME 타입이 없어서 음원이 깨지는 현상 방지
+            // 💡 안전하게 음원 파일 변환이 보장되는 시점에 마이크 종료
+            mediaRecorder.stream.getTracks().forEach(track => track.stop()); 
+            
             const options = mediaRecorder.mimeType ? { type: mediaRecorder.mimeType } : {};
             const audioBlob = new Blob(audioChunks, options); 
             const url = URL.createObjectURL(audioBlob);
-
+            
             quizPool[lockedQuizIndex].recordedAudio = url;
-
+            
             if (currentQuizIndex === lockedQuizIndex) {
                 recordedAudioUrl = url;
                 const recordPlayer = document.getElementById('record-player');
@@ -2886,35 +2879,31 @@ function navigateQuiz(dir, isAuto = false) {
             }
         };
         mediaRecorder.start();
-        
         const startBtn = document.getElementById('start-record-btn');
         const stopBtn = document.getElementById('stop-record-btn');
         if (startBtn) startBtn.style.display = 'none'; 
         if (stopBtn) stopBtn.style.display = 'flex';
-
-        // 💡 [버그 픽스] 마이크가 켜지고 녹음이 시작된 '직후'에 타이머를 돌리도록 신호 전송!
-        if (typeof onStarted === 'function') onStarted(); 
         
-    }).catch(err => { 
-        alert("마이크 장치 접근 권한이 필요합니다."); 
-        if (isAutoQuizMode) {
-            isAutoQuizMode = false;
-            renderQuizCard(); // 권한 없으면 자동모드 강제 종료
-        }
-    });
+        // 💡 마이크가 켜진 직후에 타이머를 실행하도록 콜백 호출
+        if (typeof onStarted === 'function') onStarted();
+    }).catch(err => { alert("마이크 장치 접근 권한이 필요합니다."); });
 }
 
 
 
 
     function stopRecording() {
-        if (mediaRecorder && mediaRecorder.state !== 'inactive') {
-            mediaRecorder.stop(); 
-            mediaRecorder.stream.getTracks().forEach(track => track.stop());
-            document.getElementById('start-record-btn').style.display = 'flex'; 
-            document.getElementById('stop-record-btn').style.display = 'none';
-        }
-    } 
+    if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+        mediaRecorder.stop(); 
+        // 💡 마이크 끄는 로직은 onstop 내부로 이동하여 여기선 삭제
+        const startBtn = document.getElementById('start-record-btn');
+        const stopBtn = document.getElementById('stop-record-btn');
+        if (startBtn) startBtn.style.display = 'flex'; 
+        if (stopBtn) stopBtn.style.display = 'none';
+    }
+}
+
+ 
 
     function playRecording() { 
         if (recordedAudioUrl) { 
