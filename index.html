@@ -1171,6 +1171,7 @@
     let activeBurningFilters = [];
 
     let mediaRecorder = null, audioChunks = [], recordedAudioUrl = null;
+    let sessionRecordCache = {}; // 💡 세팅 화면을 나갔다 와도 녹음을 유지해 줄 보관함!
 
     const loginScreen = document.getElementById('login-screen'),
           entryScreen = document.getElementById('entry-screen'),
@@ -2656,6 +2657,12 @@ function renderQuizCard() {
     const wk = qItem.wk, type = qItem.type, idx = qItem.idx;
     
     const progressKey = `${wk}_${type}_${idx}`;
+
+    // 💡 세팅 화면을 나갔다 와도 기존 녹음 파일이 유지되도록 캐시에서 복구!
+    if (sessionRecordCache[progressKey]) {
+        qItem.recordedAudio = sessionRecordCache[progressKey];
+    }
+
     const savedStatus = userProgressCache[progressKey];
     const englishFullText = item.chunks ? item.chunks.map(c => c.text).join(' ') : '';
 
@@ -2867,6 +2874,9 @@ function navigateQuiz(dir, isAuto = false) {
             
             quizPool[lockedQuizIndex].recordedAudio = url;
             
+            const lockedItem = quizPool[lockedQuizIndex];
+            sessionRecordCache[`${lockedItem.wk}_${lockedItem.type}_${lockedItem.idx}`] = url;
+
             if (currentQuizIndex === lockedQuizIndex) {
                 recordedAudioUrl = url;
                 const recordPlayer = document.getElementById('record-player');
@@ -3175,6 +3185,7 @@ loadSavedQuizSetup();
             .then(() => {
                 // 2. 프론트엔드 캐시 초기화
                 userProgressCache = {};
+                sessionRecordCache = {}; // 💡 추가: 녹음 보관함도 완벽하게 싹 비우기!
 
                 // 3. 현재 퀴즈 풀(Pool)에 남아있는 임시 녹음 파일(recordedAudio)도 싹 날려버리기
                 if (typeof fullQuizPool !== 'undefined') {
