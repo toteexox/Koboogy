@@ -1746,7 +1746,7 @@ function runAutoQuizSequence() {
     const qItem = quizPool[currentQuizIndex];
     const item = qItem.data;
     const duration = ((item.end || 0) - (item.start || 0));
-    const recordWaitTime = duration > 0 ? (duration * 1000) + 3000 : 3000; 
+    const recordWaitTime = duration > 0 ? (duration * 1000) + 5000 : 5000; 
 
     // 💡 마이크 권한을 얻은 후 확실하게 타이머 시작
     startRecording(() => {
@@ -1768,7 +1768,7 @@ function runAutoQuizSequence() {
                 playQuizSentence(item.start || 0, item.end || 0);
             }
 
-            const playWaitTime = duration > 0 ? (duration * 2000) + 1000 : 3000;
+            const playWaitTime = duration > 0 ? (duration * 2000) + 1000 : 5000;
             autoStepTimer2 = setTimeout(() => {
                 if (!isAutoQuizMode) return;
                 navigateQuiz(1, true);
