@@ -874,7 +874,7 @@
                 </div>
                 
                 <div class="right-user" id="user-badge-area" style="display:none;" onclick="toggleMyPageView()">
-                    <span>🎓 <span id="welcome-username">유저</span> 코치님</span>
+                    <span>🎓 <span id="welcome-username">유저</span> 님</span>
                 </div>
             </div>
         </header>
@@ -1521,86 +1521,124 @@
     }
     
 
-    // 💡 마이페이지 -> 챕터 클릭 시 퀴즈/퍼즐 진입
-    function startDirectChapterQuiz(wk, mode = 'quiz') {
-        activeQuizChapters = [wk];
-        activeQuizTypes = ['mystory', 'useful_mystory', 'live_mystory', 'grammar', 'realconvo', 'useful_realconvo', 'live_realconvo'];
-        isBurningMode = false;
-        switchMainMode(mode);
-        if(mode === 'quiz') startQuizPool();
-        else startPuzzlePool();
-        
-        // 💡 [요청4] 화면 전환 후 딜레이를 주어 스크롤을 최상단으로 강제 견인!
-        setTimeout(() => {
-            window.scrollTo(0, 0);
-            const scrollArea = document.getElementById('main-scroll-area');
-            if (scrollArea) scrollArea.scrollTop = 0;
-        }, 10);
+// 💡 1. 마이페이지 -> 챕터 클릭 시 퀴즈/퍼즐 진입
+function startDirectChapterQuiz(wk, mode = 'quiz') {
+    activeQuizChapters = [wk];
+    activeQuizTypes = ['mystory', 'useful_mystory', 'live_mystory', 'grammar', 'realconvo', 'useful_realconvo', 'live_realconvo'];
+    isBurningMode = false;
+    
+    switchMainMode(mode);
+    if(mode === 'quiz') startQuizPool();
+    else startPuzzlePool();
+    
+    setTimeout(() => {
+        window.scrollTo(0, 0);
+        const scrollArea = document.getElementById('main-scroll-area');
+        if (scrollArea) scrollArea.scrollTop = 0;
+    }, 10);
+}
+
+// 💡 2. 마이페이지 -> 챕터별 성취도(🔵🟢🟡🔴) 클릭 시 버닝모드 진입
+function startChapterBurningMode(wk, status, mode = 'quiz') {
+    switchMainMode(mode); // 💡 세팅 초기화나 화면 정리를 최우선으로 실행!
+
+    activeQuizChapters = [wk];
+    activeQuizTypes = ['mystory', 'useful_mystory', 'live_mystory', 'grammar', 'realconvo', 'useful_realconvo', 'live_realconvo'];
+    isBurningMode = true;
+    activeBurningFilters = [status];
+
+    // 🔥 화면 전환을 먼저 확실하게 강제! (세팅창 멈춤 버그 해결)
+    document.getElementById('quiz-setup-area').style.display = 'none';
+    if(mode === 'quiz') document.getElementById('quiz-play-area').style.display = 'block';
+    else document.getElementById('puzzle-play-area').style.display = 'block';
+
+    buildFullQuizPool(); 
+
+    if (mode === 'quiz') {
+        // 🚨 에러 원인이던 btn-burning-mode 조작 코드를 완전 삭제!
+        document.getElementById('burning-mode-dashboard').style.display = 'block';
+        syncBurningFilterUI();
     }
 
-    // 💡 마이페이지 -> 챕터별 성취도(🔵🟢🟡🔴) 클릭 시 버닝모드 진입
-    function startChapterBurningMode(wk, status, mode = 'quiz') {
-        activeQuizChapters = [wk];
-        activeQuizTypes = ['mystory', 'useful_mystory', 'live_mystory', 'grammar', 'realconvo', 'useful_realconvo', 'live_realconvo'];
-        isBurningMode = true;
-        activeBurningFilters = [status];
-        
-        switchMainMode(mode);
-        buildFullQuizPool(); 
-        
-        if (mode === 'quiz') {
-            document.getElementById('btn-burning-mode').classList.add('active');
-            document.getElementById('burning-mode-dashboard').style.display = 'block';
-            syncBurningFilterUI();
-        }
-        
-        applyBurningFilters(mode);
-        
-        document.getElementById('quiz-setup-area').style.display = 'none';
-        if(mode === 'quiz') document.getElementById('quiz-play-area').style.display = 'block';
-        else document.getElementById('puzzle-play-area').style.display = 'block';
+    applyBurningFilters(mode); // 에러 없이 정상적으로 카드가 그려짐
 
-        // 💡 [요청4] 화면 최상단 리셋
-        setTimeout(() => {
-            window.scrollTo(0, 0);
-            const scrollArea = document.getElementById('main-scroll-area');
-            if (scrollArea) scrollArea.scrollTop = 0;
-        }, 10);
+    setTimeout(() => {
+        window.scrollTo(0, 0);
+        const scrollArea = document.getElementById('main-scroll-area');
+        if (scrollArea) scrollArea.scrollTop = 0;
+    }, 10);
+}
+
+
+
+// 💡 3. 마이페이지 -> 전체 성취도 상단 버튼 클릭 시 글로벌 버닝모드 진입
+function startGlobalQuizByStatus(statusName, mode = 'quiz') {
+    switchMainMode(mode);
+
+    isBurningMode = true;
+    activeBurningFilters = [statusName];
+    activeQuizChapters = typeof studyData !== 'undefined' ? Object.keys(studyData) : [];
+    activeQuizTypes = ['mystory', 'useful_mystory', 'live_mystory', 'grammar', 'realconvo', 'useful_realconvo', 'live_realconvo'];
+
+    document.getElementById('quiz-setup-area').style.display = 'none';
+    if(mode === 'quiz') document.getElementById('quiz-play-area').style.display = 'block';
+    else document.getElementById('puzzle-play-area').style.display = 'block';
+
+    buildFullQuizPool();
+    
+    if (mode === 'quiz') {
+        document.getElementById('burning-mode-dashboard').style.display = 'block';
+        syncBurningFilterUI();
     }
 
+    applyBurningFilters(mode);
 
+    setTimeout(() => {
+        window.scrollTo(0, 0);
+        const scrollArea = document.getElementById('main-scroll-area');
+        if (scrollArea) scrollArea.scrollTop = 0;
+    }, 10);
+}
 
+// 💡 4. 줍줍 단독 직행 연습
+function startDirectJubJubQuiz(mode = 'quiz') {
+    activeQuizChapters = typeof studyData !== 'undefined' ? Object.keys(studyData) : [];
+    activeQuizTypes = ['jubjub'];
+    isBurningMode = false;
+    
+    switchMainMode(mode);
+    if(mode === 'quiz') startQuizPool();
+    else startPuzzlePool();
+}
 
-    // 💡 마이페이지 -> 전체 성취도 상단 버튼 클릭 시 글로벌 버닝모드 진입
-    function startGlobalQuizByStatus(statusName, mode = 'quiz') {
-        isBurningMode = true;
-        activeBurningFilters = [statusName];
-        
-        activeQuizChapters = Object.keys(studyData);
-        activeQuizTypes = ['mystory', 'useful_mystory', 'live_mystory', 'grammar', 'realconvo', 'useful_realconvo', 'live_realconvo'];
-        
-        switchMainMode(mode);
-        buildFullQuizPool();
-        
-        if (mode === 'quiz') {
-            document.getElementById('btn-burning-mode').classList.add('active');
-            document.getElementById('burning-mode-dashboard').style.display = 'block';
-            syncBurningFilterUI();
-        }
-        
-        applyBurningFilters(mode);
+// 💡 5. 줍줍 전용 성취도별 버닝모드 진입
+function startJubJubBurningMode(status, mode = 'quiz') {
+    switchMainMode(mode);
 
-        document.getElementById('quiz-setup-area').style.display = 'none';
-        if(mode === 'quiz') document.getElementById('quiz-play-area').style.display = 'block';
-        else document.getElementById('puzzle-play-area').style.display = 'block';
+    activeQuizChapters = typeof studyData !== 'undefined' ? Object.keys(studyData) : [];
+    activeQuizTypes = ['jubjub'];
+    isBurningMode = true;
+    activeBurningFilters = [status];
 
-        // 💡 [요청4] 화면 최상단 리셋
-        setTimeout(() => {
-            window.scrollTo(0, 0);
-            const scrollArea = document.getElementById('main-scroll-area');
-            if (scrollArea) scrollArea.scrollTop = 0;
-        }, 10);
+    document.getElementById('quiz-setup-area').style.display = 'none';
+    if(mode === 'quiz') document.getElementById('quiz-play-area').style.display = 'block';
+    else document.getElementById('puzzle-play-area').style.display = 'block';
+
+    buildFullQuizPool(); 
+
+    if (mode === 'quiz') {
+        document.getElementById('burning-mode-dashboard').style.display = 'block';
+        syncBurningFilterUI();
     }
+
+    applyBurningFilters(mode);
+
+    setTimeout(() => {
+        window.scrollTo(0, 0);
+        const scrollArea = document.getElementById('main-scroll-area');
+        if (scrollArea) scrollArea.scrollTop = 0;
+    }, 10);
+}
 
 
 
@@ -1686,11 +1724,12 @@
             document.getElementById('setup-title').innerText = mode === 'quiz' ? '🎯 툭탁 연습 세팅' : '🧩 문장 배열 세팅';
             document.getElementById('start-action-btn').innerText = mode === 'quiz' ? '🚀 툭탁 연습 시작하기' : '🚀 문장 배열 시작하기';
 
-            document.querySelectorAll('.chapter-chk-btn').forEach(btn => {
-                const wk = btn.innerText.replace('Ch ', '');
-                if (activeQuizChapters.includes(wk)) btn.classList.add('active');
-                else btn.classList.remove('active');
-            });
+            // 🔥 [핵심 해결] 상단 탭을 눌러서 세팅 화면으로 들어올 때마다, 
+            // 버닝 모드용 임시 데이터를 버리고 폰에 저장된 '진짜 내 세팅값'을 강제로 불러옵니다!
+            loadSavedQuizSetup();
+            isBurningMode = false;
+
+
         } else {
             if(window.innerWidth > 768) { sidebar.style.display = 'block'; }
             quizSetupArea.style.display = 'none';
@@ -1746,7 +1785,7 @@ function runAutoQuizSequence() {
     const qItem = quizPool[currentQuizIndex];
     const item = qItem.data;
     const duration = ((item.end || 0) - (item.start || 0));
-    const recordWaitTime = duration > 0 ? (duration * 1000) + 5000 : 5000; 
+    const recordWaitTime = duration > 0 ? (duration * 1000) + 3000 : 3000; 
 
     // 💡 마이크 권한을 얻은 후 확실하게 타이머 시작
     startRecording(() => {
@@ -1768,7 +1807,7 @@ function runAutoQuizSequence() {
                 playQuizSentence(item.start || 0, item.end || 0);
             }
 
-            const playWaitTime = duration > 0 ? (duration * 2000) + 1000 : 5000;
+            const playWaitTime = duration > 0 ? (duration * 2000) + 1000 : 3000;
             autoStepTimer2 = setTimeout(() => {
                 if (!isAutoQuizMode) return;
                 navigateQuiz(1, true);
@@ -2425,45 +2464,7 @@ function loadContent(wk, type, el) {
     }
 
 
-// 💡 줍줍 단독 직행 연습
-    function startDirectJubJubQuiz(mode = 'quiz') {
-        activeQuizChapters = Object.keys(studyData);
-        activeQuizTypes = ['jubjub'];
-        isBurningMode = false;
-        switchMainMode(mode);
-        if(mode === 'quiz') startQuizPool();
-        else startPuzzlePool();
-    }
-
-    // 💡 줍줍 전용 성취도별 버닝모드 진입
-    function startJubJubBurningMode(status, mode = 'quiz') {
-        activeQuizChapters = Object.keys(studyData);
-        activeQuizTypes = ['jubjub'];
-        isBurningMode = true;
-        activeBurningFilters = [status];
-        
-        switchMainMode(mode);
-        buildFullQuizPool(); 
-        
-        if (mode === 'quiz') {
-            document.getElementById('btn-burning-mode').classList.add('active');
-            document.getElementById('burning-mode-dashboard').style.display = 'block';
-            syncBurningFilterUI();
-        }
-        
-        applyBurningFilters(mode);
-        
-        document.getElementById('quiz-setup-area').style.display = 'none';
-        if(mode === 'quiz') document.getElementById('quiz-play-area').style.display = 'block';
-        else document.getElementById('puzzle-play-area').style.display = 'block';
-
-        setTimeout(() => {
-            window.scrollTo(0, 0);
-            const scrollArea = document.getElementById('main-scroll-area');
-            if (scrollArea) scrollArea.scrollTop = 0;
-        }, 10);
-    }
-
+ 
 
 
      function clearPuzzleErrorState() {
@@ -2666,16 +2667,23 @@ function loadContent(wk, type, el) {
 
 
 
-    function resetQuizSetup() {
-        stopAll(); 
-        quizPlayArea.style.display = 'none'; 
-        puzzlePlayArea.style.display = 'none';
-        quizSetupArea.style.display = 'block';
-        isBurningMode = false;
 
-        // 💡 [추가] 세팅 화면으로 돌아올 때 마지막 설정 복구
-        loadSavedQuizSetup();
-    }
+
+
+function resetQuizSetup() {
+    stopAll(); 
+    quizPlayArea.style.display = 'none'; 
+    puzzlePlayArea.style.display = 'none';
+    quizSetupArea.style.display = 'block';
+    isBurningMode = false;
+
+    // 💡 [추가] 세팅 화면으로 돌아올 때, 원래 저장해두었던 마지막 설정 완벽 복구
+    loadSavedQuizSetup();
+}
+
+
+
+
 
     function toggleRandomQuiz(el) {
     isRandomQuiz = !isRandomQuiz;
@@ -2760,13 +2768,14 @@ function renderQuizCard() {
         </div>
 
         <div class="quiz-audio-action-row" style="margin-bottom: 12px;">
-            ${(qItem.audio && qItem.audio.trim() !== "") ? `<button class="quiz-bar-action-btn native-sound" onclick="playQuizSentence(${item.start || 0}, ${item.end || 0})">🔊 원어민 음성 듣기</button>` : ''}
+            ${(qItem.audio && qItem.audio.trim() !== "") ? `<button class="quiz-bar-action-btn native-sound" onclick="playQuizSentence(${item.start || 0}, ${item.end || 0})"><span id="native-btn-text">🔊 원어민 음성 듣기</span></button>` : ''}
             
-            <!-- 💡 마이크가 꺼지면 녹음 버튼들은 숨김 처리 -->
             <button class="quiz-bar-action-btn" id="start-record-btn" onclick="startRecording()" style="display: ${isMicEnabled ? 'flex' : 'none'};">🎙️ 녹음 시작</button>
             <button class="quiz-bar-action-btn recording-active" id="stop-record-btn" onclick="stopRecording()" style="display:none;">⏹️ 녹음 중지</button>
-            <button class="quiz-bar-action-btn" id="play-record-btn" onclick="playRecording()" style="display: ${isMicEnabled ? 'flex' : 'none'};" ${qItem.recordedAudio ? '' : 'disabled'}>🎧 내 발음 듣기</button>
+            <button class="quiz-bar-action-btn" id="play-record-btn" onclick="playRecording()" style="display: ${isMicEnabled ? 'flex' : 'none'};" ${qItem.recordedAudio ? '' : 'disabled'}><span id="record-btn-text">🎧 내 발음 듣기</span></button>
         </div>
+
+
 
         <!-- 💡 justify-content: space-between 으로 양끝 정렬 -->
         <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 15px; padding: 0 4px;">
@@ -2853,23 +2862,32 @@ function renderQuizCard() {
     }
 
 function playQuizSentence(s, e) {
-    stopAll(); 
-    
-    const executePlay = () => {
-        player.currentTime = Math.max(0, s - 0.15);
-        player.play().catch(err => console.error("오디오 재생 에러:", err));
-        stopTime = e - 0.3;
-    };
+        const nativeBtnText = document.getElementById('native-btn-text');
+        
+        // 💡 현재 재생 중이면서 버튼을 눌러서 끄려는 경우
+        if (!player.paused && player.currentTime > 0 && stopTime > 0) {
+            stopAll();
+            return;
+        }
 
-    if (player.readyState >= 1) {
-        executePlay();
-    } else {
-        player.onloadedmetadata = () => {
-            executePlay();
-            player.onloadedmetadata = null;
+        stopAll(); // 다른 액션 끄기
+        if (nativeBtnText) nativeBtnText.innerText = "⏹️ 재생 정지";
+        
+        const executePlay = () => {
+            player.currentTime = Math.max(0, s - 0.15);
+            player.play().catch(err => console.error("오디오 재생 에러:", err));
+            stopTime = e - 0.3;
         };
+
+        if (player.readyState >= 1) {
+            executePlay();
+        } else {
+            player.onloadedmetadata = () => {
+                executePlay();
+                player.onloadedmetadata = null;
+            };
+        }
     }
-}
 
     
 function navigateQuiz(dir, isAuto = false) {
@@ -2928,6 +2946,8 @@ function navigateQuiz(dir, isAuto = false) {
             if (typeof onStarted === 'function') onStarted();
             return; 
         }
+
+        stopAll(); // 🔥 추가: 녹음 시작 시 진행 중인 원어민 음성/내 발음 즉각 차단!
 
         const lockedQuizIndex = currentQuizIndex; 
 
@@ -3010,22 +3030,28 @@ function navigateQuiz(dir, isAuto = false) {
         if (recordedAudioUrl) { 
             const recordPlayer = document.getElementById('record-player');
             const playBtn = document.getElementById('play-record-btn');
+            const playBtnText = document.getElementById('record-btn-text');
 
             if (!recordPlayer.paused) {
-                recordPlayer.pause();
-                if (playBtn) playBtn.style.background = ''; // 원래 색으로 복구
+                stopAll(); // 재생 중이면 정지
             } else {
+                stopAll(); // 재생 시작 전 다른 액션 모두 정지
                 recordPlayer.currentTime = 0; 
                 recordPlayer.play(); 
-                if (playBtn) playBtn.style.background = '#a8e6cf'; // 💡 [요청 2] 재생 중일 때 상큼한 초록색으로 변경!
+                if (playBtn) playBtn.style.background = '#a8e6cf'; 
+                if (playBtnText) playBtnText.innerText = "⏹️ 재생 정지";
                 
-                // 재생이 끝나면 자동으로 초록색 불이 꺼지도록 이벤트 연결
                 recordPlayer.onended = () => {
                     if (playBtn) playBtn.style.background = '';
+                    if (playBtnText) playBtnText.innerText = "🎧 내 발음 듣기";
                 };
             }
         } 
     }
+
+
+
+
     
     function submitStatusClick(wk, type, idx, statusName, btnEl) {
         saveSentenceStatusToCloud(wk, type, idx, statusName);
@@ -3127,12 +3153,27 @@ function navigateQuiz(dir, isAuto = false) {
         player.pause(); isAutoPlaying = false; stopTime = 0; clearTimeout(window.shadowTimer);
         statusIcon.innerText = "▶️";
         
-        // 💡 내 녹음 플레이어와 초록색 불도 함께 확실하게 초기화
+        // 💡 1. 내 녹음 플레이어 완벽 정지 및 초기화
         const recordPlayer = document.getElementById('record-player');
-        if (recordPlayer) recordPlayer.pause();
-        const playBtn = document.getElementById('play-record-btn');
-        if (playBtn) playBtn.style.background = '';
+        if (recordPlayer) {
+            recordPlayer.pause();
+            recordPlayer.currentTime = 0;
+        }
 
+        // 💡 2. 진행 중인 마이크 녹음 강제 정지 (소리 겹침 차단)
+        if (mediaRecorder && mediaRecorder.state === 'recording') {
+            stopRecording();
+        }
+
+        // 💡 3. 토글되었던 버튼 텍스트와 색상 원래대로 복구
+        const nativeBtnText = document.getElementById('native-btn-text');
+        if (nativeBtnText) nativeBtnText.innerText = "🔊 원어민 음성 듣기";
+        
+        const playBtnText = document.getElementById('record-btn-text');
+        const playBtn = document.getElementById('play-record-btn');
+        if (playBtnText) playBtnText.innerText = "🎧 내 발음 듣기";
+        if (playBtn) playBtn.style.background = '';
+        
         if(document.getElementById('current-count')) document.getElementById('current-count').innerText = '';
         document.querySelectorAll('.playing, .active-play, .chunk.active').forEach(el => el.classList.remove('playing', 'active-play', 'active'));
     }
@@ -3142,6 +3183,11 @@ function navigateQuiz(dir, isAuto = false) {
     player.addEventListener('timeupdate', () => {
         if (stopTime > 0 && player.currentTime >= stopTime) {
             player.pause(); stopTime = 0;
+            
+            // 💡 오디오가 끝나면 버튼 글씨 복구
+            const nativeBtnText = document.getElementById('native-btn-text');
+            if (nativeBtnText) nativeBtnText.innerText = "🔊 원어민 음성 듣기";
+
             if (isQuizMode) return;
             const active = mainStudyContainer.querySelector('.card.playing, .chat-row.playing');
             if (active) { 
