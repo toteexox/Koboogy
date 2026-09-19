@@ -836,6 +836,23 @@
 </head>
 
 <body class="lang-ko hide-details">
+
+<!-- 💡 최초 1회 기기 환경 선택 모달창 -->
+    <div id="device-select-modal" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.4); display: none; align-items: center; justify-content: center; z-index: 10000;">
+        <div style="background: white; padding: 30px; border-radius: 16px; text-align: center; max-width: 320px; width: 90%; box-shadow: 0 10px 30px rgba(0,0,0,0.15);">
+            <h3 style="margin-top: 0; color: var(--primary);">🎧 훈련 환경 선택</h3>
+            <p style="font-size: 14px; color: var(--gray-text); margin-bottom: 20px; line-height: 1.5;">원활한 툭탁 연습을 위해<br>현재 사용 중인 기기를 선택해 주세요.</p>
+            <div style="display: flex; gap: 10px; flex-direction: column;">
+                <button onclick="selectInitialAudioMode('speaker')" style="padding: 14px; border-radius: 12px; border: 1px solid #ddd; background: #f8f9fa; font-size: 15px; font-weight: bold; cursor: pointer; transition: 0.2s;">📱 스마트폰 스피커</button>
+                <button onclick="selectInitialAudioMode('earphone')" style="padding: 14px; border-radius: 12px; border: 1px solid #ddd; background: #f8f9fa; font-size: 15px; font-weight: bold; cursor: pointer; transition: 0.2s;">🎧 블루투스 이어폰</button>
+            </div>
+            <p style="font-size: 12px; color: #999; margin-top: 15px; margin-bottom: 0;">(우측 상단 아이콘을 눌러 언제든 변경 가능)</p>
+        </div>
+    </div>
+
+
+
+
     <div id="login-screen">
         <div class="login-card">
             <div class="brand">
@@ -874,7 +891,11 @@
                 </div>
                 
                 <div class="right-user" id="user-badge-area" style="display:none;" onclick="toggleMyPageView()">
-                    <span>🎓 <span id="welcome-username">유저</span> 님</span>
+                    <span style="cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
+                        🎓 <span id="welcome-username">유저</span> 코치님
+                        <!-- 💡 기기환경 설정 아이콘을 이름 바로 우측 옆으로 이동! (클릭 시 마이페이지가 열리지 않고 아이콘 기능만 작동하도록 stopPropagation 추가) -->
+                        <span id="audio-mode-toggle" onclick="event.stopPropagation(); toggleAudioMode();" style="font-size: 16px; cursor: pointer; background: #f1f3f4; padding: 2px 6px; border-radius: 6px; border: 1px solid #ddd; transition: 0.2s; display: inline-block;" title="출력 모드 변경">📱</span>
+                    </span>
                 </div>
             </div>
         </header>
@@ -1119,6 +1140,15 @@
                 loginScreen.style.display = 'none'; 
                 userBadgeArea.style.display = 'flex';
 
+                // 💡 [추가] 훈련 기기 환경 모달 체크 로직
+                const savedMode = localStorage.getItem('koboogy_audio_mode');
+                if (!savedMode) {
+                    document.getElementById('device-select-modal').style.display = 'flex';
+                } else {
+                    audioOutputMode = savedMode;
+                    updateAudioModeUI();
+                }
+
                 showEntryScreen();
                 fetchUserProgressFromFirestore();
                 
@@ -1188,6 +1218,40 @@
             globalAudioStream = null;
         }
     }
+
+
+
+    let audioOutputMode = 'speaker'; // 기본값 세팅 ('speaker' 또는 'earphone')
+
+// 💡 초기 모달창에서 모드 선택 시
+    function selectInitialAudioMode(mode) {
+        audioOutputMode = mode;
+        localStorage.setItem('koboogy_audio_mode', mode);
+        document.getElementById('device-select-modal').style.display = 'none';
+        updateAudioModeUI();
+    }
+
+    // 💡 우측 상단 아이콘을 눌러 스위칭할 때
+    function toggleAudioMode() {
+        audioOutputMode = (audioOutputMode === 'speaker') ? 'earphone' : 'speaker';
+        localStorage.setItem('koboogy_audio_mode', audioOutputMode);
+        updateAudioModeUI();
+        
+        if (audioOutputMode === 'speaker') {
+            stopGlobalMic(); // 스피커 모드로 변경 시 즉각 하울링 방지(통로 닫기)
+            alert("📱 스피커 모드 (큰 소리 출력 / 하울링 방지) 로 변경되었습니다.");
+        } else {
+            alert("🎧 이어폰 모드 (블루투스 딜레이 완벽 방지) 로 변경되었습니다.");
+        }
+    }
+
+    // 💡 화면 아이콘 모양 업데이트
+    function updateAudioModeUI() {
+        const toggleBtn = document.getElementById('audio-mode-toggle');
+        if (toggleBtn) toggleBtn.innerText = (audioOutputMode === 'speaker') ? '📱' : '🎧';
+    }
+
+
 
     // 🎙️ 마이크 ON/OFF 토글 함수
     function toggleMicMode() {
@@ -2963,29 +3027,35 @@ function navigateQuiz(dir, isAuto = false) {
                 // 🚨 주의: 여기서 track.stop() 절대 금지! (블루투스 끊김의 원인)
                 
                 const mimeType = mediaRecorder.mimeType || 'audio/mp4'; 
-                const audioBlob = new Blob(audioChunks, { type: mimeType }); 
-                
-                const reader = new FileReader();
-                reader.readAsDataURL(audioBlob);
-                reader.onloadend = () => {
-                    const base64String = reader.result; 
-                    quizPool[lockedQuizIndex].recordedAudio = base64String;
-                    const lockedItem = quizPool[lockedQuizIndex];
-                    sessionRecordCache[`${lockedItem.wk}_${lockedItem.type}_${lockedItem.idx}`] = base64String;
+            const audioBlob = new Blob(audioChunks, { type: mimeType }); 
+            
+            const reader = new FileReader();
+            reader.readAsDataURL(audioBlob);
+            reader.onloadend = () => {
+                const base64String = reader.result; 
+                quizPool[lockedQuizIndex].recordedAudio = base64String;
+                const lockedItem = quizPool[lockedQuizIndex];
+                sessionRecordCache[`${lockedItem.wk}_${lockedItem.type}_${lockedItem.idx}`] = base64String;
 
-                    if (currentQuizIndex === lockedQuizIndex) {
-                        recordedAudioUrl = base64String;
-                        const recordPlayer = document.getElementById('record-player');
-                        if (recordPlayer) {
-                            recordPlayer.src = base64String;
-                            recordPlayer.load(); 
-                        }
-                        const playBtn = document.getElementById('play-record-btn');
-                        if (playBtn) playBtn.disabled = false;
+                if (currentQuizIndex === lockedQuizIndex) {
+                    recordedAudioUrl = base64String;
+                    const recordPlayer = document.getElementById('record-player');
+                    if (recordPlayer) {
+                        recordPlayer.src = base64String;
+                        recordPlayer.load(); 
                     }
-                };
+                    const playBtn = document.getElementById('play-record-btn');
+                    if (playBtn) playBtn.disabled = false;
+                }
             };
-            mediaRecorder.start();
+
+            // 🔥 [핵심 기능] 스피커 모드(📱)일 경우에만 녹음 직후 마이크 통로를 즉시 닫아서 스피커 출력 방해 방지!
+            if (audioOutputMode === 'speaker') {
+                stopGlobalMic();
+            }
+        };
+        
+        mediaRecorder.start();
             const startBtn = document.getElementById('start-record-btn');
             const stopBtn = document.getElementById('stop-record-btn');
             if (startBtn) startBtn.style.display = 'none'; 
