@@ -3008,13 +3008,11 @@ function navigateQuiz(dir, isAuto = false) {
     renderQuizCard();
 }
 
-    function startRecording(onStarted) {
+        function startRecording(onStarted) {
         if (!isMicEnabled) {
             if (typeof onStarted === 'function') onStarted();
             return; 
         }
-
-        stopAll(); // 🔥 추가: 녹음 시작 시 진행 중인 원어민 음성/내 발음 즉각 차단!
 
         const lockedQuizIndex = currentQuizIndex; 
 
@@ -3027,35 +3025,31 @@ function navigateQuiz(dir, isAuto = false) {
                 // 🚨 주의: 여기서 track.stop() 절대 금지! (블루투스 끊김의 원인)
                 
                 const mimeType = mediaRecorder.mimeType || 'audio/mp4'; 
-            const audioBlob = new Blob(audioChunks, { type: mimeType }); 
-            
-            const reader = new FileReader();
-            reader.readAsDataURL(audioBlob);
-            reader.onloadend = () => {
-                const base64String = reader.result; 
-                quizPool[lockedQuizIndex].recordedAudio = base64String;
-                const lockedItem = quizPool[lockedQuizIndex];
-                sessionRecordCache[`${lockedItem.wk}_${lockedItem.type}_${lockedItem.idx}`] = base64String;
+                const audioBlob = new Blob(audioChunks, { type: mimeType }); 
+                
+                // 💡 [핵심 해결] 임시 링크(Blob) 대신 Base64 문자열로 완전 변환하여 메모리 증발 방지!
+                const reader = new FileReader();
+                reader.readAsDataURL(audioBlob);
+                reader.onloadend = () => {
+                    const base64String = reader.result; // 영구 보존되는 음원 데이터
+                    
+                    quizPool[lockedQuizIndex].recordedAudio = base64String;
+                    const lockedItem = quizPool[lockedQuizIndex];
+                    sessionRecordCache[`${lockedItem.wk}_${lockedItem.type}_${lockedItem.idx}`] = base64String;
 
-                if (currentQuizIndex === lockedQuizIndex) {
-                    recordedAudioUrl = base64String;
-                    const recordPlayer = document.getElementById('record-player');
-                    if (recordPlayer) {
-                        recordPlayer.src = base64String;
-                        recordPlayer.load(); 
+                    if (currentQuizIndex === lockedQuizIndex) {
+                        recordedAudioUrl = base64String;
+                        const recordPlayer = document.getElementById('record-player');
+                        if (recordPlayer) {
+                            recordPlayer.src = base64String;
+                            recordPlayer.load(); 
+                        }
+                        const playBtn = document.getElementById('play-record-btn');
+                        if (playBtn) playBtn.disabled = false;
                     }
-                    const playBtn = document.getElementById('play-record-btn');
-                    if (playBtn) playBtn.disabled = false;
-                }
+                };
             };
-
-            // 🔥 [핵심 기능] 스피커 모드(📱)일 경우에만 녹음 직후 마이크 통로를 즉시 닫아서 스피커 출력 방해 방지!
-            if (audioOutputMode === 'speaker') {
-                stopGlobalMic();
-            }
-        };
-        
-        mediaRecorder.start();
+            mediaRecorder.start();
             const startBtn = document.getElementById('start-record-btn');
             const stopBtn = document.getElementById('stop-record-btn');
             if (startBtn) startBtn.style.display = 'none'; 
@@ -3067,10 +3061,8 @@ function navigateQuiz(dir, isAuto = false) {
         if (globalAudioStream && globalAudioStream.active) {
             startRecordProcess(globalAudioStream);
         } else {
-            // 💡 통로가 닫혀있다면 새로 열어주기 (아이폰 에코 억제 기능 강제 해제)
-            navigator.mediaDevices.getUserMedia({ 
-                audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false } 
-            }).then(stream => {
+            // 통로가 닫혀있다면 새로 열어주기
+            navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
                 globalAudioStream = stream;
                 startRecordProcess(stream);
             }).catch(err => { 
