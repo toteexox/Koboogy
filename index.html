@@ -3008,7 +3008,7 @@ function navigateQuiz(dir, isAuto = false) {
     renderQuizCard();
 }
 
-        function startRecording(onStarted) {
+            function startRecording(onStarted) {
         if (!isMicEnabled) {
             if (typeof onStarted === 'function') onStarted();
             return; 
@@ -3016,22 +3016,19 @@ function navigateQuiz(dir, isAuto = false) {
 
         const lockedQuizIndex = currentQuizIndex; 
 
-        // 💡 이미 열린 마이크 통로(globalAudioStream)를 그대로 가져다 씀
         const startRecordProcess = (stream) => {
             mediaRecorder = new MediaRecorder(stream); 
             audioChunks = [];
             mediaRecorder.ondataavailable = e => { audioChunks.push(e.data); };
             mediaRecorder.onstop = () => {
-                // 🚨 주의: 여기서 track.stop() 절대 금지! (블루투스 끊김의 원인)
-                
                 const mimeType = mediaRecorder.mimeType || 'audio/mp4'; 
                 const audioBlob = new Blob(audioChunks, { type: mimeType }); 
                 
-                // 💡 [핵심 해결] 임시 링크(Blob) 대신 Base64 문자열로 완전 변환하여 메모리 증발 방지!
+                // 💡 [핵심 해결] 임시 링크(Blob) 대신 Base64 문자열로 완전 변환하여 브라우저 재시작 시 증발 방지!
                 const reader = new FileReader();
                 reader.readAsDataURL(audioBlob);
                 reader.onloadend = () => {
-                    const base64String = reader.result; // 영구 보존되는 음원 데이터
+                    const base64String = reader.result; // 영구 보존되는 음원 데이터 문자열
                     
                     quizPool[lockedQuizIndex].recordedAudio = base64String;
                     const lockedItem = quizPool[lockedQuizIndex];
@@ -3061,7 +3058,6 @@ function navigateQuiz(dir, isAuto = false) {
         if (globalAudioStream && globalAudioStream.active) {
             startRecordProcess(globalAudioStream);
         } else {
-            // 통로가 닫혀있다면 새로 열어주기
             navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
                 globalAudioStream = stream;
                 startRecordProcess(stream);
@@ -3076,6 +3072,7 @@ function navigateQuiz(dir, isAuto = false) {
             });
         }
     }
+
 
 
 
