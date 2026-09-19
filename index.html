@@ -1193,7 +1193,10 @@
     function toggleMicMode() {
         isMicEnabled = !isMicEnabled;
         if (isMicEnabled) {
-            navigator.mediaDevices.getUserMedia({ audio: true })
+            // 💡 아이폰 에코 억제 기능 강제 해제 옵션 적용
+            navigator.mediaDevices.getUserMedia({ 
+                audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false } 
+            })
                 .then(stream => {
                     globalAudioStream = stream; // 💡 마이크 끄지 않고 계속 유지!
                     renderQuizCard(); 
@@ -2994,8 +2997,10 @@ function navigateQuiz(dir, isAuto = false) {
         if (globalAudioStream && globalAudioStream.active) {
             startRecordProcess(globalAudioStream);
         } else {
-            // 통로가 닫혀있다면 새로 열어주기
-            navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+            // 💡 통로가 닫혀있다면 새로 열어주기 (아이폰 에코 억제 기능 강제 해제)
+            navigator.mediaDevices.getUserMedia({ 
+                audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false } 
+            }).then(stream => {
                 globalAudioStream = stream;
                 startRecordProcess(stream);
             }).catch(err => { 
