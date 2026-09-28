@@ -2243,26 +2243,19 @@ const studyData = {
       audio: "audio/9-3 Real Conversations.wav",
       chat: [
         { speaker: "A", start: 4.190, end: 6.360, ipa: "/wʌt duː juː fiːl laɪk ˈiːtɪŋ/", trans: "뭐 먹고 싶어?", chunks: [{ text: "What do you feel like eating?", s: 4.190, e: 6.360 }] },
-
-        { speaker: "B", start: 6.360, end: 13.890, ipa: "/ðɛrz ə ˈrɪəli ɡʊd samgyeopsal pleɪs nɪərˈbaɪ wɛr aɪ juːst tuː ɡoʊ ˈæftər wɜːrk. ðeɪ hæv ðə bɛst gyeranjjim. duː juː ˈwɑːnə traɪ ɪt/", trans: "근처에 예전에 퇴근하고 자주 갔던 삼겹살 집 있는데, 거기 계란찜이 진짜 맛있어. 가볼래?", chunks: [{ text: "There's a really good", s: 6.360, e: 7.180 }, { text: "samgyeopsal place nearby", s: 7.180, e: 8.540 }, { text: "where I used to go after work.", s: 8.540, e: 10.400 },{ text: "They have the best gyeranjjim.", s: 10.400, e: 12.290 }, { text: "Do you wanna try it?", s: 12.290, e: 13.890 }] },
-
-        { speaker: "A", start: 13.890, end: 16.670, ipa: "/ðæt saʊndz ɡreɪt. lɛts duː ɪt/", trans: "좋지. 거기 가자.", chunks: [{ text: "That sounds great", s: 13.890, e: 14.820 }, { text: "Let's do it", s: 14.820, e: 16.670 }] },
-
-        { speaker: "B", start: 16.670, end: 20.000, ipa: "/haʊ əˈbaʊt wiː stɑːrt wɪð tuː samgyeopsal ænd ə gyeranjjim/", trans: "일단 삼겹살 2인분이랑 계란찜 시킬까?", chunks: [{ text: "How about we start with", s: 16.670, e: 17.600 }, { text: "two samgyeopsal", s: 17.600, e: 18.560 }, { text: "and a gyeran-jjim?", s: 18.560, e: 20.000 }] },
-
-        { speaker: "A", start: 20.000, end: 23.680, ipa: "/ʃʊr. ðə sundubu jjigae lʊks ˈrɪəli ɡʊd tuː/", trans: "좋아. 순두부찌개도 맛있어 보이네.", chunks: [{ text: "Sure", s: 20.000, e: 20.900 },{ text: "The sundubu jjigae", s: 20.900, e: 21.820 }, { text: "looks really good, too", s: 21.820, e: 23.680 }] },
-
-        { speaker: "B", start: 23.680, end: 28.830, ipa: "/wiː kæn duː ðæt. ɪts ə bɪt ˈspaɪsi, ðoʊ. kæn juː ˈhændəl ˈspaɪsi fuːd./", trans: "그것도 괜찮지. 근데 조금 매운데, 매운 거 괜찮아?", chunks: [{ text: "We can do that", s: 23.680, e: 24.960 },{ text: "It's a bit spicy though", s: 24.960, e: 26.400 },{ text: "Can you handle spicy food?", s: 26.400, e: 28.830 }] },
-
-
-        { speaker: "A", start: 28.830, end: 32.060, ipa: "/aɪ juːst tuː nɑːt, bʌt ɪts ˈɡroʊɪŋ ɑːn miː/", trans: "예전엔 못 먹었는데, 요즘에 점점 좋아지기 시작했어.", chunks: [{ text: "I used to not,", s: 28.830, e: 29.870 }, { text: "but it's growing on me", s: 29.870, e: 32.060 }] },
-
-        { speaker: "B", start: 32.060, end: 39.780, ipa: "/ɪkˈskjuːz miː, aɪ θɪŋk wɪər ˈrɛdi tuː ˈɔːrdər. wiːl ɡɛt tuː samgyeopsal, wʌn gyeranjjim, ænd wʌn sundubu jjigae./", trans: "저기요, 주문할게요. 삼겹살 2인분, 계란찜 하나, 순두부찌개 하나 할게요.", chunks: [{ text: "Excuse me,", s: 32.060, e: 32.950 }, { text: "I think we're ready to order", s: 32.950, e: 34.880 },{ text: "We'll get two samgyeopsal,", s: 34.880, e: 36.510 }, { text: "one gyeran-jjim,", s: 36.510, e: 37.570 }, { text: "and one sundubu jjigae", s: 37.570, e: 39.780 }] },
-
+        { speaker: "B", start: 6.360, end: 10.400, ipa: "/ðɛrz ə ˈrɪəli ɡʊd samgyeopsal pleɪs nɪərˈbaɪ wɛr aɪ juːst tuː ɡoʊ ˈæftər wɜːrk./", trans: "근처에 예전에 퇴근하고 자주 갔던 삼겹살 집 있거든.", chunks: [{ text: "There's a really good", s: 6.360, e: 7.180 }, { text: "samgyeopsal place nearby", s: 7.180, e: 8.540 }, { text: "where I used to go after work.", s: 8.540, e: 10.400 }] },
+        { speaker: "B", start: 10.400, end: 13.890, ipa: "/ðeɪ hæv ðə bɛst gyeranjjim. duː juː ˈwɑːnə traɪ ɪt?/", trans: "거기 계란찜이 진짜 맛있어. 가볼래?", chunks: [{{ text: "They have the best gyeranjjim.", s: 10.400, e: 12.290 }, { text: "Do you wanna try it?", s: 12.290, e: 13.890 }] },
+        { speaker: "A", start: 13.890, end: 16.670, ipa: "/ðæt saʊndz ɡreɪt. lɛts duː ɪt/", trans: "좋지. 거기 가자.", chunks: [{ text: "That sounds great.", s: 13.890, e: 14.820 }, { text: "Let's do it.", s: 14.820, e: 16.670 }] },
+        { speaker: "B", start: 16.670, end: 20.000, ipa: "/haʊ əˈbaʊt wiː stɑːrt wɪð tuː samgyeopsal ænd ə gyeranjjim/", trans: "일단 삼겹살 2인분이랑 계란찜 시킬까?", chunks: [{ text: "How about we start with", s: 16.670, e: 17.600 }, { text: "two samgyeopsal", s: 17.600, e: 18.560 }, { text: "and a gyeranjjim?", s: 18.560, e: 20.000 }] },
+        { speaker: "A", start: 20.000, end: 23.680, ipa: "/ʃʊr. ðə sundubu jjigae lʊks ˈrɪəli ɡʊd tuː/", trans: "좋아. 순두부찌개도 맛있어 보이네.", chunks: [{ text: "Sure.", s: 20.000, e: 20.900 },{ text: "The sundubu jjigae", s: 20.900, e: 21.820 }, { text: "looks really good, too.", s: 21.820, e: 23.680 }] },
+        { speaker: "B", start: 23.680, end: 28.830, ipa: "/wiː kæn duː ðæt. ɪts ə bɪt ˈspaɪsi, ðoʊ. kæn juː ˈhændəl ˈspaɪsi fuːd./", trans: "그것도 괜찮지. 근데 조금 매운데, 매운 거 괜찮아?", chunks: [{ text: "We can do that.", s: 23.680, e: 24.960 },{ text: "It's a bit spicy, though.", s: 24.960, e: 26.400 },{ text: "Can you handle spicy food?", s: 26.400, e: 28.830 }] },
+        { speaker: "A", start: 28.830, end: 32.060, ipa: "/aɪ juːst tuː nɑːt, bʌt ɪts ˈɡroʊɪŋ ɑːn miː/", trans: "예전엔 못 먹었는데, 요즘에 점점 좋아지기 시작했어.", chunks: [{ text: "I used to not,", s: 28.830, e: 29.870 }, { text: "but it's growing on me.", s: 29.870, e: 32.060 }] },
+        { speaker: "B", start: 32.060, end: 34.880, ipa: "/ɪkˈskjuːz miː, aɪ θɪŋk wɪər ˈrɛdi tuː ˈɔːrdər./", trans: "저기요, 주문할게요. 삼겹살 2인분, 계란찜 하나, 순두부찌개 하나 할게요.", chunks: [{ text: "Excuse me,", s: 32.060, e: 32.950 }, { text: "I think we're ready to order.", s: 32.950, e: 34.880 }] },
+        { speaker: "B", start: 34.880, end: 39.780, ipa: "/wiːl ɡɛt tuː samgyeopsal, wʌn gyeranjjim, ænd wʌn sundubu jjigae./", trans: "삼겹살 2인분, 계란찜 하나, 순두부찌개 하나 할게요.", chunks: [{ text: "We'll get two samgyeopsal,", s: 34.880, e: 36.510 }, { text: "one gyeranjjim,", s: 36.510, e: 37.570 }, { text: "and one sundubu jjigae.", s: 37.570, e: 39.780 }] },
         { speaker: "C", start: 39.780, end: 41.470, ipa: "/ˈɛniˌθɪŋ tuː drɪŋk/", trans: "마실 건 뭘로 드릴까요?", chunks: [{ text: "Anything to drink?", s: 39.780, e: 41.470 }] },
-        { speaker: "B", start: 41.470, end: 42.710, ipa: "/dʒʌst ˈwɔːtərz fɔːr naʊ/", trans: "일단은 그냥 물 주세요.", chunks: [{ text: "Just waters for now", s: 41.470, e: 42.710 }] },
-        { speaker: "B", start: 42.710, end: 44.350, ipa: "/θæŋk juː/", trans: "감사합니다.", chunks: [{ text: "Thank you", s: 42.710, e: 44.350 }] },
-        { speaker: "A", start: 44.350, end: 49.110, ipa: "/waʊ, ðə gyeranjjim ɪz ˈiːvən ˈbɛtər ðæn aɪ θɔːt/", trans: "와, 계란찜 생각했던 것보다 훨씬 맛있다!", chunks: [{ text: "Wow, the gyeran-jjim", s: 44.350, e: 45.590 }, { text: "is even better than I thought!", s: 45.590, e: 49.110 }] }
+        { speaker: "B", start: 41.470, end: 42.710, ipa: "/dʒʌst ˈwɔːtərz fɔːr naʊ/", trans: "일단은 그냥 물 주세요.", chunks: [{ text: "Just waters for now.", s: 41.470, e: 42.710 }] },
+        { speaker: "B", start: 42.710, end: 44.350, ipa: "/θæŋk juː/", trans: "감사합니다.", chunks: [{ text: "Thank you.", s: 42.710, e: 44.350 }] },
+        { speaker: "A", start: 44.350, end: 49.110, ipa: "/waʊ, ðə gyeranjjim ɪz ˈiːvən ˈbɛtər ðæn aɪ θɔːt/", trans: "와, 계란찜 생각했던 것보다 훨씬 맛있다!", chunks: [{ text: "Wow, the gyeranjjim", s: 44.350, e: 45.590 }, { text: "is even better than I thought!", s: 45.590, e: 49.110 }] }
       ]
     },
     "useful_realconvo": {
@@ -2289,6 +2282,8 @@ const studyData = {
         { group: "than I thought", start: 130.990, end: 134.260, ipa: "/ɪts weɪ mɔːr ɪkˈspɛnsɪv ðæn aɪ θɔːt/", trans: "생각보다 훨씬 비싸네.", chunks: [{ text: "It's way more expensive than I thought.", s: 130.990, e: 134.260 }] }
       ]
     },
+
+    
     "live_realconvo": {
       title: "Live Session (RC)",
       audio: "",
