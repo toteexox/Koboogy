@@ -163,7 +163,7 @@ const studyData = {
       audio: "audio/1-3 Useful Expressions.wav",
       sentences: [
         { group: "take a break", start: 4.190, end: 6.470, ipa: "/lɛts teɪk ə breɪk/", trans: "우리 좀 쉬자.", chunks: [{ text: "Let's take a break.", s: 4.190, e: 6.470 }] },
-        { group: "take a break", start: 8.820, end: 11.280, ipa: "/waɪ doʊnt juː teɪk ə breɪk/", trans: "너 좀 쉬는 게 어때?", chunks: [{ text: "Why don't you take a break?", s: 8.820, e: 11.280 }] },
+        { group: "take a break", start: 8.820, end: 11.280, ipa: "/waɪ doʊnt juː teɪk ə breɪk/", trans: "좀 쉬는 게 어때?", chunks: [{ text: "Why don't you take a break?", s: 8.820, e: 11.280 }] },
         { group: "take a break", start: 13.770, end: 16.480, ipa: "/aɪ ˈrɪəli niːd tuː teɪk ə breɪk/", trans: "나 진짜 좀 쉬어야 해.", chunks: [{ text: "I really need to take a break.", s: 13.770, e: 16.480 }] },
         { group: "looking for", start: 19.490, end: 22.400, ipa: "/aɪm ˈlʊkɪŋ fɔːr maɪ foʊn/", trans: "나 핸드폰 찾고 있어.", chunks: [{ text: "I'm looking for my phone.", s: 19.490, e: 22.400 }] },
         { group: "looking for", start: 25.340, end: 28.870, ipa: "/aɪm ˈlʊkɪŋ fɔːr ə ɡʊd kəˈfeɪ ˈnɪrbaɪ/", trans: "근처에 괜찮은 카페 찾고 있어.", chunks: [{ text: "I'm looking for a good cafe nearby.", s: 25.340, e: 28.870 }] },
@@ -418,7 +418,7 @@ const studyData = {
         { group: "make", start: 15.940, end: 18.720, ipa: "/ˈɛli meɪks əˈmeɪzɪŋ ˈbɜːrɡərz/", trans: "앨리는 수제버거를 기가 막히게 만들어.", chunks: [{ text: "Ellie makes amazing burgers.", s: 15.940, e: 18.720 }] },
         { group: "used to", start: 21.470, end: 24.190, ipa: "/aɪ juːst tuː iːt rɑːmjʌn ˈɛvri naɪt/", trans: "나 예전에는 매일 밤 라면을 먹었어.", chunks: [{ text: "I used to eat ramyeon every night.", s: 21.470, e: 24.190 }] },
         { group: "used to", start: 27.330, end: 29.980, ipa: "/ˈkɛli juːst tuː biː ˈrɪəli ʃaɪ/", trans: "켈리는 예전에 엄청 내성적이었어.", chunks: [{ text: "Kelly used to be really shy.", s: 27.330, e: 29.980 }] },
-        { group: "used to", start: 32.910, end: 35.650, ipa: "/ˈkoʊhɛm juːst tuː lɪv ɪn ɡwɑːŋˈdʒoʊ/", trans: "코햄은 광저우에 살았었어.", chunks: [{ text: "Koham used to live in Guangzhou.", s: 32.910, e: 35.650 }] },
+        { group: "used to", start: 32.910, end: 35.650, ipa: "/ˈkoʊhɛm juːst tuː lɪv ɪn gwang dƷu/", trans: "코햄은 광주에 살았었어.", chunks: [{ text: "Koham used to live in Gwanfju.", s: 32.910, e: 35.650 }] },
         { group: "No matter how", start: 38.590, end: 43.170, ipa: "/noʊ ˈmætər haʊ ˈbɪzi aɪ æm, aɪ meɪk taɪm fɔːr maɪ ˈfæməli/", trans: "내가 아무리 바빠도, 나는 가족을 위해 시간을 내.", chunks: [{ text: "No matter how busy I am, I make time for my family.", s: 38.590, e: 43.170 }] },
         { group: "No matter how", start: 47.800, end: 51.440, ipa: "/noʊ ˈmætər haʊ hɑːrd aɪ traɪ, aɪ kiːp ˈfeɪlɪŋ/", trans: "내가 아무리 열심히 노력해도, 계속 실패해.", chunks: [{ text: "No matter how hard I try, I keep failing.", s: 47.800, e: 51.440 }] },
         { group: "No matter how", start: 55.710, end: 58.910, ipa: "/noʊ ˈmætər haʊ hɑːrd ɪt ɪz, doʊnt ɡɪv ʌp/", trans: "아무리 힘들어도 포기하지 마.", chunks: [{ text: "No matter how hard it is, don't give up.", s: 55.710, e: 58.910 }] },
@@ -1217,7 +1217,7 @@ const studyData = {
         { speaker: "A", start: 53.470, end: 55.040, ipa: "/siː juː ðɛn/", trans: "그때 보자~", chunks: [{ text: "See you then", s: 53.470, e: 55.040 }] }
       ]
     },
-     "useful_realconvo": {
+    "useful_realconvo": {
       title: "Useful Expressions (RC)",
       audio: "audio/5-3 Useful Expressions.wav",
       sentences: [
@@ -1235,7 +1235,7 @@ const studyData = {
         { group: "What about", start: 74.570, end: 76.640, ipa: "/wʌt əˈbaʊt ˈdʒɛni/", trans: "그럼 Jennie는?", chunks: [{ text: "What about Jenny?", s: 74.570, e: 76.640 }] }
       ]
     },
-    "live_realconvo": {
+    "realconvo_live": {
       title: "Live Session (RC)",
       audio: "",
       sentences: [
@@ -1996,23 +1996,26 @@ const studyData = {
         { group: "help", start: 82.880, end: 85.390, ipa: "/lɛt miː hɛlp juː duː ðæt/", trans: "그거 하는 거 도와줄게.", chunks: [{ text: "Let me help you do that.", s: 82.880, e: 85.390 }] }
       ]
     },
+
+
+
     "realconvo": {
       title: "Real Conversations",
       audio: "audio/8-3 Real Conversations.wav",
       chat: [
-        { speaker: "A", start: 4.350, end: 6.820, ipa: "/aɪv biːn ˈfiːlɪŋ ə bɪt daʊn ˈleɪtli/", trans: "나 요즘 좀 우울해.", chunks: [{ text: "I've been feeling a bit down lately", s: 4.350, e: 6.820 }] },
+        { speaker: "A", start: 4.350, end: 6.820, ipa: "/aɪv biːn ˈfiːlɪŋ ə bɪt daʊn ˈleɪtli/", trans: "나 요즘 좀 우울해.", chunks: [{ text: "I've been feeling a bit down lately.", s: 4.350, e: 6.820 }] },
         { speaker: "B", start: 6.820, end: 8.860, ipa: "/waɪ wʌts rɔːŋ/", trans: "왜? 무슨 일 있어?", chunks: [{ text: "Why? What's wrong?", s: 6.820, e: 8.860 }] },
-        { speaker: "A", start: 8.860, end: 13.150, ipa: "/ˈnʌθɪŋ spəˈsɪfɪk, ˈriːəli. aɪ ɡɛs aɪ dʒʌst fiːl daʊn ɪn ˈdʒɛnrəl./", trans: "딱히 이유는 없는데, 그냥 평소에 기분이 좀 가라앉아.", chunks: [{ text: "Nothing specific, really.", s: 8.860, e: 10.750 },{ text: "I guess I just", s: 10.750, e: 11.390 }, { text: "feel down in general", s: 11.390, e: 13.150 }] },
-        { speaker: "A", start: 13.150, end: 15.900, ipa: "/ˈmeɪbi aɪ doʊnt hæv ə ɡʊd ˈriːzn fɔːr ɪt/", trans: "사실 별 이유도 없는 것 같아.", chunks: [{ text: "Maybe I don't have a", s: 13.150, e: 14.010 }, { text: "good reason for it", s: 14.010, e: 15.900 }] },
-        { speaker: "B", start: 15.900, end: 20.700, ipa: "/oʊ, aɪm ˈsɑːri ðæt sʌks. aɪ juːst tuː ˈstrʌɡl wɪð dɪˈprɛʃn tuː./", trans: "아이고, 그랬구나. 힘들겠네. 나도 예전에 우울증으로 고생했었거든.", chunks: [{ text: "Oh, I'm sorry. That sucks", s: 15.900, e: 18.020 },{ text: "I used to struggle with depression too", s: 18.020, e: 20.700 }] },
-        { speaker: "A", start: 20.700, end: 25.470, ipa: "/ˈriːəli? juː ˈɔːlweɪz lʊk soʊ ˈtʃɪrfl, aɪ ˈnɛvər wʊd hæv ɡɛst./", trans: "헐, 진짜? 너는 항상 밝아 보여서, 전혀 그럴 거라 생각 못했어.", chunks: [{ text: "Really?", s: 20.700, e: 21.790 },{ text: "You always look so cheerful", s: 21.790, e: 23.390 },{ text: "I never would have guessed", s: 23.390, e: 25.470 }] },
-        { speaker: "B", start: 25.470, end: 27.580, ipa: "/jeə aɪ doʊnt tɔːk əˈbaʊt ɪt mʌtʃ/", trans: "응, 그런 얘기는 잘 안 하거든.", chunks: [{ text: "Yeah I don't talk about it much", s: 25.470, e: 27.580 }] },
-        { speaker: "B", start: 27.580, end: 31.710, ipa: "/bʌt ˈsiːɪŋ ə ˈθɛrəpɪst ˈriːəli hɛlpt miː ɡɛt θruː ðoʊz hɑːrd taɪmz/", trans: "근데 상담사를 만나면서 그 힘든 시기를 버틸 수 있었어.", chunks: [{ text: "But seeing a therapist", s: 27.580, e: 28.590 }, { text: "really helped me get through", s: 28.590, e: 29.750 }, { text: "those hard times", s: 29.750, e: 31.710 }] },
-        { speaker: "A", start: 31.710, end: 34.780, ipa: "/aɪ ˈnɛvər ˈiːvən θɔːt əˈbaʊt ˈduːɪŋ ðæt bɪˈfɔːr/", trans: "나는 상담 받아볼 생각을 한 번도 안 해봤어.", chunks: [{ text: "I never even thought about", s: 31.710, e: 32.950 }, { text: "doing that before", s: 32.950, e: 34.780 }] },
-        { speaker: "A", start: 34.780, end: 38.560, ipa: "/aɪ ɡɛs ɪt kaɪnd əv hæz ə ˈnɛɡətɪv ˈstɪɡmə ɪn kəˈriə/", trans: "한국은 그런 거 하면 좀 안 좋은 시선이 있잖아.", chunks: [{ text: "I guess it kind of has a", s: 34.780, e: 36.070 }, { text: "negative stigma in Korea", s: 36.070, e: 38.560 }] },
-        { speaker: "B", start: 38.560, end: 40.060, ipa: "/ɪt ˈriːəli ˈʃʊdnt/", trans: "사실 그러면 안 되지.", chunks: [{ text: "It really shouldn't", s: 38.560, e: 40.060 }] },
-        { speaker: "B", start: 40.060, end: 42.910, ipa: "/ˈhævɪŋ ˈsʌmwʌn ˈlɪsn tuː juː ɪz soʊ ˈhiːlɪŋ/", trans: "누군가 내 얘기를 들어줄 사람이 있다는 것만으로도 치유가 돼.", chunks: [{ text: "Having someone listen to you", s: 40.060, e: 41.250 }, { text: "is so healing", s: 41.250, e: 42.910 }] },
-        { speaker: "B", start: 42.910, end: 46.210, ipa: "/ʃiː hɛlpt miː ˈriːəˌlaɪz haʊ hɑːrd aɪ wʌz ˈbiːɪŋ ɑːn maɪˈsɛlf/", trans: "그 선생님 덕분에 내가 나한테 얼마나 가혹했는지도 깨달았어.", chunks: [{ text: "She helped me realize", s: 42.910, e: 44.050 }, { text: "how hard I was being on myself", s: 44.050, e: 46.210 }] },
+        { speaker: "A", start: 8.860, end: 13.150, ipa: "/ˈnʌθɪŋ spəˈsɪfɪk, ˈriːəli. aɪ ɡɛs aɪ dʒʌst fiːl daʊn ɪn ˈdʒɛnrəl./", trans: "딱히 이유는 없는데, 그냥 평소에 기분이 좀 가라앉아.", chunks: [{ text: "Nothing specific, really.", s: 8.860, e: 10.750 },{ text: "I guess I just", s: 10.750, e: 11.390 }, { text: "feel down in general.", s: 11.390, e: 13.150 }] },
+        { speaker: "A", start: 13.150, end: 15.900, ipa: "/ˈmeɪbi aɪ doʊnt hæv ə ɡʊd ˈriːzn fɔːr ɪt/", trans: "사실 별 이유도 없는 것 같아.", chunks: [{ text: "Maybe I don't have a", s: 13.150, e: 14.010 }, { text: "good reason for it.", s: 14.010, e: 15.900 }] },
+        { speaker: "B", start: 15.900, end: 20.700, ipa: "/oʊ, aɪm ˈsɑːri ðæt sʌks. aɪ juːst tuː ˈstrʌɡl wɪð dɪˈprɛʃn tuː./", trans: "아이고, 그랬구나. 힘들겠네. 나도 예전에 우울증으로 고생했었거든.", chunks: [{ text: "Oh, I'm sorry. That sucks.", s: 15.900, e: 18.020 },{ text: "I used to struggle with depression, too", s: 18.020, e: 20.700 }] },
+        { speaker: "A", start: 20.700, end: 25.470, ipa: "/ˈriːəli? juː ˈɔːlweɪz lʊk soʊ ˈtʃɪrfl, aɪ ˈnɛvər wʊd hæv ɡɛst./", trans: "헐, 진짜? 너는 항상 밝아 보여서, 전혀 그럴 거라 생각 못했어.", chunks: [{ text: "Really?", s: 20.700, e: 21.790 },{ text: "You always look so cheerful.", s: 21.790, e: 23.390 },{ text: "I never would have guessed.", s: 23.390, e: 25.470 }] },
+        { speaker: "B", start: 25.470, end: 27.580, ipa: "/jeə aɪ doʊnt tɔːk əˈbaʊt ɪt mʌtʃ/", trans: "응, 그런 얘기는 잘 안 하거든.", chunks: [{ text: "Yeah, I don't talk about it much.", s: 25.470, e: 27.580 }] },
+        { speaker: "B", start: 27.580, end: 31.710, ipa: "/bʌt ˈsiːɪŋ ə ˈθɛrəpɪst ˈriːəli hɛlpt miː ɡɛt θruː ðoʊz hɑːrd taɪmz/", trans: "근데 상담사를 만나면서 그 힘든 시기를 버틸 수 있었어.", chunks: [{ text: "But seeing a therapist", s: 27.580, e: 28.590 }, { text: "really helped me get through", s: 28.590, e: 29.750 }, { text: "those hard times.", s: 29.750, e: 31.710 }] },
+        { speaker: "A", start: 31.710, end: 34.780, ipa: "/aɪ ˈnɛvər ˈiːvən θɔːt əˈbaʊt ˈduːɪŋ ðæt bɪˈfɔːr/", trans: "나는 상담 받아볼 생각을 한 번도 안 해봤어.", chunks: [{ text: "I never even thought about", s: 31.710, e: 32.950 }, { text: "doing that before.", s: 32.950, e: 34.780 }] },
+        { speaker: "A", start: 34.780, end: 38.560, ipa: "/aɪ ɡɛs ɪt kaɪnd əv hæz ə ˈnɛɡətɪv ˈstɪɡmə ɪn kəˈriə/", trans: "한국은 그런 거 하면 좀 안 좋은 시선이 있잖아.", chunks: [{ text: "I guess it kind of has a", s: 34.780, e: 36.070 }, { text: "negative stigma in Korea.", s: 36.070, e: 38.560 }] },
+        { speaker: "B", start: 38.560, end: 40.060, ipa: "/ɪt ˈriːəli ˈʃʊdnt/", trans: "사실 그러면 안 되지.", chunks: [{ text: "It really shouldn't.", s: 38.560, e: 40.060 }] },
+        { speaker: "B", start: 40.060, end: 42.910, ipa: "/ˈhævɪŋ ˈsʌmwʌn ˈlɪsn tuː juː ɪz soʊ ˈhiːlɪŋ/", trans: "누군가 내 얘기를 들어줄 사람이 있다는 것만으로도 치유가 돼.", chunks: [{ text: "Having someone listen to you", s: 40.060, e: 41.250 }, { text: "is so healing.", s: 41.250, e: 42.910 }] },
+        { speaker: "B", start: 42.910, end: 46.210, ipa: "/ʃiː hɛlpt miː ˈriːəˌlaɪz haʊ hɑːrd aɪ wʌz ˈbiːɪŋ ɑːn maɪˈsɛlf/", trans: "그 선생님 덕분에 내가 나한테 얼마나 가혹했는지도 깨달았어.", chunks: [{ text: "She helped me realize", s: 42.910, e: 44.050 }, { text: "how hard I was being on myself.", s: 44.050, e: 46.210 }] },
         { speaker: "A", start: 46.210, end: 50.460, ipa: "/jʊər soʊ raɪt. duː juː θɪŋk juː kæn pʊt miː ɪn tʌtʃ wɪð hɜːr?/", trans: "네 말이 맞아. 혹시 그분이랑 나랑 연결해 줄 수 있을까?", chunks: [{ text: "You're so right.", s: 46.210, e: 47.870 },{ text: "Do you think you can", s: 47.870, e: 48.590 }, { text: "put me in touch with her?", s: 48.590, e: 50.460 }] },
         { speaker: "B", start: 50.460, end: 55.040, ipa: "/əv kɔːrs. lɛt miː æsk hɜːr fɜːrst ænd ðɛn aɪl hæv hɜːr kɔːl juː./", trans: "그럼, 당연하지. 먼저 여쭤본 다음에 너한테 전화 하라고 할게.", chunks: [{ text: "Of course.", s: 50.460, e: 51.680 },{ text: "Let me ask her first,", s: 51.680, e: 52.760 }, { text: "and then I'll have her call you.", s: 52.760, e: 55.040 }] },
       ]
@@ -2240,20 +2243,22 @@ const studyData = {
       audio: "audio/9-3 Real Conversations.wav",
       chat: [
         { speaker: "A", start: 4.190, end: 6.360, ipa: "/wʌt duː juː fiːl laɪk ˈiːtɪŋ/", trans: "뭐 먹고 싶어?", chunks: [{ text: "What do you feel like eating?", s: 4.190, e: 6.360 }] },
-        { speaker: "B", start: 6.360, end: 10.400, ipa: "/ðɛrz ə ˈrɪəli ɡʊd samgyeopsal pleɪs nɪərˈbaɪ wɛr aɪ juːst tuː ɡoʊ ˈæftər wɜːrk/", trans: "근처에 예전에 퇴근하고 자주 갔던 삼겹살 집 있는데,", chunks: [{ text: "There's a really good", s: 6.360, e: 7.180 }, { text: "samgyeopsal place nearby", s: 7.180, e: 8.540 }, { text: "where I used to go after work", s: 8.540, e: 10.400 }] },
-        { speaker: "B", start: 10.400, end: 12.290, ipa: "/ðeɪ hæv ðə bɛst gyeranjjim/", trans: "거기 계란찜이 진짜 맛있어.", chunks: [{ text: "They have the best gyeran-jjim", s: 10.400, e: 12.290 }] },
-        { speaker: "B", start: 12.290, end: 13.890, ipa: "/duː juː ˈwɑːnə traɪ ɪt/", trans: "가볼래?", chunks: [{ text: "Do you wanna try it?", s: 12.290, e: 13.890 }] },
-        { speaker: "A", start: 13.890, end: 14.820, ipa: "/ðæt saʊndz ɡreɪt/", trans: "좋지.", chunks: [{ text: "That sounds great", s: 13.890, e: 14.820 }] },
-        { speaker: "A", start: 14.820, end: 16.670, ipa: "/lɛts duː ɪt/", trans: "거기 가자.", chunks: [{ text: "Let's do it", s: 14.820, e: 16.670 }] },
+
+        { speaker: "B", start: 6.360, end: 13.890, ipa: "/ðɛrz ə ˈrɪəli ɡʊd samgyeopsal pleɪs nɪərˈbaɪ wɛr aɪ juːst tuː ɡoʊ ˈæftər wɜːrk. ðeɪ hæv ðə bɛst gyeranjjim. duː juː ˈwɑːnə traɪ ɪt/", trans: "근처에 예전에 퇴근하고 자주 갔던 삼겹살 집 있는데, 거기 계란찜이 진짜 맛있어. 가볼래?", chunks: [{ text: "There's a really good", s: 6.360, e: 7.180 }, { text: "samgyeopsal place nearby", s: 7.180, e: 8.540 }, { text: "where I used to go after work.", s: 8.540, e: 10.400 },{ text: "They have the best gyeranjjim.", s: 10.400, e: 12.290 }, { text: "Do you wanna try it?", s: 12.290, e: 13.890 }] },
+
+        { speaker: "A", start: 13.890, end: 16.670, ipa: "/ðæt saʊndz ɡreɪt. lɛts duː ɪt/", trans: "좋지. 거기 가자.", chunks: [{ text: "That sounds great", s: 13.890, e: 14.820 }, { text: "Let's do it", s: 14.820, e: 16.670 }] },
+
         { speaker: "B", start: 16.670, end: 20.000, ipa: "/haʊ əˈbaʊt wiː stɑːrt wɪð tuː samgyeopsal ænd ə gyeranjjim/", trans: "일단 삼겹살 2인분이랑 계란찜 시킬까?", chunks: [{ text: "How about we start with", s: 16.670, e: 17.600 }, { text: "two samgyeopsal", s: 17.600, e: 18.560 }, { text: "and a gyeran-jjim?", s: 18.560, e: 20.000 }] },
-        { speaker: "A", start: 20.000, end: 20.900, ipa: "/ʃʊr/", trans: "좋아.", chunks: [{ text: "Sure", s: 20.000, e: 20.900 }] },
-        { speaker: "A", start: 20.900, end: 23.680, ipa: "/ðə sundubu jjigae lʊks ˈrɪəli ɡʊd tuː/", trans: "순두부찌개도 맛있어 보이네.", chunks: [{ text: "The sundubu jjigae", s: 20.900, e: 21.820 }, { text: "looks really good too", s: 21.820, e: 23.680 }] },
-        { speaker: "B", start: 23.680, end: 24.960, ipa: "/wiː kæn duː ðæt/", trans: "그것도 괜찮지.", chunks: [{ text: "We can do that", s: 23.680, e: 24.960 }] },
-        { speaker: "B", start: 24.960, end: 26.400, ipa: "/ɪts ə bɪt ˈspaɪsi ðoʊ/", trans: "근데 조금 매운데,", chunks: [{ text: "It's a bit spicy though", s: 24.960, e: 26.400 }] },
-        { speaker: "B", start: 26.400, end: 28.830, ipa: "/kæn juː ˈhændəl ˈspaɪsi fuːd/", trans: "매운 거 괜찮아?", chunks: [{ text: "Can you handle spicy food?", s: 26.400, e: 28.830 }] },
+
+        { speaker: "A", start: 20.000, end: 23.680, ipa: "/ʃʊr. ðə sundubu jjigae lʊks ˈrɪəli ɡʊd tuː/", trans: "좋아. 순두부찌개도 맛있어 보이네.", chunks: [{ text: "Sure", s: 20.000, e: 20.900 },{ text: "The sundubu jjigae", s: 20.900, e: 21.820 }, { text: "looks really good, too", s: 21.820, e: 23.680 }] },
+
+        { speaker: "B", start: 23.680, end: 28.830, ipa: "/wiː kæn duː ðæt. ɪts ə bɪt ˈspaɪsi, ðoʊ. kæn juː ˈhændəl ˈspaɪsi fuːd./", trans: "그것도 괜찮지. 근데 조금 매운데, 매운 거 괜찮아?", chunks: [{ text: "We can do that", s: 23.680, e: 24.960 },{ text: "It's a bit spicy though", s: 24.960, e: 26.400 },{ text: "Can you handle spicy food?", s: 26.400, e: 28.830 }] },
+
+
         { speaker: "A", start: 28.830, end: 32.060, ipa: "/aɪ juːst tuː nɑːt, bʌt ɪts ˈɡroʊɪŋ ɑːn miː/", trans: "예전엔 못 먹었는데, 요즘에 점점 좋아지기 시작했어.", chunks: [{ text: "I used to not,", s: 28.830, e: 29.870 }, { text: "but it's growing on me", s: 29.870, e: 32.060 }] },
-        { speaker: "B", start: 32.060, end: 34.880, ipa: "/ɪkˈskjuːz miː, aɪ θɪŋk wɪər ˈrɛdi tuː ˈɔːrdər/", trans: "저기요, 주문할게요.", chunks: [{ text: "Excuse me,", s: 32.060, e: 32.950 }, { text: "I think we're ready to order", s: 32.950, e: 34.880 }] },
-        { speaker: "B", start: 34.880, end: 39.780, ipa: "/wiːl ɡɛt tuː samgyeopsal, wʌn gyeranjjim, ænd wʌn sundubu jjigae/", trans: "삼겹살 2인분, 계란찜 하나, 순두부찌개 하나 할게요.", chunks: [{ text: "We'll get two samgyeopsal,", s: 34.880, e: 36.510 }, { text: "one gyeran-jjim,", s: 36.510, e: 37.570 }, { text: "and one sundubu jjigae", s: 37.570, e: 39.780 }] },
+
+        { speaker: "B", start: 32.060, end: 39.780, ipa: "/ɪkˈskjuːz miː, aɪ θɪŋk wɪər ˈrɛdi tuː ˈɔːrdər. wiːl ɡɛt tuː samgyeopsal, wʌn gyeranjjim, ænd wʌn sundubu jjigae./", trans: "저기요, 주문할게요. 삼겹살 2인분, 계란찜 하나, 순두부찌개 하나 할게요.", chunks: [{ text: "Excuse me,", s: 32.060, e: 32.950 }, { text: "I think we're ready to order", s: 32.950, e: 34.880 },{ text: "We'll get two samgyeopsal,", s: 34.880, e: 36.510 }, { text: "one gyeran-jjim,", s: 36.510, e: 37.570 }, { text: "and one sundubu jjigae", s: 37.570, e: 39.780 }] },
+
         { speaker: "C", start: 39.780, end: 41.470, ipa: "/ˈɛniˌθɪŋ tuː drɪŋk/", trans: "마실 건 뭘로 드릴까요?", chunks: [{ text: "Anything to drink?", s: 39.780, e: 41.470 }] },
         { speaker: "B", start: 41.470, end: 42.710, ipa: "/dʒʌst ˈwɔːtərz fɔːr naʊ/", trans: "일단은 그냥 물 주세요.", chunks: [{ text: "Just waters for now", s: 41.470, e: 42.710 }] },
         { speaker: "B", start: 42.710, end: 44.350, ipa: "/θæŋk juː/", trans: "감사합니다.", chunks: [{ text: "Thank you", s: 42.710, e: 44.350 }] },
