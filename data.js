@@ -2601,7 +2601,6 @@ const studyData = {
         { group: "looking forward to", ipa: "/aɪm ˈlʊkɪŋ ˈfɔːrwərd tuː wɜːrkɪŋ wɪθ juː/", trans: "같이 일하게 돼서 기대돼.", chunks: [{ text: "I’m looking forward to working with you." }] },
         { group: "looking forward to", ipa: "/oʊˈkeɪ! aɪm ˈlʊkɪŋ ˈfɔːrwərd tuː ɪt/", trans: "좋아! 완전 기대할게.", chunks: [{ text: "Okay! I’m looking forward to it." }] }
       ]
-    }
   },
 
 
@@ -2759,7 +2758,7 @@ const studyData = {
         { speaker: "B", start: 39.710, end: 42.270, ipa: "/aɪ ɡɛs aɪ ʃʊd hæv dʒɔɪnd ə ˈstʌdi ɡruːp tuː/", trans: "나도 스터디 그룹에 들어갈걸 그랬네.", chunks: [{ text: "I guess I should have", s: 39.710, e: 40.450 }, { text: "joined a study group, too.", s: 40.450, e: 42.270 }] },
         { speaker: "B", start: 42.270, end: 44.770, ipa: "/aɪ dɪdnt hæv ðə ˈkɜːrɪdʒ tuː duː ɪt/", trans: "용기가 없었어.", chunks: [{ text: "I didn't have the courage", s: 42.270, e: 43.360 }, { text: "to do it.", s: 43.360, e: 44.770 }] },
         { speaker: "A", start: 44.770, end: 46.820, ipa: "/heɪ, ɪts dʒʌst ðə bɪˈɡɪnɪŋ/", trans: "야, 이제 시작이잖아.", chunks: [{ text: "Hey, it's just the beginning.", s: 44.770, e: 46.820 }] },
-        { speaker: "A", start: 46.820, end: 52.060, ipa: "/ˈaʊər ɡruːp dʒʌst dɪˈsaɪdɪd tuː ˈstʌdi fɔːr əˈnʌðər θriː mʌnθs. duː juː wɑːnt tuː dʒɔɪn?/", trans: "우리 그룹에서 앞으로 3개월 더 공부하기로 방금 결정했거든. 같이 할래?", chunks: [{ text: "Our group just decided to", s: 46.820, e: 48.050 }, { text: "study for another three months.", s: 48.050, e: 49.950 },{ text: "Do you want to join?", s: 49.950, e: 52.060 }] },
+        { speaker: "A", start: 46.820, end: 52.060, ipa: "/ˈaʊər ɡruːp dʒʌst dɪˈsaɪdɪd tuː ˈstʌdi fɔːr əˈnʌðər θriː mʌnθs. duː juː wɑːnt tuː dʒɔɪn?/", trans: "우리 그룹에서 앞으로 3개월 더 공부하기로 방금 결정했거든. 같이 할래?", chunks: [{ text: "Our group just decided to", s: 46.820, e: 48.050 }, { text: "study for another three months.", s: 48.050, e: 49.950 },{ text: "Do you want to join?", s: 49.950, e: 52.060 }] }
 
 
       ]
