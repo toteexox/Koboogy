@@ -946,7 +946,7 @@ const studyData = {
         { group: "bucket list", start: 50.020, end: 52.580, ipa: "/aɪl æd ɪt tuː maɪ ˈbʌkɪt lɪst/", trans: "내 버킷리스트에 추가해야겠다.", chunks: [{ text: "I'll add it to my bucket list", s: 50.020, e: 52.580 }] },
         { group: "bucket list", start: 55.490, end: 57.920, ipa: "/hwʌts ɑːn jɔːr ˈbʌkɪt lɪst/", trans: "너 버킷리스트에 뭐 있어?", chunks: [{ text: "What's on your bucket list?", s: 55.490, e: 57.920 }] },
         { group: "over ~ (식사/커피와 함께)", start: 60.750, end: 63.760, ipa: "/wiː hæd ə lɔːŋ tɔːk ˈoʊvər ˈkɔːfi/", trans: "우리는 커피를 마시며 오래 이야기를 나눴어.", chunks: [{ text: "We had a long talk over coffee", s: 60.750, e: 63.760 }] },
-        { group: "over ~ (식사/커피와 함께)", start: 67.000, end: 69.890, ipa: "/ðeɪ dɪˈʌst tɛr plænz ˈoʊvər ˈdɪnər/", trans: "그들은 저녁을 먹으며 계획을 논의했어.", chunks: [{ text: "They discussed their plans over dinner", s: 67.000, e: 69.890 }] },
+        { group: "over ~ (식사/커피와 함께)", start: 67.000, end: 69.890, ipa: "/ðeɪ dɪˈscʌst tɛr plænz ˈoʊvər ˈdɪnər/", trans: "그들은 저녁을 먹으며 계획을 논의했어.", chunks: [{ text: "They discussed their plans over dinner", s: 67.000, e: 69.890 }] },
         { group: "over ~ (식사/커피와 함께)", start: 73.250, end: 76.210, ipa: "/lɛts tɔːk əˈbaʊt ɪt ˈoʊvər lʌntʃ/", trans: "점심 먹으면서 그 얘기 하자.", chunks: [{ text: "Let's talk about it over lunch", s: 73.250, e: 76.210 }] },
         { group: "get (사주다/구하다) & on the way", start: 79.330, end: 82.630, ipa: "/aɪl ɡɛt juː ʃɪn ˈrɑːmjʌn ɑːn ðə weɪ/", trans: "오는 길에 신라면 사다 줄게.", chunks: [{ text: "I'll get you shin ramyun on the way", s: 79.330, e: 82.630 }] },
         { group: "get (사주다/구하다) & on the way", start: 85.820, end: 88.770, ipa: "/maɪ ˈbɔɪˌfrɛnd ɡɑːt miː ðɪs ˈnɛklɪs/", trans: "남친이 이 목걸이 사줬어.", chunks: [{ text: "My boyfriend got me this necklace", s: 85.820, e: 88.770 }] },
@@ -2482,7 +2482,7 @@ const studyData = {
         { group: "the", start: 17.600, end: 27.200, ipa: "/juː noʊ ðə ˈfeɪməs oʊld striːt laɪnd wɪθ trəˈdɪʃənəl ˈwʊdən ˈhaʊsɪz/", trans: "전통 가옥들이 늘어서 있는 그 유명한 옛날 거리 알지?", chunks: [{ text: "You know the famous old street lined with traditional wooden houses?", s: 17.600, e: 27.200 }] },
         { group: "the", start: 27.200, end: 35.550, ipa: "/ɪf juːv ˈnɛvər biːn tuː ðə ˈsɪti, aɪ ˈhaɪli ˈrɛkəˌmɛnd ɪt/", trans: "만약 그 도시안 가봤다면, 강력 추천해.", chunks: [{ text: "If you've never been to the city, I highly recommend it", s: 27.200, e: 35.550 }] },
         { group: "the", start: 35.550, end: 42.500, ipa: "/ðɪs ɪz ðə bɛst ˈrɑːmɛn aɪv ˈɛvər hæd/", trans: "내가 먹어본 최고의 라멘이야.", chunks: [{ text: "This is the best ramen I've ever had", s: 35.550, e: 42.500 }] },
-        { group: "the", start: 42.500, end: 50.930, ipa: "/ðæt wʌz ðə moʊst ɪkˈseɪtɪŋ ˈmuːvi aɪv siːn ðɪs jɪr/", trans: "건 내가 올해 본 영화 중 가장 재미있는 영화였어.", chunks: [{ text: "That was the most exciting movie I've seen this year", s: 42.500, e: 50.930 }] },
+        { group: "the", start: 42.500, end: 50.930, ipa: "/ðæt wʌz ðə moʊst ɪkˈsaɪtɪŋ ˈmuːvi aɪv siːn ðɪs jɪr/", trans: "건 내가 올해 본 영화 중 가장 재미있는 영화였어.", chunks: [{ text: "That was the most exciting movie I've seen this year", s: 42.500, e: 50.930 }] },
         { group: "the", start: 50.930, end: 58.850, ipa: "/ðɪs ɪz ðə wɜːrst ˈtræfɪk aɪv ˈɛvər ɪkˈspriːənst/", trans: "내가 겪어본 것 중 최악의 교통 체증이야.", chunks: [{ text: "This is the worst traffic I've ever experienced", s: 50.930, e: 58.850 }] },
         { group: "no article (general)", start: 58.850, end: 64.990, ipa: "/aɪ doʊnt ˈrɪli wɑːtʃ ʃoʊz/", trans: "나는 드라마는 잘 안 봐.", chunks: [{ text: "I don't really watch shows", s: 58.850, e: 64.990 }] },
         { group: "no article (general)", start: 64.990, end: 70.080, ipa: "/ɑːr juː ɡʊd wɪθ kɪdz/", trans: "너 애들이랑 잘 놀아줘?", chunks: [{ text: "Are you good with kids?", s: 64.990, e: 70.080 }] },
@@ -2500,7 +2500,7 @@ const studyData = {
 
         { speaker: "B", start: 6.340, end: 9.860, ipa: "/noʊ, bʌt aɪ ˈrɪəli wɑːnt tuː wʌn deɪ. hæv juː?/", trans: "아니, 근데 언젠가 꼭 가보고 싶어. 넌 가 봤어?", chunks: [{ text: "No, but I really want to one day.", s: 6.340, e: 8.420 }, { text: "Have you?", s: 8.420, e: 9.860 }] },
 
-        { speaker: "A", start: 9.860, end: 14.400, ipa: "/jeə, aɪ wɛnt tuː ˈbæŋkɑːk ˈdʊrɪŋ Chuseok læst jɪər. ɪt wʌz ɪnˈkrɛdəbl./", trans: "응, 작년 추석 때 방콕 갔었어. 진짜 대박이었어.", chunks: [{ text: "Yeah, I went to Bangkok", s: 9.860, e: 11.300 }, { text: "during Chuseok last year.", s: 11.300, e: 13.030 },{ text: "It was incredible.", s: 13.030, e: 14.400 }]] },
+        { speaker: "A", start: 9.860, end: 14.400, ipa: "/jeə, aɪ wɛnt tuː ˈbæŋkɑːk ˈdʊrɪŋ Chuseok læst jɪər. ɪt wʌz ɪnˈkrɛdəbl./", trans: "응, 작년 추석 때 방콕 갔었어. 진짜 대박이었어.", chunks: [{ text: "Yeah, I went to Bangkok", s: 9.860, e: 11.300 }, { text: "during Chuseok last year.", s: 11.300, e: 13.030 },{ text: "It was incredible.", s: 13.030, e: 14.400 }] },
 
 
         { speaker: "A", start: 14.400, end: 17.220, ipa: "/ɪts maɪ ˈfeɪvərɪt ˈkʌntri ðæt aɪv ˈtrævəld tuː/", trans: "내가 여행한 나라 중에 제일 좋아하는 곳이야.", chunks: [{ text: "It's my favorite country", s: 14.400, e: 15.450 }, { text: "that I've traveled to.", s: 15.450, e: 17.220 }] },
@@ -2566,7 +2566,7 @@ const studyData = {
         { group: "heard of vs heard about", ipa: "/hæv juː hɜːrd ʌv ˈbɑːndaɪ biːtʃ/", trans: "본다이 해변이라고 들어봤어?", chunks: [{ text: "Have you heard of Bondi beach?" }] },
         { group: "heard of vs heard about", ipa: "/dɪd juː hɜːr əˈbaʊt ðə ˈbɑːndaɪ ˈʃuːtɪŋ/", trans: "본다이 총기사건 들었어?", chunks: [{ text: "Did you hear about the Bondi shooting?" }] },
         { group: "favorite country/food", ipa: "/jɛs, aɪ wɛnt tuː bæŋˈkɑːk ˈdʊrɪŋ ʧuːsɔːk læst jɪr. ɪt wʌz ɪnˈkrɛdəbəl. ɪts maɪ ˈfeɪvərɪt ˈkʌntri ðæt aɪv ˈtrævəld tuː/", trans: "응, 작년 추석 때 방콕에 갔었어. 정말 환상적이었어. 내가 가본 나라 중에 제일 좋아하는 곳이야.", chunks: [{ text: "Yeah, I went to Bangkok during Chuseok last year. It was incredible. It’s my favorite country that I’ve traveled to." }] },
-        { group: "favorite country/food", ipa: "/ɪt wʌz ɛpɪk / ɪt wʌz ɪnˈseɪn / ɪt wʌz ˈkreɪzi / ɪt wʌz ˈlaɪf-ˈʧeɪndʒɪŋ / ɪt wʌz ˈmaɪnd-ˈbluːɪŋ/", trans: "진짜 대박이었어 / 미쳤었어 / 장난 아니었어 / 인생이 바뀔 정도였어 / 충격적이었어", chunks: [{ text: "It was epic / It was insane / It was crazy / It was life-changing / It was mind-blowing" }] },
+        { group: "favorite country/food", ipa: "/ɪt wʌz ɛpɪk / ɪt wʌz ɪnˈseɪn / ɪt wʌz ˈkreɪzi / ɪt wʌz ˈlaɪf-ˈʧeɪndʒɪŋ / ɪt wʌz ˈmaɪnd-ˈbloʊɪŋ/", trans: "진짜 대박이었어 / 미쳤었어 / 장난 아니었어 / 인생이 바뀔 정도였어 / 충격적이었어", chunks: [{ text: "It was epic / It was insane / It was crazy / It was life-changing / It was mind-blowing" }] },
         { group: "favorite country/food", ipa: "/hwʌts jʊər ˈfeɪvərɪt ˈkʌntri ðæt juːv ˈtrævəld tuː/", trans: "가 봤던 나라 중에 제일 좋아하는 나라가 뭐야?", chunks: [{ text: "What’s your favorite country that you’ve traveled to?" }] },
         { group: "favorite country/food", ipa: "/maɪ ˈfeɪvərɪt ˈkʌntri ðæt aɪv ˈtrævəld tuː ɪz ____/", trans: "내가 가봤던 나라중에 제일 좋았던 나라는 ___야.", chunks: [{ text: "My favorite country that I’ve traveled to is ____." }] },
         { group: "favorite country/food", ipa: "/aɪv traɪd tɑːkoʊˈjɑːki/", trans: "타코야키 먹어봤어.", chunks: [{ text: "I’ve tried takoyaki." }] },
@@ -2723,10 +2723,10 @@ const studyData = {
       audio: "audio/11-2 Grammar Focus.wav",
       sentences: [
         { group: "could've", start: 4.130, end: 11.790, ipa: "/aɪ ˈkʊdəv ʤɔɪnd ə ˈstʌdi ɡruːp, bʌt aɪ ˈdɪdənt/", trans: "스터디 그룹에 들어갈 수도 있었는데, 안 들어갔어.", chunks: [{ text: "I could have joined a study group, but I didn't", s: 4.130, e: 11.790 }] },
-        { group: "could've", start: 11.790, end: 17.170, ipa: "/juː ˈkʊdəv toʊld miː ˈɜːrliər/", trans: "나한테 더 일직 말해줄 수도 있었잖아.", chunks: [{ text: "You could have told me earlier", s: 11.790, e: 17.170 }] },
+        { group: "could've", start: 11.790, end: 17.170, ipa: "/juː ˈkʊdəv toʊld miː ˈɜːrliər/", trans: "나한테 더 일찍 말해줄 수도 있었잖아.", chunks: [{ text: "You could have told me earlier", s: 11.790, e: 17.170 }] },
         { group: "could've", start: 17.170, end: 23.360, ipa: "/aɪ ˈkʊdənt həv dʌn ɪt wɪˈðaʊt juː/", trans: "네가 없었으면 못했어.", chunks: [{ text: "I couldn't have done it without you", s: 17.170, e: 23.360 }] },
         { group: "should've", start: 23.360, end: 29.120, ipa: "/aɪ ˈʃʊdəv ˈstʌdiɪd ˈhɑːrdər/", trans: "공부를 더 열심히 할걸 그랬어.", chunks: [{ text: "I should have studied harder", s: 23.360, e: 29.120 }] },
-        { group: "should've", start: 29.120, end: 37.430, ipa: "/juː ˈʃʊdəv toʊld miː ˈɜːrliər/", trans: "나한테 더 일직 말해줬어야 했어.", chunks: [{ text: "You should have told me earlier", s: 29.120, e: 37.430 }] },
+        { group: "should've", start: 29.120, end: 37.430, ipa: "/juː ˈʃʊdəv toʊld miː ˈɜːrliər/", trans: "나한테 더 일찍 말해줬어야 했어.", chunks: [{ text: "You should have told me earlier", s: 29.120, e: 37.430 }] },
         { group: "should've", start: 37.430, end: 43.600, ipa: "/aɪ ˈʃʊdənt həv sɛd ðæt/", trans: "그 말 하지 말걸 그랬어.", chunks: [{ text: "I shouldn't have said that", s: 37.430, e: 43.600 }] },
         { group: "would've", start: 43.600, end: 47.140, ipa: "/aɪ ˈwʊdənt həv hɛlpt hɪm ɪf hiːd ɑːskt miː/", trans: "만약 걔가 도와달라고 했었으면 도와줬을 거야.", chunks: [{ text: "I would have helped him if he'd asked me", s: 43.600, e: 47.140 }] },
         { group: "would've", start: 47.140, end: 56.000, ipa: "/aɪ ˈwʊdənt həv ˈænsərd ðə foʊn ɪf aɪd noʊn ɪt wʌz juː/", trans: "넌 줄 알았으면 전화 받았을 거야.", chunks: [{ text: "I would have answered the phone if I'd known it was you", s: 47.140, e: 56.000 }] },
@@ -2796,7 +2796,7 @@ const studyData = {
         { group: "be supposed to", ipa: "/haʊ æm aɪ səˈpoʊzd tuː noʊ/", trans: "내가 그걸 어떻게 아는데?", chunks: [{ text: "How am I supposed to know?" }] },
         { group: "be supposed to", ipa: "/hwʌts ðæt səˈpoʊzd tuː miːn/", trans: "그게 무슨 뜻인데?", chunks: [{ text: "What is that supposed to mean?" }] },
         { group: "can't believe", ipa: "/aɪ kænt bɪˈliːv ðə ˈbuːtˌkæmp ɪz ˈɛndɪŋ nɛkst wiːk/", trans: "부트캠프가 다음 주에 끝난다는 게 믿기지 않아.", chunks: [{ text: "I can’t believe the bootcamp is ending next week." }] },
-        { group: "can't believe", ipa: "/aɪ kænt bɪˈliːv aɪv keɪm ðɪs fɑːr / aɪ kænt bɪːv aɪv meɪd ɪt ðɪs fɑːr/", trans: "내가 여기까지 왔다니 안 믿겨.", chunks: [{ text: "I can’t believe I’ve come this far. / I can’t believe I’ve made it this far." }] },
+        { group: "can't believe", ipa: "/aɪ kænt bɪˈliːv aɪv kʌm ðɪs fɑːr / aɪ kænt bɪ'liːv aɪv meɪd ɪt ðɪs fɑːr/", trans: "내가 여기까지 왔다니 안 믿겨.", chunks: [{ text: "I can’t believe I’ve come this far. / I can’t believe I’ve made it this far." }] },
         { group: "can't believe", ipa: "/aɪ kænt bɪˈliːv ðɛrz ˈoʊnli wʌn wiːk lɛft ɪn ðə ˈbuːtˌkæmp/", trans: "부트캠프가 한 주 밖에 안 남았다니 안 믿겨!", chunks: [{ text: "I can’t believe there’s only one week left in the bootcamp!" }] },
         { group: "can't believe", ipa: "/aɪ kænt bɪˈliːv aɪ kæn hæv ə ˌkɒnvəˈseɪʃən ɪn ˈɪŋɡlɪʃ/", trans: "내가 영어로 대화를 할 수 있다니 안 믿겨.", chunks: [{ text: "I can’t believe I can have a conversation in English." }] },
         { group: "can't believe", ipa: "/wiːv meɪd ɪt tuː ðə læst wiːk ʌv ðə ˈbuːtˌkæmp/", trans: "우리 부트캠프 마지막 주까지 왔네.", chunks: [{ text: "We’ve made it to the last week of the bootcamp." }] },
@@ -2818,12 +2818,11 @@ const studyData = {
         { group: "would've", ipa: "/seɪm hɪr. ɪf aɪ hæd noʊn əˈbaʊt ɪt bɪˈfɔːr, aɪ ˈwʊdənt həv ˈweɪstɪd soʊ mʌtʃ taɪm ænd ˈmʌni/", trans: "나도 마찬가지야. 이걸 미리 알았더라면, 시간과 돈을 그렇게 낭비하지 않았을 텐데.", chunks: [{ text: "Same here. If I had known about it before, I wouldn't have wasted so much time and money." }] },
         { group: "would've", ipa: "/juː ʃʊdəv toʊld miː. aɪ ˈwʊdənt həv kɔːld juː ɪf aɪ noʊn juː wɜːr daʊn / aɪ ˈwʊdənt həv hɛlpt juː ɪf aɪ noʊn juː wɜːr əˈloʊn/", trans: "말을 하지 그랬어. 네가 기분이 안 좋은 줄 알았으면 전화했을 텐데. / 네가 혼자 있는 줄 알았으면 도와줬을 텐데.", chunks: [{ text: "You should’ve told me. I would’ve called you if I knew you were down. / I would’ve helped you if I knew you were alone." }] },
         { group: "would've", ipa: "/aɪ ˈwʊdənt həv bɔːt ɪt ɪf ɪt ˈwʌzənt ðɪs ɪkˈspɛnsɪv/", trans: "이렇게 비싸지 않았더라면 샀을 거야.", chunks: [{ text: "I would’ve bought it if it wasn’t this expensive." }] },
-        { group: "would've", ipa: "/ˈdɛfənətli ði laɪv ˈklæsɪz. aɪ ˈɔːlsəʊ lʌv maɪ ˈstʌdi ɡruːp. wɪˈðaʊt ðɛm, aɪ ˈwʊdənt həv kwɪt ðə ˈbuːtˌkæmp əˈrɛdi/", trans: "당연히 라이브 클래스지. 난 내 스터디 그룹도 정말 좋아해. 그들이 없었었다면, 난 벌써 부트캠프를 그만뒀을 거야.", chunks: [{ text: "Definitely the live classes. I also love my study group. Without them, I would’ve quit the bootcamp already." }] },
-        { group: "would've", ipa: "/ɪf aɪ hæd mɔːr taɪm, aɪ ˈwʊdənt həv traɪd ˈhɑːrdər / ɪf aɪ ˈwʌzənt ˈbʌzi, aɪ ˈwʊdənt həv ʤɔɪnd ə ˈstʌdi ɡruːp/", trans: "시간이 더 있었더라면, 더 노력했을 거야. / 바쁘지 않았더라면, 스터디 그룹에 가입했을 거야.", chunks: [{ text: "If I had more time, I would’ve tried harder. / If I wasn’t busy, I would’ve joined a study group." }] },
+        { group: "would've", ipa: "/ˈdɛfənətli ði laɪv ˈklæsɪz. aɪ ˈɔːlsəʊ lʌv maɪ ˈstʌdi ɡruːp. wɪˈðaʊt ðɛm, aɪ ˈwʊdəv kwɪt ðə ˈbuːtˌkæmp əˈrɛdi/", trans: "당연히 라이브 클래스지. 난 내 스터디 그룹도 정말 좋아해. 그들이 없었었다면, 난 벌써 부트캠프를 그만뒀을 거야.", chunks: [{ text: "Definitely the live classes. I also love my study group. Without them, I would’ve quit the bootcamp already." }] },
+        { group: "would've", ipa: "/ɪf aɪ hæd mɔːr taɪm, aɪ ˈwʊdəv traɪd ˈhɑːrdər / ɪf aɪ ˈwʌzənt ˈbɪzi, aɪ ˈwʊdəv ʤɔɪnd ə ˈstʌdi ɡruːp/", trans: "시간이 더 있었더라면, 더 노력했을 거야. / 바쁘지 않았더라면, 스터디 그룹에 가입했을 거야.", chunks: [{ text: "If I had more time, I would’ve tried harder. / If I wasn’t busy, I would’ve joined a study group." }] },
         { group: "would've", ipa: "/aɪ ɡɛs aɪ ʃʊdəv ʤɔɪnd ə ˈstʌdi ɡruːp tuː. aɪ ˈdɪdənt hæv ðə ˈkɜːrɪʤ tuː duː ɪt/", trans: "나도 스터디 그룹에 들어갔어야 했나 봐. 그럴 용기가 없었어.", chunks: [{ text: "I guess I should have joined a study group too. I didn’t have the courage to do it." }] },
         { group: "Closing", ipa: "/heɪ, ɪts ʤʌst ði bɪˈɡɪnɪŋ. aɪ ʤʌst ˈdɪsaɪdɪd tuː stʌdi fɔːr əˈnʌðər θriː mʌnθs. duː juː wɑːnt tuː ʤɔɪn ʌʊər ɡruːp/", trans: "야, 이제 시작이야. 난 그냥 3개월 더 공부하기로 결정했어. 우리 그룹에 합류할래?", chunks: [{ text: "Hey, it’s just the beginning. I just decided to study for another three months. Do you want to join our group?" }] }
       ]
-    }
   },
 
 
@@ -2839,7 +2838,7 @@ const studyData = {
 
         { start: 13.700, end: 17.920, ipa: "/wiː ˈhædnt ˈteɪkən ə trɪp təˈɡɛðər ɪn jɪərz, soʊ ɪt wʌz ˈriːli ˈspɛʃəl/", trans: "그 전에 몇 년 동안 같이 여행을 못 갔어서 그런지 진짜 특별했어.", chunks: [{ text: "We hadn't taken a trip together in years,", s: 13.700, e: 15.920 }, { text: "so it was really special.", s: 15.920, e: 17.920 }] },
 
-        { start: 17.920, end: 21.060, ipa: "/wiː ɡɑːt tuː spɛnd ə lɑːt ʌv ˈkwɑːlə티 taɪm təˈɡɛðər/", trans: "오랜만에 가족끼리 좋은 시간 많이 보냈지.", chunks: [{ text: "We got to spend a lot of", s: 17.920, e: 19.100 }, { text: "quality time together.", s: 19.100, e: 21.060 }] },
+        { start: 17.920, end: 21.060, ipa: "/wiː ɡɑːt tuː spɛnd ə lɑːt ʌv ˈkwɑːləti taɪm təˈɡɛðər/", trans: "오랜만에 가족끼리 좋은 시간 많이 보냈지.", chunks: [{ text: "We got to spend a lot of", s: 17.920, e: 19.100 }, { text: "quality time together.", s: 19.100, e: 21.060 }] },
 
         { start: 21.060, end: 25.730, ipa: "/wʌn naɪt, wiː wɛnt θruː oʊld ˈpɪktʃərz ænd rɪˈflɛktəd ɑːn ðə jɪərz wiː lɪvd təˈɡɛðər/", trans: "하루는 같이 옛날 사진을 보면서 같이 살았던 세월을 돌아봤어.", chunks: [{ text: "One night,", s: 21.060, e: 21.800 }, { text: "we went through old pictures", s: 21.800, e: 23.050 }, { text: "and reflected on the years", s: 23.050, e: 24.230 }, { text: "we lived together.", s: 24.230, e: 25.730 }] },
 
@@ -2955,9 +2954,9 @@ const studyData = {
       title: "Grammar Focus",
       audio: "audio/12-2 Grammar Focus.wav",
       sentences: [
-        { group: "had + p.p (Past Perfect)", start: 4.230, end: 11.740, ipa: "/wɛn aɪ əˈraɪvɪd, ðə ˈmuːvi hæd ˈstɑːrtɪd/", trans: "내가 도착했을 때, (그보다도 전에) 영화가 시작해 있었어.", chunks: [{ text: "When I arrived, the movie had started", s: 4.230, e: 11.740 }] },
+        { group: "had + p.p (Past Perfect)", start: 4.230, end: 11.740, ipa: "/wɛn aɪ əˈraɪvd, ðə ˈmuːvi hæd ˈstɑːrtɪd/", trans: "내가 도착했을 때, (그보다도 전에) 영화가 시작해 있었어.", chunks: [{ text: "When I arrived, the movie had started", s: 4.230, e: 11.740 }] },
         { group: "had + p.p (Past Perfect)", start: 11.740, end: 21.970, ipa: "/wiː ˈhædənt ˈteɪkən ə trɪp təˈɡɛðər ɪn jɪrz, soʊ ɪt wʌz ˈrɪli ˈspɛʃəl/", trans: "제주도 여행 전에는 이미 여행 안 간 지 몇 년이 된 상황이었고, 그래서 제주도 여행이 특별했어.", chunks: [{ text: "We hadn't taken a trip together in years, so it was really special", s: 11.740, e: 21.970 }] },
-        { group: "had + p.p (Past Perfect)", start: 21.970, end: 32.890, ipa: "/aɪ fɛlt laɪk wiː hæd bɪn ˈdrɪfɪŋ əˈpɑːrt, bʌt wiː ˈfɪnəli fɛlt kloʊz əˈɡɛn/", trans: "제주도 여행 전에는 가족들과 계속 멀어지고 있었지만, 제주도에서 가족들과 다시 가까워짐을 느꼈어.", chunks: [{ text: "I felt like we had been drifting apart, but we finally felt close again", s: 21.970, e: 32.890 }] },
+        { group: "had + p.p (Past Perfect)", start: 21.970, end: 32.890, ipa: "/aɪ fɛlt laɪk wiː hæd bɪn ˈdrɪftɪŋ əˈpɑːrt, bʌt wiː ˈfɪnəli fɛlt kloʊz əˈɡɛn/", trans: "제주도 여행 전에는 가족들과 계속 멀어지고 있었지만, 제주도에서 가족들과 다시 가까워짐을 느꼈어.", chunks: [{ text: "I felt like we had been drifting apart, but we finally felt close again", s: 21.970, e: 32.890 }] },
         { group: "I wish + 과거동사", start: 32.890, end: 40.020, ipa: "/aɪ wɪʃ aɪ kʊd spiːk ˈɪŋɡlɪʃ ˈfluːəntli/", trans: "영어를 유창하게 말할 수 있으면 좋을 텐데.", chunks: [{ text: "I wish I could speak English fluently", s: 32.890, e: 40.020 }] },
         { group: "I wish + 과거동사", start: 40.020, end: 45.380, ipa: "/aɪ wɪʃ maɪ mɑːm wʌz hɪr/", trans: "엄마가 여기 있으면 좋을 텐데. (지금 엄마가 없음)", chunks: [{ text: "I wish my mom was here", s: 40.020, e: 45.380 }] },
         { group: "I wish + 과거동사", start: 45.380, end: 51.240, ipa: "/aɪ wɪʃ aɪ hæd mɔːr taɪm/", trans: "시간이 더 많으면 좋을 텐데. (지금 시간이 없음)", chunks: [{ text: "I wish I had more time", s: 45.380, e: 51.240 }] },
@@ -3070,7 +3069,7 @@ const studyData = {
         { group: "put myself out there", ipa: "/nɑːt fɔːr ˈɛniˌbɑːdi ɛls, bʌt fɔːr jʊərˈsɛlf/", trans: "남을 위해서가 아니라, 바로 너 자신을 위해서 말이야.", chunks: [{ text: "Not for anybody else, but for yourself." }] },
         { group: "I wish / I hope", ipa: "/aɪ siː/", trans: "그렇구나.", chunks: [{ text: "I see." }] },
         { group: "I wish / I hope", ipa: "/duː juː hæv ˈɛni tɪps ðæt ˈriːəli hɛlpt juː/", trans: "너한테 정말 도움이 됐던 팁이 혹시 있어?", chunks: [{ text: "Do you have any tips that really helped you?" }] },
-        { group: "I wish / I hope", ipa: "/ʤɛd, aɪ wɪʃ aɪ həd ɡɪvən mɑɪ ˈwʌn-hʌndrɛd-pɛrsɛnt ɪn ði ˈbɪɡɪŋə/", trans: "그래, 처음부터 100퍼센트를 쏟아부었더라면 좋았을 텐데.", chunks: [{ text: "Yeah, I wish I had given my 100% in the beginning." }] },
+        { group: "I wish / I hope", ipa: "/jeə, aɪ wɪʃ aɪ həd ɡɪvən mɑɪ ˈwʌn-hʌndrɛd-pɛrsɛnt ɪn ði ˈbɪɡɪnɪŋ/", trans: "그래, 처음부터 100퍼센트를 쏟아부었더라면 좋았을 텐데.", chunks: [{ text: "Yeah, I wish I had given my 100% in the beginning." }] },
         { group: "I wish / I hope", ipa: "/aɪ θɪŋk aɪ maɪtəv bɪn a ˈlɪtəl ˈskɛptɪkəl/", trans: "내가 조금 회의적이었던 것 같아.", chunks: [{ text: "I think I might’ve been a little skeptical." }] },
         { group: "I wish / I hope", ipa: "/aɪ wɪʃ aɪ wʌz ˈtɑːlər/", trans: "키가 좀 더 컸더라면.", chunks: [{ text: "I wish I was taller." }] },
         { group: "I wish / I hope", ipa: "/aɪ wɪʃ aɪ wʌz ðɛr/", trans: "나도 거기 있었으면 좋았을 텐데.", chunks: [{ text: "I wish I was there." }] },
@@ -3096,7 +3095,7 @@ const studyData = {
         { group: "I wish I had + p.p / might've", ipa: "/aɪ maɪtəv lɛft maɪ foʊn ˈsʌmˌwɛr/", trans: "폰을 어디다 두고 왔나 봐…", chunks: [{ text: "I might’ve left my phone somewhere." }] },
         { group: "stick with / give it a try", ipa: "/wʌtˈɛvər juː ˈdɪsaɪd tuː duː/", trans: "네가 무엇을 결정을 하든,", chunks: [{ text: "Whatever you decide to do," }] },
         { group: "stick with / give it a try", ipa: "/ʤʌst stɪk wɪθ ɪt/", trans: "그냥 끝까지 밀고 나가.", chunks: [{ text: "just stick with it." }] },
-        { group: "stick with / give it a try", ipa: "/juː wʊnt noʊ ɪf ɪtll wɜːrks fɔːr juː ʌntɪl juː give ɪt jʊər bɛst/", trans: "최선을 다해보기 전까지는 그게 너한테 맞을지 알 수 없어.", chunks: [{ text: "You won't know if it'll work for you until you give it your best." }] },
+        { group: "stick with / give it a try", ipa: "/juː wʊnt noʊ ɪf ɪtll wɜːrk fɔːr juː ʌntɪl juː gɪv ɪt jʊər bɛst/", trans: "최선을 다해보기 전까지는 그게 너한테 맞을지 알 수 없어.", chunks: [{ text: "You won't know if it'll work for you until you give it your best." }] },
         { group: "stick with / give it a try", ipa: "/ɪn ˈtwɛnti-ˈtwɛnti-sɪks, aɪm ˈɡoʊɪŋ tuː stɪk wɪθ ðə buːt kæmp/", trans: "2026년에는 부트캠프를 계속 쭉 이어갈 거야.", chunks: [{ text: "In 2026, I’m going to stick with the boot camp." }] },
         { group: "stick with / give it a try", ipa: "/aɪm ˈɡoʊɪŋ tuː kənˈtɪnjuː tuː stɪk wɪθ ˈkoʊhæm ænd ˈɛli/", trans: "코햄과 엘리와 계속 함께할 거야.", chunks: [{ text: "I’m going to continue to stick with Koham & Ellie." }] },
         { group: "stick with / give it a try", ipa: "/ɡɪv ɪt a traɪ/", trans: "한번 해봐!", chunks: [{ text: "Give it a try!" }] },
