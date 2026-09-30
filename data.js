@@ -2600,7 +2600,7 @@ const studyData = {
   "11": {
     "mystory": {
       title: "Boot camp",
-      audio: "audio/11-1 My Story.wav",
+      audio: "audio/1101 my story.wav",
       sentences: [
         { start: 7.010, end: 9.120, ipa: "/ˈoʊnli wʌn wiːk lɛft ɪn ðə ˈbuːtkæmp/", trans: "부트캠프가 이제 일주일밖에 안 남았네!", chunks: [{ text: "Only one week", s: 7.010, e: 7.730 }, { text: "left in the boot camp", s: 7.730, e: 9.120 }] },
         { start: 9.120, end: 10.790, ipa: "/haʊ duː juː fiːl/", trans: "기분이 어때?", chunks: [{ text: "How do you feel?", s: 9.120, e: 10.790 }] },
