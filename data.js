@@ -2601,6 +2601,7 @@ const studyData = {
         { group: "looking forward to", ipa: "/aɪm ˈlʊkɪŋ ˈfɔːrwərd tuː wɜːrkɪŋ wɪθ juː/", trans: "같이 일하게 돼서 기대돼.", chunks: [{ text: "I’m looking forward to working with you." }] },
         { group: "looking forward to", ipa: "/oʊˈkeɪ! aɪm ˈlʊkɪŋ ˈfɔːrwərd tuː ɪt/", trans: "좋아! 완전 기대할게.", chunks: [{ text: "Okay! I’m looking forward to it." }] }
       ]
+    }
   },
 
 
@@ -2763,6 +2764,7 @@ const studyData = {
 
       ]
     },
+
     "useful_realconvo": {
       title: "Useful Expressions (RC)",
       audio: "audio/11-3 Useful Expressions.wav",
