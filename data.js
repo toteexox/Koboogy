@@ -3106,7 +3106,7 @@ const studyData = {
       ]
     }
   }
-};
+}
 
 
 
